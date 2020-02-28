@@ -146,7 +146,11 @@ module.exports = {
 
         const checkAppointment = await Appointment.findOne({
           user,
-          status: { $ne: ["CANCELLED"] }
+          $or: [
+            { status: "PENDING" },
+            { status: "VERIFIED" },
+            { status: "RESCHEDULE" }
+          ]
         });
 
         const checkTime = await Appointment.findOne({
