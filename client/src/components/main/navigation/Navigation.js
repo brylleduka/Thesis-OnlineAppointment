@@ -10,10 +10,8 @@ import Burger from "./Burger";
 const Navigation = ({ open, setOpen }) => {
   const node = useRef();
   useOnClickOutside(node, () => setOpen(false));
-
   let history = useHistory();
   const { user, logout } = useContext(AuthContext);
-
 
   const handleLogout = () => {
     logout();
@@ -33,6 +31,8 @@ const Navigation = ({ open, setOpen }) => {
       )}
     </>
   );
+
+  console.log(user);
 
   return (
     <DNavigation ref={node}>
@@ -63,7 +63,7 @@ const Navigation = ({ open, setOpen }) => {
               <Dropdown trigger={trigger}>
                 <Dropdown.Menu>
                   <Dropdown.Item>
-                    <Link to={`/zessence/myaccount/${user.userId}`}>
+                    <Link to={`/zessence/myaccount/${user.userId || user._id}`}>
                       My Account
                     </Link>
                   </Dropdown.Item>
