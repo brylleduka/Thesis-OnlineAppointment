@@ -4,10 +4,9 @@ import {
   FETCH_ALL_CATEGORIES_QUERY,
   FETCH_SERVICES_QUERY,
   FETCH_SINGLE_SERVICE_QUERY
-} from "../../../util/graphql";
-import { Dimmer, Loader, Form } from "semantic-ui-react";
+} from "../../../util/graphql/service";
+import { Form } from "semantic-ui-react";
 import { Content } from "../../styled/containers";
-import { DLabel } from "../../styled/utils";
 
 import Page404 from "../../../pages/Page404";
 
@@ -17,8 +16,7 @@ const AppointmentInputs = ({
   serviceValue,
   setServiceValue,
   employeeVal,
-  setEmployeeVal,
-
+  setEmployeeVal
 }) => {
   //CATEGORY
   const {
@@ -92,9 +90,7 @@ const AppointmentInputs = ({
             Categories
           </label>
           {loading_categories ? (
-            <Dimmer active inverted>
-              <Loader />
-            </Dimmer>
+            <h4>Loading...</h4>
           ) : (
             <select
               name="category"
@@ -116,9 +112,7 @@ const AppointmentInputs = ({
         <Form.Field>
           <label style={{ textTransform: "uppercase" }}>Select a service</label>
           {called && loading_services ? (
-            <Dimmer active inverted>
-              <Loader />
-            </Dimmer>
+            <h4>Loading...</h4>
           ) : (
             <select
               name="service"
@@ -152,9 +146,7 @@ const AppointmentInputs = ({
             Select Aesthetician
           </label>
           {calledServiceEmp && loading_serviceEmp ? (
-            <Dimmer active inverted>
-              <Loader />
-            </Dimmer>
+            <h4>Loading...</h4>
           ) : (
             <select
               name="employee"

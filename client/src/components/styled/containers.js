@@ -217,7 +217,26 @@ export const Content = styled.div`
   img {
     max-height: ${props => (props.imgHeight ? props.imgHeight : "300px")};
     width: ${props => (props.imgWidth ? props.imgWidth : "100%")};
+    border-radius: ${props => props.circle && "50%"};
     object-fit: contain;
+  }
+`;
+
+export const DImage = styled.div`
+  height: ${props => (props.height ? props.height : "300px")};
+  width: ${props => (props.width ? props.width : "auto")};
+  position: relative;
+  overflow: hidden;
+  border-radius: ${props =>
+    props.circle ? "50%" : props.rounded ? "20px" : "0"};
+  margin: ${props => props.m && props.m};
+
+  img {
+    display: inline;
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
+    object-fit: cover;
   }
 `;
 

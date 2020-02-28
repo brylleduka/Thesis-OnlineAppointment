@@ -32,6 +32,20 @@ module.exports = {
         throw new Error("Error");
       }
     },
+    currentAppointments: async () => {
+      const getCurrentAppointments = await Appointment.find({
+        $or: [{ status: "VERIFIED" }, { status: "RESCHEDULE" }]
+      }).sort({ createdAt: -1 });
+
+      return getCurrentAppointments;
+    },
+    appointmentHistory: async () => {
+      const historyAppointments = await Appointment.find({
+        $or: [{ status: "CANCELLED" }, { status: "DONE" }]
+      }).sort({ updatedAt: -1 });
+
+      return historyAppointments;
+    },
     appointmentsByStatus: async (_, { status }) => {
       try {
         const appointmentStatus = await Appointment.find({ status }).sort({
@@ -272,6 +286,7 @@ module.exports = {
           { _id },
           { $set: { status: "DONE" } }
         );
+
         return result;
       } catch (err) {
         throw err;

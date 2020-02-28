@@ -76,6 +76,17 @@ const typeDefs = gql`
     createdAt: String
   }
 
+  type CMS {
+    _id: ID!
+    fileName: String
+    section: String
+    headling: String
+    paragraph: String
+    colorScheme: String
+    bgcolorScheme: String
+    fontSize: String
+  }
+
   # INPUTS
   input AppointmentInput {
     serviceId: ID!
@@ -133,6 +144,8 @@ const typeDefs = gql`
     appointments: [Appointment]
     appointmentsByStatus(status: String!): [Appointment]
     checkedAppointments(employeeId: ID!, date: String!): [Appointment]
+    currentAppointments: [Appointment]
+    appointmentHistory: [Appointment]
     myAppointments: [Appointment]
     myCurrentAppointment: [Appointment]
     myAppointmentHistory: [Appointment]
@@ -148,6 +161,8 @@ const typeDefs = gql`
     service(_id: ID!): Service
     services(categoryId: ID): [Service]
     allServices: [Service]
+
+    getCMS(section: String): [CMS]
   }
 
   type Mutation {
@@ -238,6 +253,8 @@ const typeDefs = gql`
     ): Service
     deleteService(_id: ID!): Boolean
     addServicePhoto(_id: ID!, file: Upload): Boolean
+
+    addCMS(section: String!): CMS
   }
 `;
 

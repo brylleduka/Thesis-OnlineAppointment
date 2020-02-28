@@ -2,13 +2,12 @@ import React, { useState, useRef } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { useForm } from "../../../util/hooks";
-import { FETCH_ALL_CATEGORIES_QUERY } from "../../../util/graphql";
+import { FETCH_ALL_CATEGORIES_QUERY } from "../../../util/graphql/service";
 
 import { Modal, Form } from "semantic-ui-react";
 import { DButtonCancel, DButtonConfirm } from "../../styled/utils";
 import JoditEditor from "jodit-react";
 import toaster from "toasted-notes";
-
 
 const NewCategory = ({ open, setOpen }) => {
   const editor = useRef(null);

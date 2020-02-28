@@ -90,7 +90,7 @@ module.exports = {
         }
         //* Token
         const token = await jwt.sign(
-          { userId: user.id, email: user.email },
+          { userId: user.id, email: user.email, firstName: user.firstName },
 
           process.env.REFRESH_SECRET_KEY,
           {

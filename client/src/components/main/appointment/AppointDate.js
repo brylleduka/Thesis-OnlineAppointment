@@ -1,10 +1,8 @@
-import React, { useState } from "react";
-import { useQuery, useLazyQuery } from "@apollo/react-hooks";
-import {
-  FETCH_EMPLOYEE_QUERY,
-  FETCH_SINGLE_SERVICE_QUERY,
-  FETCH_CHECKED_APPOINTMENTS
-} from "../../../util/graphql";
+import React from "react";
+import { useQuery } from "@apollo/react-hooks";
+import { FETCH_EMPLOYEE_QUERY } from "../../../util/graphql/employee";
+import { FETCH_SINGLE_SERVICE_QUERY } from "../../../util/graphql/service";
+import { FETCH_CHECKED_APPOINTMENTS } from "../../../util/graphql/appointment";
 import DatePicker from "react-datepicker";
 import { Content, DGrid } from "../../styled/containers";
 import moment from "moment";
@@ -27,8 +25,7 @@ const AppointDate = ({
   setSelectedTime,
   startDate,
   employeeVal,
-  serviceValue,
-  selectedTime
+  serviceValue
 }) => {
   let days = [];
   let times = [];
@@ -115,13 +112,15 @@ const AppointDate = ({
         />
       </Content>
       <Content width="100%" height="100%" flex justify="center" align="center">
-        {!data_employee ? (
-          <h2>No available time slot</h2>
+        {!data_employee && !data_service ? (
+          <h1>No available time slot</h1>
         ) : loading_employee ? (
-          <p>Loading...</p>
+          <h3>Loading...</h3>
         ) : (
           <DGrid three gap="20px">
-            {times &&
+            {!times ? (
+              <h2>Loading...</h2>
+            ) : (
               times.map(time => (
                 <div className="pretty p-default p-curve">
                   <input
@@ -135,7 +134,8 @@ const AppointDate = ({
                     <label style={styles.label}>{time}</label>
                   </div>
                 </div>
-              ))}
+              ))
+            )}
           </DGrid>
         )}
       </Content>

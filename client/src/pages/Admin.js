@@ -10,7 +10,7 @@ import { PrivateRoute } from "../util/PrivateRoute";
 
 import Dashboard from "./admin/Dashboard";
 import Appointments from "./admin/Appointments";
-// import Appointment from "./admin/Appointment";
+import AppointmentDetails from "./admin/AppointmentDetails";
 // import NewAppointment from "./admin/NewAppointment";
 import Employees from "./admin/Employees";
 import Employee from "./admin/Employee";
@@ -28,11 +28,11 @@ const Admin = () => {
         <Redirect from="/zeadmin" to="/zeadmin/signin" exact />
         <AdminAuthRoute path="/zeadmin/signin" component={Signin} exact />
         <PrivateRoute exact path="/zeadmin/dashboard" component={Dashboard} />
-        {/* <PrivateRoute
+        <PrivateRoute
           exact
           path="/zeadmin/appointment/:_id"
-          component={Appointment}
-        /> */}
+          component={AppointmentDetails}
+        />
         <PrivateRoute
           exact
           path="/zeadmin/appointments"

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { FETCH_APPOINTMENTS_QUERY } from "../../util/graphql";
+import { FETCH_APPOINTMENTS_QUERY } from "../../util/graphql/appointment";
 import UpcommingAppointments from "../../components/admin/dashboard/UpcommingAppointments";
 
 import Layout from "../../components/admin/layout/Layout";

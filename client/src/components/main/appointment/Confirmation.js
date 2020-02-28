@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
-import {
-  FETCH_SINGLE_SERVICE_QUERY,
-  FETCH_EMPLOYEE_QUERY,
-  FETCH_MY_APPOINTMENTS
-} from "../../../util/graphql";
-import { Modal, Form, Input } from "semantic-ui-react";
+import { FETCH_SINGLE_SERVICE_QUERY } from "../../../util/graphql/service";
+import { FETCH_EMPLOYEE_QUERY } from "../../../util/graphql/employee";
+import { FETCH_MY_APPOINTMENTS } from "../../../util/graphql/appointment";
+import { Modal, Form } from "semantic-ui-react";
 import {
   DButtonConfirm,
   DButtonCancel,

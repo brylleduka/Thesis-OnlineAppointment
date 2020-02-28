@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { Link } from "react-router-dom";
-import { FETCH_MY_CURRENT_APPOINTMENTS } from "../../../util/graphql";
+import { FETCH_MY_CURRENT_APPOINTMENTS } from "../../../util/graphql/appointment";
 import { Content } from "../../styled/containers";
 import { DLabel, DButton } from "../../styled/utils";
 import DataTable from "react-data-table-component";

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { FETCH_ALL_CATEGORIES_QUERY } from "../../util/graphql";
+import { FETCH_ALL_CATEGORIES_QUERY } from "../../util/graphql/service";
 
 import { Link } from "react-router-dom";
 import Layout from "../../components/admin/layout/Layout";

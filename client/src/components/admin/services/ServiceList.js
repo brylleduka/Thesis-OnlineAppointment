@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { FETCH_SERVICES_QUERY } from "../../../util/graphql";
+import { FETCH_SERVICES_QUERY } from "../../../util/graphql/service";
 import { Link } from "react-router-dom";
 import { DSection, Content } from "../../styled/containers";
 import { DButton, DLabel } from "../../styled/utils";

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useContext } from "react";
 import { AuthContext } from "../../context/auth";
 import gql from "graphql-tag";
-import { FETCH_USER_ACCOUNT } from "../../util/graphql";
+import { FETCH_USER_ACCOUNT } from "../../util/graphql/user";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { useDropzone } from "react-dropzone";
 

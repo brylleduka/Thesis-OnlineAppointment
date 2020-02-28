@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import gql from "graphql-tag";
-import { FETCH_SERVICES_QUERY } from "../../../util/graphql";
+import { FETCH_SERVICES_QUERY } from "../../../util/graphql/service";
 import { useMutation } from "@apollo/react-hooks";
 
 import { Modal, Header } from "semantic-ui-react";

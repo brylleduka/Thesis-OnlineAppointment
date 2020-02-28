@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { FETCH_SINGLE_APPOINTMENT_QUERY } from "../../util/graphql";
+import { FETCH_SINGLE_APPOINTMENT_QUERY } from "../../util/graphql/appointment";
 import { Link, useHistory } from "react-router-dom";
 import { DSection, Content, DGrid } from "../../components/styled/containers";
 import { DButton, DButtonCancel } from "../../components/styled/utils";

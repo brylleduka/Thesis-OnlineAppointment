@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import { FETCH_MY_APPOINTMENTS } from "../../../util/graphql";
+import { FETCH_MY_APPOINTMENTS } from "../../../util/graphql/appointment";
 import { Modal } from "semantic-ui-react";
 import { DButtonConfirm, DButtonCancel, Toasted } from "../../styled/utils";
 import toaster from "toasted-notes";

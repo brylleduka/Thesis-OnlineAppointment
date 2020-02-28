@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { Modal, Form } from "semantic-ui-react";
-import { FETCH_SERVICES_QUERY } from "../../../util/graphql";
+import { FETCH_SERVICES_QUERY } from "../../../util/graphql/service";
 import { useForm } from "../../../util/hooks";
 import JoditEditor from "jodit-react";
 import toaster from "toasted-notes";

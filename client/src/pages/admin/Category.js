@@ -5,7 +5,7 @@ import { useQuery, useMutation } from "@apollo/react-hooks";
 import {
   FETCH_CATEGORY_QUERY,
   FETCH_ALL_CATEGORIES_QUERY
-} from "../../util/graphql";
+} from "../../util/graphql/service";
 import Layout from "../../components/admin/layout/Layout";
 import {
   Content,

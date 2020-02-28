@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { FETCH_EMPLOYEES_NOT_ADMIN_QUERY } from "../../util/graphql";
+import { FETCH_EMPLOYEES_NOT_ADMIN_QUERY } from "../../util/graphql/employee";
 import Layout from "../../components/admin/layout/Layout";
 import { Link } from "react-router-dom";
 import { Eye } from "styled-icons/fa-regular/Eye";

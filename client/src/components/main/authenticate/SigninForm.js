@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { AuthContext } from "../../../context/auth";
-import { FETCH_MY_APPOINTMENTS } from "../../../util/graphql";
+import { FETCH_MY_APPOINTMENTS } from "../../../util/graphql/appointment";
 
 import { Link } from "react-router-dom";
 import { Form, Icon, Dimmer, Loader, Label, Input } from "semantic-ui-react";

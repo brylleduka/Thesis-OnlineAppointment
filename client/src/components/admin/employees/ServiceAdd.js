@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import { FETCH_ALL_CATEGORIES_QUERY } from "../../../util/graphql";
+import { FETCH_ALL_CATEGORIES_QUERY } from "../../../util/graphql/service";
 import { Form, Modal } from "semantic-ui-react";
 import { DButtonConfirm, DButtonCancel, Toasted } from "../../styled/utils";
 import CheckboxGroup from "react-checkbox-group";

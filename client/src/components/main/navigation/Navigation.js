@@ -1,7 +1,5 @@
-import React, { useRef, useContext, useState } from "react";
+import React, { useRef, useContext } from "react";
 import { AuthContext } from "../../../context/auth";
-import { useQuery } from "@apollo/react-hooks";
-import { FETCH_USER_ACCOUNT } from "../../../util/graphql";
 import { bool } from "prop-types";
 import { useOnClickOutside } from "./navHook";
 import { Link, useHistory } from "react-router-dom";
@@ -16,28 +14,22 @@ const Navigation = ({ open, setOpen }) => {
   let history = useHistory();
   const { user, logout } = useContext(AuthContext);
 
+
   const handleLogout = () => {
     logout();
     history.push("/zessence");
   };
 
-  const { data: userInfo, loading: userLoading } = useQuery(
-    FETCH_USER_ACCOUNT,
-    {
-      variables: {
-        userId: user ? user.userId : ""
-      }
-    }
-  );
-
   const trigger = (
     <>
-      {userInfo ? (
+      {user ? (
         <span style={{ fontSize: "12px" }}>
-          <Icon name="user" /> Hello, {userInfo.user.firstName}
+          <Icon name="user" /> Hello, {user.firstName}
         </span>
       ) : (
-        ""
+        <span style={{ fontSize: "12px" }}>
+          <Icon name="user" /> Hello, User
+        </span>
       )}
     </>
   );
@@ -71,13 +63,9 @@ const Navigation = ({ open, setOpen }) => {
               <Dropdown trigger={trigger}>
                 <Dropdown.Menu>
                   <Dropdown.Item>
-                    {!userInfo ? (
-                      <h6>Loading...</h6>
-                    ) : (
-                      <Link to={`/zessence/myaccount/${userInfo.user._id}`}>
-                        My Account
-                      </Link>
-                    )}
+                    <Link to={`/zessence/myaccount/${user.userId}`}>
+                      My Account
+                    </Link>
                   </Dropdown.Item>
                   <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
                 </Dropdown.Menu>

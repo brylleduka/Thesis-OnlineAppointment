@@ -6,7 +6,7 @@ import { useQuery, useMutation } from "@apollo/react-hooks";
 import {
   FETCH_EMPLOYEE_QUERY,
   FETCH_ALL_EMPLOYEES_QUERY
-} from "../../util/graphql";
+} from "../../util/graphql/employee";
 import Layout from "../../components/admin/layout/Layout";
 import {
   DGrid,

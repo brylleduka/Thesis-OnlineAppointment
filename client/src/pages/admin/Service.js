@@ -5,7 +5,7 @@ import { useQuery, useMutation } from "@apollo/react-hooks";
 import {
   FETCH_ALL_SERVICES_QUERY,
   FETCH_SINGLE_SERVICE_QUERY
-} from "../../util/graphql";
+} from "../../util/graphql/service";
 
 import Layout from "../../components/admin/layout/Layout";
 import Skeleton from "../../components/Skeleton";
