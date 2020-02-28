@@ -195,7 +195,7 @@ module.exports = {
             expiresIn: "1d"
           },
           (err, emailToken) => {
-            const url = `https://zessencefacialandspa.herokuapp.com/zessence/verified/${emailToken}`;
+            const url = `http://www.zessencefacialandspa.com/zessence/verified/${emailToken}`;
 
             transportMail({
               from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
@@ -240,7 +240,7 @@ module.exports = {
           );
 
           transportMail({
-            from: '"Z Essence Facial and Spa"<smtp.mailtrap.io>',
+            from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
             to: userEmail,
             subject: "Appointment Cancellation",
             text: `${userName}, we received your cancellation notice, and we want to let you know that we are sorry to hear of your decisions. If you would, please tell us why you have made this decision so our company can provide better service in the future.`,
