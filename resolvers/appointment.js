@@ -146,7 +146,7 @@ module.exports = {
 
         const checkAppointment = await Appointment.findOne({
           user,
-          status: { $ne: "CANCELLED" }
+          status: { $nin: ["CANCELLED", "DONE"] }
         });
 
         const checkTime = await Appointment.findOne({
