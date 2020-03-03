@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 export const DNavigation = styled.nav`
   width: 100%;
-  background: #fff;
+  background: ${props => (props.bg ? props.bg : "transparent")};
   position: fixed;
   top: 0;
   right: 0;
   left: 0;
-  height: 12vh;
+  height: 20vh;
   z-index: 10;
 
   .content {
@@ -63,6 +63,10 @@ export const DNavigation = styled.nav`
       }
     }
   }
+
+  ${props =>
+    props.scrolled &&
+    "background: rgba(0,0,0,0.6); height: 12vh; transition: all 0.2s ease-in-out;"};
 `;
 
 export const DMenu = styled.ul`

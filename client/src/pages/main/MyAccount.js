@@ -64,9 +64,6 @@ const MyAccount = props => {
       margin="20vh auto 10vh auto"
       width="90%"
       pad="40px 50px"
-      background={
-        "https://images.pexels.com/photos/413885/pexels-photo-413885.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-      }
       fixed
     >
       <h2 style={{ color: "#fff" }}>My Account</h2>

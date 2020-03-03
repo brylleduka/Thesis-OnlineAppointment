@@ -4,7 +4,7 @@ import {useMutation } from "@apollo/react-hooks";
 import { Content } from "../../styled/containers";
 import { DLabel, DButton, Toasted } from "../../styled/utils";
 import { Form } from "semantic-ui-react";
-import { useForm } from "../../../util/hooks";
+import { useForm } from "../../../util/hooks/useForm";
 import Spinner from "../../Spinner";
 import toaster from "toasted-notes";
 

@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
   {
+    pseudoUserId: String,
     firstName: {
       type: String,
       required: true
@@ -18,6 +19,8 @@ const userSchema = new Schema(
       type: String,
       required: true
     },
+    dateOfBirth: String,
+    address: String,
     photo: String,
     password: {
       type: String,

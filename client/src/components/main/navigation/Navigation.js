@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from "react";
+import React, { useRef, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../context/auth";
 import { bool } from "prop-types";
 import { useOnClickOutside } from "./navHook";
@@ -6,8 +6,11 @@ import { Link, useHistory } from "react-router-dom";
 import { Dropdown, Icon } from "semantic-ui-react";
 import { DNavigation, DMainMenu, DRightMenu } from "../../styled/navigation";
 import Burger from "./Burger";
+import useScroll from "../../../util/hooks/useScroll";
 
 const Navigation = ({ open, setOpen }) => {
+  const scrolling = useScroll();
+
   const node = useRef();
   useOnClickOutside(node, () => setOpen(false));
   let history = useHistory();
@@ -32,10 +35,8 @@ const Navigation = ({ open, setOpen }) => {
     </>
   );
 
-  console.log(user);
-
   return (
-    <DNavigation ref={node}>
+    <DNavigation ref={node} scrolled={scrolling ? true : false}>
       <div className="content">
         <img src={"/images/logo.png"} alt="Z Essence" className="logo" />
         <Burger open={open} setOpen={setOpen} />

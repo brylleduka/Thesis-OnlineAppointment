@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { FETCH_ALL_SERVICES_QUERY } from "../../../util/graphql/service";
-import { useForm } from "../../../util/hooks";
+import { useForm } from "../../../util/hooks/useForm";
 import { Form, Label } from "semantic-ui-react";
 import JoditEditor from "jodit-react";
 import {

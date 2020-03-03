@@ -2,13 +2,13 @@ const nodemailer = require("nodemailer");
 
 const Mailer = ({ from, to, subject, text, html, url }) => {
   let transporter = nodemailer.createTransport({
-    // host: "smtp.mailtrap.io",
-    // port: 587,
-    // secure: false,
+    host: "mail.privateemail.com",
+    port: 465,
+    secure: true,
     // true for 465, false for other ports
-    service: "gmail",
+    // service: "gmail",
     auth: {
-      user: "zessence.spa@gmail.com",
+      user: "support@zessencefacialandspa.com",
       pass: "nqjxihn722"
     }
   });

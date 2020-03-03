@@ -35,7 +35,7 @@ const SideNav = () => {
         icon={<BookContent size="16px" />}
         fs="14px"
       >
-        <NavLink to="/zeadmin/categories" activeClassName="navlink-active">
+        <NavLink to="/zeadmin/user" activeClassName="navlink-active">
           <span>
             <Service size="16px" />
             Users

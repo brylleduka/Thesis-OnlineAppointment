@@ -13,7 +13,7 @@ const {
 
 module.exports = {
   Query: {
-    getUsers: async (_, __, context) => {
+    getUsers: async () => {
       try {
         const getAllUsers = await User.find();
 

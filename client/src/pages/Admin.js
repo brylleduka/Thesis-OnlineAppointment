@@ -11,12 +11,14 @@ import { PrivateRoute } from "../util/PrivateRoute";
 import Dashboard from "./admin/Dashboard";
 import Appointments from "./admin/Appointments";
 import AppointmentDetails from "./admin/AppointmentDetails";
-// import NewAppointment from "./admin/NewAppointment";
+import NewAppointment from "./admin/NewAppointment";
 import Employees from "./admin/Employees";
 import Employee from "./admin/Employee";
 import Categories from "./admin/Categories";
 import Category from "./admin/Category";
 import Service from "./admin/Service";
+import Inquiry from "./admin/Inquiry";
+import User from "./admin/User";
 import Signin from "./admin/Signin";
 // import Home from "./admin/cms/Home";
 import Page404 from "../pages/Page404";
@@ -38,11 +40,13 @@ const Admin = () => {
           path="/zeadmin/appointments"
           component={Appointments}
         />
-        {/* <PrivateRoute
+        <PrivateRoute exact path="/zeadmin/user" component={User} />
+        <PrivateRoute exact path="/zeadmin/inquiry" component={Inquiry} />
+        <PrivateRoute
           exact
-          path="/zeadmin/newappointment"
+          path="/zeadmin/new_appointment"
           component={NewAppointment}
-        /> */}
+        />
 
         <PrivateRoute exact path="/zeadmin/employees" component={Employees} />
         <PrivateRoute

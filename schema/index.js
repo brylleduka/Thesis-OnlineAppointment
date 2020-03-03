@@ -76,6 +76,18 @@ const typeDefs = gql`
     createdAt: String
   }
 
+  type Inquiry {
+    _id: ID!
+    name: String
+    email: String
+    to: String
+    subject: String
+    message: String
+    reply: String
+    createdAt: String
+    updatedAt: String
+  }
+
   type CMS {
     _id: ID!
     fileName: String
@@ -163,6 +175,9 @@ const typeDefs = gql`
     allServices: [Service]
 
     getCMS(section: String): [CMS]
+
+    inquiries: [Inquiry]
+    inquiry(_id: ID!): Inquiry
   }
 
   type Mutation {
@@ -186,6 +201,7 @@ const typeDefs = gql`
       firstName: String!
       lastName: String!
       email: String!
+      contact: String
       appointmentInput: AppointmentInput
     ): Appointment
 
@@ -253,7 +269,22 @@ const typeDefs = gql`
     ): Service
     deleteService(_id: ID!): Boolean
     addServicePhoto(_id: ID!, file: Upload): Boolean
-
+    # INQ
+    sendInquiry(
+      name: String
+      email: String
+      to: String
+      subject: String
+      message: String
+    ): Inquiry
+    readInquiry(_id: ID!): Inquiry
+    replyInquiry(
+      _id: ID!
+      name: String
+      email: String
+      message: String
+    ): Inquiry
+    # CMS
     addCMS(section: String!): CMS
   }
 `;

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import { useForm } from "../../../util/hooks";
+import { useForm } from "../../../util/hooks/useForm";
 import toaster from "toasted-notes";
 import JoditEditor from "jodit-react";
 import { Form, Label } from "semantic-ui-react";

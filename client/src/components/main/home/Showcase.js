@@ -17,7 +17,6 @@ const Showcase = () => {
       <Link to="/zessence" className="btn">
         Book Appointment
       </Link>
-      <Overlay />
     </DShowCase>
   );
 };

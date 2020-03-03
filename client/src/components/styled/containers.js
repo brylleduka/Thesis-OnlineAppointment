@@ -17,8 +17,8 @@ const rows = {
 };
 
 export const DContainer = styled.div`
-  width: 90%;
-  max-width: 90%;
+  width: 100%;
+
   margin: auto;
 `;
 
@@ -30,7 +30,6 @@ export const DShowCase = styled.header`
     props.background && props.background}') no-repeat center center/cover;
 
   background: ${props => props.bgcolor && props.bgcolor};
-  margin-top: 10vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -177,7 +176,8 @@ export const DCard = styled.div`
 export const DSection = styled.section`
   height: ${props => (props.height ? props.height : "400px")};
   width:  ${props => (props.width ? props.width : "100%")};;
-  margin: ${props => props.margin && props.margin};
+  margin: ${props =>
+    props.margin ? props.margin : props.mcenter ? "0 auto" : "0"};
   padding: ${props => props.pad && props.pad};
   background: url('${props =>
     props.background && props.background}') no-repeat center center/cover;

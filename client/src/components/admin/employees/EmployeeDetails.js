@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import { useForm } from "../../../util/hooks";
+import { useForm } from "../../../util/hooks/useForm";
 import { Form, Label } from "semantic-ui-react";
 import { Content, DGrid, DSection } from "../../styled/containers";
 import {

@@ -73,28 +73,27 @@ const CurrentAppointment = () => {
 
   return (
     <Content
-      height="50vh"
+      height="100%"
       flex
       justify="center"
       align="center"
       direct="column"
-      bgcolor="#eee"
       width="100%"
-      pad="10px"
       rounded
     >
-      <DLabel size="16px" tt="uppercase" weight="700" pad="10px 25px" rounded>
-        My Appointment
-      </DLabel>
       {currentAppointLoading ? (
         <h2>Loading...</h2>
       ) : (
         <DataTable
+          title={title}
           columns={columns}
           data={currentAppointData.myCurrentAppointment.map(
             currentAppoint => currentAppoint
           )}
           responsive
+          pagination={true}
+          paginationPerPage={5}
+          paginationRowsPerPageOptions={paginationRowsPerPageOptions}
           customStyles={customStyles}
           highlightOnHover
           pointerOnHover
@@ -128,12 +127,22 @@ const customStyles = {
       borderBottomColor: "#FFFFFF",
       borderRadius: "25px",
       outline: "1px solid #FFFFFF"
+    },
+    pagination: {
+      style: {
+        marginTop: "10px",
+        border: "none"
+      }
     }
   }
 };
 
-// const title = (
+const title = (
+  <DLabel size="16px" tt="uppercase" weight="700" pad="10px 25px" rounded>
+    My Appointment
+  </DLabel>
+);
 
-// );
+const paginationRowsPerPageOptions = [5, 10, 15, 20];
 
 export default CurrentAppointment;

@@ -4,11 +4,10 @@ const User = require("../models/User");
 const Employee = require("../models/Employee");
 const Service = require("../models/Service");
 const Auth = require("../utils/check-auth");
-const EmailAuth = require("../utils/emailAuth");
 const moment = require("moment");
 const jwt = require("jsonwebtoken");
 const transportMail = require("../utils/transportMail");
-const nodemailer = require("nodemailer");
+const bcrypt = require("bcryptjs");
 
 module.exports = {
   Query: {
@@ -122,10 +121,62 @@ module.exports = {
         firstName,
         lastName,
         email,
+        contact,
         appointmentInput: { serviceId, employeeId, date, slot_start, message }
       }
     ) => {
       try {
+        const pseudoUserId = (Math.random() + 1).toString(36).substring(7);
+
+        const hashedPassword = await bcrypt.hash(pseudoUserId, 12);
+
+        const newGuestUser = new User({
+          firstName,
+          lastName,
+          email,
+          contact,
+          password: hashedPassword
+        });
+
+        await newGuestUser.save();
+
+        const checkTime = await Appointment.findOne({
+          employee: employeeId,
+          date: new Date(date).toISOString(),
+          slot_start
+        });
+
+        if (checkTime) {
+          errors.checkTime = "Time unavailable";
+          throw new UserInputError("Time error", { errors });
+        }
+
+        const service = await Service.findById(serviceId);
+        const employee = await Employee.findById(employeeId);
+        const duration = service.duration;
+
+        const newAppointment = await new Appointment({
+          user: newGuestUser,
+          service,
+          employee,
+          date: new Date(date).toISOString(),
+          duration,
+          slot_start,
+          message,
+          status: "VERIFIED"
+        });
+
+        const result = await newAppointment.save();
+
+        transportMail({
+          from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
+          to: email, // list of receivers
+          subject: "Appointment Confirmation",
+          text: "Good Day", // plain text body
+          html: `Your appointment details`
+        });
+
+        return result;
       } catch (err) {
         throw err;
       }
@@ -190,7 +241,7 @@ module.exports = {
         });
 
         const result = await newAppointment.save();
-        console.log(newAppointment._id);
+
         jwt.sign(
           { _id: newAppointment._id },
 

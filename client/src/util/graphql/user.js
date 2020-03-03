@@ -13,4 +13,17 @@ const FETCH_USER_ACCOUNT = gql`
   }
 `;
 
-export { FETCH_USER_ACCOUNT };
+const FETCH_USERS_ACCOUNT = gql`
+  query getUsers {
+    getUsers {
+      _id
+      firstName
+      lastName
+      email
+      contact
+      photo
+    }
+  }
+`;
+
+export { FETCH_USER_ACCOUNT, FETCH_USERS_ACCOUNT };

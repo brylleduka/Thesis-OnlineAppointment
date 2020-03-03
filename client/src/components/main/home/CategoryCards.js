@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { DGrid, DImage } from "../../styled/containers";
+import { DGrid, DImage, DSection } from "../../styled/containers";
 
-const CategoryCards = ({ cards }) => {
+const CategoryCards = ({ cards, setRef }) => {
   return (
-    <>
+    <DSection width="90%" height="100%" mcenter ref={setRef}>
       <h1>Our Services</h1>
       <DGrid four margin="0 0 40px 0" gap="20px" circle>
         <div className="card-content">
@@ -73,7 +73,7 @@ const CategoryCards = ({ cards }) => {
           </div>
         </div>
       </DGrid>
-    </>
+    </DSection>
   );
 };
 

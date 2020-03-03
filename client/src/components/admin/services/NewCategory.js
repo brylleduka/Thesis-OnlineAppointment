@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import { useForm } from "../../../util/hooks";
+import { useForm } from "../../../util/hooks/useForm";
 import { FETCH_ALL_CATEGORIES_QUERY } from "../../../util/graphql/service";
 
 import { Modal, Form } from "semantic-ui-react";
