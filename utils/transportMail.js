@@ -3,8 +3,8 @@ const nodemailer = require("nodemailer");
 const Mailer = ({ from, to, subject, text, html, url }) => {
   let transporter = nodemailer.createTransport({
     host: "mail.privateemail.com",
-    port: 465,
-    secure: true,
+    port: 587,
+    secure: false,
     // true for 465, false for other ports
     // service: "gmail",
     auth: {
