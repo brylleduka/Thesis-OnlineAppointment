@@ -20,7 +20,11 @@ const Employees = () => {
     data: data_employeesAR,
     loading: loading_employeesAR,
     error
-  } = useQuery(FETCH_EMPLOYEES_NOT_ADMIN_QUERY);
+  } = useQuery(FETCH_EMPLOYEES_NOT_ADMIN_QUERY, {
+    variables: {
+      limit: 0
+    }
+  });
 
   useEffect(() => {
     if (data_employeesAR) {

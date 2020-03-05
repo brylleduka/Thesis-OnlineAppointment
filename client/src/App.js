@@ -12,8 +12,6 @@ import { AuthProvider } from "./context/auth";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./components/theme";
 import "./App.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 function App() {
   return (
@@ -22,8 +20,8 @@ function App() {
         <Router>
           <Switch>
             <Redirect from="/" to="/zessence" exact />
-            <Route path="/zessence" component={Main}  />
-            <Route path="/zeadmin" component={Admin}  />
+            <Route path="/zessence" component={Main} />
+            <Route path="/zeadmin" component={Admin} />
             <Route component={Page404} />
           </Switch>
         </Router>

@@ -1,12 +1,12 @@
 const { createWriteStream } = require("fs");
 const path = require("path");
-const CMS = require("../models/CMS");
+const ContentManagement = require("../models/ContentManagement");
 
 module.exports = {
   Query: {
-    getCMS: async (_, { section }) => {
+    contentManagements: async (_, { section }) => {
       try {
-        const getTheCMS = await CMS.find({ section });
+        const getTheCMS = await ContentManagement.find({ section: section });
 
         return getTheCMS;
       } catch (err) {
@@ -15,6 +15,33 @@ module.exports = {
     }
   },
   Mutation: {
-      
+    addShowcase: async (_, { file }) => {
+      try {
+        const { createReadStream, filename } = await file;
+
+        await new Promise(res =>
+          createReadStream().pipe(
+            createWriteStream(
+              path.join(__dirname, "../images/cms/home", filename)
+            ).on("close", res)
+          )
+        );
+
+        const newShowcase = new ContentManagement({
+          photo: filename,
+          section: "SHOWCASE",
+          headline: null,
+          paragraph: null
+        });
+
+        const result = await newShowcase.save();
+
+        console.log(result);
+
+        return true;
+      } catch (err) {
+        throw err;
+      }
+    }
   }
 };

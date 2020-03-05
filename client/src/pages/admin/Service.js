@@ -78,14 +78,18 @@ const Service = props => {
               >
                 <input {...getInputProps()} />
                 {isDragActive ? (
-                  <Overlay
-                    flex
-                    justify="center"
-                    align="center"
-                    bg="rgba(0, 0, 0, 0.6)"
-                  >
-                    <h3>Drop Image</h3>
-                  </Overlay>
+                  <>
+                    <Content height="300px"></Content>
+                    <Overlay
+                      flex
+                      justify="center"
+                      align="center"
+                      bg="rgba(0, 0, 0, 0.6)"
+                      className="dark"
+                    >
+                      <h3>Drop Image</h3>
+                    </Overlay>
+                  </>
                 ) : (
                   <>
                     {loading ? (

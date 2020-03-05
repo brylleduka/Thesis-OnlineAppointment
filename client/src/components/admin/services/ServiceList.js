@@ -8,14 +8,9 @@ import DataTable from "react-data-table-component";
 import { Eye } from "styled-icons/fa-regular/Eye";
 import Spinner from "../../Spinner";
 import NewService from "./NewService";
-
-function extractContent(html) {
-  return new DOMParser().parseFromString(html, "text/html").documentElement
-    .textContent;
-}
+import parse from "html-react-parser";
 
 const ServiceList = ({ categoryId }) => {
-  const [setServices] = useState([]);
   const [open, setOpen] = useState(false);
 
   const { data: data_services, loading: loading_services } = useQuery(
@@ -66,9 +61,7 @@ const ServiceList = ({ categoryId }) => {
       name: "Description",
       selector: "description",
       wrap: true,
-      cell: row => (
-        <p style={{ fontWeight: 500 }}>{extractContent(row.description)}</p>
-      )
+      cell: row => <p style={{ fontWeight: 500 }}>{parse(row.description)}</p>
     },
 
     {

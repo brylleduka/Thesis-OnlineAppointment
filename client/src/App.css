@@ -34,11 +34,15 @@ ul {
   border: 0;
   font-weight: bold;
   padding: 10px 20px;
-  background-color: #2193b0;
+  background-color: #fe8c00;
   color: #fff;
   font-size: 18px;
   z-index: 2;
   border-radius: 5px;
+}
+
+.btn-blue {
+  background-color: #2193b0;
 }
 .btn:hover {
   opacity: 0.9;
@@ -95,52 +99,6 @@ ul {
 .jodit_toolbar_btn-image,
 .jodit_toolbar_btn-fullsize {
   display: none;
-}
-
-/* .slick-dots {
-  position: absolute;
-  width: auto;
-  height: auto;
-  bottom: 0px;
-  background: none;
-  left: 50%;
-} */
-.slick-dots li button::before {
-  color: white;
-  width: 22px;
-}
-.slick-next {
-  /* right: -25px !important; */
-  z-index: 2 !important;
-  background: #2980b9 !important;
-  border-radius: 50%;
-}
-.slick-prev {
-  /* left: -25px !important; */
-  z-index: 2 !important;
-  background: #2980b9 !important;
-  border-radius: 50%;
-}
-
-.slick-custom-content {
-  background: #fff !important;
-  border-radius: 10px;
-  width: 250px !important;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25), 0 2px 2px rgba(0, 0, 0, 0.2),
-    0 4px 4px rgba(0, 0, 0, 0.15), 0 8px 8px rgba(0, 0, 0, 0.1),
-    0 16px 16px rgba(0, 0, 0, 0.05);
-  margin: 20px 0;
-}
-.slick-custom-content p,
-.slick-custom-content h2 {
-  margin: 10px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  text-align: left;
 }
 
 /* MEDIA QUERY */

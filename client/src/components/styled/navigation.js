@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const DNavigation = styled.nav`
   width: 100%;
-  background: ${props => (props.bg ? props.bg : "transparent")};
+  background: ${props => (props.bg ? props.bg : "rgba(255,255,255,0)")};
   position: fixed;
   top: 0;
   right: 0;
@@ -66,7 +66,7 @@ export const DNavigation = styled.nav`
 
   ${props =>
     props.scrolled &&
-    "background: rgba(0,0,0,0.6); height: 12vh; transition: all 0.2s ease-in-out;"};
+    "background: rgba(0,0,0,0.4); height: 12vh; transition: all 0.2s ease-in-out;"};
 `;
 
 export const DMenu = styled.ul`
@@ -77,11 +77,13 @@ export const DMenu = styled.ul`
   }
   li a {
     padding-bottom: 2px;
+    color: ${({ theme }) => theme.light};
   }
 
   li a:hover,
   &.active {
-    border-bottom: 2px solid ${({ theme }) => theme.secondary};
+    color: ${({ theme }) => theme.primary};
+    border-bottom: 2px solid ${({ theme }) => theme.primary};
   }
 `;
 
@@ -89,10 +91,16 @@ export const DMainMenu = styled(DMenu)`
   flex: 1;
   margin-left: 30px;
 
+  li:nth-child(1),
+  li:nth-child(2),
+  .hr-nav {
+    display: none;
+  }
+
   @media (max-width: 1024px) {
     height: 100vh;
     width: 100%;
-    background: ${({ theme }) => theme.primary};
+    background: ${({ theme }) => theme.blue};
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
@@ -102,11 +110,36 @@ export const DMainMenu = styled(DMenu)`
     top: 0;
     right: 0;
     z-index: 8;
-    color: ${({ theme }) => theme.blue};
+    color: ${({ theme }) => theme.light};
     transform: ${({ open }) =>
       open ? "skewX(-15deg) translateX(0%)" : "translateX(100%)"};
     transform-origin: bottom left;
     transition: transform 0.3s ease-in-out;
+
+    li:nth-child(1),
+    li:nth-child(2) {
+      display: block;
+      a {
+        font-size: 12px;
+      }
+    }
+    li:nth-child(2) {
+      .btn {
+        background: none;
+      }
+    }
+
+    .hr-nav {
+      display: block;
+      width: 70%;
+      margin: 10px auto;
+      hr {
+        border: 0;
+        height: 1px;
+        background: #333;
+        background-image: linear-gradient(to right, #ccc, #333, #ccc);
+      }
+    }
 
     li {
       justify-content: flex-start;
@@ -127,7 +160,7 @@ export const DMainMenu = styled(DMenu)`
         letter-spacing: 0.5rem;
         text-align: center;
         line-height: 2.8;
-        color: ${({ theme }) => theme.dark};
+        color: ${({ theme }) => theme.light};
         text-decoration: none;
       }
 
@@ -181,6 +214,7 @@ export const DRightMenu = styled(DMenu)`
     justify-content: flex-end;
     margin-right: 60px;
     width: 90%;
+    display: none;
     .btn {
       font-size: 12px;
     }

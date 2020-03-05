@@ -89,14 +89,11 @@ const typeDefs = gql`
   }
 
   type CMS {
-    _id: ID!
-    fileName: String
+    _id: ID
+    photo: String
     section: String
-    headling: String
+    headline: String
     paragraph: String
-    colorScheme: String
-    bgcolorScheme: String
-    fontSize: String
   }
 
   # INPUTS
@@ -166,7 +163,7 @@ const typeDefs = gql`
     employeeService(serviceId: ID): Employee
     employees: [Employee]
     employeesByRole(role: String!): [Employee]
-    aestheticiansReceps: [Employee]
+    aestheticiansReceps(limit: Int): [Employee]
 
     category(_id: ID!): Category
     categories: [Category]
@@ -174,7 +171,7 @@ const typeDefs = gql`
     services(categoryId: ID): [Service]
     allServices: [Service]
 
-    getCMS(section: String): [CMS]
+    contentManagements(section: String): [CMS]
 
     inquiries: [Inquiry]
     inquiry(_id: ID!): Inquiry
@@ -285,7 +282,13 @@ const typeDefs = gql`
       message: String
     ): Inquiry
     # CMS
-    addCMS(section: String!): CMS
+    addShowcase(file: Upload): Boolean
+    updateShowcase(
+      _id: ID!
+      fileName: String
+      headline: String
+      paragraph: String
+    ): CMS
   }
 `;
 

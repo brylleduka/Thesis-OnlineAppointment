@@ -8,10 +8,12 @@ import {
   Content,
   DGrid,
   DSection,
-  DCard
+  DCard,
+  DImage
 } from "../../components/styled/containers";
 import NewCategory from "../../components/admin/services/NewCategory";
 import { DButton } from "../../components/styled/utils";
+import parse from "html-react-parser";
 
 const Categories = () => {
   const [open, setOpen] = useState(false);
@@ -51,18 +53,21 @@ const Categories = () => {
           ) : (
             data.categories &&
             data.categories.map(category => (
-              <DCard imgHeight="200px" key={category._id}>
-                <img
-                  src={
-                    category.photo !== null
-                      ? `/images/category/${category.photo}`
-                      : "https://images.pexels.com/photos/413885/pexels-photo-413885.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                  }
-                  alt="category"
-                />
+              <DCard key={category._id}>
+                <DImage height="250px" width="250px">
+                  <img
+                    src={
+                      category.photo !== null
+                        ? `/images/category/${category.photo}`
+                        : "https://images.pexels.com/photos/413885/pexels-photo-413885.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                    }
+                    alt="category"
+                  />
+                </DImage>
+
                 <div className="card-details">
                   <h3>{category.name}</h3>
-                  <p className="des">{extractContent(category.description)}</p>
+                  <p className="des">{parse(category.description)}</p>
                   <Link to={`/zeadmin/category/${category._id}`}>
                     <DButton basic>View</DButton>
                   </Link>

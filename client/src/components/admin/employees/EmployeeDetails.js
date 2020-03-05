@@ -27,10 +27,6 @@ const EmployeeDetails = ({ employee }) => {
   const [content, setContent] = useState(employee.bio);
   const [days, setDays] = useState(employee.schedule.day);
 
-  // if (employee) {
-  //   employee.schedule.day.filter(d => daay.push(d));
-  // }
-
   //   QUERY
   const { values, handleChange, handleSubmit } = useForm(
     updateEmployeeCallback,

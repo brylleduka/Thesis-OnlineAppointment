@@ -42,6 +42,32 @@ const Navigation = ({ open, setOpen }) => {
         <Burger open={open} setOpen={setOpen} />
 
         <DMainMenu open={open}>
+          {user ? (
+            <li>
+              <Dropdown trigger={trigger}>
+                <Dropdown.Menu>
+                  <Dropdown.Item>
+                    <Link to={`/zessence/myaccount/${user.userId || user._id}`}>
+                      My Account
+                    </Link>
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </li>
+          ) : (
+            <li>
+              <Link to="/zessence/login">Sign in</Link>
+            </li>
+          )}
+          <li>
+            <Link to="/zessence/appointment" className="btn">
+              Book Appointment
+            </Link>
+          </li>
+          <li className="hr-nav">
+            <hr className="hr-one"/>
+          </li>
           <li>
             <Link to="/zessence">Home</Link>
           </li>

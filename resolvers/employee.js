@@ -31,13 +31,15 @@ module.exports = {
         throw err;
       }
     },
-    aestheticiansReceps: async () => {
+    aestheticiansReceps: async (_, { limit }) => {
       try {
         const employeesAesthe = await Employee.find({
           role: { $ne: "ADMIN" }
-        }).sort({
-          createdAt: -1
-        });
+        })
+          .sort({
+            createdAt: -1
+          })
+          .limit(limit ? limit : 0);
 
         return employeesAesthe;
       } catch (err) {

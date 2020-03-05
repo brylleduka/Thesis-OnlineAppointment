@@ -1,3 +1,4 @@
+require("dotenv").config({ path: "../env" });
 const nodemailer = require("nodemailer");
 
 const Mailer = ({ from, to, subject, text, html, url }) => {
@@ -8,8 +9,8 @@ const Mailer = ({ from, to, subject, text, html, url }) => {
     // true for 465, false for other ports
     // service: "gmail",
     auth: {
-      user: "support@zessencefacialandspa.com",
-      pass: "nqjxihn722"
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
     }
   });
 

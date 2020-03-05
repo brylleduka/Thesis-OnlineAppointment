@@ -6,7 +6,8 @@ import "semantic-ui-css/semantic.min.css";
 import "toasted-notes/src/styles.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "pretty-checkbox/dist/pretty-checkbox.css";
-
+import 'react-toastify/dist/ReactToastify.css';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 ReactDOM.render(ApolloProvider, document.getElementById("root"));
 

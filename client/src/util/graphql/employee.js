@@ -35,8 +35,8 @@ const FETCH_ALL_EMPLOYEES_QUERY = gql`
 `;
 
 const FETCH_EMPLOYEES_NOT_ADMIN_QUERY = gql`
-  query aestheticiansReceps {
-    aestheticiansReceps {
+  query aestheticiansReceps($limit: Int) {
+    aestheticiansReceps(limit: $limit) {
       _id
       empId
       title

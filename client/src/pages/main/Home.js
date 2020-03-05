@@ -16,11 +16,12 @@ const Home = () => {
       {/* SHOWCASE */}
 
       <Showcase />
-      {/* Home Cards 1 */}
-      <CategoryCards cards={card1} />
 
       {/* SECTION 2 */}
       <Section2 />
+
+      {/* Home Cards 1 */}
+      <CategoryCards cards={card1} />
 
       {/* Home Cards 2 */}
       <Team cards={card1} />
