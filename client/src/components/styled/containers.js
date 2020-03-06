@@ -82,12 +82,18 @@ export const Overlay = styled.div`
   .overlay-box {
     width: 0;
     height: 100%;
+
     border: 1px solid white;
     margin: 0 auto;
     transform: rotate(45deg);
     transition: width 0.4s ease-in-out;
 
     .overlay-box__content {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+
+      text-align: center;
       transform: rotate(-45deg);
       h1 {
         transform: translateY(80px);

@@ -21,10 +21,18 @@ const appointmentSchema = new Schema(
       autopopulate: true
     },
     status: String,
-    isVerified: Boolean,
     slot_start: String,
     duration: Number,
-    date: Date
+    date: Date,
+    message: String,
+    note: String,
+    view: Boolean,
+    reschedule: {
+      appointmentId: {
+        type: Schema.Types.ObjectId
+      },
+      new: Boolean
+    }
   },
   {
     timestamps: true

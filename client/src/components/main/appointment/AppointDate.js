@@ -97,12 +97,13 @@ const AppointDate = ({
   return (
     <DGrid two>
       <Content
-        height="70vh"
+        height="100%"
         width="100%"
         flex
         justify="center"
         align="center"
         pad="0"
+        margin="0 auto"
       >
         <DatePicker
           selected={startDate}
@@ -117,7 +118,7 @@ const AppointDate = ({
         ) : loading_employee ? (
           <h3>Loading...</h3>
         ) : (
-          <DGrid three gap="20px">
+          <DGrid two gap="20px">
             {!times ? (
               <h2>Loading...</h2>
             ) : (

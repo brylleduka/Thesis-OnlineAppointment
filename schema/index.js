@@ -24,7 +24,15 @@ const typeDefs = gql`
     date: String
     status: String
     message: String
+    note: String
+    reschedule: Reschedule
     createdAt: String
+    updatedAt: String
+  }
+
+  type Reschedule {
+    _id: ID
+    new: Boolean
   }
 
   type Employee {
@@ -199,6 +207,16 @@ const typeDefs = gql`
       lastName: String!
       email: String!
       contact: String
+      appointmentInput: AppointmentInput
+    ): Appointment
+
+    createUserExistAppointment(
+      userId: ID!
+      appointmentInput: AppointmentInput
+    ): Appointment
+
+    reschedAdminAppointment(
+      _id: ID!
       appointmentInput: AppointmentInput
     ): Appointment
 

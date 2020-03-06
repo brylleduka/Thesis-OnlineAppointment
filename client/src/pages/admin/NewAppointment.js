@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { DGrid, DSection, Content } from "../../components/styled/containers";
 import { DButton } from "../../components/styled/utils";
 import { useForm } from "../../util/hooks/useForm";
-import { Link } from "react-router-dom";
-import { Breadcrumb, Divider } from "semantic-ui-react";
+import { Link, useHistory } from "react-router-dom";
+import { Breadcrumb } from "semantic-ui-react";
 import Layout from "../../components/admin/layout/Layout";
 import NewUserAppointment from "../../components/admin/appointment/NewUserAppointment";
 import NewAppointmentDetails from "../../components/admin/appointment/NewAppointmentDetails";
 import NewConfirmation from "../../components/admin/appointment/NewConfirmation";
 
 const NewAppointment = () => {
+  const history = useHistory();
   const [open, setOpen] = useState(false);
   const { values, handleChange } = useForm({
     firstName: "",
@@ -49,7 +50,9 @@ const NewAppointment = () => {
               New Appointment
             </Breadcrumb.Section>
           </Breadcrumb>
+          <DButton>Existing Client</DButton>
         </Content>
+
         <DGrid two gap="24px">
           <NewUserAppointment values={values} valueChange={handleChange} />
           <NewAppointmentDetails

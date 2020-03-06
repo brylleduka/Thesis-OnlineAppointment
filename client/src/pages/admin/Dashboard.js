@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { FETCH_APPOINTMENTS_QUERY } from "../../util/graphql/appointment";
+import { FETCH_CURRENT_APPOINTMENTS } from "../../util/graphql/appointment";
 import UpcommingAppointments from "../../components/admin/dashboard/UpcommingAppointments";
 
 import Layout from "../../components/admin/layout/Layout";
@@ -91,11 +91,11 @@ const Dashboard = () => {
     }
   };
 
-  const { loading, data } = useQuery(FETCH_APPOINTMENTS_QUERY);
+  const { loading, data } = useQuery(FETCH_CURRENT_APPOINTMENTS);
 
   useEffect(() => {
     if (data) {
-      setAppointments(data.appointments);
+      setAppointments(data.currentAppointments);
     }
   }, [data]);
 
@@ -170,9 +170,9 @@ const Dashboard = () => {
                 <h2>Loading...</h2>
               </Overlay>
             ) : (
-              data.appointments && (
+              data.currentAppointments && (
                 <UpcommingAppointments
-                  appointments={appointments}
+                  appointments={data.currentAppointments}
                   loading={loading}
                 />
               )

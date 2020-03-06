@@ -10,17 +10,17 @@ import { Eye } from "styled-icons/fa-regular/Eye";
 import moment from "moment";
 
 const CurrentAppointments = () => {
-  const [currentAppointments, setCurrentAppointments] = useState([]);
+  // const [currentAppointments, setCurrentAppointments] = useState([]);
 
   const { loading, data: currentAppointmentData } = useQuery(
     FETCH_CURRENT_APPOINTMENTS
   );
 
-  useEffect(() => {
-    if (currentAppointmentData) {
-      setCurrentAppointments(currentAppointmentData.currentAppointments);
-    }
-  }, [currentAppointmentData]);
+  // useEffect(() => {
+  //   if (currentAppointmentData) {
+  //     setCurrentAppointments(currentAppointmentData.currentAppointments);
+  //   }
+  // }, [currentAppointmentData]);
 
   const columns = [
     {

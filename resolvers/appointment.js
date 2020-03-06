@@ -33,7 +33,10 @@ module.exports = {
     },
     currentAppointments: async () => {
       const getCurrentAppointments = await Appointment.find({
-        $or: [{ status: "VERIFIED" }, { status: "RESCHEDULE" }]
+        $or: [
+          { status: "VERIFIED" },
+          { status: "RESCHEDULE", reschedule: { new: true } }
+        ]
       }).sort({ createdAt: -1 });
 
       return getCurrentAppointments;
@@ -181,6 +184,67 @@ module.exports = {
         throw err;
       }
     },
+    createUserExistAppointment: async (
+      _,
+      {
+        userId,
+        appointmentInput: { serviceId, employeeId, date, slot_start, message }
+      }
+    ) => {
+      try {
+        const userInfo = await User.findOne({ _id: userId });
+        const userEmail = userInfo.email;
+
+        const checkAppointment = await Appointment.findOne({
+          user,
+          $or: [{ status: "PENDING" }, { status: "VERIFIED" }]
+        });
+
+        const checkTime = await Appointment.findOne({
+          employee: employeeId,
+          date: new Date(date).toISOString(),
+          slot_start
+        });
+
+        if (checkAppointment) {
+          errors.check = "User already have an appointment";
+          throw new UserInputError("Error", { errors });
+        }
+
+        if (checkTime) {
+          errors.checkTime = "Time unavailable";
+          throw new UserInputError("Time error", { errors });
+        }
+
+        const service = await Service.findById(serviceId);
+        const employee = await Employee.findById(employeeId);
+        const duration = service.duration;
+        const newAppointment = await new Appointment({
+          user,
+          service,
+          employee,
+          date: new Date(date).toISOString(),
+          duration,
+          slot_start,
+          message,
+          status: "VERIFIED"
+        });
+
+        const result = await newAppointment.save();
+
+        transportMail({
+          from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
+          to: userEmail, // list of receivers
+          subject: "Appointment Confirmation",
+          text: "Good Day", // plain text body
+          html: `Your appointment has been set`
+        });
+
+        return result;
+      } catch (err) {
+        throw err;
+      }
+    },
     createAppointment: async (
       _,
       {
@@ -197,11 +261,7 @@ module.exports = {
 
         const checkAppointment = await Appointment.findOne({
           user,
-          $or: [
-            { status: "PENDING" },
-            { status: "VERIFIED" },
-            { status: "RESCHEDULE" }
-          ]
+          $or: [{ status: "PENDING" }, { status: "VERIFIED" }]
         });
 
         const checkTime = await Appointment.findOne({
@@ -358,6 +418,85 @@ module.exports = {
       } catch (err) {
         throw err;
       }
+    },
+    reschedAdminAppointment: async (
+      _,
+      {
+        _id,
+        appointmentInput: { serviceId, employeeId, date, slot_start, message }
+      }
+    ) => {
+      let errors = {};
+      const appointment = await Appointment.findById(_id);
+      const user = appointment.user;
+      const userInfo = await User.findOne({ _id: user });
+      const userName = userInfo.firstName + " " + userInfo.lastName;
+      const userEmail = userInfo.email;
+
+      // const checkAppointment = await Appointment.findOne({
+      //   user: user,
+      //   $or: [{ status: "PENDING" }, { status: "VERIFIED" }]
+      // });
+
+      const checkTime = await Appointment.findOne({
+        employee: employeeId,
+        date: new Date(date).toISOString(),
+        slot_start
+      });
+
+      // if (checkAppointment) {
+      //   errors.check = "User already have an appointment";
+      //   throw new UserInputError("Error", { errors });
+      // }
+
+      if (checkTime) {
+        errors.checkTime = "Time unavailable";
+        throw new UserInputError("Time error", { errors });
+      }
+
+      const service = await Service.findById(serviceId);
+      const employee = await Employee.findById(employeeId);
+      const duration = service.duration;
+
+      const rescheduleAppointment = await new Appointment({
+        user,
+        service,
+        employee,
+        date: new Date(date).toISOString(),
+        duration,
+        slot_start,
+        message,
+        note: "Reschedule Appointment",
+        status: "VERIFIED",
+        view: false,
+        reschedule: {
+          appointmentId: _id,
+          new: true
+        }
+      });
+
+      const result = await rescheduleAppointment.save();
+
+      await Appointment.updateOne(
+        { _id },
+        {
+          $set: {
+            status: "RESCHEDULED",
+            note: "For Reschedule",
+            reschedule: { appointmentId: rescheduleAppointment, new: false }
+          }
+        }
+      );
+
+      transportMail({
+        from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
+        to: userEmail, // list of receivers
+        subject: "Appointment Confirmation",
+        text: "Good Day", // plain text body
+        html: `Good Day ${userName}, Your appointment has been  reschedule`
+      });
+
+      return result;
     }
   }
 };

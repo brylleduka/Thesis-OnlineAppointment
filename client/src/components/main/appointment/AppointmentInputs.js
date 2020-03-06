@@ -74,7 +74,7 @@ const AppointmentInputs = ({
 
   return (
     <Content
-      height="80vh"
+      height="100%"
       width="100%"
       margin="20px 0"
       flex
