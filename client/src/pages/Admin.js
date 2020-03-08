@@ -20,6 +20,7 @@ import Service from "./admin/Service";
 import Inquiry from "./admin/Inquiry";
 import User from "./admin/User";
 import Signin from "./admin/Signin";
+import FileReport from "./admin/FileReport";
 import Home from "./admin/cms/Home";
 import Page404 from "../pages/Page404";
 
@@ -62,6 +63,7 @@ const Admin = () => {
         />
         <PrivateRoute exact path="/zeadmin/service/:_id" component={Service} />
         <PrivateRoute exact path="/zeadmin/cms_home" component={Home} />
+        <PrivateRoute exact path="/zeadmin/report" component={FileReport} />
         <Route component={Page404} />
       </Switch>
     </Router>

@@ -36,36 +36,37 @@ export const DButton = styled.button`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  border: ${props =>
-    props.border
-      ? "2px solid #1CA7EC"
-      : props.basic
-      ? "2px solid #1CA7EC"
-      : "0"};
-
   border-radius: 5px;
+  border-width: ${props => (props.basic ? "2px" : "0")};
+  border-style: ${props => props.basic && "solid"};
+  color: ${props => (props.color ? props.color : ({ theme }) => theme.light)};
+
   background: ${props =>
-    props.background
-      ? props.background
-      : props.basic
+    props.basic
       ? "transparent"
+      : props.alert
+      ? ({ theme }) => theme.red
+      : props.warning
+      ? ({ theme }) => theme.yellow
+      : props.confirm
+      ? ({ theme }) => theme.green
+      : props.primary
+      ? ({ theme }) => theme.primary
       : ({ theme }) => theme.blue};
-  color: ${props =>
-    props.color
-      ? props.color
-      : props.basic
-      ? "inherit"
-      : ({ theme }) => theme.light};
+
+  ${props =>
+    props.disabled &&
+    "background: #E9E4F0; color: #D3CCE3; &:hover:{opacity: 1}"}
+
   font-weight: 700;
   outline: 0;
 
   &:hover {
-    background: ${props => props.basic && (({ theme }) => theme.blue)};
-    color: ${props => props.basic && (({ theme }) => theme.light)};
+   opacity: 0.8;
   }
 
   &:focus {
-    background: darken(${({ theme }) => theme.blue}, 12%);
+    background: darken(${({ theme }) => theme.dark}, 12%);
     outline: 0;
   }
 
@@ -174,6 +175,30 @@ export const DLabel = styled.label`
   background: ${props => props.bgcolor && props.bgcolor};
   border-radius: ${props => props.rounded && "10px"};
   text-transform: ${props => props.tt && props.tt};
+  width: ${props => (props.w ? props.w : "auto")};
+  display: ${props => props.flex && "flex"};
+  justify-content: ${props =>
+    props.justifyCenter
+      ? "center"
+      : props.justifyAround
+      ? "space-around"
+      : props.justifyBetween
+      ? "space-between"
+      : props.jusitfyFend
+      ? "flex-end"
+      : "flex-start"};
+
+  align-items: ${props =>
+    props.alignCenter
+      ? "center"
+      : props.alignAround
+      ? "space-around"
+      : props.alignBetween
+      ? "space-between"
+      : props.alignFend
+      ? "flex-end"
+      : "flex-start"};
+  flex-direction: ${props => props.fcol && "column"};
 
   &:hover {
     opacity: ${props => props.hover && "0.8"};

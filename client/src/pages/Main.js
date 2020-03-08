@@ -17,6 +17,7 @@ import Services from "./main/Services";
 import ThankYou from "./main/ThankYou";
 import VerifyNotice from "./main/VerifyNotice";
 import MyAccount from "./main/MyAccount";
+import Account from "./main/Account";
 import { UserAuthRoute } from "../util/AuthRoute";
 import { UserPrivateRoute } from "../util/PrivateRoute";
 import Footer from "../components/main/footer/Footer";
@@ -46,11 +47,13 @@ function Main({ match }) {
         />
         <UserAuthRoute path={`${match.path}/signup`} component={Signup} exact />
         <UserAuthRoute path={`${match.path}/login`} component={Signin} exact />
-        <UserPrivateRoute
+        {/* <UserPrivateRoute
           path={`${match.path}/myaccount/:_id`}
           component={MyAccount}
           exact
-        />
+        /> */}
+        <UserPrivateRoute path={`${match.path}/account/:_id`} component={Account} exact />
+        
         <UserPrivateRoute
           path={`${match.path}/myappointment/:_id`}
           component={AppointmentDetails}

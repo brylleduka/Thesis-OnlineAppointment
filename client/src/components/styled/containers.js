@@ -18,8 +18,9 @@ const rows = {
 
 export const DContainer = styled.div`
   width: 100%;
-
   margin: auto;
+  background: rgba(242, 242, 242, 0.9);
+  margin-top: 14vh;
 `;
 
 export const DShowCase = styled.header`
@@ -178,7 +179,9 @@ export const DGrid = styled.section`
   margin: ${props => props.margin && props.margin};
 
   .card-content {
-    border-radius: ${props => (props.circle ? "40% 40% 10px 10px" : "0")};
+    border-radius: ${props => (props.circle ? "40% 40% 10px 10px" : "5px")};
+    padding: 10px;
+    background: #fff;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25), 0 2px 2px rgba(0, 0, 0, 0.2),
       0 4px 4px rgba(0, 0, 0, 0.15), 0 8px 8px rgba(0, 0, 0, 0.1),
       0 16px 16px rgba(0, 0, 0, 0.05);
@@ -221,7 +224,35 @@ export const DGrid = styled.section`
 export const DCard = styled.div`
   position: relative;
   border-radius: 10px;
-  padding: 10px;
+  padding: ${props => (props.p ? props.p : "10px")};
+  height: ${props => (props.dh ? props.dh : "300px")};
+  width: ${props => (props.dw ? props.dw : "250px")};
+  display: ${props => props.flex && "flex"};
+  justify-content: ${props =>
+    props.justifyCenter
+      ? "center"
+      : props.justifyAround
+      ? "space-around"
+      : props.justifyBetween
+      ? "space-between"
+      : props.jusitfyFend
+      ? "flex-end"
+      : "flex-start"};
+
+  align-items: ${props =>
+    props.alignCenter
+      ? "center"
+      : props.alignAround
+      ? "space-around"
+      : props.alignBetween
+      ? "space-between"
+      : props.alignFend
+      ? "flex-end"
+      : "flex-start"};
+  flex-direction: ${props => props.fcol && "column"};
+
+  overflow: hidden;
+  background: ${props => (props.bg ? props.bg : "#ffffff")};
   box-shadow: ${props =>
     props.bs
       ? props.bs
@@ -247,6 +278,34 @@ export const DCard = styled.div`
       color: #0067b8;
       text-transform: uppercase;
       font-weight: 700;
+    }
+  }
+
+  .camera {
+    position: absolute;
+    bottom: 15%;
+    right: 25%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    background: ${({ theme }) => theme.primary};
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    cursor: pointer;
+
+    &:hover {
+      background: ${({ theme }) => theme.blue};
+    }
+
+    &:focus,
+    &:active {
+      background: darken(${({ theme }) => theme.primary}, 12%);
+      outline: none;
+      border: none;
     }
   }
 `;
@@ -285,11 +344,19 @@ export const Content = styled.div`
   background: ${props => props.bgcolor && props.bgcolor};
   border-radius: ${props => props.rounded && "10px"};
   z-index: 2;
+  font-weight: ${props => props.weight && props.weight};
   h2 {
     text-transform: uppercase;
   }
   p {
     margin: 10px 0 20px;
+  }
+  .content-edit {
+    color: ${({ theme }) => theme.blue};
+    &:hover {
+      color: ${({ theme }) => theme.bluer};
+      cursor: pointer;
+    }
   }
 
   img {
@@ -307,7 +374,7 @@ export const DImage = styled.div`
   overflow: hidden;
   border-radius: ${props =>
     props.circle ? "50%" : props.rounded ? "20px" : "0"};
-  margin: ${props => props.m && props.m};
+  margin: ${props => (props.m ? props.m : "0 auto")};
 
   img {
     display: inline;

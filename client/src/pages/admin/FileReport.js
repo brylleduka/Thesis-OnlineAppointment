@@ -8,7 +8,7 @@ import CurrentAppointments from "../../components/admin/appointment/CurrentAppoi
 import HistoryAppointments from "../../components/admin/appointment/HistoryAppointments";
 import NewModal from "../../components/admin/appointment/NewModal";
 
-const Appointments = () => {
+const FileReport = () => {
   const [open, setOpen] = useState(false);
   return (
     <Layout>
@@ -21,15 +21,13 @@ const Appointments = () => {
           margin="24px auto"
         >
           <Breadcrumb size={"huge"}>
-            <Breadcrumb.Section as={Link} to="/zeadmin/appointments" active>
-              Appointment
+            <Breadcrumb.Section as={Link} to="/zeadmin/report" active>
+              File Report
             </Breadcrumb.Section>
           </Breadcrumb>
-          <DButton onClick={() => setOpen(true)}>New Appointment</DButton>
         </Content>
         <DGrid>
-          <CurrentAppointments />
-          {/* <HistoryAppointments /> */}
+          <HistoryAppointments />
         </DGrid>
       </DSection>
       <NewModal open={open} setOpen={setOpen} />
@@ -37,4 +35,4 @@ const Appointments = () => {
   );
 };
 
-export default Appointments;
+export default FileReport;

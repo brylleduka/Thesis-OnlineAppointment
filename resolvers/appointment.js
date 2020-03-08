@@ -342,7 +342,7 @@ module.exports = {
         if (
           date <=
           moment()
-            .add(1, "d")
+            .add(12, "h")
             .format("M/D/YYYY")
         ) {
           errors.invalidCancellation =

@@ -4,9 +4,13 @@ import { useDropzone } from "react-dropzone";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { FETCH_SHOWCASE } from "../../../../util/graphql/cms";
 import { DShowCase, Overlay, DSection } from "../../../styled/containers";
+import { DButton } from "../../../styled/utils";
 import { Carousel } from "react-responsive-carousel";
+import ShowcaseModal from "./ShowcaseModal";
+import { Edit } from "@styled-icons/boxicons-regular/Edit";
 
 const Showcase = () => {
+  const [open, setOpen] = useState(false);
   const mql = window.matchMedia("(max-width: 768px)");
   const [showcase, setShowcase] = useState({});
 
@@ -46,11 +50,15 @@ const Showcase = () => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
+  const handleEdit = cms => {
+    console.log(cms._id);
+  };
+
   return (
     <DSection>
       <h1>Showcase</h1>
       <div
-        style={{ border: "1px dashed #ccc", width: "150px", height: "150px" }}
+        style={{ border: "1px dashed #ccc", width: "100%", height: "150px" }}
         {...getRootProps()}
       >
         <input {...getInputProps()} />
@@ -77,6 +85,7 @@ const Showcase = () => {
           >
             {showcaseData.contentManagements.map(cms => (
               <DShowCase
+                key={cms._id}
                 height="50vh"
                 background={
                   cms.photo !== null || cms.photo !== undefined
@@ -99,7 +108,22 @@ const Showcase = () => {
                       Quisquam, doloribus.
                     </p>
                   </div>
+                  <Edit
+                    size="32px"
+                    onClick={cms => handleEdit(cms)}
+                    style={{
+                      position: "absolute",
+                      right: "24px",
+                      top: "10px",
+                      color: "white",
+                      cursor: "pointer"
+                    }}
+                  >
+                    Edit
+                  </Edit>
                 </Overlay>
+
+                <ShowcaseModal open={open} setOpen={setOpen} showcase={cms} />
               </DShowCase>
             ))}
           </Carousel>

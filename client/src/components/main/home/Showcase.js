@@ -5,6 +5,7 @@ import { FETCH_SHOWCASE } from "../../../util/graphql/cms";
 import { Link } from "react-router-dom";
 import { DShowCase, Overlay } from "../../styled/containers";
 import { Carousel } from "react-responsive-carousel";
+import Spinner from "../../Spinner";
 
 const Showcase = () => {
   const mql = window.matchMedia("(max-width: 768px)");

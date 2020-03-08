@@ -103,7 +103,10 @@ module.exports = {
         throw err;
       }
     },
-    updateUser: async (_, { _id, firstName, lastName, contact, email }) => {
+    updateUser: async (
+      _,
+      { _id, firstName, lastName, contact, email, dateOfBirth }
+    ) => {
       try {
         let updateUser = {};
 
@@ -121,6 +124,10 @@ module.exports = {
 
         if (contact) {
           updateUser.contact = contact;
+        }
+
+        if (dateOfBirth) {
+          updateUser.dateOfBirth = dateOfBirth;
         }
 
         const updated = await User.findByIdAndUpdate(_id, updateUser, {

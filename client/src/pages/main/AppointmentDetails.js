@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_SINGLE_APPOINTMENT_QUERY } from "../../util/graphql/appointment";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { DSection, Content, DGrid } from "../../components/styled/containers";
-import { DButton, DButtonCancel } from "../../components/styled/utils";
-import { Form } from "semantic-ui-react";
+import { DButton } from "../../components/styled/utils";
+import { Form, Popup, Icon } from "semantic-ui-react";
 import Spinner from "../../components/Spinner";
 import moment from "moment";
 import AppointmentCancel from "../../components/main/user/AppointmentCancel";
@@ -29,6 +29,20 @@ const AppointmentDetails = props => {
       setMyAppoint(data.appointment);
     }
   }, [data]);
+
+  //Date Difference
+
+  let schedDate;
+  let addDate;
+
+  if (data) {
+    schedDate = moment(parseInt(data.appointment.date)).format("M/D/YYYY");
+    addDate = moment()
+      .add(12, "h")
+      .format("M/D/YYYY");
+  }
+
+  const diffDate = schedDate <= addDate;
 
   return (
     <DSection
@@ -156,9 +170,18 @@ const AppointmentDetails = props => {
             ) : (
               <>
                 <DButton>Reschedule</DButton>
-                <DButtonCancel onClick={() => setOpen(true)}>
-                  Cancel
-                </DButtonCancel>
+                <Content flex align="center" justify="center">
+                  <DButton alert onClick={() => setOpen(true)} disabled>
+                    Cancel
+                  </DButton>
+                  {diffDate && (
+                    <Popup
+                      trigger={<Icon circular name="question" size="small" />}
+                      content="Cancellation of appointment 12 hours before the scheduled appointment day. If you wish to still cancel your appointment, you may call us on (+63) 926 652 4505. Thank you!"
+                      inverted
+                    />
+                  )}
+                </Content>
               </>
             )}
           </Content>

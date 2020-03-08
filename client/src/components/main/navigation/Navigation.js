@@ -23,13 +23,9 @@ const Navigation = ({ open, setOpen }) => {
 
   const trigger = (
     <>
-      {user ? (
+      {user && (
         <span style={{ fontSize: "12px" }}>
           <Icon name="user" /> Hello, {user.firstName}
-        </span>
-      ) : (
-        <span style={{ fontSize: "12px" }}>
-          <Icon name="user" /> Hello, User
         </span>
       )}
     </>
@@ -41,20 +37,26 @@ const Navigation = ({ open, setOpen }) => {
         <img src={"/images/logo.png"} alt="Z Essence" className="logo" />
         <Burger open={open} setOpen={setOpen} />
 
-        <DMainMenu open={open}>
+        <DMainMenu open={open} scrolled={scrolling ? true : false}>
           {user ? (
-            <li>
-              <Dropdown trigger={trigger}>
-                <Dropdown.Menu>
-                  <Dropdown.Item>
-                    <Link to={`/zessence/myaccount/${user.userId || user._id}`}>
-                      My Account
-                    </Link>
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </li>
+            <div className="account-nav">
+              <li>
+                Signed is as{" "}
+                <span>
+                  {user.firstName}
+                </span>
+              </li>
+              <li>
+                <Link to={`/zessence/myaccount/${user.userId || user._id}`}>
+                  My Account
+                </Link>
+              </li>
+              <li>
+                <span onClick={handleLogout} className="signing_out">
+                  Sign out
+                </span>
+              </li>
+            </div>
           ) : (
             <li>
               <Link to="/zessence/login">Sign in</Link>
@@ -66,7 +68,7 @@ const Navigation = ({ open, setOpen }) => {
             </Link>
           </li>
           <li className="hr-nav">
-            <hr className="hr-one"/>
+            <hr className="hr-one" />
           </li>
           <li>
             <Link to="/zessence">Home</Link>
@@ -84,14 +86,27 @@ const Navigation = ({ open, setOpen }) => {
             <Link to="/zessence/testimonials">Testimonials</Link>
           </li>
         </DMainMenu>
-        <DRightMenu>
+        <DRightMenu scrolled={scrolling ? true : false}>
           {user ? (
             <li>
               <Dropdown trigger={trigger}>
                 <Dropdown.Menu>
+                  <Dropdown.Item disabled>
+                    <span style={{ fontSize: "10px" }}>
+                      Signed is as{" "}
+                      <strong>
+                        {user.firstName}
+                      </strong>
+                    </span>
+                  </Dropdown.Item>
+
                   <Dropdown.Item>
-                    <Link to={`/zessence/myaccount/${user.userId || user._id}`}>
-                      My Account
+                    <Link
+                      to={`/zessence/account/${user.userId || user._id}`}
+                      className="account-right"
+                      onClick={() => localStorage.setItem("account", "details")}
+                    >
+                      Account
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>

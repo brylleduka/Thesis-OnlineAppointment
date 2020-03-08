@@ -11,11 +11,14 @@ import { DContainer } from "../../components/styled/containers";
 
 const Home = () => {
   const card1 = "/images/card1.jpg";
+
   return (
     <DContainer>
       {/* SHOWCASE */}
 
       <Showcase />
+
+      
 
       {/* SECTION 2 */}
       <Section2 />

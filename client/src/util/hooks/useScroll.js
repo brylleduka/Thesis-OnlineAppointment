@@ -7,7 +7,7 @@ export default function useScroll() {
   useEffect(() => {
     const onScroll = e => {
       setScrollTop(e.target.documentElement.scrollTop);
-      setScrolling(e.target.documentElement.scrollTop > 0);
+      setScrolling(e.target.documentElement.scrollTop > 100);
     };
     window.addEventListener("scroll", onScroll);
 

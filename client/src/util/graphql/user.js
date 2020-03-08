@@ -9,6 +9,7 @@ const FETCH_USER_ACCOUNT = gql`
       email
       contact
       photo
+      dateOfBirth
     }
   }
 `;
@@ -22,6 +23,7 @@ const FETCH_USERS_ACCOUNT = gql`
       email
       contact
       photo
+      dateOfBirth
     }
   }
 `;

@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 export const DNavigation = styled.nav`
   width: 100%;
-  background: ${props => (props.bg ? props.bg : "rgba(255,255,255,0)")};
+  background: ${props => (props.bg ? props.bg : "rgba(255,255,255,1)")};
   position: fixed;
   top: 0;
   right: 0;
   left: 0;
-  height: 20vh;
+  height: 14vh;
   z-index: 10;
 
   .content {
@@ -52,7 +52,6 @@ export const DNavigation = styled.nav`
     }
 
     @media (max-width: 500px) {
-      // flex-direction: column;
       padding: 2px 0;
       height: 80px;
       width: 90%;
@@ -77,8 +76,10 @@ export const DMenu = styled.ul`
   }
   li a {
     padding-bottom: 2px;
-    color: ${({ theme }) => theme.light};
+    color: ${({ theme }) => theme.dark};
   }
+
+  ${props => props.scrolled && "li a {color: #fff;}"};
 
   li a:hover,
   &.active {
@@ -93,8 +94,13 @@ export const DMainMenu = styled(DMenu)`
 
   li:nth-child(1),
   li:nth-child(2),
+  .account-nav,
   .hr-nav {
     display: none;
+  }
+
+  li:nth-child(2) {
+    font-size: 16px;
   }
 
   @media (max-width: 1024px) {
@@ -103,18 +109,18 @@ export const DMainMenu = styled(DMenu)`
     background: ${({ theme }) => theme.blue};
     display: flex;
     flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 2rem 4rem 2rem 2rem;
     position: fixed;
     top: 0;
     right: 0;
     z-index: 8;
     color: ${({ theme }) => theme.light};
-    transform: ${({ open }) =>
-      open ? "skewX(-15deg) translateX(0%)" : "translateX(100%)"};
+    transform: ${({ open }) => (open ? "translateX(0%)" : "translateX(100%)")};
     transform-origin: bottom left;
     transition: transform 0.3s ease-in-out;
+    border: 1px solid #fff;
 
     li:nth-child(1),
     li:nth-child(2) {
@@ -126,6 +132,36 @@ export const DMainMenu = styled(DMenu)`
     li:nth-child(2) {
       .btn {
         background: none;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    .account-nav {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-end;
+    }
+
+    .account-nav li,
+    .account-nav li a {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      font-size: 14px;
+    }
+
+    .account-nav li:first-child span {
+      margin-left: 10px;
+    }
+
+    .account-nav .signing_out {
+      cursor: pointer;
+      &:hover {
+        color: ${({ theme }) => theme.secondary};
       }
     }
 
@@ -146,7 +182,7 @@ export const DMainMenu = styled(DMenu)`
       align-items: flex-start;
       margin-right: 20px;
       transform: ${({ open }) =>
-        open ? "skewX(15deg) translateX(0%)" : "translateX(100%)"};
+        open ? " translateX(0%)" : "translateX(100%)"};
 
       transition: color 0.15s, transform 0.5s;
       transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
@@ -196,6 +232,9 @@ export const DRightMenu = styled(DMenu)`
 
   li {
     padding: 0 10px;
+  }
+  li a {
+    color: #232323;
   }
   li:first-child {
     padding: 10px;

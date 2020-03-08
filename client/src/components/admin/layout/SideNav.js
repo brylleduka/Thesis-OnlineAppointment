@@ -91,6 +91,12 @@ const SideNav = () => {
           </span>
         </NavLink>
       </Accordion>
+      <NavItem>
+        <NavLink to="/zeadmin/report">
+          <Dashboard size="16px" />
+          <span>File Report</span>
+        </NavLink>
+      </NavItem>
     </SideNavLayout>
   );
 };

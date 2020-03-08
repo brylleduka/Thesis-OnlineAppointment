@@ -9,6 +9,7 @@ const typeDefs = gql`
     email: String
     password: String
     photo: String
+    dateOfBirth: String
     token: String!
     createdAt: String
     updatedAt: String
@@ -228,6 +229,7 @@ const typeDefs = gql`
       lastName: String
       contact: String
       email: String
+      dateOfBirth: String
     ): User
     addUserPhoto(_id: ID!, file: Upload): Boolean
 
