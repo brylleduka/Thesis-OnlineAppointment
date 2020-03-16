@@ -330,7 +330,8 @@ module.exports = {
               to: userEmail, // list of receivers
               subject: "Appointment Confirmation",
               text: "Good Day", // plain text body
-              html: `Please click this email to confirm your appointment: <a href="${url}">${url}</a>`
+              temp: "index",
+              url
             });
           }
         );
@@ -372,7 +373,7 @@ module.exports = {
             to: userEmail,
             subject: "Appointment Cancellation",
             text: `${userName}, we received your cancellation notice, and we want to let you know that we are sorry to hear of your decisions. If you would, please tell us why you have made this decision so our company can provide better service in the future.`,
-            html: `<p><span style="font-weight: bold">${userName}</span>, we received your cancellation notice, and we want to let you know that we are sorry to hear of your decisions. If you would, please tell us why you have made this decision so our company can provide better service in the future.</p>`
+            temp: "cancel"
           });
 
           return result;
@@ -400,7 +401,7 @@ module.exports = {
           to: userEmail,
           subject: "Appointment Cancellation",
           text: `${userName}, we received your cancellation notice, and we want to let you know that we are sorry to hear of your decisions. If you would, please tell us why you have made this decision so our company can provide better service in the future.`,
-          html: `<p><span style="font-weight: bold">${userName}</span>, we received your cancellation notice, and we want to let you know that we are sorry to hear of your decisions. If you would, please tell us why you have made this decision so our company can provide better service in the future.</p>`
+          temp: "cancel"
         });
 
         return result;
@@ -519,7 +520,7 @@ module.exports = {
               to: userEmail, // list of receivers
               subject: "Appointment Confirmation",
               text: "Good Day", // plain text body
-              html: `Please click this email to confirm your appointment: <a href="${url}">${url}</a>`
+              temp: "index"
             });
           }
         );
@@ -529,7 +530,7 @@ module.exports = {
           to: userEmail, // list of receivers
           subject: "Appointment Rescheduling",
           text: "Good Day", // plain text body
-          html: `Good Day ${userName}, Your appointment has been  reschedule`
+          temp: "index"
         });
       }
 

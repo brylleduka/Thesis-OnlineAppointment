@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../../context/auth";
 import { Link, useHistory } from "react-router-dom";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
@@ -7,6 +8,7 @@ import { DSection, Content } from "../../components/styled/containers";
 import { DButton } from "../../components/styled/utils";
 
 const ThankYou = props => {
+  const { userId } = useContext(AuthContext);
   const emailToken = props.match.params.emailToken;
   const history = useHistory();
   history.go(1);
@@ -59,10 +61,13 @@ const ThankYou = props => {
           align="center"
           margin="0 auto"
         >
-          <DButton as={Link} to="/zessence/home" basic>
+          <DButton as={Link} to="/zessence/home">
             Explore
           </DButton>
-          <DButton as={Link} to="/zessence/MyAccount" basic>
+          <DButton
+            as={Link}
+            to={userId ? `/zessence/account/${userId}` : `/zessence/login`}
+          >
             Go to my account
           </DButton>
         </Content>

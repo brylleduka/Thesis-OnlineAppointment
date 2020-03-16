@@ -10,6 +10,7 @@ const resolvers = require("./resolvers");
 //MIDDLEWARE
 const app = express();
 
+
 // MONGODB CONNECTION
 const uri = process.env.MONGODB_URI;
 

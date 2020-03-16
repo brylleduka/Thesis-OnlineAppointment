@@ -44,8 +44,8 @@ module.exports = {
         from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
         to: to, // list of receivers
         subject: subject,
-        text: "We will get in touch with you as soon as possible", // plain text body
-        html: "We will get in touch with you as soon as possible "
+        text: "We will get in touch with you as soon as possible",
+        temp: "inquiry" // plain text body
       });
 
       await newInquiry.save();
