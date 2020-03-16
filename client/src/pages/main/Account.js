@@ -34,6 +34,10 @@ const Account = props => {
     }
   );
 
+  if (user) {
+    console.log("success");
+  }
+
   const handleDetails = () => {
     setIsAccount("details");
     localStorage.setItem("account", "details");
@@ -45,7 +49,7 @@ const Account = props => {
 
   return (
     <DContainer>
-      <DSection width="80%" mcenter height="100vh">
+      <DSection width="90%" mcenter pad="40px 0" height="100%">
         <h1>Account</h1>
         {!userInfo ? (
           <DSection width="80%" mcenter height="100vh">

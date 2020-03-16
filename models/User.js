@@ -19,7 +19,7 @@ const userSchema = new Schema(
       type: String,
       required: true
     },
-    dateOfBirth: String,
+    dateOfBirth: Date,
     address: String,
     photo: String,
     password: {

@@ -1,14 +1,18 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { Link } from "react-router-dom";
+
 import { FETCH_MY_APPOINTMENT_HISTORY } from "../../../util/graphql/appointment";
 import { Content } from "../../styled/containers";
-import { DLabel, DButton } from "../../styled/utils";
+import { DButton } from "../../styled/utils";
 import DataTable from "react-data-table-component";
-import { Eye } from "styled-icons/fa-regular/Eye";
+import { Popup, Icon } from "semantic-ui-react";
+import CurrentAppointModal from "./CurrentAppointModal";
 import moment from "moment";
 
 const MyAppointmentHistory = () => {
+  const [open, setOpen] = useState(false);
+  const [isPop, setIsPop] = useState(false);
+  const [appoint, setAppoint] = useState(null);
   const [appointHistory, setAppointHistory] = useState([]);
 
   const { data: appointHistoryData, loading: appointHistoryLoading } = useQuery(
@@ -21,36 +25,45 @@ const MyAppointmentHistory = () => {
     }
   }, [appointHistoryData]);
 
+  const handleRow = e => {
+    setAppoint(e.currentTarget.value);
+    setOpen(true);
+  };
+
+  const handlePop = () => {
+    setIsPop(!isPop);
+  };
+
   const columns = [
     {
-      name: "Appointment ID",
+      name: "ID",
       selector: "_id",
       sortable: true
     },
     {
       name: "Aesthetician",
       selector: "employee",
-      wrap: true,
+
       sortable: true,
       format: row => `${row.employee.firstName} ${row.employee.lastName}`
     },
     {
       name: "Service",
       selector: "service.name",
-      wrap: true,
+
       sortable: true
     },
     {
       name: "Date",
       selector: "date",
-      wrap: true,
+
       sortable: true,
       format: row => `${moment(parseInt(row.date)).format("LL")}`
     },
     {
       name: "Status",
       selector: "status",
-      wrap: true,
+
       sortable: true,
       cell: row => (
         <span
@@ -70,46 +83,63 @@ const MyAppointmentHistory = () => {
       name: "Actions",
 
       cell: row => (
-        <DButton as={Link} to={`/zessence/myappointment/${row._id}`}>
-          <Eye size="18px" style={{ color: "white" }} />
-        </DButton>
+        <Popup
+          trigger={
+            <DButton
+              height="32px"
+              pad="2px 8px"
+              value={row._id}
+              onClick={handleRow}
+            >
+              <Icon name="eye" />
+            </DButton>
+          }
+          mouseEnterDelay={500}
+          mouseLeaveDelay={500}
+          content="View detailed appointment info."
+          position="left center"
+          size="tiny"
+        />
       )
     }
   ];
 
   return (
-    <Content
-      height="50vh"
-      flex
-      justify="center"
-      align="center"
-      direct="column"
-      bgcolor="#eee"
-      width="100%"
-      pad="10px"
-      rounded
-    >
-      <DLabel size="16px" tt="uppercase" weight="700" pad="10px 25px" rounded>
-        My Appointment History
-      </DLabel>
-      {appointHistoryLoading ? (
-        <h2>Loading...</h2>
-      ) : (
-        <DataTable
-          columns={columns}
-          data={appointHistoryData.myAppointmentHistory.map(
-            historyAppoint => historyAppoint
-          )}
-          responsive
-          customStyles={customStyles}
-          pagination={true}
-          paginationPerPage={5}
-          paginationRowsPerPageOptions={paginationRowsPerPageOptions}
-          highlightOnHover
-          pointerOnHover
+    <>
+      <Content
+        height="100%"
+        flex
+        justify="center"
+        align="center"
+        direct="column"
+        width="100%"
+      >
+        {appointHistoryLoading ? (
+          <h2>Loading...</h2>
+        ) : (
+          <DataTable
+            compact
+            columns={columns}
+            data={appointHistory.map(historyAppoint => historyAppoint)}
+            responsive
+            customStyles={customStyles}
+            pagination={true}
+            paginationPerPage={5}
+            paginationRowsPerPageOptions={paginationRowsPerPageOptions}
+            highlightOnHover
+            pointerOnHover
+          />
+        )}
+      </Content>
+      {appoint && (
+        <CurrentAppointModal
+          appointId={appoint}
+          setAppoint={setAppoint}
+          open={open}
+          setOpen={setOpen}
         />
       )}
-    </Content>
+    </>
   );
 };
 
@@ -122,12 +152,12 @@ const customStyles = {
   headCells: {
     style: {
       color: "#202124",
-      fontSize: "14px"
+      fontSize: "12px"
     }
   },
   rows: {
     style: {
-      fontSize: "14px",
+      fontSize: "12px",
       fontWeight: "700",
       color: "#000"
     },
@@ -140,7 +170,6 @@ const customStyles = {
   },
   pagination: {
     style: {
-      marginTop: "10px",
       border: "none"
     }
   }

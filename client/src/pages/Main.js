@@ -35,6 +35,7 @@ function Main({ match }) {
         <Route path={`${match.path}/`} render={() => <Home />} exact />
         <Route path={`${match.path}/about`} component={About} exact />
         <Route path={`${match.path}/contact`} component={Contact} exact />
+        <Route path={`${match.path}/gallery`} component={Gallery} exact />
         <Route
           path={`${match.path}/verified/:emailToken`}
           component={ThankYou}

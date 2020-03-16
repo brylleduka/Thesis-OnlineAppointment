@@ -101,6 +101,10 @@ ul {
   display: none;
 }
 
+.rdt_Table {
+  height: auto !important;
+}
+
 /* MEDIA QUERY */
 
 @media (max-width: 768px) {

@@ -4,7 +4,10 @@ import { useMutation, useQuery } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
 import { FETCH_SINGLE_SERVICE_QUERY } from "../../../util/graphql/service";
 import { FETCH_EMPLOYEE_QUERY } from "../../../util/graphql/employee";
-import { FETCH_MY_APPOINTMENTS } from "../../../util/graphql/appointment";
+import {
+  FETCH_MY_APPOINTMENTS,
+  FETCH_MY_CURRENT_APPOINTMENTS
+} from "../../../util/graphql/appointment";
 import { Modal, Form } from "semantic-ui-react";
 import {
   DButtonConfirm,
@@ -47,14 +50,16 @@ const Confirmation = ({
   const [createAppointment, { loading }] = useMutation(CREATE_NEW_APPOINTMENT, {
     update(cache, result) {
       const data = cache.readQuery({
-        query: FETCH_MY_APPOINTMENTS
+        query: FETCH_MY_CURRENT_APPOINTMENTS
       });
 
       const newAppointment = result.data.createAppointment;
 
       cache.writeQuery({
-        query: FETCH_MY_APPOINTMENTS,
-        data: { myAppointments: [newAppointment, ...data.myAppointments] }
+        query: FETCH_MY_CURRENT_APPOINTMENTS,
+        data: {
+          myCurrentAppointment: [newAppointment, ...data.myCurrentAppointment]
+        }
       });
     },
     onCompleted(data) {
@@ -227,6 +232,14 @@ const CREATE_NEW_APPOINTMENT = gql`
       }
     ) {
       _id
+      message
+      date
+      slot_start
+      note
+      reschedule {
+        appointmentId
+        new
+      }
       user {
         _id
         firstName

@@ -15,10 +15,9 @@ import { Carousel } from "react-responsive-carousel";
 
 const Appointment = () => {
   const mql = window.matchMedia("(max-width: 768px)");
-  const { user } = useContext(AuthContext);
+
   const [open, setOpen] = useState(false);
 
-  const [categories, setCategories] = useState([]);
   const [service, setService] = useState([]);
   const [serviceEmp, setServiceEmp] = useState([]);
   const [values, setValues] = useState({
@@ -85,19 +84,14 @@ const Appointment = () => {
           </Carousel>
           <DGrid>
             <AppointmentInputs
-              user={user}
               values={values}
               setValues={setValues}
-              categories={categories}
-              service={service}
               employeeVal={employeeVal}
-              setCategories={setCategories}
               setService={setService}
               setServiceEmp={setServiceEmp}
               serviceValue={serviceValue}
               setServiceValue={setServiceValue}
               setEmployeeVal={setEmployeeVal}
-              startDate={startDate}
             />
             <Content width="100%" margin="20px 0">
               <DGrid>

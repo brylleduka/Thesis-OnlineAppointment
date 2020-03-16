@@ -11,7 +11,7 @@ import {
   Content,
   Overlay
 } from "../../components/styled/containers";
-import AccountDetails from "../../components/main/user/AccountDetails";
+
 import CurrentAppointment from "../../components/main/user/CurrentAppointment";
 import MyAppointmentHistory from "../../components/main/user/MyAppointmentHistory";
 import Skeleton from "../../components/Skeleton";
@@ -132,7 +132,7 @@ const MyAccount = props => {
                 )}
               </Content>
 
-              <AccountDetails myDetails={userInfo.user} userId={userId} />
+             
             </DGrid>
           </Content>
           <CurrentAppointment />

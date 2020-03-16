@@ -22,7 +22,9 @@ module.exports = {
     },
     appointments: async () => {
       try {
-        const getAllAppointments = await Appointment.find().sort({
+        const getAllAppointments = await Appointment.find({
+          $or: [{ status: "DONE" }, { status: "CANCELLED" }]
+        }).sort({
           createdAt: -1
         });
 
@@ -33,17 +35,18 @@ module.exports = {
     },
     currentAppointments: async () => {
       const getCurrentAppointments = await Appointment.find({
-        $or: [
-          { status: "VERIFIED" },
-          { status: "RESCHEDULE", reschedule: { new: true } }
-        ]
+        $or: [{ status: "VERIFIED" }]
       }).sort({ createdAt: -1 });
 
       return getCurrentAppointments;
     },
     appointmentHistory: async () => {
       const historyAppointments = await Appointment.find({
-        $or: [{ status: "CANCELLED" }, { status: "DONE" }]
+        $or: [
+          { status: "CANCELLED" },
+          { status: "DONE" },
+          { status: "RESCHEDULED" }
+        ]
       }).sort({ updatedAt: -1 });
 
       return historyAppointments;
@@ -63,7 +66,12 @@ module.exports = {
       try {
         const checkAppointments = await Appointment.find({
           employee: employeeId,
-          date: new Date(date).toISOString()
+          date: new Date(date).toISOString(),
+          $or: [
+            { status: "PENDING" },
+            { status: "VERIFIED" },
+            { status: "DONE" }
+          ]
         });
 
         return checkAppointments;
@@ -90,11 +98,7 @@ module.exports = {
 
         const getCurrentAppointment = await Appointment.find({
           user,
-          $or: [
-            { status: "PENDING" },
-            { status: "VERIFIED" },
-            { status: "RESCHEDULE" }
-          ]
+          $or: [{ status: "PENDING" }, { status: "VERIFIED" }]
         }).sort({ createdAt: -1 });
 
         return getCurrentAppointment;
@@ -108,7 +112,11 @@ module.exports = {
 
         const getAppointmentHistory = await Appointment.find({
           user,
-          $or: [{ status: "CANCELLED" }, { status: "DONE" }]
+          $or: [
+            { status: "CANCELLED" },
+            { status: "DONE" },
+            { status: "RESCHEDULED" }
+          ]
         }).sort({ updatedAt: -1 });
 
         return getAppointmentHistory;
@@ -196,7 +204,7 @@ module.exports = {
         const userEmail = userInfo.email;
 
         const checkAppointment = await Appointment.findOne({
-          user,
+          user: userId,
           $or: [{ status: "PENDING" }, { status: "VERIFIED" }]
         });
 
@@ -220,7 +228,7 @@ module.exports = {
         const employee = await Employee.findById(employeeId);
         const duration = service.duration;
         const newAppointment = await new Appointment({
-          user,
+          user: userId,
           service,
           employee,
           date: new Date(date).toISOString(),
@@ -267,7 +275,12 @@ module.exports = {
         const checkTime = await Appointment.findOne({
           employee: employeeId,
           date: new Date(date).toISOString(),
-          slot_start
+          slot_start,
+          $or: [
+            { status: "PENDING" },
+            { status: "VERIFIED" },
+            { status: "DONE" }
+          ]
         });
 
         if (!user) {
@@ -327,7 +340,7 @@ module.exports = {
         throw err;
       }
     },
-    cancelAppointment: async (_, { _id }) => {
+    cancelAppointment: async (_, { _id, note }) => {
       try {
         const errors = {};
         const appointmentDay = await Appointment.findById(_id);
@@ -351,7 +364,7 @@ module.exports = {
         } else {
           const result = await Appointment.updateOne(
             { _id },
-            { $set: { status: "CANCELLED" } }
+            { $set: { status: "CANCELLED", note } }
           );
 
           transportMail({
@@ -368,7 +381,7 @@ module.exports = {
         throw err;
       }
     },
-    cancelTheAppointment: async (_, { _id }) => {
+    cancelTheAppointment: async (_, { _id, note }) => {
       try {
         const appointment = await Appointment.findById(_id);
 
@@ -379,7 +392,7 @@ module.exports = {
 
         const result = await Appointment.updateOne(
           { _id },
-          { $set: { status: "CANCELLED" } }
+          { $set: { status: "CANCELLED", note } }
         );
 
         transportMail({
@@ -419,10 +432,12 @@ module.exports = {
         throw err;
       }
     },
-    reschedAdminAppointment: async (
+    reschedAppointment: async (
       _,
       {
         _id,
+        status,
+        isAdmin,
         appointmentInput: { serviceId, employeeId, date, slot_start, message }
       }
     ) => {
@@ -467,7 +482,7 @@ module.exports = {
         slot_start,
         message,
         note: "Reschedule Appointment",
-        status: "VERIFIED",
+        status,
         view: false,
         reschedule: {
           appointmentId: _id,
@@ -482,19 +497,41 @@ module.exports = {
         {
           $set: {
             status: "RESCHEDULED",
-            note: "For Reschedule",
+            note: "For Rescheduling",
             reschedule: { appointmentId: rescheduleAppointment, new: false }
           }
         }
       );
 
-      transportMail({
-        from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
-        to: userEmail, // list of receivers
-        subject: "Appointment Confirmation",
-        text: "Good Day", // plain text body
-        html: `Good Day ${userName}, Your appointment has been  reschedule`
-      });
+      if (isAdmin !== true) {
+        jwt.sign(
+          { _id: rescheduleAppointment._id },
+
+          process.env.EMAIL_KEY,
+          {
+            expiresIn: "1d"
+          },
+          (err, emailToken) => {
+            const url = `http://www.zessencefacialandspa.com/zessence/verified/${emailToken}`;
+
+            transportMail({
+              from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
+              to: userEmail, // list of receivers
+              subject: "Appointment Confirmation",
+              text: "Good Day", // plain text body
+              html: `Please click this email to confirm your appointment: <a href="${url}">${url}</a>`
+            });
+          }
+        );
+      } else {
+        transportMail({
+          from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
+          to: userEmail, // list of receivers
+          subject: "Appointment Rescheduling",
+          text: "Good Day", // plain text body
+          html: `Good Day ${userName}, Your appointment has been  reschedule`
+        });
+      }
 
       return result;
     }

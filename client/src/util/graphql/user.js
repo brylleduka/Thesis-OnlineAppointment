@@ -24,6 +24,7 @@ const FETCH_USERS_ACCOUNT = gql`
       contact
       photo
       dateOfBirth
+      createdAt
     }
   }
 `;

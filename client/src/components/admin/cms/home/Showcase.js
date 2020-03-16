@@ -7,12 +7,17 @@ import { DShowCase, Overlay, DSection } from "../../../styled/containers";
 import { DButton } from "../../../styled/utils";
 import { Carousel } from "react-responsive-carousel";
 import ShowcaseModal from "./ShowcaseModal";
+import DeleteShowcase from "./DeleteShowcase";
 import { Edit } from "@styled-icons/boxicons-regular/Edit";
+import { Icon } from "semantic-ui-react";
 
 const Showcase = () => {
   const [open, setOpen] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
   const mql = window.matchMedia("(max-width: 768px)");
-  const [showcase, setShowcase] = useState({});
+  const [showcase, setShowcase] = useState([]);
+  const [isShowCase, setIsShowCase] = useState({});
+  const [isDeleteShowCase, setIsDeleteShowCase] = useState({});
 
   const { data: showcaseData, loading: dataLoading, error } = useQuery(
     FETCH_SHOWCASE,
@@ -50,8 +55,16 @@ const Showcase = () => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
-  const handleEdit = cms => {
-    console.log(cms._id);
+  const handleEdit = e => {
+    e.preventDefault();
+    setOpen(true);
+    setIsShowCase(e.target.value);
+  };
+
+  const handleDelete = e => {
+    e.preventDefault();
+    setOpenAlert(true);
+    setIsDeleteShowCase(e.target.value);
   };
 
   return (
@@ -78,57 +91,79 @@ const Showcase = () => {
             emulateTouch
             infiniteLoop
             useKeyboardArrows
-            autoPlay
             showThumbs={false}
             showStatus={false}
             showArrows={mql.matches ? false : true}
           >
-            {showcaseData.contentManagements.map(cms => (
-              <DShowCase
-                key={cms._id}
-                height="50vh"
-                background={
-                  cms.photo !== null || cms.photo !== undefined
-                    ? `/images/cms/home/${cms.photo}`
-                    : "https://images.pexels.com/photos/3765134/pexels-photo-3765134.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                }
-              >
-                <Overlay
-                  bg={
-                    "linear-gradient(to right, rgba(0,0,0,0.7), rgba(255,255,255,0.1))"
+            {showcaseData.contentManagements &&
+              showcaseData.contentManagements.map(cms => (
+                <DShowCase
+                  key={cms._id}
+                  height="50vh"
+                  background={
+                    cms.photo !== null || cms.photo !== undefined
+                      ? `/images/cms/home/${cms.photo}`
+                      : "https://images.pexels.com/photos/3765134/pexels-photo-3765134.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
                   }
-                  flex
-                  justify="flex-start"
-                  align="center"
                 >
-                  <div className="overlay-content">
-                    <h3>Z Essence Facial & Spa</h3>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Quisquam, doloribus.
-                    </p>
-                  </div>
-                  <Edit
-                    size="32px"
-                    onClick={cms => handleEdit(cms)}
-                    style={{
-                      position: "absolute",
-                      right: "24px",
-                      top: "10px",
-                      color: "white",
-                      cursor: "pointer"
-                    }}
+                  <Overlay
+                    bg={
+                      "linear-gradient(to right, rgba(0,0,0,0.7), rgba(255,255,255,0.1))"
+                    }
+                    flex
+                    justify="flex-start"
+                    align="center"
                   >
-                    Edit
-                  </Edit>
-                </Overlay>
-
-                <ShowcaseModal open={open} setOpen={setOpen} showcase={cms} />
-              </DShowCase>
-            ))}
+                    <div className="overlay-content">
+                      <h3>Z Essence Facial & Spa</h3>
+                      <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Quisquam, doloribus.
+                      </p>
+                    </div>
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        right: 20,
+                        display: "flex"
+                      }}
+                    >
+                      <DButton
+                        value={cms._id}
+                        onClick={handleEdit}
+                        style={{ width: "50px" }}
+                      >
+                        <Icon name="edit" />
+                        <div style={{ visibility: "hidden" }}>{cms._id}</div>
+                      </DButton>
+                      <DButton
+                        alert
+                        value={cms._id}
+                        onClick={handleDelete}
+                        style={{ width: "50px" }}
+                      >
+                        <Icon name="trash" />
+                        <div style={{ visibility: "hidden" }}>{cms._id}</div>
+                      </DButton>
+                    </div>
+                  </Overlay>
+                </DShowCase>
+              ))}
           </Carousel>
         )}
       </DSection>
+      {isShowCase && (
+        <ShowcaseModal open={open} setOpen={setOpen} showcase={isShowCase} />
+      )}
+
+      {isDeleteShowCase && (
+        <DeleteShowcase
+          openAlert={openAlert}
+          setOpenAlert={setOpenAlert}
+          isDeleteShowCase={isDeleteShowCase}
+        />
+      )}
     </DSection>
   );
 };

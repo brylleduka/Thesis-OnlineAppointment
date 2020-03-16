@@ -11,6 +11,14 @@ module.exports = {
         throw err;
       }
     },
+    inquiriesRead: async (_, { read }) => {
+      try {
+        const inqs = await Inquiry.find({ read }).sort({ createdAt: -1 });
+        return inqs;
+      } catch (err) {
+        throw err;
+      }
+    },
     inquiry: async (_, { _id }) => {
       try {
         const inq = await Inquiry.findById(_id);
@@ -45,7 +53,7 @@ module.exports = {
       return newInquiry;
     },
     replyInquiry: async (_, { _id, email, message }) => {
-      const inquiry = await Inquiry.findById(id);
+      const inquiry = await Inquiry.findById(_id);
       const subject = inquiry.subject;
       const updateInquiry = await Inquiry.findByIdAndUpdate(_id, {
         $set: { reply: message }
@@ -62,11 +70,14 @@ module.exports = {
       return updateInquiry;
     },
     readInquiry: async (_, { _id }) => {
-      const readInquiry = await Inquiry.findByIdAndUpdate(_id, {
-        $set: { read: true }
-      });
+      const readInquiry = await Inquiry.updateOne(
+        { _id },
+        {
+          $set: { read: true }
+        }
+      );
 
-      return readInquiry;
+      return true;
     }
   }
 };

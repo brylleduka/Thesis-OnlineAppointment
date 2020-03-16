@@ -69,14 +69,14 @@ module.exports = {
 
         if (!employee) {
           errors.general = "Employee not found";
-          throw new UserInputError("Employee not found");
+          throw new UserInputError("Employee not found", { errors });
         }
 
         const isEqual = await bcrypt.compare(password, employee.password);
 
         if (!isEqual) {
           errors.isNotEqual = "Invalid Credentials";
-          throw new UserInputError("Invalid Credentials");
+          throw new UserInputError("Invalid Credentials", { errors });
         }
 
         const employeeToken = await jwt.sign(
@@ -178,6 +178,7 @@ module.exports = {
       _,
       {
         _id,
+        title,
         empId,
         firstName,
         lastName,
@@ -186,6 +187,7 @@ module.exports = {
         role,
         bio,
         day,
+        dateOfBirth,
         workStart,
         workLength,
         breakStart,
@@ -207,6 +209,9 @@ module.exports = {
 
         if (empId) {
           updateEmployee.empId = empId;
+        }
+        if (title) {
+          updateEmployee.title = title;
         }
 
         if (firstName) {
@@ -250,9 +255,9 @@ module.exports = {
           updateSchedule.breakLength = breakLength;
         }
 
-        // if (_id !== authId) {
-        //   throw new Error("NOT AUTHORIZE");
-        // }
+        if (dateOfBirth) {
+          updateEmployee.dateOfBirth = new Date(dateOfBirth).toISOString();
+        }
 
         if (password && oldpassword) {
           const isEqual = await bcrypt.compare(oldpassword, employee.password);

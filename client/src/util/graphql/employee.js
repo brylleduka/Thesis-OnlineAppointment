@@ -79,6 +79,7 @@ const FETCH_EMPLOYEE_QUERY = gql`
       email
       photo
       role
+      dateOfBirth
       schedule {
         _id
         day

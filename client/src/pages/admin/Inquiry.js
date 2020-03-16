@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
+import gql from "graphql-tag";
 import Layout from "../../components/admin/layout/Layout";
 import DataTable from "react-data-table-component";
 import { FETCH_INQUIRIES } from "../../util/graphql/inquiry";
-import { useQuery } from "@apollo/react-hooks";
-import { Eye } from "styled-icons/fa-regular/Eye";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import { DButton, DLabel } from "../../components/styled/utils";
-import { Link } from "react-router-dom";
+import { Popup, Icon } from "semantic-ui-react";
+import ReplyModal from "../../components/admin/inquiry/ReplyModal";
 
 const Inquiry = () => {
+  const [open, setOpen] = useState(false);
   const [inquiries, setInquiries] = useState([]);
+
+  const [inq, setInq] = useState({});
 
   const { data: data_inquiries, loading: loading_inquiries, error } = useQuery(
     FETCH_INQUIRIES
@@ -20,7 +24,10 @@ const Inquiry = () => {
     }
   }, [data_inquiries]);
 
-  console.log(data_inquiries);
+  const handleRow = e => {
+    setInq(e.currentTarget.value);
+    setOpen(true);
+  };
 
   const columns = [
     {
@@ -29,41 +36,58 @@ const Inquiry = () => {
       sortable: true
     },
     {
-      name: "Name",
-      selector: "name",
-      wrap: true,
-      sortable: true
-    },
-    {
-      name: "Email",
-      selector: "email",
-      wrap: true,
-      sortable: true
-    },
-    {
       name: "Subject",
       selector: "subject",
       wrap: true
     },
+
+    {
+      name: "Message",
+      selector: "message",
+      format: row => {
+        const length = 50;
+        const msg = row.message;
+
+        const trimString =
+          msg.length > length
+            ? msg.substring(0, length) + "..."
+            : msg.substring(0, length);
+        return <span>{trimString}</span>;
+      }
+    },
     {
       name: "Actions",
       cell: row => (
-        <DButton as={Link} to={`/zeadmin/inq/${row._id}`}>
-          <Eye size="18px" style={{ color: "white" }} />
-        </DButton>
+        <Popup
+          trigger={
+            <DButton
+              height="32px"
+              pad="2px 8px"
+              value={row._id}
+              onClick={handleRow}
+            >
+              <Icon name="eye" />
+            </DButton>
+          }
+          mouseEnterDelay={500}
+          mouseLeaveDelay={500}
+          content="View detailed appointment info."
+          position="left center"
+          size="tiny"
+        />
       )
     }
   ];
 
   return (
     <Layout>
-      {!data_inquiries ? (
+      {loading_inquiries ? (
         <h1>Loading...</h1>
       ) : (
         <DataTable
           title={title}
           columns={columns}
-          data={data_inquiries.inquiries.map(inq => inq)}
+          data={inquiries.map(inq => inq)}
           responsive
           customStyles={customStyles}
           pagination={true}
@@ -73,6 +97,7 @@ const Inquiry = () => {
           pointerOnHover
         />
       )}
+      {inq && <ReplyModal inqId={inq} open={open} setOpen={setOpen} />}
     </Layout>
   );
 };

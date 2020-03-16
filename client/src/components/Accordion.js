@@ -17,7 +17,15 @@ const Accordion = props => {
   };
 
   return (
-    <DAccordion fs={props.fs} uc={props.uc}>
+    <DAccordion
+      fs={props.fs}
+      uc={props.uc}
+      bg={props.bg}
+      color={props.color}
+      hoverColorText={props.hoverColorText}
+      rounded={props.rounded}
+      oblong={props.oblong}
+    >
       <div
         className={active ? "accordion-title active" : "accordion-title"}
         onClick={toggleActive}

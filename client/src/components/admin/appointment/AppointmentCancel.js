@@ -7,7 +7,7 @@ import { DButtonConfirm, DButtonCancel, Toasted } from "../../styled/utils";
 import toaster from "toasted-notes";
 import Spinner from "../../Spinner";
 
-const AppointmentCancel = ({ open, setOpen, appointmentId }) => {
+const AppointmentCancel = ({ openCancel, setOpenCancel, appointmentId }) => {
   const [errors, setErrors] = useState([]);
   const [cancelAppointment, { loading }] = useMutation(
     CANCEL_APPOINTMENT_MUTATION,
@@ -17,11 +17,11 @@ const AppointmentCancel = ({ open, setOpen, appointmentId }) => {
       },
       refetchQueries: [{ query: FETCH_APPOINTMENTS_QUERY }],
       onCompleted(data) {
-        setOpen(false);
+        setOpenCancel(false);
         toaster.notify("Appointment Cancelled", { position: "bottom-right" });
       },
       onError(err) {
-        setOpen(false);
+        setOpenCancel(false);
       }
     }
   );
@@ -31,13 +31,13 @@ const AppointmentCancel = ({ open, setOpen, appointmentId }) => {
   };
 
   return (
-    <Modal basic size="small" open={open}>
+    <Modal basic size="small" open={openCancel}>
       <Modal.Header>Appointment Cancellation</Modal.Header>
       <Modal.Content>
         <h2>Are you sure you want to cancel the appointment?</h2>
       </Modal.Content>
       <Modal.Actions>
-        <DButtonConfirm basic onClick={() => setOpen(false)}>
+        <DButtonConfirm basic onClick={() => setOpenCancel(false)}>
           No
         </DButtonConfirm>
         <DButtonCancel basic onClick={handleConfirm}>

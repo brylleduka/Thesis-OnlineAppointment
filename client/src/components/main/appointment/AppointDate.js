@@ -95,7 +95,7 @@ const AppointDate = ({
   }
 
   return (
-    <DGrid two>
+    <DGrid two gap="10px">
       <Content
         height="100%"
         width="100%"
@@ -113,31 +113,33 @@ const AppointDate = ({
         />
       </Content>
       <Content width="100%" height="100%" flex justify="center" align="center">
-        {!data_employee && !data_service ? (
-          <h1>No available time slot</h1>
-        ) : loading_employee ? (
-          <h3>Loading...</h3>
-        ) : (
-          <DGrid two gap="20px">
-            {!times ? (
-              <h2>Loading...</h2>
-            ) : (
-              times.map(time => (
-                <div className="pretty p-default p-curve">
-                  <input
-                    type="radio"
-                    name="time"
-                    key={time}
-                    value={time}
-                    onChange={handleTimeChanged}
-                  />
-                  <div className="state p-info-o">
-                    <label style={styles.label}>{time}</label>
+        {data_employee && data_service ? (
+          loading_employee || loading_appointments ? (
+            <h3>Loading...</h3>
+          ) : (
+            <DGrid two gap="20px">
+              {!times ? (
+                <h2>Loading...</h2>
+              ) : (
+                times.map(time => (
+                  <div className="pretty p-default p-curve">
+                    <input
+                      type="radio"
+                      name="time"
+                      key={time}
+                      value={time}
+                      onChange={handleTimeChanged}
+                    />
+                    <div className="state p-info-o">
+                      <label style={styles.label}>{time}</label>
+                    </div>
                   </div>
-                </div>
-              ))
-            )}
-          </DGrid>
+                ))
+              )}
+            </DGrid>
+          )
+        ) : (
+          "Select Available Time"
         )}
       </Content>
     </DGrid>

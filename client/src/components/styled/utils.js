@@ -21,7 +21,7 @@ export const DButton = styled.button`
   width: ${props =>
     props.fluid ? "100%" : props.width ? props.width : "auto"};
   display: inline-block;
-  padding: 6px 16px;
+  padding: ${props => (props.pad ? props.pad : "6px 16px")};
   line-height: 1.42857143;
   margin: 1.5%;
   text-align: center;
@@ -39,6 +39,17 @@ export const DButton = styled.button`
   border-radius: 5px;
   border-width: ${props => (props.basic ? "2px" : "0")};
   border-style: ${props => props.basic && "solid"};
+  border-color: ${props =>
+    props.alert
+      ? ({ theme }) => theme.red
+      : props.warning
+      ? ({ theme }) => theme.yellow
+      : props.confirm
+      ? ({ theme }) => theme.green
+      : props.primary
+      ? ({ theme }) => theme.primary
+      : ({ theme }) => theme.blue};
+      
   color: ${props => (props.color ? props.color : ({ theme }) => theme.light)};
 
   background: ${props =>
@@ -250,11 +261,16 @@ export const DAccordion = styled.section`
     align-items: center;
     border: none;
     outline: none;
+    border-radius: ${props =>
+      props.oblong ? "25px" : props.rounded ? "15px" : "0"};
     transition: background-color 0.6s ease;
 
     &:hover,
     &.active {
-      background: ${({ theme }) => theme.blue};
+      background: ${props =>
+        props.activeBg ? props.activeBg : ({ theme }) => theme.blue};
+      color: ${props =>
+        props.hoverColorText ? props.hoverColorText : "#232323"};
     }
 
     .accordion-icon {
@@ -291,7 +307,7 @@ export const DAccordion = styled.section`
     flex-direction: column;
     background-color: white;
     overflow: hidden;
-    transition: max-height 0.6s ease;
+    transition: max-height 0.4s ease-in-out;
 
     span {
       width: 100%;

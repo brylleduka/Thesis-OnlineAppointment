@@ -41,10 +41,7 @@ const Navigation = ({ open, setOpen }) => {
           {user ? (
             <div className="account-nav">
               <li>
-                Signed is as{" "}
-                <span>
-                  {user.firstName}
-                </span>
+                Signed is as <span>{user.firstName}</span>
               </li>
               <li>
                 <Link to={`/zessence/myaccount/${user.userId || user._id}`}>
@@ -80,6 +77,9 @@ const Navigation = ({ open, setOpen }) => {
             <Link to="/zessence/about">About Us</Link>
           </li>
           <li>
+            <Link to="/zessence/gallery">Gallery</Link>
+          </li>
+          <li>
             <Link to="/zessence/contact">Contact</Link>
           </li>
           <li>
@@ -93,10 +93,7 @@ const Navigation = ({ open, setOpen }) => {
                 <Dropdown.Menu>
                   <Dropdown.Item disabled>
                     <span style={{ fontSize: "10px" }}>
-                      Signed is as{" "}
-                      <strong>
-                        {user.firstName}
-                      </strong>
+                      Signed is as <strong>{user.firstName}</strong>
                     </span>
                   </Dropdown.Item>
 

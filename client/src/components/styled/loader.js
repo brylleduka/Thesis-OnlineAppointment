@@ -36,7 +36,7 @@ export const SpinnerRing = styled.div`
     border-color: ${props =>
       props.inverted
         ? "#fff transparent transparent transparent"
-        : " #000 transparent transparent transparent"};
+        : "#fe8c00 transparent transparent transparent"};
   }
   div:nth-child(1) {
     animation-delay: -0.45s;

@@ -1,13 +1,12 @@
 import React, { useCallback, useState } from "react";
 import gql from "graphql-tag";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/react-hooks";
 import { useDropzone } from "react-dropzone";
 import { FETCH_USER_ACCOUNT } from "../../../util/graphql/user";
 import { DGrid, DCard, Content, DImage } from "../../styled/containers";
 import { DButton } from "../../styled/utils";
 import { Camera } from "@styled-icons/boxicons-solid/Camera";
 import { Edit } from "@styled-icons/boxicons-regular/Edit";
-import Gallery from "react-photo-gallery";
 import Carousel, { Modal, ModalGateway } from "react-images";
 
 const AccountContentOne = ({ handleAppointments, handleDetails, userInfo }) => {
@@ -45,7 +44,7 @@ const AccountContentOne = ({ handleAppointments, handleDetails, userInfo }) => {
   const images = [{ src: `/images/users/${userInfo.photo}` }];
 
   return (
-    <Content width="100%">
+    <Content width="100%" height="auto">
       <DGrid gap="15px">
         <DCard dh="200px" flex justifyBetween alignCenter fcol>
           {loading ? (

@@ -1,15 +1,21 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { Link } from "react-router-dom";
 import { FETCH_MY_CURRENT_APPOINTMENTS } from "../../../util/graphql/appointment";
 import { Content } from "../../styled/containers";
-import { DLabel, DButton } from "../../styled/utils";
+import { DButton } from "../../styled/utils";
 import DataTable from "react-data-table-component";
-import { Eye } from "styled-icons/fa-regular/Eye";
+import { Grid, Popup, Icon } from "semantic-ui-react";
 import moment from "moment";
+import CurrentAppointModal from "./CurrentAppointModal";
 
 const CurrentAppointment = () => {
-  const [currentAppoint, setCurrentAppoint] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [isPop, setIsPop] = useState(false);
+  const [appoint, setAppoint] = useState(null);
+
+  const handlePop = () => {
+    setIsPop(!isPop);
+  };
 
   const { data: currentAppointData, loading: currentAppointLoading } = useQuery(
     FETCH_MY_CURRENT_APPOINTMENTS
@@ -17,8 +23,9 @@ const CurrentAppointment = () => {
 
   const columns = [
     {
-      name: "Appointment ID",
+      name: "ID",
       selector: "_id",
+      flex: 0,
       sortable: true
     },
     {
@@ -44,16 +51,16 @@ const CurrentAppointment = () => {
     {
       name: "Status",
       selector: "status",
-      wrap: true,
+
       sortable: true,
       cell: row => (
         <span
           style={
             row.status === "PENDING"
-              ? { fontSize: 14, fontWeight: 500, color: "gold" }
+              ? { fontSize: 12, fontWeight: 500, color: "gold" }
               : row.status === "VERIFIED"
-              ? { fontSize: 14, fontWeight: 500, color: "green" }
-              : { fontSize: 14, fontWeight: 500, color: "blue" }
+              ? { fontSize: 12, fontWeight: 500, color: "green" }
+              : { fontSize: 12, fontWeight: 500, color: "blue" }
           }
         >
           {row.status}
@@ -64,9 +71,84 @@ const CurrentAppointment = () => {
       name: "Actions",
 
       cell: row => (
-        <DButton as={Link} to={`/zessence/myappointment/${row._id}`}>
-          <Eye size="18px" style={{ color: "white" }} />
-        </DButton>
+        <>
+          <Popup
+            trigger={
+              <DButton
+                height="auto"
+                width="100%"
+                pad="2px 8px"
+                onClick={() => setOpen(true)}
+              >
+                <Icon name="eye" fitted />
+              </DButton>
+            }
+            mouseEnterDelay={500}
+            mouseLeaveDelay={500}
+            content="View detailed appointment info."
+            position="left center"
+            size="tiny"
+          />
+
+          <Popup
+            wide
+            trigger={
+              <DButton
+                alert
+                height="auto"
+                width="100%"
+                pad="2px 8px"
+                onClick={handlePop}
+              >
+                <Icon name="ban" fitted />
+              </DButton>
+            }
+            open={isPop}
+            position="top right"
+          >
+            <Grid divided columns="equal">
+              <Grid.Column>
+                <Popup
+                  trigger={
+                    <DButton confirm height="auto" width="100%" pad="2px 8px">
+                      <Icon name="check" fitted />
+                    </DButton>
+                  }
+                  mouseEnterDelay={500}
+                  mouseLeaveDelay={500}
+                  content="Yes I want to cancel my appointment"
+                  position="top center"
+                  size="tiny"
+                />
+              </Grid.Column>
+              <Grid.Column>
+                <Popup
+                  trigger={
+                    <DButton
+                      alert
+                      height="auto"
+                      width="100%"
+                      pad="2px 8px"
+                      onClick={() => setIsPop(false)}
+                    >
+                      <Icon name="close" fitted />
+                    </DButton>
+                  }
+                  mouseEnterDelay={500}
+                  mouseLeaveDelay={500}
+                  content="No, I do not want to cancel my appointment."
+                  position="top center"
+                  size="tiny"
+                />
+              </Grid.Column>
+            </Grid>
+          </Popup>
+          <CurrentAppointModal
+            appointId={row._id}
+            open={open}
+            setOpen={setOpen}
+          />
+        </>
       )
     }
   ];
@@ -85,7 +167,6 @@ const CurrentAppointment = () => {
         <h2>Loading...</h2>
       ) : (
         <DataTable
-          title={title}
           columns={columns}
           data={currentAppointData.myCurrentAppointment.map(
             currentAppoint => currentAppoint
@@ -112,7 +193,7 @@ const customStyles = {
   headCells: {
     style: {
       color: "#202124",
-      fontSize: "14px",
+      fontSize: "12px",
       fontWeight: "700"
     }
   },
@@ -136,12 +217,6 @@ const customStyles = {
     }
   }
 };
-
-const title = (
-  <DLabel size="16px" tt="uppercase" weight="700" pad="10px 25px" rounded>
-    My Appointment
-  </DLabel>
-);
 
 const paginationRowsPerPageOptions = [5, 10, 15, 20];
 

@@ -67,7 +67,7 @@ const User = () => {
     {
       name: "Actions",
       cell: row => (
-        <DButton as={Link} to={`/zeadmin/employee/${row._id}`}>
+        <DButton as={Link} to={`/zeadmin/userInfo/${row._id}`}>
           <Eye size="18px" style={{ color: "white" }} />
         </DButton>
       )
@@ -118,7 +118,7 @@ const User = () => {
       customStyles={customStyles}
       rounded
     >
-      Employee List
+      Client List
     </DLabel>
   );
   const paginationRowsPerPageOptions = [5, 10, 15, 20];

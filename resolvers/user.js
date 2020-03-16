@@ -94,7 +94,7 @@ module.exports = {
 
           process.env.REFRESH_SECRET_KEY,
           {
-            expiresIn: "1h"
+            expiresIn: "1d"
           }
         );
 
@@ -105,10 +105,22 @@ module.exports = {
     },
     updateUser: async (
       _,
-      { _id, firstName, lastName, contact, email, dateOfBirth }
+      {
+        _id,
+        firstName,
+        lastName,
+        contact,
+        email,
+        dateOfBirth,
+        password,
+        oldpassword
+      }
     ) => {
       try {
         let updateUser = {};
+        let errors = {};
+
+        const yousire = await User.findById(_id);
 
         if (firstName) {
           updateUser.firstName = firstName;
@@ -127,7 +139,19 @@ module.exports = {
         }
 
         if (dateOfBirth) {
-          updateUser.dateOfBirth = dateOfBirth;
+          updateUser.dateOfBirth = new Date(dateOfBirth).toISOString();
+        }
+
+        if (password && oldpassword) {
+          const isEqual = await bcrypt.compare(oldpassword, yousire.password);
+          if (!isEqual) {
+            errors.general = "Password not correct";
+            throw new UserInputError("Error", { errors });
+          } else {
+            const hashedPassword = await bcrypt.hash(password, 12);
+
+            updateUser.password = hashedPassword;
+          }
         }
 
         const updated = await User.findByIdAndUpdate(_id, updateUser, {

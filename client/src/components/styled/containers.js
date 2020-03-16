@@ -19,7 +19,7 @@ const rows = {
 export const DContainer = styled.div`
   width: 100%;
   margin: auto;
-  background: rgba(242, 242, 242, 0.9);
+  background: rgba(242, 242, 242, 0.8);
   margin-top: 14vh;
 `;
 
@@ -227,6 +227,7 @@ export const DCard = styled.div`
   padding: ${props => (props.p ? props.p : "10px")};
   height: ${props => (props.dh ? props.dh : "300px")};
   width: ${props => (props.dw ? props.dw : "250px")};
+  cursor: ${props => props.pointer && "pointer"};
   display: ${props => props.flex && "flex"};
   justify-content: ${props =>
     props.justifyCenter
@@ -256,11 +257,11 @@ export const DCard = styled.div`
   box-shadow: ${props =>
     props.bs
       ? props.bs
-      : ("0 1px 1px rgba(0, 0, 0, 0.25)",
-        "0 2px 2px rgba(0, 0, 0, 0.2)",
-        "0 4px 4px rgba(0, 0, 0, 0.15)",
-        "0 8px 8px rgba(0, 0, 0, 0.1)",
-        "0 16px 16px rgba(0, 0, 0, 0.05)")};
+      : ("0 1px 1px rgba(0, 0, 0, 0.12)",
+        "0 2px 2px rgba(0, 0, 0, 0.12)",
+        "0 4px 4px rgba(0, 0, 0, 0.12)",
+        "0 6px 8px rgba(0, 0, 0, 0.12)",
+        "0 8px 16px rgba(0, 0, 0, 0.12)")};
 
   .card-details {
     padding: 0 10px;
@@ -332,7 +333,6 @@ export const Content = styled.div`
   height: ${props => props.height && props.height};
   width: ${props => (props.width ? props.width : props.fluid ? "100%" : "50%")};
   padding: ${props => props.pad && props.pad};
-
   display: ${props => props.flex && "flex"};
   justify-content: ${props => props.justify && props.justify};
   align-items: ${props => props.align && props.align};
@@ -345,11 +345,14 @@ export const Content = styled.div`
   border-radius: ${props => props.rounded && "10px"};
   z-index: 2;
   font-weight: ${props => props.weight && props.weight};
+
   h2 {
     text-transform: uppercase;
   }
+
   p {
     margin: 10px 0 20px;
+    font-size: ${props => (props.size ? props.size : "14px")};
   }
   .content-edit {
     color: ${({ theme }) => theme.blue};

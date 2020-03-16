@@ -29,6 +29,7 @@ const employeeSchema = new Schema(
     photo: String,
     bio: String,
     role: String,
+    dateOfBirth: Date,
     level: Number,
     password: {
       type: String,

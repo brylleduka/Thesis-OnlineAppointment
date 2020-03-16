@@ -36,13 +36,15 @@ const SigninForm = () => {
           Account Signin
         </h2>
 
-        <Form.Field error={errors.empId ? true : false}>
+        <Form.Field error={errors.empId || errors.isNotEqual ? true : false}>
           <label>Employee ID</label>
 
-          {errors.empId && (
+          {errors.empId || errors.isNotEqual ? (
             <Label basic color="red" style={{ border: "none" }}>
-              {errors.empId}
+              {errors.empId || errors.isNotEqual}
             </Label>
+          ) : (
+            ""
           )}
           <Input
             name="employeeId"

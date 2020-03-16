@@ -18,7 +18,9 @@ import Categories from "./admin/Categories";
 import Category from "./admin/Category";
 import Service from "./admin/Service";
 import Inquiry from "./admin/Inquiry";
+import PersonalAccount from "./admin/PersonalAccount";
 import User from "./admin/User";
+import UserInfo from "./admin/UserInfo";
 import Signin from "./admin/Signin";
 import FileReport from "./admin/FileReport";
 import Home from "./admin/cms/Home";
@@ -41,7 +43,17 @@ const Admin = () => {
           path="/zeadmin/appointments"
           component={Appointments}
         />
+        <PrivateRoute
+          exact
+          path="/zeadmin/paccount"
+          component={PersonalAccount}
+        />
         <PrivateRoute exact path="/zeadmin/user" component={User} />
+        <PrivateRoute
+          exact
+          path="/zeadmin/userInfo/:_id"
+          component={UserInfo}
+        />
         <PrivateRoute exact path="/zeadmin/inquiry" component={Inquiry} />
         <PrivateRoute
           exact

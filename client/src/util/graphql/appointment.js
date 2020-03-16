@@ -32,10 +32,10 @@ const FETCH_APPOINTMENTS_QUERY = gql`
         photo
       }
       slot_start
-      slot_end
       date
       status
       message
+      note
     }
   }
 `;
@@ -71,10 +71,10 @@ const FETCH_MY_APPOINTMENTS = gql`
         photo
       }
       slot_start
-      slot_end
       date
       status
       message
+      note
     }
   }
 `;
@@ -110,10 +110,14 @@ const FETCH_MY_CURRENT_APPOINTMENTS = gql`
         photo
       }
       slot_start
-      slot_end
       date
       status
       message
+      note
+      reschedule {
+        appointmentId
+        new
+      }
     }
   }
 `;
@@ -149,10 +153,14 @@ const FETCH_MY_APPOINTMENT_HISTORY = gql`
         photo
       }
       slot_start
-      slot_end
       date
       status
       message
+      note
+      reschedule {
+        appointmentId
+        new
+      }
     }
   }
 `;
@@ -191,6 +199,12 @@ const FETCH_SINGLE_APPOINTMENT_QUERY = gql`
       date
       slot_start
       status
+      message
+      note
+      reschedule {
+        appointmentId
+        new
+      }
       user {
         _id
         firstName
@@ -243,10 +257,10 @@ const FETCH_CURRENT_APPOINTMENTS = gql`
         photo
       }
       slot_start
-      slot_end
       date
       status
       message
+      note
     }
   }
 `;
@@ -282,10 +296,40 @@ const FETCH_HISTORY_APPOINTMENTS = gql`
         photo
       }
       slot_start
-      slot_end
       date
       status
       message
+      note
+    }
+  }
+`;
+
+const FETCH_APPOINTMENT_STATUS = gql`
+  query appointmentsByStatus($status: String!) {
+    appointmentsByStatus(status: $status) {
+      _id
+      user {
+        _id
+        firstName
+        lastName
+      }
+      employee {
+        _id
+        title
+        firstName
+        lastName
+      }
+      service {
+        _id
+        name
+        price
+        duration
+      }
+      slot_start
+      date
+      status
+      message
+      note
     }
   }
 `;
@@ -300,5 +344,6 @@ export {
   FETCH_MY_APPOINTMENT_HISTORY,
   FETCH_SINGLE_APPOINTMENT_QUERY,
   FETCH_CURRENT_APPOINTMENTS,
-  FETCH_HISTORY_APPOINTMENTS
+  FETCH_HISTORY_APPOINTMENTS,
+  FETCH_APPOINTMENT_STATUS
 };

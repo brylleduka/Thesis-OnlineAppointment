@@ -7,7 +7,7 @@ import { DButton } from "../../components/styled/utils";
 import { Form, Popup, Icon } from "semantic-ui-react";
 import Spinner from "../../components/Spinner";
 import moment from "moment";
-import AppointmentCancel from "../../components/main/user/AppointmentCancel";
+
 
 const AppointmentDetails = props => {
   const history = useHistory();
@@ -187,11 +187,6 @@ const AppointmentDetails = props => {
           </Content>
         </DGrid>
       )}
-      <AppointmentCancel
-        open={open}
-        setOpen={setOpen}
-        appointmentId={appointmentId}
-      />
     </DSection>
   );
 };

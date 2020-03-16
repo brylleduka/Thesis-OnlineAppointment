@@ -32,7 +32,7 @@ const typeDefs = gql`
   }
 
   type Reschedule {
-    _id: ID
+    appointmentId: ID
     new: Boolean
   }
 
@@ -46,6 +46,7 @@ const typeDefs = gql`
     email: String!
     photo: String
     bio: String
+    dateOfBirth: String
     role: String
     level: Int
     password: String
@@ -183,6 +184,7 @@ const typeDefs = gql`
     contentManagements(section: String): [CMS]
 
     inquiries: [Inquiry]
+    inquiriesRead(read: Boolean): [Inquiry]
     inquiry(_id: ID!): Inquiry
   }
 
@@ -199,8 +201,8 @@ const typeDefs = gql`
       date: String
       slot_time: String
     ): Appointment
-    cancelAppointment(_id: ID!): Appointment
-    cancelTheAppointment(_id: ID!): Appointment
+    cancelAppointment(_id: ID!, note: String): Appointment
+    cancelTheAppointment(_id: ID!, note: String): Appointment
     doneAppointment(_id: ID!): Appointment
     verifiedAppointment(_id: ID!): Appointment
     createGuestAppointment(
@@ -216,8 +218,10 @@ const typeDefs = gql`
       appointmentInput: AppointmentInput
     ): Appointment
 
-    reschedAdminAppointment(
+    reschedAppointment(
       _id: ID!
+      status: String
+      isAdmin: Boolean
       appointmentInput: AppointmentInput
     ): Appointment
 
@@ -230,6 +234,8 @@ const typeDefs = gql`
       contact: String
       email: String
       dateOfBirth: String
+      password: String
+      oldpassword: String
     ): User
     addUserPhoto(_id: ID!, file: Upload): Boolean
 
@@ -253,6 +259,7 @@ const typeDefs = gql`
       password: String
       oldpassword: String
       day: [String]
+      dateOfBirth: String
       workStart: String
       workLength: Int
       breakStart: String
@@ -294,15 +301,11 @@ const typeDefs = gql`
       subject: String
       message: String
     ): Inquiry
-    readInquiry(_id: ID!): Inquiry
-    replyInquiry(
-      _id: ID!
-      name: String
-      email: String
-      message: String
-    ): Inquiry
+    readInquiry(_id: ID): Boolean
+    replyInquiry(_id: ID!, email: String, message: String): Inquiry
     # CMS
     addShowcase(file: Upload): Boolean
+    deleteShowcase(_id: ID!): Boolean
     updateShowcase(
       _id: ID!
       fileName: String

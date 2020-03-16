@@ -74,7 +74,9 @@ const UserDetails = ({ userInfo }) => {
                   align="center"
                   pad="10px 15px"
                 >
-                  {userInfo.dateOfBirth}
+                  {new Date(
+                    parseInt(userInfo.dateOfBirth)
+                  ).toLocaleDateString()}
                 </Content>
               </Content>
               <Content width="100%" flex justify="center">
@@ -163,7 +165,7 @@ const UserDetails = ({ userInfo }) => {
                   align="center"
                   pad="10px 15px"
                 >
-                  <strong>********</strong>
+                  <strong>**********</strong>
                 </Content>
               </Content>
             </DGrid>

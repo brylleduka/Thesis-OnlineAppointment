@@ -42,6 +42,15 @@ module.exports = {
       } catch (err) {
         throw err;
       }
+    },
+    deleteShowcase: async (_, { _id }) => {
+      try {
+        await ContentManagement.findByIdAndDelete(_id);
+
+        return true;
+      } catch (err) {
+        throw err;
+      }
     }
   }
 };

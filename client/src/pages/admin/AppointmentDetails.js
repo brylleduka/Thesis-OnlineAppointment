@@ -14,12 +14,14 @@ import moment from "moment";
 import Layout from "../../components/admin/layout/Layout";
 import AppointmentCancel from "../../components/admin/appointment/AppointmentCancel";
 import AppointmentDone from "../../components/admin/appointment/AppointmentDone";
+import ReschedModal from "../../components/main/appointment/ReschedModal";
 
 const AppointmentDetails = props => {
   const history = useHistory();
   const appointmentId = props.match.params._id;
   const [myAppoint, setMyAppoint] = useState([]);
   const [open, setOpen] = useState(false);
+  const [openCancel, setOpenCancel] = useState(false);
   const [openDone, setOpenDone] = useState(false);
 
   const { data, loading: dataLoading } = useQuery(
@@ -164,15 +166,21 @@ const AppointmentDetails = props => {
               <DButton onClick={() => history.goBack()}>Back</DButton>
 
               {data.appointment.status === "CANCELLED" ||
-              data.appointment.status === "DONE" ? (
+              data.appointment.status === "DONE" ||
+              data.appointment.status === "RESCHEDULED" ? (
                 ""
               ) : (
                 <>
                   <DButtonConfirm onClick={() => setOpenDone(true)}>
                     Done
                   </DButtonConfirm>
-                  <DButton>Reschedule</DButton>
-                  <DButtonCancel onClick={() => setOpen(true)}>
+                  <ReschedModal
+                    isAdmin={true}
+                    status={"VERIFIED"}
+                    setOpen={setOpen}
+                    appointmentId={appointmentId}
+                  />
+                  <DButtonCancel onClick={() => setOpenCancel(true)}>
                     Cancel
                   </DButtonCancel>
                 </>
@@ -181,8 +189,8 @@ const AppointmentDetails = props => {
           </DGrid>
         )}
         <AppointmentCancel
-          open={open}
-          setOpen={setOpen}
+          openCancel={openCancel}
+          setOpenCancel={setOpenCancel}
           appointmentId={appointmentId}
         />
         <AppointmentDone
