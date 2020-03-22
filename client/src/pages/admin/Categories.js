@@ -11,9 +11,11 @@ import {
   DCard,
   DImage
 } from "../../components/styled/containers";
+import { JCard } from "../../components/styled/card";
 import NewCategory from "../../components/admin/services/NewCategory";
 import { DButton } from "../../components/styled/utils";
-import parse from "html-react-parser";
+import Skeleton from "react-loading-skeleton";
+import parser from "html-react-parser";
 
 const Categories = () => {
   const [open, setOpen] = useState(false);
@@ -47,32 +49,29 @@ const Categories = () => {
           <DButton onClick={handleOpenModal}>New Category</DButton>
         </Content>
         <h3>Category List</h3>
-        <DGrid four gap="15px" margin="40px 0">
+        <DGrid two gap="15px" margin="40px 0">
           {loading ? (
-            <h2>Loading...</h2>
+            <>
+              <Skeleton width={300} height={300} />
+              <Skeleton width={300} height={300} />
+            </>
           ) : (
-            data.categories &&
-            data.categories.map(category => (
-              <DCard key={category._id}>
-                <DImage height="250px" width="250px">
-                  <img
-                    src={
-                      category.photo !== null
-                        ? `/images/category/${category.photo}`
-                        : "https://images.pexels.com/photos/413885/pexels-photo-413885.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                    }
-                    alt="category"
-                  />
-                </DImage>
-
-                <div className="card-details">
-                  <h3>{category.name}</h3>
-                  <p className="des">{parse(category.description)}</p>
-                  <Link to={`/zeadmin/category/${category._id}`}>
-                    <DButton basic>View</DButton>
-                  </Link>
-                </div>
-              </DCard>
+            categories.map(category => (
+              <JCard>
+                <img
+                  src={
+                    category.photo !== null
+                      ? `/images/service/${category.photo}`
+                      : "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample108.jpg"
+                  }
+                  alt={category.name}
+                />
+                <figcaption>
+                  <h3>{parser(category.name)}</h3>
+                  <p>{parser(category.description)}</p>
+                </figcaption>
+                <Link to={`/zeadmin/category/${category._id}`} />
+              </JCard>
             ))
           )}
         </DGrid>

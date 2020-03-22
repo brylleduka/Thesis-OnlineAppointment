@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { DSection, Content, Section2Styled } from "../../styled/containers";
+import { Section2Styled } from "../../styled/containers";
 import { TweenMax, TimelineLite, Power3 } from "gsap";
 
-const Section2 = () => {
+const Section2 = ({ nextSection }) => {
   let section2 = useRef(null);
   let images = useRef(null);
   let tl = new TimelineLite();
@@ -37,7 +37,7 @@ const Section2 = () => {
 
   return (
     <Section2Styled ref={el => (section2 = el)}>
-      <div className="sec2-container">
+      <div className="sec2-container" ref={nextSection}>
         <div className="sec2-inner">
           <div className="sec2-content">
             <div className="sec2-content_inner">

@@ -36,8 +36,9 @@ export const DButton = styled.button`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  border-radius: 5px;
-  border-width: ${props => (props.basic ? "2px" : "0")};
+  border-radius: ${props =>
+    props.radius ? props.radius : props.circle ? "50%" : "5px"};
+  border-width: ${props => (props.basic ? "1px" : "0")};
   border-style: ${props => props.basic && "solid"};
   border-color: ${props =>
     props.alert
@@ -48,6 +49,8 @@ export const DButton = styled.button`
       ? ({ theme }) => theme.green
       : props.primary
       ? ({ theme }) => theme.primary
+      : props.default
+      ? ({ theme }) => theme.dark
       : ({ theme }) => theme.blue};
       
   color: ${props => (props.color ? props.color : ({ theme }) => theme.light)};
@@ -381,5 +384,33 @@ export const Toasted = styled.div`
     top: 0;
     font-size: 18px;
     cursor: pointer;
+  }
+`;
+
+export const ReadMore = styled.p`
+  text-align: right;
+  cursor: pointer !important;
+
+  span {
+    color: ${({ theme }) => theme.secondary};
+    display: inline-block;
+    position: relative;
+    font-weight: 700;
+    &:after {
+      content: "\f061";
+      font-family: FontAwesome;
+      ${props =>
+        props.hover === 0
+          ? "margin-left: 5px;opacity: 1;"
+          : "margin-left: -10px; opacity: 0;"};
+      vertical-align: middle;
+      transition: margin 0.3s, opacity 0.3s;
+    }
+    &:hover {
+      &:after {
+        margin-left: 5px;
+        opacity: 1;
+      }
+    }
   }
 `;

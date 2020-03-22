@@ -106,6 +106,17 @@ const typeDefs = gql`
     paragraph: String
   }
 
+  type CMSAbout {
+    _id: ID
+    title: String
+    subtitle: String
+    bgimage: String
+    mparagraph: String
+    mphoto: [String]
+    sparagraph: String
+    sphoto: [String]
+  }
+
   # INPUTS
   input AppointmentInput {
     serviceId: ID!
@@ -312,6 +323,20 @@ const typeDefs = gql`
       headline: String
       paragraph: String
     ): CMS
+
+    #CMS ABOUT
+    addCMSAboutPhoto(bgimage: Upload): Boolean
+    addCMSAboutTitle(title: String, subtitle: String): CMSAbout
+    updateCMSAbout(
+      _id: ID!
+      title: String
+      subtitle: String
+      bgimage: Upload
+      mparagraph: String
+      mphoto: Upload
+      sparagraph: String
+      sphoto: Upload
+    ): CMSAbout
   }
 `;
 

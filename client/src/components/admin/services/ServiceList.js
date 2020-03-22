@@ -11,6 +11,7 @@ import NewService from "./NewService";
 import parse from "html-react-parser";
 
 const ServiceList = ({ categoryId }) => {
+  const [services, setServices] = useState([]);
   const [open, setOpen] = useState(false);
 
   const { data: data_services, loading: loading_services } = useQuery(
@@ -22,11 +23,11 @@ const ServiceList = ({ categoryId }) => {
     }
   );
 
-  // useEffect(() => {
-  //   if (data_services) {
-  //     setServices(data_services.services);
-  //   }
-  // }, [data_services]);
+  useEffect(() => {
+    if (data_services) {
+      setServices(data_services.services);
+    }
+  }, [data_services]);
 
   const columns = [
     {
@@ -61,7 +62,17 @@ const ServiceList = ({ categoryId }) => {
       name: "Description",
       selector: "description",
       wrap: true,
-      cell: row => <p style={{ fontWeight: 500 }}>{parse(row.description)}</p>
+      format: row => {
+        const length = 20;
+        const descript = row.description;
+
+        const trimString =
+          descript.length > length
+            ? descript.substring(0, length) + "..."
+            : descript.substring(0, length);
+
+        return <p style={{ fontWeight: 500 }}>{parse(trimString)}</p>;
+      }
     },
 
     {
@@ -135,7 +146,7 @@ const ServiceList = ({ categoryId }) => {
           <DataTable
             title={title}
             columns={columns}
-            data={data_services.services.map(service => service)}
+            data={services.map(service => service)}
             responsive={true}
             pagination
             paginationPerPage={5}

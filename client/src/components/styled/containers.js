@@ -23,7 +23,7 @@ export const DContainer = styled.div`
   margin-top: 14vh;
 `;
 
-export const DShowCase = styled.header`
+export const DShowCase = styled.div`
   width: 100%;
   height: ${props => (props.height ? props.height : "100vh")};
   position: relative;
@@ -186,13 +186,6 @@ export const DGrid = styled.section`
       0 4px 4px rgba(0, 0, 0, 0.15), 0 8px 8px rgba(0, 0, 0, 0.1),
       0 16px 16px rgba(0, 0, 0, 0.05);
 
-    // img {
-    //   width: 100%;
-    //   height: 100%;
-    //   object-fit: cover;
-    //   border-radius: ${props => (props.circle ? "50%" : "20px")};
-    // }
-
     .card-details {
       padding: 0 10px;
 
@@ -212,12 +205,18 @@ export const DGrid = styled.section`
     }
   }
 
+  @media (max-width: 1024px) {
+    grid-template-columns: ${props =>
+      props.med10 ? props.med10 : "repeat(2, 1fr)"};
+  }
+
   @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: ${props =>
+      props.med7 ? props.med7 : "repeat(2, 1fr)"};
   }
 
   @media (max-width: 500px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: ${props => (props.med5 ? props.med5 : "1fr")};
   }
 `;
 
@@ -342,12 +341,33 @@ export const Content = styled.div`
   position: relative;
   margin: ${props => props.margin && props.margin};
   background: ${props => props.bgcolor && props.bgcolor};
-  border-radius: ${props => props.rounded && "10px"};
+  border-radius: ${props =>
+    props.rounded
+      ? "10px"
+      : props.br1
+      ? "0% 24% 26% 39% / 20% 0% 100% 0% "
+      : "0"};
+  box-shadow: ${props =>
+    props.bs &&
+    ("0 1px 1px rgba(0, 0, 0, 0.12)",
+    "0 2px 2px rgba(0, 0, 0, 0.12)",
+    "0 4px 4px rgba(0, 0, 0, 0.12)",
+    "0 6px 8px rgba(0, 0, 0, 0.12)",
+    "0 8px 16px rgba(0, 0, 0, 0.12)")};
   z-index: 2;
   font-weight: ${props => props.weight && props.weight};
 
   h2 {
     text-transform: uppercase;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  span {
+    color: ${props => props.color && props.color};
   }
 
   p {
@@ -378,7 +398,7 @@ export const DImage = styled.div`
   border-radius: ${props =>
     props.circle ? "50%" : props.rounded ? "20px" : "0"};
   margin: ${props => (props.m ? props.m : "0 auto")};
-
+  padding: ${props => props.pad && props.pad};
   img {
     display: inline;
     margin: 0 auto;

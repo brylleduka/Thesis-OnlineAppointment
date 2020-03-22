@@ -85,7 +85,7 @@ const NewEmployee = ({ setOpen, open }) => {
   console.log(days);
 
   return (
-    <Modal size={"small"} open={open} onClose={() => setOpen(false)}>
+    <Modal size={"large"} open={open} onClose={() => setOpen(false)}>
       <Modal.Header>Create new Category</Modal.Header>
       <Modal.Content>
         <Form noValidate>

@@ -1,6 +1,7 @@
 const { createWriteStream } = require("fs");
 const path = require("path");
 const ContentManagement = require("../models/ContentManagement");
+const CMSAbout = require("../models/CmsAbout");
 
 module.exports = {
   Query: {
@@ -46,6 +47,39 @@ module.exports = {
     deleteShowcase: async (_, { _id }) => {
       try {
         await ContentManagement.findByIdAndDelete(_id);
+
+        return true;
+      } catch (err) {
+        throw err;
+      }
+    },
+    addCMSAboutPhoto: async (_, { bgimage }) => {
+      try {
+        const { createReadStream, filename } = await bgimage;
+
+        await new Promise(res =>
+          createReadStream().pipe(
+            createWriteStream(
+              path.join(__dirname, "../images/cms/about", filename)
+            ).on("close", res)
+          )
+        );
+        const newAbout = new CMSAbout({
+          bgimage: filename,
+          title: null,
+          subtitle: null,
+          mission: {
+            title: null,
+            subtitle: null,
+            photo: null
+          },
+          story: {
+            title: null,
+            subtitle: null,
+            photo: null
+          }
+        });
+        const result = await newAbout.save();
 
         return true;
       } catch (err) {

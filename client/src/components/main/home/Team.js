@@ -72,7 +72,7 @@ const Team = ({ cards }) => {
         ) : (
           data_employeesAR &&
           data_employeesAR.aestheticiansReceps.map(emp => (
-            <DCard bs={"0"}>
+            <DCard bs={"0"} key={emp._id}>
               <DImage width="150px" height="150px" m="0 auto" circle>
                 <img
                   src={
