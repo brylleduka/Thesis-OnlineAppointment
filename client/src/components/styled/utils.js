@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import { Icon } from "semantic-ui-react";
 
 const ripple = keyframes`
 
@@ -413,4 +414,13 @@ export const ReadMore = styled.p`
       }
     }
   }
+`;
+
+export const ScrollUp = styled(Icon)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
 `;

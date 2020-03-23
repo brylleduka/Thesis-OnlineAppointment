@@ -42,6 +42,7 @@ const Showcase = ({ nextSection }) => {
   const params = {
     slidesPerView: 1,
     centeredSlides: true,
+    effect: "fade",
     loop: true,
     autoplay: {
       delay: 4000,

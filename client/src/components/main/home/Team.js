@@ -10,9 +10,10 @@ import {
   DSection,
   Overlay
 } from "../../styled/containers";
-// import Skeleton from "../../Skeleton";
+import { JCard4 } from "../../styled/card";
 import Skeleton from "react-loading-skeleton";
-import parse from "html-react-parser";
+import parser from "html-react-parser";
+import ReadMore from "../../main/utils/ReadMore";
 
 const Team = ({ cards }) => {
   const [employeesAR, setEmployeesAR] = useState([]);
@@ -49,7 +50,7 @@ const Team = ({ cards }) => {
     >
       <h1 style={{ marginBottom: "24px" }}>Our Team</h1>
       <DGrid four margin="0 auto" gap="25px" style={{ marginBottom: "24px" }}>
-        {!data_employeesAR ? (
+        {loading_employeesAR ? (
           <>
             <div style={styles.dloading}>
               <Skeleton width="150px" height="150px" circle={true} />
@@ -70,44 +71,37 @@ const Team = ({ cards }) => {
             </div>
           </>
         ) : (
-          data_employeesAR &&
-          data_employeesAR.aestheticiansReceps.map(emp => (
-            <DCard bs={"0"} key={emp._id}>
-              <DImage width="150px" height="150px" m="0 auto" circle>
+          employeesAR &&
+          employeesAR.map(employee => (
+            <JCard4 data-emp={employee._id}>
+              <div className="profile-image">
                 <img
                   src={
-                    emp.photo !== null
-                      ? `/images/employees/${emp.photo}`
-                      : cards
+                    employee.photo
+                      ? `/images/employees/${employee.photo}`
+                      : "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample83.jpg"
                   }
-                  alt="card 1"
+                  alt={employee.photo}
                 />
-              </DImage>
-              <div className="card-details">
-                <h3>
-                  {emp.title}. {emp.firstName} {emp.lastName}
-                </h3>
-                <p>{parse(emp.bio)}</p>
               </div>
-              <Overlay
-                hovOpac="1"
-                opac="0"
-                bg={"rgba(0,0,0,0.7)"}
-                flex
-                jusitfy="center"
-                align="center"
-              >
-                <div className="overlay-box">
-                  <div className="overlay-box__content dark">
-                    <h1>Follow</h1>
-                  </div>
-                </div>
-              </Overlay>
-            </DCard>
+              <figcaption>
+                <h3>
+                  {employee.title} {employee.firstName} {employee.lastName}
+                </h3>
+                <h4>{employee.role}</h4>
+                <p>
+                  {employee.bio.length > 50
+                    ? parser(employee.bio.substr(0, 50) + "...")
+                    : parser(employee.bio.substr(0, 50))}
+                </p>
+                <ReadMore hover={0}>Read More</ReadMore>
+              </figcaption>
+              <Link to="/zessence/about" className="linkToPage" />
+            </JCard4>
           ))
         )}
       </DGrid>
-      <Link to="/" className="btn btn-blue">
+      <Link to="/zessence/about" className="btn btn-blue">
         Learn More
       </Link>
     </DSection>

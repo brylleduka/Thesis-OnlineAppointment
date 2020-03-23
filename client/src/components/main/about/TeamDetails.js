@@ -9,9 +9,7 @@ const TeamDetails = ({ employee }) => {
   const [open, setOpen] = useState(false);
 
   const handleModal = event => {
-    const employeeId = event.currentTarget.dataset.emp;
     setOpen(true);
-    console.log(employeeId);
   };
 
   return (

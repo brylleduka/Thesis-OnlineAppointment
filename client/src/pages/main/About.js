@@ -7,10 +7,9 @@ import {
   DGrid,
   DImage
 } from "../../components/styled/containers";
-import { DButton } from "../../components/styled/utils";
+import { DButton, ScrollUp } from "../../components/styled/utils";
 import ScrollButton from "../../components/main/utils/ScrollButton";
 import useScroll from "../../util/hooks/useScroll";
-import { Icon } from "semantic-ui-react";
 import Story from "../../components/main/about/Story";
 import Team from "../../components/main/about/Team";
 
@@ -45,9 +44,13 @@ const About = () => {
           justify="center"
           direct="column"
           align="center"
-          fluid
+          width="50%"
+          margin="0 auto"
           height="100%"
+          style={{ minWidth: "90%", textAlign: "center" }}
+          className="dark"
         >
+          <h1 style={{ fontSize: "38px" }}>About Us</h1>
           <h3>The Concept of Beauty</h3>
           <DButton
             onClick={pageDown}
@@ -62,30 +65,15 @@ const About = () => {
               bottom: "20px"
             }}
           >
-            <Icon
-              name="chevron down"
-              size="large"
-              circular
-              style={absoluteCenter}
-            />
+            <ScrollUp name="chevron down" size="large" circular />
           </DButton>
         </Content>
         <Overlay />
       </DSection>
       <Story content={content} />
-
       <Team />
     </DContainer>
   );
-};
-
-const absoluteCenter = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  height: "50%",
-  transform: "translate(-50%, -50%)",
-  display: "block"
 };
 
 export default About;

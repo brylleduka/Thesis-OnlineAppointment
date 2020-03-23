@@ -3,7 +3,7 @@ import { ReadMore as RM } from "../../styled/utils";
 
 const ReadMore = props => {
   return (
-    <RM hover={props.hover}>
+    <RM {...props}>
       <span>{props.children}</span>
     </RM>
   );

@@ -1,21 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_ALL_CATEGORIES_QUERY } from "../../util/graphql/service";
 import {
   DContainer,
   DSection,
   Content,
-  DGrid
+  DGrid,
+  Overlay
 } from "../../components/styled/containers";
 import { JCard } from "../../components/styled/card";
 import Skeleton from "react-loading-skeleton";
 import parser from "html-react-parser";
 import { Link } from "react-router-dom";
 import ReadMore from "../../components/main/utils/ReadMore";
+import { DButton, ScrollUp } from "../../components/styled/utils";
+import ScrollButton from "../../components/main/utils/ScrollButton";
+import useScroll from "../../util/hooks/useScroll";
 
 const Services = () => {
+  const sectionDown = useRef();
+  const scrolling = useScroll(500);
   const [isCategories, setIsCategories] = useState([]);
-
   const { data, loading } = useQuery(FETCH_ALL_CATEGORIES_QUERY);
 
   useEffect(() => {
@@ -24,10 +29,59 @@ const Services = () => {
     }
   }, [data]);
 
-  console.log(isCategories.map(category => category));
+  function scrollView(ref) {
+    if (ref.current)
+      ref.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+  }
+
+  const scrollDown = () => {
+    scrollView(sectionDown);
+  };
 
   return (
     <DContainer>
+      {scrolling && <ScrollButton scrollPx="100" delay="16.66" />}
+      <DSection
+        background={
+          "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+        }
+        height="85vh"
+        fixed
+      >
+        <Content
+          flex
+          justify="center"
+          direct="column"
+          align="center"
+          width="50%"
+          margin="0 auto"
+          height="100%"
+          style={{ minWidth: "90%", textAlign: "center" }}
+          className="dark"
+        >
+          <h1 style={{ fontSize: "48px" }}>Our Services</h1>
+          <h3>It's time to take care of your skin</h3>
+          <DButton
+            onClick={scrollDown}
+            basic
+            circle
+            default
+            size="58px"
+            width="58px"
+            pad="auto"
+            style={{
+              position: "absolute",
+              bottom: "20px"
+            }}
+          >
+            <ScrollUp name="chevron down" size="large" circular />
+          </DButton>
+        </Content>
+        <Overlay />
+      </DSection>
       <DSection
         width="90%"
         flex
@@ -37,8 +91,8 @@ const Services = () => {
         mcenter
         pad="24px"
         height="100%"
+        ref={sectionDown}
       >
-        <h1>Our Service</h1>
         <Content width="100%" margin="0 auto" style={{ minHeight: "100vh" }}>
           <DGrid three gap="24px" med7={"1fr"}>
             {loading ? (
