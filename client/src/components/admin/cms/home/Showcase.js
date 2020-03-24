@@ -114,7 +114,9 @@ const Showcase = () => {
                 width="600px"
                 key={sc._id}
                 background={
-                  "https://images.pexels.com/photos/3765134/pexels-photo-3765134.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                  sc.photo !== null || sc.photo !== undefined
+                    ? `/images/cms/home/${sc.photo}`
+                    : "https://images.pexels.com/photos/3765134/pexels-photo-3765134.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
                 }
               >
                 <Overlay
@@ -136,6 +138,18 @@ const Showcase = () => {
               </DShowCase>
             ))}
         </Slider>
+      )}
+
+      {isShowCase && (
+        <ShowcaseModal open={open} setOpen={setOpen} showcase={isShowCase} />
+      )}
+
+      {isDeleteShowCase && (
+        <DeleteShowcase
+          openAlert={openAlert}
+          setOpenAlert={setOpenAlert}
+          isDeleteShowCase={isDeleteShowCase}
+        />
       )}
     </DSection>
 
