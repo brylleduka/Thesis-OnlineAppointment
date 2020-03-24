@@ -69,7 +69,8 @@ const Showcase = () => {
   const handleDelete = e => {
     e.preventDefault();
     setOpenAlert(true);
-    setIsDeleteShowCase(e.target.value);
+    setIsDeleteShowCase(e.currentTarget.dataset.scvalue);
+    console.log(e.currentTarget.dataset.scvalue);
   };
 
   const settings = {
@@ -80,8 +81,6 @@ const Showcase = () => {
     slidesToShow: 1,
     slidesToScroll: 1
   };
-
-  console.log(showcase);
 
   return (
     <DSection width="900px" mcenter pad="20px 10px">
@@ -128,11 +127,38 @@ const Showcase = () => {
                   align="center"
                 >
                   <div className="overlay-content">
-                    <h1>Z Essence Facial & Spa</h1>
+                    <h3>Z Essence Facial & Spa</h3>
                     <p>
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.
                       Quisquam, doloribus.
                     </p>
+                  </div>
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      right: 20,
+                      display: "flex"
+                    }}
+                  >
+                    <DButton
+                      value={sc._id}
+                      onClick={handleEdit}
+                      style={{ width: "50px" }}
+                    >
+                      <Icon name="edit" />
+                      <div style={{ visibility: "hidden" }}>{sc._id}</div>
+                    </DButton>
+                    <DButton
+                      alert
+                      value={sc._id}
+                      data-scvalue={sc._id}
+                      onClick={handleDelete}
+                      style={{ width: "50px" }}
+                    >
+                      <Icon name="trash" />
+                      <div style={{ visibility: "hidden" }}>{sc._id}</div>
+                    </DButton>
                   </div>
                 </Overlay>
               </DShowCase>
