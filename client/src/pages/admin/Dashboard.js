@@ -8,10 +8,9 @@ import {
   Content,
   DSection,
   DGrid,
-  Overlay,
-  DCard
+  Overlay
 } from "../../components/styled/containers";
-import { Bar, Doughnut } from "react-chartjs-2";
+// import { Bar, Doughnut } from "react-chartjs-2";
 import Cards from "../../components/admin/dashboard/Cards";
 
 const Dashboard = () => {
@@ -122,9 +121,9 @@ const Dashboard = () => {
                 <h2>Loading...</h2>
               </Overlay>
             ) : (
-              data.currentAppointments && (
+              appointments && (
                 <UpcommingAppointments
-                  appointments={data.currentAppointments}
+                  appointments={appointments}
                   loading={loading}
                 />
               )

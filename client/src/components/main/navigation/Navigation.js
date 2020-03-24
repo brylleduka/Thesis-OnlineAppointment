@@ -2,9 +2,15 @@ import React, { useRef, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../context/auth";
 import { bool } from "prop-types";
 import { useOnClickOutside } from "./navHook";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { HashLink as Link } from "react-router-hash-link";
 import { Dropdown, Icon } from "semantic-ui-react";
-import { DNavigation, DMainMenu, DRightMenu } from "../../styled/navigation";
+import {
+  DNavigation,
+  DMainMenu,
+  DRightMenu,
+  DropdownCustomNav
+} from "../../styled/navigation";
 import Burger from "./Burger";
 import useScroll from "../../../util/hooks/useScroll";
 
@@ -30,6 +36,9 @@ const Navigation = ({ open, setOpen }) => {
       )}
     </>
   );
+
+  const scrollBehavior = el =>
+    el.scrollIntoView({ behavior: "smooth", block: "center" });
 
   return (
     <DNavigation ref={node} scrolled={scrolling ? true : false}>
@@ -68,16 +77,48 @@ const Navigation = ({ open, setOpen }) => {
             <hr className="hr-one" />
           </li>
           <li>
-            <Link to="/zessence">Home</Link>
+            <Link to="/zessence/#home" scroll={scrollBehavior}>
+              Home
+            </Link>
           </li>
           <li>
-            <Link to="/zessence/services&rates">Services & Rates</Link>
+            <Link to="/zessence/services&rates/#services">Services</Link>
           </li>
+
+          {/* <Link to="/zessence/about">About&nbsp;Us</Link> */}
+          <DropdownCustomNav
+            trigger={
+              <Link to="/zessence/about/#about" scroll={scrollBehavior}>
+                About&nbsp;Us
+              </Link>
+            }
+            simple
+            scrolled={scrolling ? true : false}
+          >
+            <Dropdown.Menu className="customDropMenu">
+              <Dropdown.Item
+                className="customDropMenuItem"
+                as={Link}
+                to="/zessence/about/#story"
+                scroll={scrollBehavior}
+              >
+                Our Story
+              </Dropdown.Item>
+              <Dropdown.Item
+                className="customDropMenuItem"
+                as={Link}
+                to="/zessence/about/#team"
+                scroll={scrollBehavior}
+              >
+                Our Team
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </DropdownCustomNav>
+
           <li>
-            <Link to="/zessence/about">About Us</Link>
-          </li>
-          <li>
-            <Link to="/zessence/gallery">Gallery</Link>
+            <Link to="/zessence/gallery/#gallery" scroll={scrollBehavior}>
+              Gallery
+            </Link>
           </li>
           <li>
             <Link to="/zessence/contact">Contact</Link>

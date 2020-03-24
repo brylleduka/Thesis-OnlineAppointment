@@ -4,7 +4,7 @@ import { useQuery, useMutation } from "@apollo/react-hooks";
 import { FETCH_INQUIRY } from "../../../util/graphql/inquiry";
 import { Modal, Icon, Dropdown, Form } from "semantic-ui-react";
 import { Content, DGrid, DCard } from "../../styled/containers";
-import { DButton, Toasted } from "../../styled/utils";
+import { DButton } from "../../styled/utils";
 import Spinner from "../../Spinner";
 import toaster from "toasted-notes";
 
@@ -25,11 +25,11 @@ const ReplyModal = ({ open, setOpen, inqId }) => {
     }
   }, [dataInq]);
 
-  const [readInquiry, { loading: readLoading }] = useMutation(READ_INQ, {
-    variables: {
-      inqId: inqId
-    }
-  });
+  // const [readInquiry, { loading: readLoading }] = useMutation(READ_INQ, {
+  //   variables: {
+  //     inqId: inqId
+  //   }
+  // });
 
   const [replyInquiry, { loading }] = useMutation(REPLY_MESSAGE, {
     variables: {
@@ -40,15 +40,15 @@ const ReplyModal = ({ open, setOpen, inqId }) => {
     update() {
       isMessage = "";
     },
-    onCompleted(result) {
+    onCompleted() {
       toaster.notify("Message sent");
     }
   });
 
   const handleReply = () => {
     setDisplayMsg(true);
-    readInquiry();
   };
+
   const handleReplyMsg = e => {
     setIsMessage(e.target.value);
   };
@@ -67,17 +67,19 @@ const ReplyModal = ({ open, setOpen, inqId }) => {
     >
       <Modal.Header>Inquiry</Modal.Header>
       <Modal.Content>
-        {dataInq && (
+        {loadingInq ? (
+          <h1>Loading...</h1>
+        ) : (
           <Content width="100%" height="100%">
             <DGrid gap="20px">
               <Content width="90%">
-                <Dropdown trigger={<strong>{dataInq.inquiry.email}</strong>}>
+                <Dropdown trigger={<strong>{inq.email}</strong>}>
                   <Dropdown.Menu>
                     <Dropdown.Item>
-                      <strong>email:</strong> {dataInq.inquiry.email}
+                      <strong>email:</strong> {inq.email}
                     </Dropdown.Item>
                     <Dropdown.Item>
-                      <strong>name:</strong> {dataInq.inquiry.name}
+                      <strong>name:</strong> {inq.name}
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
@@ -87,14 +89,14 @@ const ReplyModal = ({ open, setOpen, inqId }) => {
                   <Form.Field>
                     <label>Subject</label>
                     <input
-                      value={dataInq.inquiry.subject}
+                      value={inq.subject}
                       readOnly
                       style={{ width: "auto" }}
                     />
                   </Form.Field>
                   <Form.Field>
                     <label>Message</label>
-                    <textarea value={dataInq.inquiry.message} readOnly />
+                    <textarea value={inq.message} readOnly />
                   </Form.Field>
                 </Form>
               </Content>
@@ -160,10 +162,10 @@ const REPLY_MESSAGE = gql`
   }
 `;
 
-const READ_INQ = gql`
-  mutation readInquiry($inqId: ID) {
-    readInquiry(_id: $inqId)
-  }
-`;
+// const READ_INQ = gql`
+//   mutation readInquiry($inqId: ID) {
+//     readInquiry(_id: $inqId)
+//   }
+// `;
 
 export default ReplyModal;

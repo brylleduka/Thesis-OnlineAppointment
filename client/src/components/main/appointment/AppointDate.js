@@ -114,7 +114,7 @@ const AppointDate = ({
       </Content>
       <Content width="100%" height="100%" flex justify="center" align="center">
         {data_employee && data_service ? (
-          loading_employee || loading_appointments ? (
+          loading_employee || loading_appointments || loading_service ? (
             <h3>Loading...</h3>
           ) : (
             <DGrid two gap="20px">

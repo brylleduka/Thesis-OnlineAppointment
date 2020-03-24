@@ -1,6 +1,7 @@
 import React from "react";
 import AccountDetails from "./AccountDetails";
 import AccountSched from "./AccountSched";
+import Page404 from "../../../pages/Page404";
 
 const AccountInfo = ({ isAccount, employee, fetchEmployee }) => {
   switch (isAccount) {
@@ -10,6 +11,8 @@ const AccountInfo = ({ isAccount, employee, fetchEmployee }) => {
       );
     case "schedule":
       return <AccountSched />;
+    default:
+      return <Page404 />;
   }
 };
 

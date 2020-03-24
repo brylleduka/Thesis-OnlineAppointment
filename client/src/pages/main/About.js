@@ -3,9 +3,7 @@ import {
   DContainer,
   DSection,
   Content,
-  Overlay,
-  DGrid,
-  DImage
+  Overlay
 } from "../../components/styled/containers";
 import { DButton, ScrollUp } from "../../components/styled/utils";
 import ScrollButton from "../../components/main/utils/ScrollButton";
@@ -38,6 +36,7 @@ const About = () => {
         }
         height="85vh"
         fixed
+        id="about"
       >
         <Content
           flex

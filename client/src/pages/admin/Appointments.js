@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { DSection, DGrid, Content } from "../../components/styled/containers";
 import { DButton } from "../../components/styled/utils";
-import { Breadcrumb, Divider } from "semantic-ui-react";
+import { Breadcrumb } from "semantic-ui-react";
 import Layout from "../../components/admin/layout/Layout";
 import CurrentAppointments from "../../components/admin/appointment/CurrentAppointments";
-import HistoryAppointments from "../../components/admin/appointment/HistoryAppointments";
+// import HistoryAppointments from "../../components/admin/appointment/HistoryAppointments";
 import NewModal from "../../components/admin/appointment/NewModal";
 
 const Appointments = () => {

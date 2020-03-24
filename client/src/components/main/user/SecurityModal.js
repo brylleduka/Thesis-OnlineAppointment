@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import { Modal, Label, Form } from "semantic-ui-react";
+import { Modal, Form } from "semantic-ui-react";
 import { DLabel, DButton, Toasted } from "../../styled/utils";
 import Spinner from "../../Spinner";
 import toaster from "toasted-notes";
@@ -41,6 +41,8 @@ const SecurityModal = ({ securityOpen, setSecurityOpen, userInfo }) => {
   function updateUserPassword() {
     updateUser();
   }
+
+  console.log(errors);
 
   return (
     <Modal

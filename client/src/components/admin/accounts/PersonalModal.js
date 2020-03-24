@@ -8,7 +8,7 @@ import Spinner from "../../Spinner";
 import toaster from "toasted-notes";
 
 const PersonalModal = ({ personalOpen, setPersonalOpen, employee }) => {
-  const [errors, setErrors] = useState({});
+  // const [errors, setErrors] = useState({});
   const [startDate, setStartDate] = useState(
     new Date(parseInt(employee.dateOfBirth))
   );

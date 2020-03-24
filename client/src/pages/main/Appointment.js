@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { AuthContext } from "../../context/auth";
+import React, { useState } from "react";
+// import { AuthContext } from "../../context/auth";
 
 import AppointDate from "../../components/main/appointment/AppointDate";
 import AppointmentInputs from "../../components/main/appointment/AppointmentInputs";
@@ -11,15 +11,12 @@ import {
 } from "../../components/styled/containers";
 import { DButton } from "../../components/styled/utils";
 import Confirmation from "../../components/main/appointment/Confirmation";
-import { Carousel } from "react-responsive-carousel";
 
 const Appointment = () => {
   const mql = window.matchMedia("(max-width: 768px)");
 
   const [open, setOpen] = useState(false);
 
-  const [service, setService] = useState([]);
-  const [serviceEmp, setServiceEmp] = useState([]);
   const [values, setValues] = useState({
     category: ""
   });
@@ -47,15 +44,6 @@ const Appointment = () => {
       </DSection>
       <DSection width="100%" height="100%">
         <DGrid two>
-          <Carousel
-            emulateTouch
-            infiniteLoop
-            useKeyboardArrows
-            autoPlay
-            showThumbs={false}
-            showStatus={false}
-            showArrows={mql.matches ? false : true}
-          >
             <DSection
               width="100%"
               flex
@@ -81,14 +69,12 @@ const Appointment = () => {
                 </div>
               </Overlay>
             </DSection>
-          </Carousel>
+        
           <DGrid>
             <AppointmentInputs
               values={values}
               setValues={setValues}
               employeeVal={employeeVal}
-              setService={setService}
-              setServiceEmp={setServiceEmp}
               serviceValue={serviceValue}
               setServiceValue={setServiceValue}
               setEmployeeVal={setEmployeeVal}
@@ -141,12 +127,6 @@ const Appointment = () => {
       </DSection>
     </DGrid>
   );
-};
-
-const styles = {
-  sec: {
-    height: "30vh"
-  }
 };
 
 export default Appointment;

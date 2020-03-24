@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navigation from "../components/main/navigation/Navigation";
 import Home from "./main/Home";
 import About from "./main/About";
@@ -13,6 +8,7 @@ import Signin from "./main/Signin";
 import Appointment from "./main/Appointment";
 import Gallery from "./main/Gallery";
 import Contact from "./main/Contact";
+import Testimonials from "./main/Testimonials";
 import Services from "./main/Services";
 import Service from "./main/Service";
 import ThankYou from "./main/ThankYou";
@@ -36,6 +32,11 @@ function Main({ match }) {
         <Route path={`${match.path}/about`} component={About} exact />
         <Route path={`${match.path}/contact`} component={Contact} exact />
         <Route path={`${match.path}/gallery`} component={Gallery} exact />
+        <Route
+          path={`${match.path}/testimonials`}
+          component={Testimonials}
+          exact
+        />
         <Route
           path={`${match.path}/services&rates`}
           component={Services}

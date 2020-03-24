@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Dropdown } from "semantic-ui-react";
 
 export const DNavigation = styled.nav`
   width: 100%;
@@ -16,7 +17,7 @@ export const DNavigation = styled.nav`
     justify-content: space-between;
     height: 100%;
     padding: 30px 0;
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 700;
     letter-spacing: 2px;
 
@@ -79,7 +80,7 @@ export const DMenu = styled.ul`
     color: ${({ theme }) => theme.dark};
   }
 
-  ${props => props.scrolled && "li a {color: #fff;}"};
+  ${props => props.scrolled && "li a {color: #fff}"};
 
   li a:hover,
   &.active {
@@ -111,7 +112,7 @@ export const DMainMenu = styled(DMenu)`
     flex-flow: column nowrap;
     justify-content: flex-end;
     align-items: flex-end;
-    padding: 2rem 4rem 2rem 2rem;
+    padding: 2rem;
     position: fixed;
     top: 0;
     right: 0;
@@ -222,6 +223,18 @@ export const DMainMenu = styled(DMenu)`
       }
       &:nth-child(6) {
         transition-delay: 0s, 350ms;
+      }
+      &:nth-child(7) {
+        transition-delay: 0s, 400ms;
+      }
+      &:nth-child(8) {
+        transition-delay: 0s, 450ms;
+      }
+      &:nth-child(9) {
+        transition-delay: 0s, 500ms;
+      }
+      &:nth-child(10) {
+        transition-delay: 0s, 550ms;
       }
     }
   }
@@ -349,5 +362,51 @@ export const DBurger = styled.nav`
   @media only screen and (max-width: 500px) {
     top: 3%;
     right: 2rem;
+  }
+`;
+
+export const DropdownCustomNav = styled(Dropdown)`
+  &:hover {
+    color: ${({ theme }) => theme.primary};
+  }
+
+  & a {
+    color: #232323;
+    font-weight: 700;
+  }
+  & a:hover {
+    color: ${({ theme }) => theme.primary};
+  }
+
+  & .customDropMenu a {
+    font-weight: 500;
+    color: ${({ theme }) => theme.primary} !important;
+  }
+
+  ${props => props.scrolled && "color: #fff; a {color: #fff}"};
+
+  @media (max-width: 1024px) {
+    a {
+      color: #ffff;
+      font-size: 18px;
+      text-transform: uppercase;
+      margin-right: 24px;
+    }
+    a:hover {
+      color: ${({ theme }) => theme.secondary};
+      font-size: 18px;
+      text-transform: uppercase;
+      margin-right: 24px;
+    }
+  }
+
+  .customDropMenu .customDropMenuItem {
+    width: 100%;
+    text-align: center;
+    color: #232323 !important;
+    font-size: 14px !important;
+  }
+  .customDropMenu .customDropMenuItem:hover {
+    color: ${({ theme }) => theme.secondary};
   }
 `;

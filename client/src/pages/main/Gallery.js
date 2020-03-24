@@ -105,6 +105,7 @@ const Gallery = () => {
         }
         height="85vh"
         fixed
+        id="gallery"
       >
         <Content
           flex
@@ -124,8 +125,8 @@ const Gallery = () => {
             basic
             circle
             default
-            size="58px"
-            width="58px"
+            size="48px"
+            width="48px"
             pad="auto"
             style={{
               position: "absolute",

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { FETCH_ALL_CATEGORIES_QUERY } from "../../../util/graphql/service";
 import { Form, Modal } from "semantic-ui-react";
-import { DButtonConfirm, DButtonCancel, Toasted } from "../../styled/utils";
+import { DButtonConfirm, DButtonCancel } from "../../styled/utils";
 import CheckboxGroup from "react-checkbox-group";
 import toaster from "toasted-notes";
 import { DGrid } from "../../styled/containers";
@@ -11,18 +11,18 @@ import Spinner from "../../Spinner";
 
 const ServiceAdd = ({ open, setOpen, employeeId }) => {
   const [errors, setErrors] = useState({});
-  // const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [services, setServices] = useState([]);
 
   const { data: dataCategory, loading: loadingCategory } = useQuery(
     FETCH_ALL_CATEGORIES_QUERY
   );
 
-  // useEffect(() => {
-  //   if (dataCategory) {
-  //     setCategories(dataCategory.categories);
-  //   }
-  // }, [dataCategory]);
+  useEffect(() => {
+    if (dataCategory) {
+      setCategories(dataCategory.categories);
+    }
+  }, [dataCategory]);
 
   const [addService, { loading }] = useMutation(ADD_SERVICES_MUTATION, {
     variables: {
@@ -56,6 +56,8 @@ const ServiceAdd = ({ open, setOpen, employeeId }) => {
     addService();
   };
 
+  console.log(errors);
+
   return (
     <Modal size="small" open={open}>
       <Modal.Header>Choose Services</Modal.Header>
@@ -65,7 +67,7 @@ const ServiceAdd = ({ open, setOpen, employeeId }) => {
         ) : (
           <Form>
             <DGrid two gap="10px">
-              {dataCategory.categories.map(category => (
+              {categories.map(category => (
                 <Form.Group
                   style={{ display: "flex", flexDirection: "column" }}
                   key={category._id}

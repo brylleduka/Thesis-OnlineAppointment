@@ -19,7 +19,7 @@ const rows = {
 export const DContainer = styled.div`
   width: 100%;
   margin: auto;
-  background: rgba(242, 242, 242, 0.8);
+  background: rgba(242, 242, 242, 0.2);
   margin-top: 14vh;
 `;
 

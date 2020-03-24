@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/react-hooks";
-import { useHistory } from "react-router-dom";
 import { FETCH_SINGLE_SERVICE_QUERY } from "../../../util/graphql/service";
 import { FETCH_EMPLOYEE_QUERY } from "../../../util/graphql/employee";
 import {
-  FETCH_MY_APPOINTMENTS,
-  FETCH_MY_CURRENT_APPOINTMENTS
+  FETCH_MY_APPOINTMENTS
 } from "../../../util/graphql/appointment";
 import { Modal } from "semantic-ui-react";
 import { DButton, DLabel, Toasted } from "../../styled/utils";
@@ -27,9 +25,8 @@ const ReschedConfirm = ({
   isAdmin,
   status
 }) => {
-  const [errors, setErrors] = useState({});
-  const [addInfo, setAddInfo] = useState("");
-  const history = useHistory();
+  // const [addInfo, setAddInfo] = useState("");
+  // const history = useHistory();
   const [isReschedConfirm, setIsReschedConfirm] = useState(false);
 
   const { data: data_service, loading: loading_service } = useQuery(
@@ -100,9 +97,9 @@ const ReschedConfirm = ({
     }
   });
 
-  const handleMessage = e => {
-    setAddInfo(e.target.value);
-  };
+  // const handleMessage = e => {
+  //   setAddInfo(e.target.value);
+  // };
 
   const handleReschedAppointment = () => {
     reschedAppointment();

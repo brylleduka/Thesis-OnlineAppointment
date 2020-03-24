@@ -9,6 +9,7 @@ const Story = ({ content }) => {
         width="90%"
         margin="24px auto 0 auto"
         ref={content}
+        id="story"
       >
         <DGrid two>
           <Content

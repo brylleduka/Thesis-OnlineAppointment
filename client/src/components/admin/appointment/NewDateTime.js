@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState, useEffect} from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_EMPLOYEE_QUERY } from "../../../util/graphql/employee";
 import { FETCH_SINGLE_SERVICE_QUERY } from "../../../util/graphql/service";

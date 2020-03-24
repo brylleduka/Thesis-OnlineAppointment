@@ -3,7 +3,6 @@ import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { useDropzone } from "react-dropzone";
 import { DGrid, Content, DCard, DImage } from "../../styled/containers";
-import { DButton } from "../../styled/utils";
 import { Camera } from "@styled-icons/boxicons-solid/Camera";
 import Carousel, { Modal, ModalGateway } from "react-images";
 import Spinner from "../../Spinner";
@@ -12,8 +11,6 @@ const PhotoBooth = ({
   id,
   photo,
   fetchEmployee,
-  handleDetails,
-  handleSchedule
 }) => {
   // LIGHT BOX
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
@@ -50,7 +47,7 @@ const PhotoBooth = ({
     [addEmployeePhoto]
   );
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   const images = [
     {

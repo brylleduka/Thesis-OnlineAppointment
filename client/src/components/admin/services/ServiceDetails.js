@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import { FETCH_ALL_SERVICES_QUERY } from "../../../util/graphql/service";
 import { useForm } from "../../../util/hooks/useForm";
 import { Form, Label } from "semantic-ui-react";
 import JoditEditor from "jodit-react";
@@ -45,13 +44,10 @@ const ServiceDetails = ({ service, serviceHistoryCallback }) => {
       duration: parseInt(parseFloat(values.duration) * 60),
       description: content
     },
-    update(data) {
-      console.log(data);
-    },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
-    onCompleted(data) {
+    onCompleted() {
       toaster.notify(({ onClose }) => (
         <Toasted status={"success"}>
           <span className="description">Service Updated</span>
@@ -66,6 +62,8 @@ const ServiceDetails = ({ service, serviceHistoryCallback }) => {
   function updateServiceCallback() {
     updateService();
   }
+
+  console.log(errors);
 
   return (
     <>
@@ -127,13 +125,15 @@ const ServiceDetails = ({ service, serviceHistoryCallback }) => {
               config={config}
               tabIndex={1} // tabIndex of textarea
               onBlur={newContent => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
-              onChange={newContent => {}}
+              // onChange={newContent => {}}
             />
           </Content>
         </DGrid>
       </DSection>
       <Content width="100%" flex justify="flex-end">
-        <DButtonConfirm onClick={handleSubmit}>Save</DButtonConfirm>
+        <DButtonConfirm onClick={handleSubmit}>
+          {loading ? "Loading..." : "Save"}
+        </DButtonConfirm>
         <DButtonCancel onClick={() => setOpen(true)}>Delete</DButtonCancel>
       </Content>
       <ServiceConfirmDelete

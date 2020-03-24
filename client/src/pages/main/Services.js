@@ -33,7 +33,7 @@ const Services = () => {
     if (ref.current)
       ref.current.scrollIntoView({
         behavior: "smooth",
-        block: "center"
+        block: "start"
       });
   }
 
@@ -42,7 +42,7 @@ const Services = () => {
   };
 
   return (
-    <DContainer>
+    <DContainer id="services">
       {scrolling && <ScrollButton scrollPx="100" delay="16.66" />}
       <DSection
         background={
@@ -69,8 +69,8 @@ const Services = () => {
             basic
             circle
             default
-            size="58px"
-            width="58px"
+            size="48px"
+            width="48px"
             pad="auto"
             style={{
               position: "absolute",

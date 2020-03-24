@@ -8,13 +8,11 @@ import { Form, Popup, Icon } from "semantic-ui-react";
 import Spinner from "../../components/Spinner";
 import moment from "moment";
 
-
 const AppointmentDetails = props => {
   const history = useHistory();
   const appointmentId = props.match.params._id;
-  const [myAppoint, setMyAppoint] = useState([]);
-  const [open, setOpen] = useState(false);
-
+  const [myAppoint, setMyAppoint] = useState({});
+ 
   const { data, loading: dataLoading } = useQuery(
     FETCH_SINGLE_APPOINTMENT_QUERY,
     {
@@ -59,7 +57,7 @@ const AppointmentDetails = props => {
     >
       <h2 style={{ color: "#fff" }}>My Appointment Details</h2>
 
-      {!data ? (
+      {dataLoading ? (
         <Spinner inverted />
       ) : (
         <DGrid rowCustom="1fr 100px">
@@ -77,16 +75,12 @@ const AppointmentDetails = props => {
             <Form>
               <Form.Field style={styles.field}>
                 <label style={styles.label}>Appointment Id</label>
-                <input
-                  value={data.appointment._id}
-                  readOnly
-                  style={styles.input}
-                />
+                <input value={myAppoint._id} readOnly style={styles.input} />
               </Form.Field>
               <Form.Field style={styles.field}>
                 <label style={styles.label}>Service</label>
                 <input
-                  value={data.appointment.service.name}
+                  value={myAppoint.service.name}
                   readOnly
                   style={styles.input}
                 />
@@ -94,7 +88,7 @@ const AppointmentDetails = props => {
               <Form.Field style={styles.field}>
                 <label style={styles.label}>Aesthetician</label>
                 <input
-                  value={`${data.appointment.employee.title}. ${data.appointment.employee.firstName} ${data.appointment.employee.lastName}`}
+                  value={`${myAppoint.employee.title}. ${myAppoint.employee.firstName} ${myAppoint.employee.lastName}`}
                   readOnly
                   style={styles.input}
                 />
@@ -102,7 +96,7 @@ const AppointmentDetails = props => {
               <Form.Field style={styles.field}>
                 <label style={styles.label}>Date of Appointment</label>
                 <input
-                  value={moment(parseInt(data.appointment.date)).format("LL")}
+                  value={moment(parseInt(myAppoint.date)).format("LL")}
                   readOnly
                   style={styles.input}
                 />
@@ -110,7 +104,7 @@ const AppointmentDetails = props => {
               <Form.Field style={styles.field}>
                 <label style={styles.label}>Time of Appointment</label>
                 <input
-                  value={data.appointment.slot_start}
+                  value={myAppoint.slot_start}
                   readOnly
                   style={styles.input}
                 />
@@ -118,7 +112,7 @@ const AppointmentDetails = props => {
               <Form.Field style={styles.field}>
                 <label style={styles.label}>Duration</label>
                 <input
-                  value={`${data.appointment.service.duration} min`}
+                  value={`${myAppoint.service.duration} min`}
                   readOnly
                   style={styles.input}
                 />
@@ -126,24 +120,24 @@ const AppointmentDetails = props => {
               <Form.Field style={styles.field}>
                 <label style={styles.label}>Status</label>
                 <input
-                  value={data.appointment.status}
+                  value={myAppoint.status}
                   readOnly
                   style={
-                    data.appointment.status === "PENDING"
+                    myAppoint.status === "PENDING"
                       ? {
                           width: "60%",
                           fontSize: 14,
                           fontWeight: 700,
                           color: "gold"
                         }
-                      : data.appointment.status === "CANCELLED"
+                      : myAppoint.status === "CANCELLED"
                       ? {
                           width: "60%",
                           fontSize: 14,
                           fontWeight: 700,
                           color: "firebrick"
                         }
-                      : data.appointment.status === "VERIFIED"
+                      : myAppoint.status === "VERIFIED"
                       ? {
                           width: "60%",
                           fontSize: 14,
@@ -164,14 +158,13 @@ const AppointmentDetails = props => {
           <Content width="100%" flex align="center" justify="space-between">
             <DButton onClick={() => history.goBack()}>Back</DButton>
 
-            {data.appointment.status === "CANCELLED" ||
-            data.appointment.status === "DONE" ? (
+            {myAppoint.status === "CANCELLED" || myAppoint.status === "DONE" ? (
               ""
             ) : (
               <>
                 <DButton>Reschedule</DButton>
                 <Content flex align="center" justify="center">
-                  <DButton alert onClick={() => setOpen(true)} disabled>
+                  <DButton alert disabled>
                     Cancel
                   </DButton>
                   {diffDate && (

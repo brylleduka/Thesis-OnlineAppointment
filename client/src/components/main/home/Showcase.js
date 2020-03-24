@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { DShowCase, Overlay } from "../../styled/containers";
 import { DButton } from "../../styled/utils";
 import { Icon } from "semantic-ui-react";
-import Swiper from "react-id-swiper";
+import Slider from "react-slick";
 
 const Showcase = ({ nextSection }) => {
   const mql = window.matchMedia("(max-width: 768px)");
@@ -38,29 +38,17 @@ const Showcase = ({ nextSection }) => {
     }
   }, [showcaseData]);
 
-  // Custom params swiper
-  const params = {
-    slidesPerView: 1,
-    centeredSlides: true,
-    effect: "fade",
-    loop: true,
-    autoplay: {
-      delay: 4000,
-      disableOnInteraction: true
-    },
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-      dynamicBullets: true
-    },
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev"
-    }
+  const settings = {
+    dots: true,
+    infinite: true,
+    fade: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
   };
 
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ position: "relative" }} id="home">
       <DButton
         onClick={scrollDown}
         basic
@@ -92,9 +80,9 @@ const Showcase = ({ nextSection }) => {
           }
         ></DShowCase>
       ) : (
-        <Swiper {...params}>
+        <Slider {...settings}>
           {showcaseData &&
-            showcaseData.contentManagements.map((sc, index) => (
+            showcaseData.contentManagements.map(sc => (
               <DShowCase
                 height="90vh"
                 key={sc._id}
@@ -125,7 +113,7 @@ const Showcase = ({ nextSection }) => {
                 </Overlay>
               </DShowCase>
             ))}
-        </Swiper>
+        </Slider>
       )}
     </div>
   );

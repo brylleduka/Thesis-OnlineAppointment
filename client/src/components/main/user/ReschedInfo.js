@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_SINGLE_APPOINTMENT_QUERY } from "../../../util/graphql/appointment";
 import { Content, DGrid } from "../../styled/containers";
-import { DLabel, DButton } from "../../styled/utils";
+import { DLabel } from "../../styled/utils";
 import Accordion from "../../Accordion";
 import moment from "moment";
 

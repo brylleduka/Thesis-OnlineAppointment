@@ -3,7 +3,6 @@ import { useQuery } from "@apollo/react-hooks";
 import { FETCH_USER_ACCOUNT } from "../../util/graphql/user";
 import Layout from "../../components/admin/layout/Layout";
 import { DSection, DGrid, Content } from "../../components/styled/containers";
-import { DButton } from "../../components/styled/utils";
 import Skeleton from "react-loading-skeleton";
 import PhotoBooth from "../../components/admin/client/PhotoBooth";
 import ClientDetails from "../../components/admin/client/ClientDetails";

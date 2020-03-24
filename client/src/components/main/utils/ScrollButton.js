@@ -1,5 +1,6 @@
 import React from "react";
 import { Icon } from "semantic-ui-react";
+import { ScrollUp, DButton } from "../../styled/utils";
 import "./scroll.css";
 
 class ScrollButton extends React.Component {
@@ -38,12 +39,7 @@ class ScrollButton extends React.Component {
           this.scrollToTop();
         }}
       >
-        <Icon
-          name="chevron circle up"
-          size="large"
-          circular
-          className="arrow-up"
-        />
+        <ScrollUp name="chevron up" size="large" className="arrow-up" />
       </button>
     );
   }

@@ -1,13 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { useHistory } from "react-router-dom";
 import { FETCH_SINGLE_SERVICE_QUERY } from "../../../util/graphql/service";
 import { FETCH_EMPLOYEE_QUERY } from "../../../util/graphql/employee";
-import {
-  FETCH_MY_APPOINTMENTS,
-  FETCH_MY_CURRENT_APPOINTMENTS
-} from "../../../util/graphql/appointment";
+import { FETCH_MY_CURRENT_APPOINTMENTS } from "../../../util/graphql/appointment";
 import { Modal, Form } from "semantic-ui-react";
 import {
   DButtonConfirm,
@@ -26,9 +23,11 @@ const Confirmation = ({
   startDate,
   selectedTime
 }) => {
+  const history = useHistory();
   const [errors, setErrors] = useState({});
   const [addInfo, setAddInfo] = useState("");
-  const history = useHistory();
+  const [service, setService] = useState({});
+
   const { data: data_service, loading: loading_service } = useQuery(
     FETCH_SINGLE_SERVICE_QUERY,
     {
@@ -37,6 +36,12 @@ const Confirmation = ({
       }
     }
   );
+
+  useEffect(() => {
+    if (data_service) {
+      setService(data_service.service);
+    }
+  }, [data_service]);
 
   const { data: data_employee, loading: loading_employee } = useQuery(
     FETCH_EMPLOYEE_QUERY,
@@ -127,6 +132,8 @@ const Confirmation = ({
     createAppointment();
   };
 
+  console.log(errors);
+
   return (
     <Modal size="tiny" open={open} onClose={() => setOpen(false)}>
       <Modal.Header>Appointment Confirmation</Modal.Header>
@@ -136,11 +143,11 @@ const Confirmation = ({
             <DLabel bgcolor="#2193b0" style={styles.label} rounded m="10px 0">
               Service
             </DLabel>
-            {!data_service ? (
+            {loading_service ? (
               <h6>Loading...</h6>
             ) : (
               <input
-                value={data_service.service.name}
+                value={service.name}
                 readOnly
                 style={{ width: "60%" }}
               />

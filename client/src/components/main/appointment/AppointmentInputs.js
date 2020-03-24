@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery, useLazyQuery } from "@apollo/react-hooks";
 import {
   FETCH_ALL_CATEGORIES_QUERY,
@@ -18,12 +18,21 @@ const AppointmentInputs = ({
   employeeVal,
   setEmployeeVal
 }) => {
+  const [categories, setCategories] = useState([]);
+  const [services, setServices] = useState([]);
+  const [employees, setEmployees] = useState([]);
   //CATEGORY
   const {
     loading: loading_categories,
     data: data_categories,
     error
   } = useQuery(FETCH_ALL_CATEGORIES_QUERY);
+
+  useEffect(() => {
+    if (data_categories) {
+      setCategories(data_categories.categories);
+    }
+  }, [data_categories]);
 
   //SERVICE
   const [
@@ -34,6 +43,12 @@ const AppointmentInputs = ({
       categoryId: values.category
     }
   });
+
+  useEffect(() => {
+    if (data_services) {
+      setServices(data_services.services);
+    }
+  }, [data_services]);
 
   //EMPLOYEE
   const [
@@ -48,6 +63,12 @@ const AppointmentInputs = ({
       serviceId: serviceValue
     }
   });
+
+  useEffect(() => {
+    if (data_serviceEmp) {
+      setEmployees(data_serviceEmp.service.employees);
+    }
+  }, [data_serviceEmp]);
 
   //Handle Changes
 
@@ -99,8 +120,8 @@ const AppointmentInputs = ({
               className="input-custom"
             >
               <option></option>
-              {data_categories.categories &&
-                data_categories.categories.map(category => (
+              {categories &&
+                categories.map(category => (
                   <option value={category._id} key={category._id}>
                     {category.name}
                   </option>
@@ -131,8 +152,8 @@ const AppointmentInputs = ({
               }}
             >
               <option></option>
-              {data_services &&
-                data_services.services.map(service => (
+              {services &&
+                services.map(service => (
                   <option key={service._id} value={service._id}>
                     {service.name}
                   </option>
@@ -155,8 +176,8 @@ const AppointmentInputs = ({
               className="ui fluid dropdown"
             >
               <option></option>
-              {data_serviceEmp &&
-                data_serviceEmp.service.employees.map(servEmp => (
+              {employees &&
+                employees.map(servEmp => (
                   <option key={servEmp._id} value={servEmp._id}>
                     {servEmp.firstName}
                   </option>

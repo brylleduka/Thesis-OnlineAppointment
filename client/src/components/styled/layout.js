@@ -13,14 +13,9 @@ export const LayoutContainer = styled.div`
 
 export const MainLayout = styled.div`
   grid-area: main;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 90%;
-  margin: 0 auto;
-  position: relative;
+  width: 100%;
+  margin: auto;
+  background: rgba(242, 242, 242, 0.2);
 `;
 export const SideNavLayout = styled.div`
   grid-area: sidenav;

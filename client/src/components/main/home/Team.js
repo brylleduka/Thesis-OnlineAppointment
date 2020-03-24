@@ -5,10 +5,7 @@ import { FETCH_EMPLOYEES_NOT_ADMIN_QUERY } from "../../../util/graphql/employee"
 import { Link } from "react-router-dom";
 import {
   DGrid,
-  DImage,
-  DCard,
   DSection,
-  Overlay
 } from "../../styled/containers";
 import { JCard4 } from "../../styled/card";
 import Skeleton from "react-loading-skeleton";

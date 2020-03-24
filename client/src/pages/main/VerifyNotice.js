@@ -1,10 +1,6 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import {
-  DSection,
-  Content,
-  DShowCase
-} from "../../components/styled/containers";
+import { DSection, Content } from "../../components/styled/containers";
 import { DButton } from "../../components/styled/utils";
 
 const VerifyNotice = () => {

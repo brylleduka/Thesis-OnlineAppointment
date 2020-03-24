@@ -8,6 +8,8 @@ const AccountContentTwo = ({ isAccount, userInfo }) => {
       return <UserDetails userInfo={userInfo} />;
     case "appointments":
       return <UserAppointments />;
+    default:
+      return <h1>Something went wrong</h1>;
   }
 };
 
