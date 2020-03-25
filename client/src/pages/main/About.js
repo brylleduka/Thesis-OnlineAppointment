@@ -10,6 +10,7 @@ import ScrollButton from "../../components/main/utils/ScrollButton";
 import useScroll from "../../util/hooks/useScroll";
 import Story from "../../components/main/about/Story";
 import Team from "../../components/main/about/Team";
+import MouseScroll from "../../components/MouseScroll";
 
 const About = () => {
   const content = useRef();
@@ -23,7 +24,7 @@ const About = () => {
       });
   }
 
-  const pageDown = () => {
+  const scrollDown = () => {
     scrollView(content);
   };
 
@@ -51,21 +52,7 @@ const About = () => {
         >
           <h1 style={{ fontSize: "38px" }}>About Us</h1>
           <h3>The Concept of Beauty</h3>
-          <DButton
-            onClick={pageDown}
-            basic
-            circle
-            default
-            size="58px"
-            width="58px"
-            pad="auto"
-            style={{
-              position: "absolute",
-              bottom: "20px"
-            }}
-          >
-            <ScrollUp name="chevron down" size="large" circular />
-          </DButton>
+          <MouseScroll onClick={scrollDown} />
         </Content>
         <Overlay />
       </DSection>
