@@ -10,7 +10,6 @@ const resolvers = require("./resolvers");
 //MIDDLEWARE
 const app = express();
 
-
 // MONGODB CONNECTION
 const uri = process.env.MONGODB_URI;
 
@@ -47,6 +46,14 @@ app.get("*", (req, res) => {
 });
 
 const PORT = process.env.PORT || 4000;
+
+if (process.env.NODE_ENV === "production") {
+  app.use((req, res, next) => {
+    if (req.header("x-forwarded-proto") !== "https")
+      res.redirect(`https://${req.header("host")}${req.url}`);
+    else next();
+  });
+}
 
 app.listen({ port: PORT }, () => {
   console.log(`Server ready at http://localhost:${PORT}${server.graphqlPath}`);
