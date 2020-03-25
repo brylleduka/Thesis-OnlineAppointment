@@ -38,6 +38,14 @@ const server = new ApolloServer({
 
 server.applyMiddleware({ app });
 
+if (process.env.NODE_ENV === "production") {
+  app.use((req, res, next) => {
+    if (req.header("x-forwarded-proto") !== "https")
+      res.redirect(`https://${req.header("host")}${req.url}`);
+    else next();
+  });
+}
+
 app.use("/images", express.static(path.join(__dirname, "/images")));
 
 app.use(express.static("public"));
@@ -46,14 +54,6 @@ app.get("*", (req, res) => {
 });
 
 const PORT = process.env.PORT || 4000;
-
-if (process.env.NODE_ENV === "production") {
-  app.use((req, res, next) => {
-    if (req.header("x-forwarded-proto") !== "https")
-      res.redirect(`https://${req.header("host")}${req.url}`);
-    else next();
-  });
-}
 
 app.listen({ port: PORT }, () => {
   console.log(`Server ready at http://localhost:${PORT}${server.graphqlPath}`);
