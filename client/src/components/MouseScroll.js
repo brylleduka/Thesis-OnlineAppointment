@@ -4,9 +4,9 @@ import { DMouseScroll } from "./styled/scroll.styled";
 const MouseScroll = props => {
   return (
     <DMouseScroll {...props}>
-      <div class="scroll-downs">
-        <div class="mousey">
-          <div class="scroller"></div>
+      <div className="scroll-downs">
+        <div className="mousey">
+          <div className="scroller"></div>
         </div>
       </div>
     </DMouseScroll>

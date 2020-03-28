@@ -249,6 +249,9 @@ export const DRightMenu = styled(DMenu)`
   li a {
     color: #232323;
   }
+
+  ${props => props.scrolled && "li a {color: #fff}"};
+
   li:first-child {
     padding: 10px;
   }

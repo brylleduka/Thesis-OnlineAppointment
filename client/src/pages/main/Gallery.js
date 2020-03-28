@@ -7,9 +7,10 @@ import {
   Content,
   Overlay
 } from "../../components/styled/containers";
-import { DButton, ScrollUp } from "../../components/styled/utils";
 import ScrollButton from "../../components/main/utils/ScrollButton";
 import useScroll from "../../util/hooks/useScroll";
+import MouseScroll from "../../components/MouseScroll";
+import { scrollView } from "../../util/useScrollDown";
 
 const photos = [
   {
@@ -84,15 +85,7 @@ const Gallery = () => {
     setViewerIsOpen(false);
   };
 
-  function scrollView(ref) {
-    if (ref.current)
-      ref.current.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest"
-      });
-  }
-
-  const pageDown = () => {
+  const scrollDown = () => {
     scrollView(content);
   };
 
@@ -120,21 +113,7 @@ const Gallery = () => {
         >
           <h1 style={{ fontSize: "38px" }}>Gallery</h1>
           <h3>Love Your Skin</h3>
-          <DButton
-            onClick={pageDown}
-            basic
-            circle
-            default
-            size="48px"
-            width="48px"
-            pad="auto"
-            style={{
-              position: "absolute",
-              bottom: "20px"
-            }}
-          >
-            <ScrollUp name="chevron down" size="large" circular />
-          </DButton>
+          <MouseScroll onClick={scrollDown} />
         </Content>
         <Overlay />
       </DSection>

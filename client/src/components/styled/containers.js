@@ -116,7 +116,10 @@ export const Overlay = styled.div`
   .overlay-content {
     width: ${props => (props.cwidth ? props.cwidth : "50%")};
     text-align: left;
+    height: auto;
     margin: ${props => (props.cmarg ? props.cmarg : "0 24px")};
+    padding: 10px;
+
     h1,
     h2,
     h3,
@@ -150,6 +153,8 @@ export const Overlay = styled.div`
 `;
 
 export const DGrid = styled.section`
+  height: 100%;
+  width: 100%;
   display: grid;
   grid-template-columns: ${props =>
     props.two
@@ -319,7 +324,7 @@ export const DSection = styled.section`
   background: url('${props =>
     props.background && props.background}') no-repeat center center/cover;
   background-attachment: ${props => props.fixed && "fixed"};
-  background: ${props => props.bgcolor && props.bgcolor};
+  background-color: ${props => props.bgcolor && props.bgcolor};
   display: ${props => props.flex && "flex"};
   justify-content: ${props => props.justify && props.justify};
   align-items: ${props => props.align && props.align};
@@ -340,7 +345,10 @@ export const Content = styled.div`
   letter-spacing: 2px;
   position: relative;
   margin: ${props => props.margin && props.margin};
-  background: ${props => props.bgcolor && props.bgcolor};
+  background: url('${props =>
+    props.background && props.background}') no-repeat center center/cover;
+  background-attachment: ${props => props.fixed && "fixed"};
+  background-color: ${props => props.bgcolor && props.bgcolor};
   border-radius: ${props =>
     props.rounded
       ? "10px"
@@ -397,6 +405,9 @@ export const DImage = styled.div`
   overflow: hidden;
   border-radius: ${props =>
     props.circle ? "50%" : props.rounded ? "20px" : "0"};
+  border-width: ${props => props.bordered && "1px"};
+  border-style: ${props => (props.dashed ? "dashed" : "solid")};
+  border-color: ${props => (props.dashed ? "#ccc" : "#000")};
   margin: ${props => (props.m ? props.m : "0 auto")};
   padding: ${props => props.pad && props.pad};
   img {
@@ -481,7 +492,7 @@ export const Section2Styled = styled.div`
 
     .sec2-inner {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       margin: 0 24px;
       height: 100vh;
@@ -507,6 +518,7 @@ export const Section2Styled = styled.div`
             line-height: 24px;
             padding-right: 48px;
             margin-bottom: 56px;
+            text-align: justify;
           }
         }
       }
@@ -542,6 +554,12 @@ export const Section2Styled = styled.div`
           }
         }
       }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .sec2-images {
+      display: none;
     }
   }
 `;

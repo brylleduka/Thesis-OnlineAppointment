@@ -7,14 +7,13 @@ export const LayoutContainer = styled.div`
     "sidenav header"
     "sidenav main"
     "sidenav footer";
-
   position: relative;
 `;
 
 export const MainLayout = styled.div`
   grid-area: main;
+  position: relative;
   width: 100%;
-  margin: auto;
   background: rgba(242, 242, 242, 0.2);
 `;
 export const SideNavLayout = styled.div`

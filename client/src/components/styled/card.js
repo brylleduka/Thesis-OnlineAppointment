@@ -65,58 +65,58 @@ export const JCard = styled.figure`
     z-index: 1;
     bottom: 0;
     padding: 25px 40% 25px 20px;
-  }
 
-  figcaption:before,
-  figcaption:after {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #2193b0;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-    content: "";
-    opacity: 0.5;
-    z-index: -1;
-  }
+    &::before,
+    &::after {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #2193b0;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+      content: "";
+      opacity: 0.5;
+      z-index: -1;
+    }
 
-  figcaption:before {
-    -webkit-transform: skew(30deg) translateX(-100%);
-    transform: skew(30deg) translateX(-100%);
-  }
+    &::before {
+      -webkit-transform: skew(30deg) translateX(-100%);
+      transform: skew(30deg) translateX(-100%);
+    }
 
-  figcaption:after {
-    -webkit-transform: skew(-30deg) translateX(-90%);
-    transform: skew(-30deg) translateX(-90%);
-  }
+    &::after {
+      -webkit-transform: skew(-30deg) translateX(-90%);
+      transform: skew(-30deg) translateX(-90%);
+    }
 
-  h3,
-  p {
-    margin: 0;
-    opacity: 0;
-    letter-spacing: 1px;
-  }
+    h3,
+    p {
+      margin: 0;
+      opacity: 0;
+      letter-spacing: 1px;
+    }
 
-  h3 {
-    font-family: "Teko", sans-serif;
-    font-size: 36px;
-    font-weight: 700;
-    line-height: 1em;
-    text-transform: uppercase;
-  }
+    h3 {
+      font-family: "Teko", sans-serif;
+      font-size: ${props => (props.titleSize ? props.titleSize : "36px")};
+      font-weight: 700;
+      line-height: 1em;
+      text-transform: uppercase;
+    }
 
-  p {
-    font-size: 0.9em;
-  }
+    p {
+      font-size: 0.9em;
+    }
 
-  a {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;
+    a {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1;
+    }
   }
 
   &:hover h3,
@@ -466,4 +466,127 @@ export const JCard4 = styled.figure`
     right: 0;
     z-index: 1;
   }
+`;
+
+export const DTestimonialCard = styled.div`
+  margin: 0 auto;
+  padding: 10px;
+  outline: 0;
+  border: 0;
+
+  figure {
+    position: relative;
+    float: left;
+    overflow: hidden;
+    margin: 0 auto;
+    min-width: 230px;
+    width: 100%;
+    color: #000000;
+    text-align: center;
+    font-size: 16px;
+    background: #2193b0;
+    background: -webkit-linear-gradient(
+      to bottom,
+      rgba(248, 181, 0, 0.4),
+      #2193b0
+    );
+    background: linear-gradient(
+      to bottom,
+      rgba(248, 181, 0, 0.2),
+      rgba(33, 147, 176, 0.7)
+    );
+    padding: 15px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
+    & *,
+    & *::before,
+    & *::after {
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      -webkit-transition: all 0.35s ease;
+      transition: all 0.35s ease;
+    }
+
+    img {
+      width: 100px;
+      border-radius: 50%;
+      display: inline-block;
+      -webkit-box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.4);
+      box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.4);
+      margin-bottom: 10px;
+      border: solid 5px #fe8c00;
+      border-color: ${({ theme }) => theme.blue};
+    }
+
+    figcaption {
+      position: relative;
+      width: 100%;
+
+      h5,
+      h4,
+      blockquote {
+        margin: 0;
+      }
+
+      h5,
+      h4 {
+        font-weight: 300;
+      }
+
+      h4 {
+        color: #ffffff;
+      }
+
+      h5 {
+        color: ${props =>
+          props.inverted
+            ? ({ theme }) => theme.light
+            : ({ theme }) => theme.dark};
+      }
+
+      blockquote {
+        font-size: 1em;
+        padding: 45px 20px 40px 50px;
+        margin-top: 30px;
+        background: #ffffff;
+        border-radius: 5px;
+        -webkit-box-shadow: inset -1.4px -1.4px 2px rgba(0, 0, 0, 0.3);
+        box-shadow: inset -1.4px -1.4px 2px rgba(0, 0, 0, 0.3);
+        text-align: left;
+        position: relative;
+        color: ${props =>
+          props.inverted
+            ? ({ theme }) => theme.light
+            : ({ theme }) => theme.dark};
+
+        &::before,
+        &::after {
+          font-family: "FontAwesome";
+          position: absolute;
+          font-size: 22px;
+          opacity: 0.25;
+          color: ${props =>
+            props.inverted
+              ? ({ theme }) => theme.light
+              : ({ theme }) => theme.dark};
+        }
+
+        &::before {
+          content: "\f10d";
+          top: 20px;
+          left: 20px;
+        }
+        &::after {
+          content: "\f10e";
+          bottom: 10px;
+          right: 20px;
+        }
+      }
+    }
+  }
+
+  ${props =>
+    props.basic &&
+    "figure{background: transparent; figcaption{blockquote{box-shadow: none; background: transparent}}}"}
 `;

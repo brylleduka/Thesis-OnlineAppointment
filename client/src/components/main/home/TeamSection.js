@@ -3,16 +3,14 @@ import { useQuery } from "@apollo/react-hooks";
 import { FETCH_EMPLOYEES_NOT_ADMIN_QUERY } from "../../../util/graphql/employee";
 
 import { Link } from "react-router-dom";
-import {
-  DGrid,
-  DSection,
-} from "../../styled/containers";
+import { DGrid, DSection } from "../../styled/containers";
 import { JCard4 } from "../../styled/card";
 import Skeleton from "react-loading-skeleton";
 import parser from "html-react-parser";
-import ReadMore from "../../main/utils/ReadMore";
+import ReadMore from "../utils/ReadMore";
+import FancyText from "../../FancyText";
 
-const Team = ({ cards }) => {
+const TeamSection = ({ cards }) => {
   const [employeesAR, setEmployeesAR] = useState([]);
 
   const {
@@ -45,7 +43,7 @@ const Team = ({ cards }) => {
       height="100%"
       margin="48px auto"
     >
-      <h1 style={{ marginBottom: "24px" }}>Our Team</h1>
+      <FancyText size="40px">Our Team</FancyText>
       <DGrid four margin="0 auto" gap="25px" style={{ marginBottom: "24px" }}>
         {loading_employeesAR ? (
           <>
@@ -116,4 +114,4 @@ const styles = {
   }
 };
 
-export default Team;
+export default TeamSection;

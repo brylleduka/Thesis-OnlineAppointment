@@ -5,24 +5,17 @@ import {
   Content,
   Overlay
 } from "../../components/styled/containers";
-import { DButton, ScrollUp } from "../../components/styled/utils";
 import ScrollButton from "../../components/main/utils/ScrollButton";
 import useScroll from "../../util/hooks/useScroll";
 import TestimonialCard from "../../components/main/testimonial/TestimonialCard";
+import { scrollView } from "../../util/useScrollDown";
+import MouseScroll from "../../components/MouseScroll";
 
 const Testimonials = () => {
   const content = useRef();
   const scrolling = useScroll(500);
 
-  function scrollView(ref) {
-    if (ref.current)
-      ref.current.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-  }
-
-  const pageDown = () => {
+  const scrollDown = () => {
     scrollView(content);
   };
   return (
@@ -34,6 +27,7 @@ const Testimonials = () => {
         }
         height="85vh"
         fixed
+        id="tstmnl"
       >
         <Content
           flex
@@ -50,21 +44,7 @@ const Testimonials = () => {
             What Our Client Says
           </h1>
           {/* <h3>We continously improve our service</h3> */}
-          <DButton
-            onClick={pageDown}
-            basic
-            circle
-            default
-            size="48px"
-            width="48px"
-            pad="auto"
-            style={{
-              position: "absolute",
-              bottom: "20px"
-            }}
-          >
-            <ScrollUp name="chevron down" size="large" circular />
-          </DButton>
+          <MouseScroll onClick={scrollDown} />
         </Content>
         <Overlay />
       </DSection>

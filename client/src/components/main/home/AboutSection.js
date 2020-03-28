@@ -2,8 +2,9 @@ import React, { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Section2Styled } from "../../styled/containers";
 import { TweenMax, TimelineLite, Power3 } from "gsap";
+import ReadMore from "../utils/ReadMore";
 
-const Section2 = ({ nextSection }) => {
+const AboutSection = ({ nextSection }) => {
   let section2 = useRef(null);
   let images = useRef(null);
   let tl = new TimelineLite();
@@ -52,9 +53,15 @@ const Section2 = ({ nextSection }) => {
               <p>
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam
                 labore dolore ad nemo, veritatis iure mollitia impedit. Quod, id
-                tempore?
-                <Link to="/zessence/appointment">Learn More</Link>
+                tempore? Lorem ipsum dolor sit amet, consectetur adipisicing
+                elit. Placeat dolorum repudiandae tempora, sunt nostrum
+                explicabo. Doloribus, quis est, corporis deserunt excepturi
+                praesentium fugit eius minus laudantium nesciunt modi temporibus
+                vitae.
               </p>
+              <ReadMore>
+                <Link to="/zessence/appointment">Learn More</Link>
+              </ReadMore>
             </div>
           </div>
           <div className="sec2-images">
@@ -79,4 +86,4 @@ const Section2 = ({ nextSection }) => {
   );
 };
 
-export default Section2;
+export default AboutSection;

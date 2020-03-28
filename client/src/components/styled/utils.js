@@ -407,6 +407,9 @@ export const ReadMore = styled.p`
       vertical-align: middle;
       transition: margin 0.3s, opacity 0.3s;
     }
+    a {
+      color: ${({ theme }) => theme.secondary};
+    }
     &:hover {
       &:after {
         margin-left: 5px;
@@ -423,4 +426,12 @@ export const ScrollUp = styled(Icon)`
   height: 50%;
   transform: translate(-50%, -50%);
   display: block;
+`;
+
+export const DIconCustom = styled(Icon)`
+  cursor: ${props => props.pointer && "pointer"};
+  font-size: ${props => props.customSize && props.customSize} !important;
+  &:hover {
+    opacity: 0.85;
+  }
 `;

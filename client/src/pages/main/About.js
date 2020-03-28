@@ -5,24 +5,16 @@ import {
   Content,
   Overlay
 } from "../../components/styled/containers";
-import { DButton, ScrollUp } from "../../components/styled/utils";
 import ScrollButton from "../../components/main/utils/ScrollButton";
 import useScroll from "../../util/hooks/useScroll";
 import Story from "../../components/main/about/Story";
 import Team from "../../components/main/about/Team";
 import MouseScroll from "../../components/MouseScroll";
+import { scrollView } from "../../util/useScrollDown";
 
 const About = () => {
   const content = useRef();
   const scrolling = useScroll(500);
-
-  function scrollView(ref) {
-    if (ref.current)
-      ref.current.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-      });
-  }
 
   const scrollDown = () => {
     scrollView(content);

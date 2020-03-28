@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { DSection, Content } from "../../styled/containers";
 
-const Section3 = () => {
+const PromoSection1 = () => {
   return (
     <DSection
       background={
@@ -26,4 +26,4 @@ const Section3 = () => {
   );
 };
 
-export default Section3;
+export default PromoSection1;

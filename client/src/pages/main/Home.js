@@ -1,10 +1,11 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import Showcase from "../../components/main/home/Showcase";
-import CategoryCards from "../../components/main/home/CategoryCards";
-import Team from "../../components/main/home/Team";
-import Section2 from "../../components/main/home/Section2";
-import Section3 from "../../components/main/home/Section3";
+import CategorySection from "../../components/main/home/CategorySection";
+import TeamSection from "../../components/main/home/TeamSection";
+import AboutSection from "../../components/main/home/AboutSection";
+import PromoSection1 from "../../components/main/home/PromoSection1";
+import TestimonialSection from "../../components/main/home/TestimonialSection";
 import { DContainer } from "../../components/styled/containers";
 import ScrollButton from "../../components/main/utils/ScrollButton";
 import useScroll from "../../util/hooks/useScroll";
@@ -19,25 +20,13 @@ const Home = () => {
       {scrolling && <ScrollButton />}
       <Showcase nextSection={nextSection} />
 
-      <Section2 nextSection={nextSection} />
+      <AboutSection nextSection={nextSection} />
 
-      <CategoryCards cards={card1} />
-
-      <Team cards={card1} />
-      {/* Carbon */}
-      <Section3 />
-      <section className="follow">
-        <p>Follow Z Essence</p>
-        <Link to="/">
-          <h4>Facebook</h4>
-        </Link>
-        <Link to="/">
-          <h4>Twitter</h4>
-        </Link>
-        <Link to="/">
-          <h4>LinkedIn</h4>
-        </Link>
-      </section>
+      <CategorySection cards={card1} />
+      <PromoSection1 />
+      <TeamSection cards={card1} />
+      <TestimonialSection />
+      <PromoSection1 />
     </DContainer>
   );
 };

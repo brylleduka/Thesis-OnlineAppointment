@@ -1,10 +1,10 @@
 import React from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import { FETCH_SHOWCASE } from "../../../../util/graphql/cms";
+import { FETCH_SHOWCASE } from "../../../../../util/graphql/cms";
 import { Modal } from "semantic-ui-react";
-import { DButton } from "../../../styled/utils";
-import Spinner from "../../../Spinner";
+import { DButton } from "../../../../styled/utils";
+import Spinner from "../../../../Spinner";
 
 const DeleteShowcase = ({ openAlert, setOpenAlert, isDeleteShowCase }) => {
   const [deleteShowcase, { loading: loadingDelete }] = useMutation(

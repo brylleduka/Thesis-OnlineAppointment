@@ -13,9 +13,10 @@ import Skeleton from "react-loading-skeleton";
 import parser from "html-react-parser";
 import { Link } from "react-router-dom";
 import ReadMore from "../../components/main/utils/ReadMore";
-import { DButton, ScrollUp } from "../../components/styled/utils";
 import ScrollButton from "../../components/main/utils/ScrollButton";
 import useScroll from "../../util/hooks/useScroll";
+import MouseScroll from "../../components/MouseScroll";
+import { scrollView } from "../../util/useScrollDown";
 
 const Services = () => {
   const sectionDown = useRef();
@@ -28,14 +29,6 @@ const Services = () => {
       setIsCategories(data.categories);
     }
   }, [data]);
-
-  function scrollView(ref) {
-    if (ref.current)
-      ref.current.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-  }
 
   const scrollDown = () => {
     scrollView(sectionDown);
@@ -64,23 +57,11 @@ const Services = () => {
         >
           <h1 style={{ fontSize: "48px" }}>Our Services</h1>
           <h3>It's time to take care of your skin</h3>
-          <DButton
-            onClick={scrollDown}
-            basic
-            circle
-            default
-            size="48px"
-            width="48px"
-            pad="auto"
-            style={{
-              position: "absolute",
-              bottom: "20px"
-            }}
-          >
-            <ScrollUp name="chevron down" size="large" circular />
-          </DButton>
+          <MouseScroll onClick={scrollDown} />
         </Content>
-        <Overlay />
+        <Overlay
+          bg={"linear-gradient(to top, rgba(0,0,0,0.3), rgba(255,255,255,0.1))"}
+        />
       </DSection>
       <DSection
         width="90%"

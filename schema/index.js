@@ -97,7 +97,7 @@ const typeDefs = gql`
     createdAt: String
     updatedAt: String
   }
-
+  # MODIFY
   type CMS {
     _id: ID
     photo: String
@@ -115,6 +115,27 @@ const typeDefs = gql`
     mphoto: [String]
     sparagraph: String
     sphoto: [String]
+  }
+  #
+
+  type HomeCMS {
+    _id: ID
+    title: String
+    subtitle: String
+    paragraph: String
+    content: [HomeContent]
+    sectionName: String
+  }
+
+  type HomeContent {
+    _id: ID
+    title: String
+    subtitle: String
+    paragraph: String
+    bgImg: String
+    bgColor: String
+    position: String
+    dark: Boolean
   }
 
   # INPUTS
@@ -167,6 +188,16 @@ const typeDefs = gql`
     categoryId: ID
   }
 
+  input HomeContentInput {
+    ctitle: String
+    csubtitle: String
+    cparagraph: String
+    bgImg: String
+    bgColor: String
+    position: String
+    dark: Boolean
+  }
+
   type Query {
     user(_id: ID!): User
     getUsers: [User]
@@ -197,6 +228,8 @@ const typeDefs = gql`
     inquiries: [Inquiry]
     inquiriesRead(read: Boolean): [Inquiry]
     inquiry(_id: ID!): Inquiry
+
+    homeCMS(sectionName: String): HomeCMS
   }
 
   type Mutation {
@@ -337,6 +370,15 @@ const typeDefs = gql`
       sparagraph: String
       sphoto: Upload
     ): CMSAbout
+
+    # CMSHOME
+    # SHOWCASE
+    addNewShowCase(
+      title: String
+      subtitle: String
+      paragraph: String
+      inputHomeContent: HomeContentInput
+    ): HomeCMS
   }
 `;
 

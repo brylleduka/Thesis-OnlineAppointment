@@ -5,6 +5,7 @@ const employeeResolvers = require("./employee");
 const appointmentResolvers = require("./appointment");
 const inquiryResolvers = require("./inquiry");
 const cmsResolvers = require("./cms");
+const homeCMSResolvers = require("./homeCms");
 
 module.exports = {
   Query: {
@@ -14,7 +15,8 @@ module.exports = {
     ...employeeResolvers.Query,
     ...appointmentResolvers.Query,
     ...inquiryResolvers.Query,
-    ...cmsResolvers.Query
+    ...cmsResolvers.Query,
+    ...homeCMSResolvers.Query
   },
   Mutation: {
     ...userResolvers.Mutation,
@@ -23,6 +25,7 @@ module.exports = {
     ...employeeResolvers.Mutation,
     ...appointmentResolvers.Mutation,
     ...inquiryResolvers.Mutation,
-    ...cmsResolvers.Mutation
+    ...cmsResolvers.Mutation,
+    ...homeCMSResolvers.Mutation
   }
 };

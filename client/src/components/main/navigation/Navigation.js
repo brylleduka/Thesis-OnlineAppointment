@@ -38,7 +38,7 @@ const Navigation = ({ open, setOpen }) => {
   );
 
   const scrollBehavior = el =>
-    el.scrollIntoView({ behavior: "smooth", block: "center" });
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
 
   return (
     <DNavigation ref={node} scrolled={scrolling ? true : false}>
@@ -124,7 +124,9 @@ const Navigation = ({ open, setOpen }) => {
             <Link to="/zessence/contact">Contact</Link>
           </li>
           <li>
-            <Link to="/zessence/testimonials">Testimonials</Link>
+            <Link to="/zessence/testimonials/#tstmnl" scroll={scrollBehavior}>
+              Testimonials
+            </Link>
           </li>
         </DMainMenu>
         <DRightMenu scrolled={scrolling ? true : false}>
