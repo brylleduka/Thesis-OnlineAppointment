@@ -55,7 +55,7 @@ ul {
 }
 
 .dark {
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
 .dark .btn {

@@ -20,34 +20,36 @@ export const DContainer = styled.div`
   width: 100%;
   margin: auto;
   background: rgba(242, 242, 242, 0.2);
-  margin-top: 14vh;
+  margin-top: 12vh;
 `;
 
 export const DShowCase = styled.div`
   width: 100%;
   height: ${props => (props.height ? props.height : "100vh")};
   position: relative;
-  background: url('${props =>
-    props.background && props.background}') no-repeat center center/cover;
-
   background: ${props => props.bgcolor && props.bgcolor};
+  background-image: url(${props => props.background && props.background});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   text-align: center;
 
-
-  h1,h2,
+  h1,
+  h2,
   p {
-    
     margin-left: 48px;
   }
   .btn {
     margin-left: 48px;
   }
 
-  img{
+  img {
     height: 100%;
     width: auto;
     object-fit: cover;
@@ -65,11 +67,11 @@ export const Overlay = styled.div`
     props.bg
       ? props.bg
       : props.bgr
-      ? "linear-gradient(270deg, rgba(0,0,0,0.6) 13%, rgba(255,255,255,0.1) 100%)"
+      ? "linear-gradient(270deg, rgba(0,0,0,0.4) 8%, rgba(255,255,255,0) 100%)"
       : props.bgl
-      ? "linear-gradient(90deg, rgba(0,0,0,0.6) 13%, rgba(255,255,255,0.1) 100%)"
+      ? "linear-gradient(90deg, rgba(0,0,0,0.4) 8%, rgba(255,255,255,0) 100%)"
       : props.bgc
-      ? "rgba(0,0,0,0.6)"
+      ? "rgba(0,0,0,0.4)"
       : "rgba(0, 0, 0, 0)"};
   border-radius: inherit;
   z-index: 1;
@@ -123,11 +125,11 @@ export const Overlay = styled.div`
   }
 
   .overlay-content {
-    width: ${props => (props.cwidth ? props.cwidth : "50%")};
+    width: ${props => (props.cwidth ? props.cwidth : "80%")};
     text-align: ${props => (props.talign ? props.talign : "left")};
     height: auto;
     margin: ${props => (props.cmarg ? props.cmarg : "0 24px")};
-    padding: 10px;
+    padding: 10px 40px;
 
     h1,
     h2,
@@ -147,7 +149,9 @@ export const Overlay = styled.div`
     }
 
     h1 {
-      font-size: ${props => (props.fs ? props.fs : "48px")};
+      font-size: ${props => (props.fs ? props.fs : "60px")};
+      font-weight: 700;
+      text-transform: uppercase;
     }
   }
 
@@ -335,22 +339,23 @@ export const DCard = styled.div`
 
 export const DSection = styled.section`
   height: ${props => (props.height ? props.height : "400px")};
-  width:  ${props => (props.width ? props.width : "100%")};;
+  width: ${props => (props.width ? props.width : "100%")};
   margin: ${props =>
     props.margin ? props.margin : props.mcenter ? "0 auto" : "0"};
   padding: ${props => props.pad && props.pad};
- 
-  background: url('${props =>
-    props.background && props.background}') no-repeat center center/cover;
-  background-attachment: ${props => props.fixed && "fixed"};
-  background-color: ${props => props.bgcolor && props.bgcolor};
+  background: ${props => props.bgcolor && props.bgcolor};
+  background-image: url(${props => props.background && props.background});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+
   display: ${props => props.flex && "flex"};
   justify-content: ${props => props.justify && props.justify};
   align-items: ${props => props.align && props.align};
   flex-flow: ${props => props.flow && props.flow};
   flex-direction: ${props => props.direct && props.direct};
   position: relative;
-
 `;
 
 export const Content = styled.div`

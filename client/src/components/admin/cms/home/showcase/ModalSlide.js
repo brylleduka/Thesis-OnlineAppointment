@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { FETCH_THE_SHOWCASE } from "../../../../../util/graphql/cms";
-import { Modal, Icon, Form, TextArea } from "semantic-ui-react";
+import { Modal, Icon, Form, TextArea, Popup } from "semantic-ui-react";
 import { BlockPicker } from "react-color";
 import { DButton } from "../../../../styled/utils";
 import { DGrid, Content } from "../../../../styled/containers";
@@ -186,7 +186,12 @@ const ModalSlide = ({ open, setOpen, showcase }) => {
               <Form.Field>
                 <label>
                   Background-color{" "}
-                  <Icon name="question circle outline" size="large" />
+                  <Popup
+                    content="This Background color is for fallback if background image is not set or unavailable"
+                    trigger={
+                      <Icon name="question circle outline" size="large" />
+                    }
+                  />
                 </label>
 
                 <BlockPicker
@@ -200,7 +205,13 @@ const ModalSlide = ({ open, setOpen, showcase }) => {
 
               <Form.Field>
                 <label>
-                  Overlay <Icon name="question circle outline" size="small" />
+                  Overlay{" "}
+                  <Popup
+                    content="Adding overlay over the top of slide and make the text white for contrast"
+                    trigger={
+                      <Icon name="question circle outline" size="large" />
+                    }
+                  />
                 </label>
                 <Content
                   flex

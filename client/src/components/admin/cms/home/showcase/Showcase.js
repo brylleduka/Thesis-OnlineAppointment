@@ -56,8 +56,13 @@ const Showcase = () => {
       ) : (
         <Slider {...settings}>
           {showcase.map(sc => (
-            <DShowCase height="70vh" key={sc._id} bgcolor={sc.bgColor}>
-              {sc.bgImg && (
+            <DShowCase
+              height="70vh"
+              key={sc._id}
+              background={sc.bgImg && `/images/cms/home/${sc.bgImg}`}
+              bgcolor={sc.bgColor}
+            >
+              {/* {sc.bgImg && (
                 <DImage height="100%">
                   <img
                     src={
@@ -68,7 +73,7 @@ const Showcase = () => {
                     alt="showcase"
                   />
                 </DImage>
-              )}
+              )} */}
 
               <Overlay
                 flex

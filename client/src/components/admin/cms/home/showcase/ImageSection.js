@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Icon } from "semantic-ui-react";
+import { Icon, Popup } from "semantic-ui-react";
 import {
   DImage,
   Content,
@@ -80,13 +80,17 @@ const ImageSection = ({
           style={{ display: "none" }}
           ref={fileInput}
         />
-
-        <Icon
-          name="camera"
-          size="large"
-          onClick={handleInputClick}
-          style={{ cursor: "pointer", color: "#2193b0", opacity: 0.75 }}
-          className="icon_camera-custom"
+        <Popup
+          content="Select image for background slide"
+          trigger={
+            <Icon
+              name="camera"
+              size="large"
+              onClick={handleInputClick}
+              style={{ cursor: "pointer", color: "#2193b0", opacity: 0.75 }}
+              className="icon_camera-custom"
+            />
+          }
         />
       </Content>
     </>

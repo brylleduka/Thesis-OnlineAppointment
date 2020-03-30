@@ -8,7 +8,7 @@ export const DNavigation = styled.nav`
   top: 0;
   right: 0;
   left: 0;
-  height: 14vh;
+  height: 12vh;
   z-index: 10;
 
   .content {
