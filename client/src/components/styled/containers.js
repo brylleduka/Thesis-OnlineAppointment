@@ -61,7 +61,16 @@ export const Overlay = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: ${props => (props.bg ? props.bg : "rgba(0, 0, 0, 0.15)")};
+  background: ${props =>
+    props.bg
+      ? props.bg
+      : props.bgr
+      ? "linear-gradient(270deg, rgba(0,0,0,0.6) 13%, rgba(255,255,255,0.1) 100%)"
+      : props.bgl
+      ? "linear-gradient(90deg, rgba(0,0,0,0.6) 13%, rgba(255,255,255,0.1) 100%)"
+      : props.bgc
+      ? "rgba(0,0,0,0.6)"
+      : "rgba(0, 0, 0, 0)"};
   border-radius: inherit;
   z-index: 1;
   display: ${props => props.flex && "flex"};
@@ -115,19 +124,28 @@ export const Overlay = styled.div`
 
   .overlay-content {
     width: ${props => (props.cwidth ? props.cwidth : "50%")};
-    text-align: left;
+    text-align: ${props => (props.talign ? props.talign : "left")};
     height: auto;
     margin: ${props => (props.cmarg ? props.cmarg : "0 24px")};
     padding: 10px;
 
     h1,
     h2,
-    h3,
     p {
-      color: ${props => (props.color ? props.color : "#fff")};
       letter-spacing: 5px;
-      line-height: 2;
+      line-height: 1.4;
     }
+
+    h3,
+    h4,
+    .ps {
+      letter-spacing: 1px;
+      line-height: 1.4;
+    }
+    .ps {
+      font-size: 10px;
+    }
+
     h1 {
       font-size: ${props => (props.fs ? props.fs : "48px")};
     }
@@ -321,6 +339,7 @@ export const DSection = styled.section`
   margin: ${props =>
     props.margin ? props.margin : props.mcenter ? "0 auto" : "0"};
   padding: ${props => props.pad && props.pad};
+ 
   background: url('${props =>
     props.background && props.background}') no-repeat center center/cover;
   background-attachment: ${props => props.fixed && "fixed"};
@@ -331,6 +350,7 @@ export const DSection = styled.section`
   flex-flow: ${props => props.flow && props.flow};
   flex-direction: ${props => props.direct && props.direct};
   position: relative;
+
 `;
 
 export const Content = styled.div`
@@ -405,9 +425,12 @@ export const DImage = styled.div`
   overflow: hidden;
   border-radius: ${props =>
     props.circle ? "50%" : props.rounded ? "20px" : "0"};
-  border-width: ${props => props.bordered && "1px"};
-  border-style: ${props => (props.dashed ? "dashed" : "solid")};
-  border-color: ${props => (props.dashed ? "#ccc" : "#000")};
+  border: ${props =>
+    props.bordered
+      ? "1px solid #000"
+      : props.dashed
+      ? "1px dashed #ccc"
+      : "none"};
   margin: ${props => (props.m ? props.m : "0 auto")};
   padding: ${props => props.pad && props.pad};
   img {

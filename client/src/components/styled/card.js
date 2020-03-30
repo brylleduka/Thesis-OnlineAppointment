@@ -108,15 +108,6 @@ export const JCard = styled.figure`
     p {
       font-size: 0.9em;
     }
-
-    a {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 1;
-    }
   }
 
   &:hover h3,
@@ -158,6 +149,15 @@ export const JCard = styled.figure`
     transform: skew(-30deg) translateX(-30%);
     -webkit-transition-delay: 0.1s;
     transition-delay: 0.1s;
+  }
+
+  a {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
   }
 `;
 

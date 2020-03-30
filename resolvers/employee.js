@@ -290,7 +290,7 @@ module.exports = {
           updateSchedule
         );
 
-        console.log(scheduleId._id);
+     
 
         const updated = await Employee.findByIdAndUpdate(_id, updateEmployee, {
           new: true

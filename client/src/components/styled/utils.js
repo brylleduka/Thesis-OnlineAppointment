@@ -51,7 +51,7 @@ export const DButton = styled.button`
       : props.primary
       ? ({ theme }) => theme.primary
       : props.default
-      ? ({ theme }) => theme.dark
+      ? ({ theme }) => theme.bluer
       : ({ theme }) => theme.blue};
       
   color: ${props => (props.color ? props.color : ({ theme }) => theme.light)};
@@ -67,6 +67,8 @@ export const DButton = styled.button`
       ? ({ theme }) => theme.green
       : props.primary
       ? ({ theme }) => theme.primary
+      : props.default
+      ? ({ theme }) => theme.bluer
       : ({ theme }) => theme.blue};
 
   ${props =>
@@ -426,12 +428,4 @@ export const ScrollUp = styled(Icon)`
   height: 50%;
   transform: translate(-50%, -50%);
   display: block;
-`;
-
-export const DIconCustom = styled(Icon)`
-  cursor: ${props => props.pointer && "pointer"};
-  font-size: ${props => props.customSize && props.customSize} !important;
-  &:hover {
-    opacity: 0.85;
-  }
 `;

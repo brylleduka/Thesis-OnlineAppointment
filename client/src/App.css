@@ -25,6 +25,9 @@ a {
 ul {
   list-style: none;
 }
+.icon_camera-custom:hover {
+  opacity: 1;
+}
 
 .main-content {
   width: 100%;
@@ -36,8 +39,8 @@ ul {
   border: 0;
   font-weight: bold;
   padding: 10px 20px;
-  background-color: #fe8c00;
-  color: #fff;
+  background-color: #fe8c00 !important;
+  color: #fff !important;
   font-size: 18px;
   z-index: 2;
   border-radius: 5px;

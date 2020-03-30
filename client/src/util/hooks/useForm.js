@@ -9,7 +9,6 @@ export const useForm = (callback, initialState = {}) => {
 
   const handleSubmit = event => {
     event.preventDefault();
-
     callback();
   };
 

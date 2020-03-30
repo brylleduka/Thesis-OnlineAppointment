@@ -192,7 +192,7 @@ const typeDefs = gql`
     ctitle: String
     csubtitle: String
     cparagraph: String
-    bgImg: String
+    bgImg: Upload
     bgColor: String
     position: String
     dark: Boolean
@@ -350,12 +350,6 @@ const typeDefs = gql`
     # CMS
     addShowcase(file: Upload): Boolean
     deleteShowcase(_id: ID!): Boolean
-    updateShowcase(
-      _id: ID!
-      fileName: String
-      headline: String
-      paragraph: String
-    ): CMS
 
     #CMS ABOUT
     addCMSAboutPhoto(bgimage: Upload): Boolean
@@ -373,12 +367,9 @@ const typeDefs = gql`
 
     # CMSHOME
     # SHOWCASE
-    addNewShowCase(
-      title: String
-      subtitle: String
-      paragraph: String
-      inputHomeContent: HomeContentInput
-    ): HomeCMS
+    addNewShowCase(inputHomeContent: HomeContentInput): HomeCMS
+
+    updateShowcase(showcaseId: ID!, inputHomeContent: HomeContentInput): HomeCMS
   }
 `;
 

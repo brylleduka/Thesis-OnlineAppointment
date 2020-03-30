@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { FETCH_SHOWCASE } from "../../../util/graphql/cms";
+import { FETCH_THE_SHOWCASE } from "../../../util/graphql/cms";
 import { Link } from "react-router-dom";
-import { DShowCase, Overlay } from "../../styled/containers";
+import { DShowCase, Overlay, DImage } from "../../styled/containers";
 import Slider from "react-slick";
 import MouseScroll from "../../MouseScroll";
 
@@ -23,17 +23,17 @@ const Showcase = ({ nextSection }) => {
   };
 
   const { data: showcaseData, loading: dataLoading, error } = useQuery(
-    FETCH_SHOWCASE,
+    FETCH_THE_SHOWCASE,
     {
       variables: {
-        section: "SHOWCASE"
+        sectionName: "SHOWCASE"
       }
     }
   );
 
   useEffect(() => {
     if (showcaseData) {
-      setShowcase(showcaseData.contentManagements);
+      setShowcase(showcaseData.homeCMS.content);
     }
   }, [showcaseData]);
 
@@ -59,29 +59,50 @@ const Showcase = ({ nextSection }) => {
       ) : (
         <Slider {...settings}>
           {showcase.map(sc => (
-            <DShowCase
-              height="90vh"
-              key={sc._id}
-              background={
-                sc.photo !== null || sc.photo !== undefined
-                  ? `/images/cms/home/${sc.photo}`
-                  : "https://images.pexels.com/photos/3765134/pexels-photo-3765134.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-              }
-            >
+            <DShowCase height="90vh" key={sc._id} bgcolor={sc.bgColor}>
+              {sc.bgImg && (
+                <DImage height="100%">
+                  <img
+                    src={
+                      sc.bgImg !== null || sc.bgImg !== undefined
+                        ? `/images/cms/home/${sc.bgImg}`
+                        : "https://images.pexels.com/photos/3765134/pexels-photo-3765134.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                    }
+                    alt="showcase"
+                  />
+                </DImage>
+              )}
+
               <Overlay
-                bg={
-                  "linear-gradient(to right, rgba(0,0,0,0.7), rgba(255,255,255,0.1))"
-                }
                 flex
-                justify="flex-start"
+                bgr={sc.dark && sc.position === "right" ? true : false}
+                bgl={sc.dark && sc.position === "left" ? true : false}
+                bgc={sc.dark && sc.position === "center" ? true : false}
+                justify={
+                  sc.position === "left"
+                    ? "flex-start"
+                    : sc.position === "right"
+                    ? "flex-end"
+                    : sc.position === "center"
+                    ? "center"
+                    : ""
+                }
+                talign={
+                  sc.position === "left"
+                    ? "left"
+                    : sc.position === "right"
+                    ? "right"
+                    : sc.position === "center"
+                    ? "center"
+                    : ""
+                }
                 align="center"
+                className={sc.dark ? "dark" : ""}
               >
                 <div className="overlay-content">
-                  <h1>Z Essence Facial & Spa</h1>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quisquam, doloribus.
-                  </p>
+                  <h1>{sc.title}</h1>
+                  <h2>{sc.subtitle}</h2>
+                  <p>{sc.paragraph}</p>
                   <Link to="/zessence" className="btn">
                     Book Appointment
                   </Link>

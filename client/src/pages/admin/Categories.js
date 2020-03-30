@@ -43,38 +43,40 @@ const Categories = () => {
 
   return (
     <Layout>
-      <DSection margin="20px 0">
+      <DSection margin="20px 0" width="90%" mcenter height="100%">
         <Content flex justify="space-between" width="100%">
           <h2>Services</h2>
           <DButton onClick={handleOpenModal}>New Category</DButton>
         </Content>
         <h3>Category List</h3>
-        <DGrid two gap="15px" margin="40px 0">
-          {loading ? (
-            <>
-              <Skeleton width={300} height={300} />
-              <Skeleton width={300} height={300} />
-            </>
-          ) : (
-            categories.map(category => (
-              <JCard>
-                <img
-                  src={
-                    category.photo !== null
-                      ? `/images/service/${category.photo}`
-                      : "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample108.jpg"
-                  }
-                  alt={category.name}
-                />
-                <figcaption>
-                  <h3>{parser(category.name)}</h3>
-                  <p>{parser(category.description)}</p>
-                </figcaption>
-                <Link to={`/zeadmin/category/${category._id}`} />
-              </JCard>
-            ))
-          )}
-        </DGrid>
+        <Content width="100%" height="100%">
+          <DGrid three gap="15px" margin="40px 0">
+            {loading ? (
+              <>
+                <Skeleton width={300} height={300} />
+                <Skeleton width={300} height={300} />
+              </>
+            ) : (
+              categories.map(category => (
+                <JCard>
+                  <img
+                    src={
+                      category.photo !== null
+                        ? `/images/service/${category.photo}`
+                        : "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample108.jpg"
+                    }
+                    alt={category.name}
+                  />
+                  <figcaption>
+                    <h3>{parser(category.name)}</h3>
+                    <p>{parser(category.description)}</p>
+                  </figcaption>
+                  <Link to={`/zeadmin/category/${category._id}`}>View</Link>
+                </JCard>
+              ))
+            )}
+          </DGrid>
+        </Content>
         <NewCategory open={open} setOpen={setOpen} />
       </DSection>
     </Layout>
