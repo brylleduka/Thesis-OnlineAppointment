@@ -6,9 +6,7 @@ import { Form, Label } from "semantic-ui-react";
 import { Content, DGrid, DSection } from "../../styled/containers";
 import {
   Toasted,
-  DButton,
-  DButtonConfirm,
-  DButtonCancel
+  DButton
 } from "../../styled/utils";
 import toaster from "toasted-notes";
 import JoditEditor from "jodit-react";
@@ -318,12 +316,12 @@ const EmployeeDetails = ({ employee }) => {
                 </Form.Field>
               </Form.Group>
               <Content width="100%" flex justify="flex-end">
-                <DButtonConfirm onClick={handleSubmit}>
+                <DButton confirm onClick={handleSubmit}>
                   {loading ? <Spinner small inverted /> : "Save"}
-                </DButtonConfirm>
-                <DButtonCancel onClick={() => setOpen(true)}>
+                </DButton>
+                <DButton alert onClick={() => setOpen(true)}>
                   Delete
-                </DButtonCancel>
+                </DButton>
               </Content>
             </Form>
           </Content>

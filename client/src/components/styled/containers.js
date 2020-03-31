@@ -356,6 +356,14 @@ export const DSection = styled.section`
   flex-flow: ${props => props.flow && props.flow};
   flex-direction: ${props => props.direct && props.direct};
   position: relative;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+
+  @media (max-width: 500px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const Content = styled.div`
@@ -509,27 +517,44 @@ export const DFooter = styled.footer`
 `;
 
 export const Section2Styled = styled.div`
-  visibility: hidden;
-  height: 100vh;
-  margin: 32px 0;
-  width: 90%;
+  position: relative;
+  visibility: ${props => (props.visible ? "visible" : "hidden")};
+  max-height: 100vh;
+  min-height: 30vh;
+  height: 100%;
+  width: ${props => (props.width ? props.width : "90%")};
+  margin: 24px auto;
+  text-align: center;
+
+  .switch {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: auto;
+    margin-bottom: 24px;
+    position: absolute;
+    top: 0;
+    right: 24px;
+  }
+
   .sec2-container {
     width: 100%;
     min-width: 90%;
     margin: 0 auto;
-
+    padding-top: 48px;
     .sec2-inner {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      margin: 0 24px;
+      ${props => props.alt && "flex-direction: row-reverse"};
+      margin: 0 auto;
       height: 100vh;
 
       .sec2-content {
         width: 50%;
 
         .sec2-content_inner {
-          width: 400px;
+          width: 90%;
           margin: 0 auto;
           color: #323232;
           h1 {
@@ -544,16 +569,17 @@ export const Section2Styled = styled.div`
           p {
             font-size: 14px;
             line-height: 24px;
-            padding-right: 48px;
+            padding: 12px;
             margin-bottom: 56px;
             text-align: justify;
           }
         }
       }
       .sec2-images {
-        width: 50%;
-        height: 100vh;
+        width: 55%;
+        height: 100%;
         position: relative;
+
         .sec2-images_inner {
           .sec2-image {
             position: absolute;
@@ -571,6 +597,7 @@ export const Section2Styled = styled.div`
               width: 52%;
               height: 65%;
             }
+
             img {
               position: absolute;
               top: 0;
@@ -578,6 +605,7 @@ export const Section2Styled = styled.div`
               right: 0;
               bottom: 0;
               width: 100%;
+              object-fit: cover;
             }
           }
         }
@@ -586,6 +614,19 @@ export const Section2Styled = styled.div`
   }
 
   @media (max-width: 768px) {
+    width: 100%;
+    .sec2-container {
+      width: 100%;
+      .sec2-inner {
+        width: 100%;
+        justify-content: center;
+        margin: 0 auto;
+        .sec2-content {
+          width: 100%;
+        }
+      }
+    }
+
     .sec2-images {
       display: none;
     }

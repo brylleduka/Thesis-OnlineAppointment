@@ -4,12 +4,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { useForm } from "../../../util/hooks/useForm";
 import { Form, Label } from "semantic-ui-react";
 import JoditEditor from "jodit-react";
-import {
-  Toasted,
-  DButtonConfirm,
-  DButtonCancel,
-  DLabel
-} from "../../../components/styled/utils";
+import { Toasted, DButton, DLabel } from "../../../components/styled/utils";
 import toaster from "toasted-notes";
 import {
   DGrid,
@@ -131,10 +126,12 @@ const ServiceDetails = ({ service, serviceHistoryCallback }) => {
         </DGrid>
       </DSection>
       <Content width="100%" flex justify="flex-end">
-        <DButtonConfirm onClick={handleSubmit}>
+        <DButton confirm onClick={handleSubmit}>
           {loading ? "Loading..." : "Save"}
-        </DButtonConfirm>
-        <DButtonCancel onClick={() => setOpen(true)}>Delete</DButtonCancel>
+        </DButton>
+        <DButton alert onClick={() => setOpen(true)}>
+          Delete
+        </DButton>
       </Content>
       <ServiceConfirmDelete
         open={open}

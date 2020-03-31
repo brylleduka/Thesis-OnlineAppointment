@@ -4,9 +4,7 @@ import { FETCH_SINGLE_APPOINTMENT_QUERY } from "../../util/graphql/appointment";
 import { useHistory } from "react-router-dom";
 import { DSection, Content, DGrid } from "../../components/styled/containers";
 import {
-  DButton,
-  DButtonCancel,
-  DButtonConfirm
+  DButton
 } from "../../components/styled/utils";
 import { Form } from "semantic-ui-react";
 import Spinner from "../../components/Spinner";
@@ -171,18 +169,18 @@ const AppointmentDetails = props => {
                 ""
               ) : (
                 <>
-                  <DButtonConfirm onClick={() => setOpenDone(true)}>
+                  <DButton confirm onClick={() => setOpenDone(true)}>
                     Done
-                  </DButtonConfirm>
+                  </DButton>
                   <ReschedModal
                     isAdmin={true}
                     status={"VERIFIED"}
                     setOpen={setOpen}
                     appointmentId={appointmentId}
                   />
-                  <DButtonCancel onClick={() => setOpenCancel(true)}>
+                  <DButton alert onClick={() => setOpenCancel(true)}>
                     Cancel
-                  </DButtonCancel>
+                  </DButton>
                 </>
               )}
             </Content>

@@ -6,7 +6,7 @@ import { FETCH_SERVICES_QUERY } from "../../../util/graphql/service";
 import { useForm } from "../../../util/hooks/useForm";
 import JoditEditor from "jodit-react";
 import toaster from "toasted-notes";
-import { DButtonConfirm, DButtonCancel, Toasted } from "../../styled/utils";
+import { DButton, Toasted } from "../../styled/utils";
 import Spinner from "../../Spinner";
 
 const config = {
@@ -151,10 +151,10 @@ const NewService = ({ categoryId, open, setOpen }) => {
         </Form>
       </Modal.Content>
       <Modal.Actions>
-        <DButtonCancel onClick={() => setOpen(false)}>No</DButtonCancel>
-        <DButtonConfirm type="submit" onClick={handleSubmit}>
+        <DButton alert onClick={() => setOpen(false)}>No</DButton>
+        <DButton confirm type="submit" onClick={handleSubmit}>
           {loading ? <Spinner small inverted /> : "Yes"}
-        </DButtonConfirm>
+        </DButton>
       </Modal.Actions>
     </Modal>
   );

@@ -4,7 +4,7 @@ import { FETCH_SERVICES_QUERY } from "../../../util/graphql/service";
 import { useMutation } from "@apollo/react-hooks";
 
 import { Modal, Header } from "semantic-ui-react";
-import { DButton, DButtonCancel } from "../../styled/utils";
+import { DButton } from "../../styled/utils";
 
 const ServiceConfirmDelete = ({
   open,
@@ -56,12 +56,12 @@ const ServiceConfirmDelete = ({
         </p>
       </Modal.Content>
       <Modal.Actions>
-        <DButton basic onClick={() => setOpen(false)}>
+        <DButton alert basic onClick={() => setOpen(false)}>
           No
         </DButton>
-        <DButtonCancel basic onClick={handleDeleteService}>
+        <DButton basic onClick={handleDeleteService}>
           Yes
-        </DButtonCancel>
+        </DButton>
       </Modal.Actions>
     </Modal>
   );

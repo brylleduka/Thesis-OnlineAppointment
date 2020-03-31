@@ -4,7 +4,7 @@ import { FETCH_ALL_CATEGORIES_QUERY } from "../../../util/graphql/service";
 import { useMutation } from "@apollo/react-hooks";
 
 import { Modal, Header } from "semantic-ui-react";
-import { DButton, DButtonCancel } from "../../styled/utils";
+import { DButton } from "../../styled/utils";
 
 const CategoryDelete = ({ setOpen, open, historyCallback, category }) => {
   const [deleteCategory] = useMutation(DELETE_CATEGORY_MUTATION, {
@@ -48,12 +48,12 @@ const CategoryDelete = ({ setOpen, open, historyCallback, category }) => {
         </p>
       </Modal.Content>
       <Modal.Actions>
-        <DButton basic onClick={() => setOpen(false)}>
+        <DButton alert basic onClick={() => setOpen(false)}>
           No
         </DButton>
-        <DButtonCancel basic onClick={handleDeleteCategory}>
+        <DButton basic onClick={handleDeleteCategory}>
           Yes
-        </DButtonCancel>
+        </DButton>
       </Modal.Actions>
     </Modal>
   );

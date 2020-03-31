@@ -5,7 +5,7 @@ import { useForm } from "../../../util/hooks/useForm";
 import { FETCH_ALL_CATEGORIES_QUERY } from "../../../util/graphql/service";
 
 import { Modal, Form } from "semantic-ui-react";
-import { DButtonCancel, DButtonConfirm } from "../../styled/utils";
+import { DButton } from "../../styled/utils";
 import JoditEditor from "jodit-react";
 import toaster from "toasted-notes";
 
@@ -87,8 +87,8 @@ const NewCategory = ({ open, setOpen }) => {
             />
           </Form.Field>
           <Modal.Actions>
-            <DButtonCancel onClick={() => setOpen(false)}>No</DButtonCancel>
-            <DButtonConfirm type="submit">Yes</DButtonConfirm>
+            <DButton alert onClick={() => setOpen(false)}>No</DButton>
+            <DButton confirm type="submit">Yes</DButton>
           </Modal.Actions>
         </Form>
       </Modal.Content>

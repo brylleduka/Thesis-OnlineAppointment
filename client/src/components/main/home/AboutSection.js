@@ -1,10 +1,27 @@
-import React, { useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useRef, useEffect, useState } from "react";
+import { FETCH_ABOUT_SECTION } from "../../../util/graphql/cms";
+import { useQuery } from "@apollo/react-hooks";
+import { HashLink as Link } from "react-router-hash-link";
 import { Section2Styled } from "../../styled/containers";
 import { TweenMax, TimelineLite, Power3 } from "gsap";
 import ReadMore from "../utils/ReadMore";
 
 const AboutSection = ({ nextSection }) => {
+  const [isAboutSection, setIsAboutSection] = useState({});
+
+  const {
+    data: aboutChange,
+    loading: loadAboutChange
+  } = useQuery(FETCH_ABOUT_SECTION, { variables: { sectionName: "ABOUT" } });
+
+  useEffect(() => {
+    if (aboutChange) {
+      setIsAboutSection(aboutChange.homeCMS);
+    }
+  }, [aboutChange]);
+
+  console.log(isAboutSection);
+
   let section2 = useRef(null);
   let images = useRef(null);
   let tl = new TimelineLite();
@@ -37,7 +54,10 @@ const AboutSection = ({ nextSection }) => {
   }, []);
 
   return (
-    <Section2Styled ref={el => (section2 = el)}>
+    <Section2Styled
+      ref={el => (section2 = el)}
+      alt={isAboutSection && isAboutSection.alt === true ? true : false}
+    >
       <div className="sec2-container" ref={nextSection}>
         <div className="sec2-inner">
           <div className="sec2-content">
@@ -60,7 +80,7 @@ const AboutSection = ({ nextSection }) => {
                 vitae.
               </p>
               <ReadMore>
-                <Link to="/zessence/appointment">Learn More</Link>
+                <Link to="/zessence/about/#story">Learn More</Link>
               </ReadMore>
             </div>
           </div>

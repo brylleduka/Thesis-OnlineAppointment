@@ -71,7 +71,7 @@ const Categories = () => {
                     <h3>{parser(category.name)}</h3>
                     <p>{parser(category.description)}</p>
                   </figcaption>
-                  <Link to={`/zeadmin/category/${category._id}`}>View</Link>
+                  <Link to={`/zeadmin/category/${category._id}`} />
                 </JCard>
               ))
             )}

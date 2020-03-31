@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_EMPLOYEES_NOT_ADMIN_QUERY } from "../../../util/graphql/employee";
 
-import { Link } from "react-router-dom";
+import { HashLink as Link } from "react-router-hash-link";
 import { DGrid, DSection } from "../../styled/containers";
 import { JCard4 } from "../../styled/card";
 import Skeleton from "react-loading-skeleton";
@@ -68,7 +68,7 @@ const TeamSection = ({ cards }) => {
         ) : (
           employeesAR &&
           employeesAR.map(employee => (
-            <JCard4 data-emp={employee._id}>
+            <JCard4 data-emp={employee._id} key={employee._id}>
               <div className="profile-image">
                 <img
                   src={
@@ -96,7 +96,7 @@ const TeamSection = ({ cards }) => {
           ))
         )}
       </DGrid>
-      <Link to="/zessence/about" className="btn btn-blue">
+      <Link to="/zessence/about/#team" className="btn btn-blue">
         Learn More
       </Link>
     </DSection>

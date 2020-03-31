@@ -8,8 +8,7 @@ import { FETCH_MY_APPOINTMENTS } from "../../../util/graphql/appointment";
 import { Modal, Form } from "semantic-ui-react";
 import { DGrid, Content } from "../../styled/containers";
 import {
-  DButtonConfirm,
-  DButtonCancel,
+  DButton,
   DLabel,
   Toasted
 } from "../../styled/utils";
@@ -278,10 +277,10 @@ const Confirmation = ({
         </Form>
       </Modal.Content>
       <Modal.Actions>
-        <DButtonConfirm onClick={handleCreateAppointment}>
+        <DButton confirm onClick={handleCreateAppointment}>
           {loading ? <Spinner small inverted /> : "Book"}
-        </DButtonConfirm>
-        <DButtonCancel onClick={() => setOpen(false)}>Cancel</DButtonCancel>
+        </DButton>
+        <DButton alert onClick={() => setOpen(false)}>Cancel</DButton>
       </Modal.Actions>
     </Modal>
   );

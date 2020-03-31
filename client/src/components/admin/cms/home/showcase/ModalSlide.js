@@ -47,20 +47,22 @@ const ModalSlide = ({ open, setOpen, showcase }) => {
       position: isPosition,
       dark: isDark
     },
-    refetchQueries: [{ query: FETCH_THE_SHOWCASE }],
+    refetchQueries: [
+      { query: FETCH_THE_SHOWCASE, variables: { sectionName: "SHOWCASE" } }
+    ],
     update() {
       if (!showcase) {
         values.title = "";
         values.subtitle = "";
         values.paragraph = "";
-        isDark = false;
-        isPosition = "left";
-        setSelectedFile();
-        setIsColor("#E9E4F0");
       }
     },
     onCompleted() {
       setOpen(false);
+      setIsDark(false);
+      setIsPosition("left");
+      setSelectedFile();
+      setIsColor("#E9E4F0");
       if (showcase) {
         toaster.notify("Update Slide Successfully");
       } else {

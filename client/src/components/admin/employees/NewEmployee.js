@@ -4,7 +4,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { useForm } from "../../../util/hooks/useForm";
 import { FETCH_EMPLOYEES_NOT_ADMIN_QUERY } from "../../../util/graphql/employee";
 import { Modal, Form } from "semantic-ui-react";
-import { DButtonCancel, DButtonConfirm } from "../../styled/utils";
+import { DButton } from "../../styled/utils";
 import { DGrid, Content } from "../../styled/containers";
 import CheckboxGroup from "react-checkbox-group";
 
@@ -310,10 +310,10 @@ const NewEmployee = ({ setOpen, open }) => {
         </Form>
       </Modal.Content>
       <Modal.Actions>
-        <DButtonCancel onClick={() => setOpen(false)}>No</DButtonCancel>
-        <DButtonConfirm type="submit" onClick={handleSubmit}>
+        <DButton alert onClick={() => setOpen(false)}>No</DButton>
+        <DButton confirm type="submit" onClick={handleSubmit}>
           Yes
-        </DButtonConfirm>
+        </DButton>
       </Modal.Actions>
     </Modal>
   );

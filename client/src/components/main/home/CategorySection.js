@@ -32,7 +32,7 @@ const CategorySection = ({ setRef }) => {
     >
       <FancyText size="38px">What We Offer</FancyText>
       <Content height="100%" width="100%">
-        <DGrid four margin="0 0 40px 0" gap="20px">
+        <DGrid two margin="0 0 40px 0" gap="20px">
           {loading ? (
             <>
               <Skeleton width={300} height={300} />
@@ -42,7 +42,7 @@ const CategorySection = ({ setRef }) => {
             </>
           ) : (
             isCategories.map(category => (
-              <JCard titleSize="22px">
+              <JCard titleSize="22px" key={category._id}>
                 <img
                   src={
                     category.photo !== null

@@ -106,7 +106,7 @@ const Category = props => {
                         <img
                           src={
                             data.category.photo !== null
-                              ? `/images/category/${data.category.photo}`
+                              ? `/images/service/${data.category.photo}`
                               : // `/images/${photo}`
                                 "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
                           }

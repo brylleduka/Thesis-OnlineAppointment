@@ -7,6 +7,8 @@ const homeCMS = new Schema(
     title: String,
     subtitle: String,
     paragraph: String,
+    grid: Number,
+    alt: Boolean,
     content: [
       {
         title: String,

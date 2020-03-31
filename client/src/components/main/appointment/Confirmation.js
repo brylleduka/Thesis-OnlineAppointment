@@ -6,12 +6,7 @@ import { FETCH_SINGLE_SERVICE_QUERY } from "../../../util/graphql/service";
 import { FETCH_EMPLOYEE_QUERY } from "../../../util/graphql/employee";
 import { FETCH_MY_CURRENT_APPOINTMENTS } from "../../../util/graphql/appointment";
 import { Modal, Form } from "semantic-ui-react";
-import {
-  DButtonConfirm,
-  DButtonCancel,
-  DLabel,
-  Toasted
-} from "../../styled/utils";
+import { DButton, DLabel, Toasted } from "../../styled/utils";
 import Spinner from "../../Spinner";
 import toaster from "toasted-notes";
 
@@ -146,11 +141,7 @@ const Confirmation = ({
             {loading_service ? (
               <h6>Loading...</h6>
             ) : (
-              <input
-                value={service.name}
-                readOnly
-                style={{ width: "60%" }}
-              />
+              <input value={service.name} readOnly style={{ width: "60%" }} />
             )}
           </Form.Field>
           <Form.Field inline>
@@ -212,10 +203,10 @@ const Confirmation = ({
         </Form>
       </Modal.Content>
       <Modal.Actions>
-        <DButtonConfirm onClick={handleCreateAppointment}>
+        <DButton confirm onClick={handleCreateAppointment}>
           {loading ? <Spinner small inverted /> : "Book"}
-        </DButtonConfirm>
-        <DButtonCancel onClick={() => setOpen(false)}>Cancel</DButtonCancel>
+        </DButton>
+        <DButton alert onClick={() => setOpen(false)}>Cancel</DButton>
       </Modal.Actions>
     </Modal>
   );

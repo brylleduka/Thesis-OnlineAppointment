@@ -8,7 +8,6 @@ import { Form, Label } from "semantic-ui-react";
 import { Content, DGrid } from "../../../components/styled/containers";
 import {
   DButton,
-  DButtonCancel,
   Toasted
 } from "../../../components/styled/utils";
 import Spinner from "../../../components/Spinner";
@@ -96,9 +95,9 @@ const CategoryDetails = ({ category, historyCallback }) => {
             <DButton fluid type="submit" onClick={handleSubmit}>
               {loading ? <Spinner small inverted /> : "Save"}
             </DButton>
-            <DButtonCancel width="30%" onClick={() => setOpen(true)}>
+            <DButton alert width="30%" onClick={() => setOpen(true)}>
               Delete
-            </DButtonCancel>
+            </DButton>
           </Content>
         </DGrid>
       </Form>

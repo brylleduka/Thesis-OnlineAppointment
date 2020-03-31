@@ -142,6 +142,34 @@ module.exports = {
       } catch (err) {
         throw err;
       }
+    },
+    removeShowcase: async (_, { showcaseId }) => {
+      try {
+        await HomeCMS.updateOne(
+          { sectionName: "SHOWCASE" },
+          { $pull: { content: { _id: showcaseId } } },
+          {
+            new: true
+          }
+        );
+
+        return true;
+      } catch (err) {
+        throw err;
+      }
+    },
+    updateAboutSection: async (_, { title, subtitle, alt }) => {
+      try {
+        const aboutSectionUpdate = await HomeCMS.findOneAndUpdate(
+          { sectionName: "ABOUT" },
+          { $set: { title, subtitle, alt } },
+          { new: true, upsert: true }
+        );
+
+        return aboutSectionUpdate;
+      } catch (err) {
+        throw err;
+      }
     }
   }
 };

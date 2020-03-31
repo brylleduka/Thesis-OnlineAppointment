@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { FETCH_APPOINTMENTS_QUERY } from "../../../util/graphql/appointment";
 import { Modal } from "semantic-ui-react";
-import { DButtonConfirm, DButtonCancel, Toasted } from "../../styled/utils";
+import { DButton, Toasted } from "../../styled/utils";
 import toaster from "toasted-notes";
 import Spinner from "../../Spinner";
 
@@ -37,12 +37,12 @@ const AppointmentCancel = ({ openCancel, setOpenCancel, appointmentId }) => {
         <h2>Are you sure you want to cancel the appointment?</h2>
       </Modal.Content>
       <Modal.Actions>
-        <DButtonConfirm basic onClick={() => setOpenCancel(false)}>
+        <DButton confirm basic onClick={() => setOpenCancel(false)}>
           No
-        </DButtonConfirm>
-        <DButtonCancel basic onClick={handleConfirm}>
+        </DButton>
+        <DButton alert basic onClick={handleConfirm}>
           {loading ? <Spinner small inverted /> : "Yes"}
-        </DButtonCancel>
+        </DButton>
       </Modal.Actions>
     </Modal>
   );

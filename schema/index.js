@@ -97,25 +97,6 @@ const typeDefs = gql`
     createdAt: String
     updatedAt: String
   }
-  # MODIFY
-  type CMS {
-    _id: ID
-    photo: String
-    section: String
-    headline: String
-    paragraph: String
-  }
-
-  type CMSAbout {
-    _id: ID
-    title: String
-    subtitle: String
-    bgimage: String
-    mparagraph: String
-    mphoto: [String]
-    sparagraph: String
-    sphoto: [String]
-  }
   #
 
   type HomeCMS {
@@ -123,6 +104,8 @@ const typeDefs = gql`
     title: String
     subtitle: String
     paragraph: String
+    grid: Int
+    alt: Boolean
     content: [HomeContent]
     sectionName: String
   }
@@ -222,8 +205,6 @@ const typeDefs = gql`
     service(_id: ID!): Service
     services(categoryId: ID): [Service]
     allServices: [Service]
-
-    contentManagements(section: String): [CMS]
 
     inquiries: [Inquiry]
     inquiriesRead(read: Boolean): [Inquiry]
@@ -347,29 +328,19 @@ const typeDefs = gql`
     ): Inquiry
     readInquiry(_id: ID): Boolean
     replyInquiry(_id: ID!, email: String, message: String): Inquiry
-    # CMS
-    addShowcase(file: Upload): Boolean
-    deleteShowcase(_id: ID!): Boolean
-
-    #CMS ABOUT
-    addCMSAboutPhoto(bgimage: Upload): Boolean
-    addCMSAboutTitle(title: String, subtitle: String): CMSAbout
-    updateCMSAbout(
-      _id: ID!
-      title: String
-      subtitle: String
-      bgimage: Upload
-      mparagraph: String
-      mphoto: Upload
-      sparagraph: String
-      sphoto: Upload
-    ): CMSAbout
 
     # CMSHOME
     # SHOWCASE
     addNewShowCase(inputHomeContent: HomeContentInput): HomeCMS
-
     updateShowcase(showcaseId: ID!, inputHomeContent: HomeContentInput): HomeCMS
+    removeShowcase(showcaseId: ID!): Boolean
+
+    #AboutSection
+    updateAboutSection(
+      title: String
+      subtitle: String
+      alt: Boolean
+    ): HomeCMS
   }
 `;
 

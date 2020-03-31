@@ -8,12 +8,23 @@ export const LayoutContainer = styled.div`
     "sidenav main"
     "sidenav footer";
   position: relative;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "main"
+      "footer";
+  }
 `;
 
 export const MainLayout = styled.div`
   grid-area: main;
   position: relative;
   width: 100%;
+  max-width: 100%;
+  min-width: 90%;
+  margin: auto;
   background: rgba(242, 242, 242, 0.2);
 `;
 export const SideNavLayout = styled.div`
@@ -40,6 +51,11 @@ export const SideNavLayout = styled.div`
 
     margin: 0 auto;
     margin-top: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    position: absolute;
+    display: none;
   }
 `;
 

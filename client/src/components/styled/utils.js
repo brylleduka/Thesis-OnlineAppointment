@@ -80,6 +80,18 @@ export const DButton = styled.button`
 
   &:hover {
    opacity: 0.8;
+   background: ${props =>
+     props.alert
+       ? ({ theme }) => theme.red
+       : props.warning
+       ? ({ theme }) => theme.yellow
+       : props.confirm
+       ? ({ theme }) => theme.green
+       : props.primary
+       ? ({ theme }) => theme.primary
+       : props.default
+       ? ({ theme }) => theme.bluer
+       : ({ theme }) => theme.blue};
   }
 
   &:focus {

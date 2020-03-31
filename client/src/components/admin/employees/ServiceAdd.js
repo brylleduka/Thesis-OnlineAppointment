@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { FETCH_ALL_CATEGORIES_QUERY } from "../../../util/graphql/service";
 import { Form, Modal } from "semantic-ui-react";
-import { DButtonConfirm, DButtonCancel } from "../../styled/utils";
+import { DButton } from "../../styled/utils";
 import CheckboxGroup from "react-checkbox-group";
 import toaster from "toasted-notes";
 import { DGrid } from "../../styled/containers";
@@ -98,10 +98,10 @@ const ServiceAdd = ({ open, setOpen, employeeId }) => {
         )}
       </Modal.Content>
       <Modal.Actions>
-        <DButtonConfirm type="submit" onClick={handleAddService}>
+        <DButton confirm type="submit" onClick={handleAddService}>
           {loading ? <Spinner small inverted /> : "Add"}
-        </DButtonConfirm>
-        <DButtonCancel onClick={() => setOpen(false)}>Exit</DButtonCancel>
+        </DButton>
+        <DButton alert onClick={() => setOpen(false)}>Exit</DButton>
       </Modal.Actions>
     </Modal>
   );

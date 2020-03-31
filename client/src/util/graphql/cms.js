@@ -1,21 +1,12 @@
 import gql from "graphql-tag";
 
-const FETCH_SHOWCASE = gql`
-  query contentManagements($section: String) {
-    contentManagements(section: $section) {
-      _id
-      photo
-      section
-      headline
-      paragraph
-    }
-  }
-`;
-
 const FETCH_THE_SHOWCASE = gql`
   query homeCMS($sectionName: String) {
     homeCMS(sectionName: $sectionName) {
       _id
+      title
+      subtitle
+      alt
       content {
         _id
         title
@@ -30,4 +21,15 @@ const FETCH_THE_SHOWCASE = gql`
   }
 `;
 
-export { FETCH_SHOWCASE, FETCH_THE_SHOWCASE };
+const FETCH_ABOUT_SECTION = gql`
+  query homeCMS($sectionName: String) {
+    homeCMS(sectionName: $sectionName) {
+      _id
+      title
+      subtitle
+      alt
+    }
+  }
+`;
+
+export { FETCH_THE_SHOWCASE, FETCH_ABOUT_SECTION };
