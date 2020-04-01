@@ -33,7 +33,7 @@ const Showcase = ({ nextSection }) => {
 
   useEffect(() => {
     if (showcaseData) {
-      setShowcase(showcaseData.homeCMS.content);
+      setShowcase(showcaseData.showcaseCMS.content);
     }
   }, [showcaseData]);
 

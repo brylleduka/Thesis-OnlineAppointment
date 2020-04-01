@@ -3,17 +3,18 @@ import styled from "styled-components";
 export const JCard = styled.figure`
   background-color: #fff;
   color: #ffffff;
-  font-family: "Source Sans Pro", sans-serif;
   font-size: 16px;
-  margin: 10px;
   max-width: 100%;
   min-width: 200px;
+  width: ${props => (props.width ? props.width : "100%")};
+  height: ${props => (props.height ? props.height : "auto")};
   overflow: hidden;
   position: relative;
   text-align: left;
-  width: 100%;
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
+  font-size: 12px;
+  margin: 24px auto;
 
   *,
   *:before,
@@ -106,7 +107,7 @@ export const JCard = styled.figure`
     }
 
     p {
-      font-size: 0.9em;
+      font-size: 1em;
     }
   }
 

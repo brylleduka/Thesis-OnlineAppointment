@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const DFancyText = styled.h1`
   font-size: ${props => (props.size ? props.size : "22px")};
   letter-spacing: 2px;
-  margin: 30px auto;
+  margin: 24px auto;
   text-align: center;
   text-transform: uppercase;
   display: table;

@@ -143,56 +143,14 @@ export const DButton = styled.button`
   }
 `;
 
-export const DButtonCancel = styled(DButton)`
-  background: ${props =>
-    props.background
-      ? props.background
-      : props.basic
-      ? "transparent"
-      : ({ theme }) => theme.red};
-
-  border: ${props =>
-    props.border
-      ? "2px solid #1CA7EC"
-      : props.basic
-      ? "2px solid #f12711"
-      : "0"};
-
-  color: ${props =>
-    props.color
-      ? props.color
-      : props.basic
-      ? "inherit"
-      : ({ theme }) => theme.light};
-
-  &:hover {
-    background: ${props => props.basic && (({ theme }) => theme.red)};
-    color: ${props => props.basic && (({ theme }) => theme.light)};
-  }
+export const DButtonFree = styled(DButton)`
+  position: absolute;
+  top: ${props => props.top && props.top};
+  left: ${props => props.left && props.left};
+  bottom: ${props => props.bottom && props.bottom};
+  right: ${props => props.right && props.right};
 `;
 
-export const DButtonConfirm = styled(DButton)`
-  background: ${props =>
-    props.background
-      ? props.background
-      : props.basic
-      ? "transparent"
-      : ({ theme }) => theme.green};
-
-  border: ${props =>
-    props.border
-      ? "2px solid #0f9b0f"
-      : props.basic
-      ? "2px solid #0f9b0f"
-      : "0"};
-
-  color: ${props =>
-    props.color
-      ? props.color
-      : props.basic
-      ? "inherit"
-      : ({ theme }) => theme.light};
-`;
 // LABELS
 export const DLabel = styled.label`
   font-size: ${props => (props.size ? props.size : "12px")};

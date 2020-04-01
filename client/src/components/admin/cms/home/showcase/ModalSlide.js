@@ -12,7 +12,14 @@ import ImageSection from "./ImageSection";
 import toaster from "toasted-notes";
 import "./modal.custom.css";
 
-const colors = ["#6dd5ed", "#2193b0", "#fe8c00", "#E9E4F0", "#203A43"];
+const colors = [
+  "#6dd5ed",
+  "#2193b0",
+  "#fe8c00",
+  "#E9E4F0",
+  "#203A43",
+  "#FFFFFF"
+];
 
 const ModalSlide = ({ open, setOpen, showcase }) => {
   const [isDark, setIsDark] = useState(showcase ? showcase.dark : false);
@@ -21,13 +28,15 @@ const ModalSlide = ({ open, setOpen, showcase }) => {
   );
 
   const [isColor, setIsColor] = useState(
-    showcase ? showcase.bgColor : "#E9E4F0"
+    showcase ? showcase.bgColor : "#FFFFFF"
   );
   const [values, setValues] = useState({
     title: showcase ? showcase.title : "",
     subtitle: showcase ? showcase.subtitle : "",
     paragraph: showcase ? showcase.paragraph : ""
   });
+
+  
   const [
     preview,
     selectedFile,
@@ -261,10 +270,10 @@ const ADD_NEW_SLIDE = gql`
     $dark: Boolean
   ) {
     addNewShowCase(
-      inputHomeContent: {
-        ctitle: $title
-        csubtitle: $subtitle
-        cparagraph: $paragraph
+      inputShowcaseContent: {
+        title: $title
+        subtitle: $subtitle
+        paragraph: $paragraph
         bgImg: $bgImg
         bgColor: $bgColor
         position: $position
@@ -299,10 +308,10 @@ const UPDATE_SLIDE = gql`
   ) {
     updateShowcase(
       showcaseId: $showcaseId
-      inputHomeContent: {
-        ctitle: $title
-        csubtitle: $subtitle
-        cparagraph: $paragraph
+      inputShowcaseContent: {
+        title: $title
+        subtitle: $subtitle
+        paragraph: $paragraph
         bgImg: $bgImg
         bgColor: $bgColor
         position: $position

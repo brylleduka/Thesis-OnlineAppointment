@@ -7,34 +7,53 @@ module.exports = {
   Query: {
     homeCMS: async (_, { sectionName }) => {
       try {
-        const getHomeCMS = await HomeCMS.findOne({ sectionName });
-        return getHomeCMS;
+        const getShowcaseCMS = await HomeCMS.findOne({ sectionName });
+        return getShowcaseCMS;
       } catch (err) {
         throw err;
       }
     }
   },
   Mutation: {
-    addNewShowCase: async (
+    updateAboutSection: async (_, { title, subtitle, alt }) => {
+      try {
+        const aboutSectionUpdate = await HomeCMS.findOneAndUpdate(
+          { sectionName: "ABOUT" },
+          { $set: { title, subtitle, alt } },
+          { new: true, upsert: true }
+        );
+
+        return aboutSectionUpdate;
+      } catch (err) {
+        throw err;
+      }
+    },
+    updateHomeSection: async (
       _,
       {
+        sectionName,
         inputHomeContent: {
-          ctitle,
-          csubtitle,
-          cparagraph,
+          title,
+          subtitle,
+          paragraph,
           bgImg,
           bgColor,
           position,
-          dark
+          grid,
+          dark,
+          alt
         }
       }
     ) => {
       try {
-        // const showcaseExist = await HomeCMS.findOne({
-        //   sectionName: "SHOWCASE"
-        // });
+        const homeCheck = await HomeCMS.findOne({ sectionName });
+        let fileImg;
 
-        let fileImg = "";
+        if (homeCheck) {
+          fileImg = homeCheck.bgImg || "";
+        } else {
+          fileImg = "";
+        }
 
         if (bgImg instanceof stream.Readable || bgImg) {
           const { createReadStream, filename } = await bgImg;
@@ -50,123 +69,25 @@ module.exports = {
           fileImg = filename;
         }
 
-        const showcasing = await HomeCMS.findOneAndUpdate(
-          { sectionName: "SHOWCASE" },
-          {
-            $addToSet: {
-              content: {
-                title: ctitle,
-                subtitle: csubtitle,
-                paragraph: cparagraph,
-                bgImg: fileImg,
-                bgColor,
-                position,
-                dark
-              }
-            }
-          },
-          {
-            upsert: true,
-            new: true
-          }
-        );
-
-        return showcasing;
-      } catch (err) {
-        throw err;
-      }
-    },
-    updateShowcase: async (
-      _,
-      {
-        showcaseId,
-        inputHomeContent: {
-          ctitle,
-          csubtitle,
-          cparagraph,
-          bgImg,
-          bgColor,
-          position,
-          dark
-        }
-      }
-    ) => {
-      try {
-        let bgImgString = [];
-        const showcaseCheck = await HomeCMS.findOne(
-          {
-            sectionName: "SHOWCASE"
-          },
-          { content: { $elemMatch: { _id: showcaseId } } }
-        );
-
-        showcaseCheck.content.map(x => {
-          bgImgString.push(x.bgImg);
-        });
-
-        let fileImgUpdate = bgImgString.toString();
-
-        if (bgImg instanceof stream.Readable || bgImg) {
-          const { createReadStream, filename } = await bgImg;
-
-          await new Promise(res =>
-            createReadStream().pipe(
-              createWriteStream(
-                path.join(__dirname, "../images/cms/home", filename)
-              ).on("close", res)
-            )
-          );
-
-          fileImgUpdate = filename;
-        }
-
-        const showcase = await HomeCMS.findOneAndUpdate(
-          { "content._id": showcaseId },
+        const homeUpdate = await HomeCMS.findOneAndUpdate(
+          { sectionName },
           {
             $set: {
-              "content.$.title": ctitle,
-              "content.$.subtitle": csubtitle,
-              "content.$.paragraph": cparagraph,
-              "content.$.bgImg": fileImgUpdate,
-              "content.$.bgColor": bgColor,
-              "content.$.position": position,
-              "content.$.dark": dark
+              title,
+              subtitle,
+              paragraph,
+              bgImg: fileImg,
+              bgColor,
+              position,
+              dark,
+              grid,
+              alt
             }
           },
-          {
-            new: true
-          }
-        );
-
-        return showcase;
-      } catch (err) {
-        throw err;
-      }
-    },
-    removeShowcase: async (_, { showcaseId }) => {
-      try {
-        await HomeCMS.updateOne(
-          { sectionName: "SHOWCASE" },
-          { $pull: { content: { _id: showcaseId } } },
-          {
-            new: true
-          }
-        );
-
-        return true;
-      } catch (err) {
-        throw err;
-      }
-    },
-    updateAboutSection: async (_, { title, subtitle, alt }) => {
-      try {
-        const aboutSectionUpdate = await HomeCMS.findOneAndUpdate(
-          { sectionName: "ABOUT" },
-          { $set: { title, subtitle, alt } },
           { new: true, upsert: true }
         );
 
-        return aboutSectionUpdate;
+        return homeUpdate;
       } catch (err) {
         throw err;
       }

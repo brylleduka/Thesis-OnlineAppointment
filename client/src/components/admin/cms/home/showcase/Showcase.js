@@ -5,7 +5,6 @@ import {
   DShowCase,
   Overlay,
   DSection,
-  DContainer,
   DImage
 } from "../../../../styled/containers";
 import NewSlide from "./NewSlide";
@@ -14,7 +13,6 @@ import RemoveSlide from "./RemoveSlide";
 import Slider from "react-slick";
 
 const Showcase = () => {
-  const mql = window.matchMedia("(max-width: 768px)");
   const [showcase, setShowcase] = useState([]);
 
   const { data: showcaseData, loading: dataLoading } = useQuery(
@@ -28,7 +26,7 @@ const Showcase = () => {
 
   useEffect(() => {
     if (showcaseData) {
-      setShowcase(showcaseData.homeCMS.content);
+      setShowcase(showcaseData.showcaseCMS.content);
     }
   }, [showcaseData]);
 

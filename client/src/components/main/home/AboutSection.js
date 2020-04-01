@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import { FETCH_ABOUT_SECTION } from "../../../util/graphql/cms";
+import { FETCH_HOME_SECTION } from "../../../util/graphql/cms";
 import { useQuery } from "@apollo/react-hooks";
 import { HashLink as Link } from "react-router-hash-link";
 import { Section2Styled } from "../../styled/containers";
@@ -12,7 +12,7 @@ const AboutSection = ({ nextSection }) => {
   const {
     data: aboutChange,
     loading: loadAboutChange
-  } = useQuery(FETCH_ABOUT_SECTION, { variables: { sectionName: "ABOUT" } });
+  } = useQuery(FETCH_HOME_SECTION, { variables: { sectionName: "ABOUT" } });
 
   useEffect(() => {
     if (aboutChange) {

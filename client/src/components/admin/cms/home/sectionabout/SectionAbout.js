@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/react-hooks";
-import { FETCH_ABOUT_SECTION } from "../../../../../util/graphql/cms";
+import { FETCH_HOME_SECTION } from "../../../../../util/graphql/cms";
 import { Section2Styled } from "../../../../styled/containers";
 import EditModal from "./EditModal";
 
@@ -9,7 +9,7 @@ const SectionAbout = () => {
   const [isAbout, setIsAbout] = useState({});
 
   const { data: dataAboutSection, loading: loadingAboutSection } = useQuery(
-    FETCH_ABOUT_SECTION,
+    FETCH_HOME_SECTION,
     {
       variables: { sectionName: "ABOUT" }
     }

@@ -7,19 +7,12 @@ const homeCMS = new Schema(
     title: String,
     subtitle: String,
     paragraph: String,
+    bgImg: String,
+    bgColor: String,
+    position: String,
+    dark: Boolean,
     grid: Number,
     alt: Boolean,
-    content: [
-      {
-        title: String,
-        subtitle: String,
-        paragraph: String,
-        bgImg: String,
-        bgColor: String,
-        position: String,
-        dark: Boolean
-      }
-    ],
     sectionName: String
   },
   { timestamps: true }

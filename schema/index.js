@@ -104,13 +104,21 @@ const typeDefs = gql`
     title: String
     subtitle: String
     paragraph: String
+    bgImg: String
+    bgColor: String
+    dark: Boolean
     grid: Int
     alt: Boolean
-    content: [HomeContent]
     sectionName: String
   }
 
-  type HomeContent {
+  type ShowcaseCMS {
+    _id: ID
+    sectionName: String
+    content: [ShowcaseContent]
+  }
+
+  type ShowcaseContent {
     _id: ID
     title: String
     subtitle: String
@@ -171,14 +179,26 @@ const typeDefs = gql`
     categoryId: ID
   }
 
-  input HomeContentInput {
-    ctitle: String
-    csubtitle: String
-    cparagraph: String
+  input ShowcaseContentInput {
+    title: String
+    subtitle: String
+    paragraph: String
     bgImg: Upload
     bgColor: String
     position: String
     dark: Boolean
+  }
+
+  input HomeContentInput {
+    title: String
+    subtitle: String
+    paragraph: String
+    bgImg: Upload
+    bgColor: String
+    position: String
+    grid: Int
+    dark: Boolean
+    alt: Boolean
   }
 
   type Query {
@@ -193,23 +213,24 @@ const typeDefs = gql`
     myAppointments: [Appointment]
     myCurrentAppointment: [Appointment]
     myAppointmentHistory: [Appointment]
-
+    # EMPLOYEE
     employee(_id: ID!): Employee
     employeeService(serviceId: ID): Employee
     employees: [Employee]
     employeesByRole(role: String!): [Employee]
     aestheticiansReceps(limit: Int): [Employee]
-
+    # SERVICE
     category(_id: ID!): Category
     categories: [Category]
     service(_id: ID!): Service
     services(categoryId: ID): [Service]
     allServices: [Service]
-
+    # INQ
     inquiries: [Inquiry]
     inquiriesRead(read: Boolean): [Inquiry]
     inquiry(_id: ID!): Inquiry
-
+    # CMS
+    showcaseCMS(sectionName: String): ShowcaseCMS
     homeCMS(sectionName: String): HomeCMS
   }
 
@@ -331,15 +352,19 @@ const typeDefs = gql`
 
     # CMSHOME
     # SHOWCASE
-    addNewShowCase(inputHomeContent: HomeContentInput): HomeCMS
-    updateShowcase(showcaseId: ID!, inputHomeContent: HomeContentInput): HomeCMS
+    addNewShowCase(inputShowcaseContent: ShowcaseContentInput): ShowcaseCMS
+    updateShowcase(
+      showcaseId: ID!
+      inputShowcaseContent: ShowcaseContentInput
+    ): ShowcaseCMS
     removeShowcase(showcaseId: ID!): Boolean
 
     #AboutSection
-    updateAboutSection(
-      title: String
-      subtitle: String
-      alt: Boolean
+    updateAboutSection(title: String, subtitle: String, alt: Boolean): HomeCMS
+    # CATEGORY SECTION
+    updateHomeSection(
+      sectionName: String
+      inputHomeContent: HomeContentInput
     ): HomeCMS
   }
 `;
