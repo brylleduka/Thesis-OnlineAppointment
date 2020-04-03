@@ -1,9 +1,9 @@
 import React from "react";
-import { DGrid, DSection, Content, DImage } from "../../styled/containers";
+import { DSection, Content, DImage } from "../../styled/containers";
 import useWindowSize from "../../../util/hooks/useWindowSize";
 
 const Story = ({ content }) => {
-  const { height, width } = useWindowSize();
+  const { width } = useWindowSize();
 
   return (
     <>

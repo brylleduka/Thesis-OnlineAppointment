@@ -129,6 +129,37 @@ const typeDefs = gql`
     dark: Boolean
   }
 
+  type AboutCMS {
+    _id: ID
+    title: String
+    subtitle: String
+    paragraph: String
+    dark: Boolean
+    overlay: Boolean
+    bgImg: String
+    bgColor: String
+    story: Story
+    mission: Mission
+  }
+
+  type Story {
+    _id: ID
+    title: String
+    subtitle: String
+    paragraph: String
+    photo: String
+    alt: Boolean
+  }
+
+  type Mission {
+    _id: ID
+    title: String
+    subtitle: String
+    paragraph: String
+    photo: String
+    alt: Boolean
+  }
+
   # INPUTS
   input AppointmentInput {
     serviceId: ID!
@@ -201,6 +232,26 @@ const typeDefs = gql`
     alt: Boolean
   }
 
+  input AboutInput {
+    title: String
+    subtitle: String
+    paragraph: String
+    bgImg: Upload
+    bgColor: String
+    dark: Boolean
+    overlay: Boolean
+    mtitle: String
+    msubtitle: String
+    mparagraph: String
+    mphoto: Upload
+    malt: Boolean
+    stitle: String
+    ssubtitle: String
+    sparagraph: String
+    sphoto: Upload
+    salt: Boolean
+  }
+
   type Query {
     user(_id: ID!): User
     getUsers: [User]
@@ -232,6 +283,8 @@ const typeDefs = gql`
     # CMS
     showcaseCMS(sectionName: String): ShowcaseCMS
     homeCMS(sectionName: String): HomeCMS
+    # CMS ABOUT
+    aboutUsCMS(contentName: String): AboutCMS
   }
 
   type Mutation {
@@ -366,6 +419,9 @@ const typeDefs = gql`
       sectionName: String
       inputHomeContent: HomeContentInput
     ): HomeCMS
+
+    #CMSABOUT
+    updateAboutUs(inputAbout: AboutInput): AboutCMS
   }
 `;
 

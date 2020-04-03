@@ -34,4 +34,33 @@ const FETCH_HOME_SECTION = gql`
   }
 `;
 
-export { FETCH_THE_SHOWCASE, FETCH_HOME_SECTION };
+const FETCH_ABOUT_CMS = gql`
+  query aboutUsCMS($contentName: String) {
+    aboutUsCMS(contentName: $contentName) {
+      _id
+      title
+      subtitle
+      paragraph
+      bgImg
+      bgColor
+      dark
+      overlay
+      story {
+        _id
+        title
+        subtitle
+        paragraph
+        alt
+      }
+      mission {
+        _id
+        title
+        subtitle
+        paragraph
+        alt
+      }
+    }
+  }
+`;
+
+export { FETCH_THE_SHOWCASE, FETCH_HOME_SECTION, FETCH_ABOUT_CMS };

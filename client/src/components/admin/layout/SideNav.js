@@ -54,10 +54,10 @@ const SideNav = () => {
             Home
           </span>
         </NavLink>
-        <NavLink to="/zeadmin/about" activeClassName="navlink-active">
+        <NavLink to="/zeadmin/cms_about" activeClassName="navlink-active">
           <span>
             <Dashboard size="16px" />
-            About Us
+            About
           </span>
         </NavLink>
         <NavLink to="/zeadmin/testimonials" activeClassName="navlink-active">

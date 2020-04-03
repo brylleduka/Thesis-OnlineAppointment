@@ -36,7 +36,6 @@ const ModalSlide = ({ open, setOpen, showcase }) => {
     paragraph: showcase ? showcase.paragraph : ""
   });
 
-  
   const [
     preview,
     selectedFile,
