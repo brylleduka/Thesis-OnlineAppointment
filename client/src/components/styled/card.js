@@ -5,9 +5,9 @@ export const JCard = styled.figure`
   color: #ffffff;
   font-size: 16px;
   max-width: 100%;
-  min-width: 200px;
-  width: ${props => (props.width ? props.width : "100%")};
-  height: ${props => (props.height ? props.height : "auto")};
+  min-width: 90%;
+  width: ${(props) => (props.width ? props.width : "100%")};
+  height: ${(props) => (props.height ? props.height : "auto")};
   overflow: hidden;
   position: relative;
   text-align: left;
@@ -100,7 +100,7 @@ export const JCard = styled.figure`
 
     h3 {
       font-family: "Teko", sans-serif;
-      font-size: ${props => (props.titleSize ? props.titleSize : "36px")};
+      font-size: ${(props) => (props.titleSize ? props.titleSize : "36px")};
       font-weight: 700;
       line-height: 1em;
       text-transform: uppercase;
@@ -172,7 +172,7 @@ export const JCard2 = styled.div`
     height: 400px;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: ${props =>
+    box-shadow: ${(props) =>
       props.bs
         ? props.bs
         : ("0 1px 1px rgba(0, 0, 0, 0.22)",
@@ -297,7 +297,7 @@ export const JCard2 = styled.div`
         .description{
           height: 175px;
           transition: height 0.6s ease-in-out;
-          overflow: ${props => props.oflow && "auto"};
+          overflow: ${(props) => props.oflow && "auto"};
           p{
             cursor: default;
             pointer-events: auto;
@@ -364,7 +364,7 @@ export const JCard4 = styled.figure`
   min-width: 230px;
   max-width: 315px;
   width: 100%;
-  height: ${props => props.height && props.height};
+  height: ${(props) => props.height && props.height};
   color: #000000;
   text-align: center;
   line-height: 1.4em;
@@ -381,11 +381,11 @@ export const JCard4 = styled.figure`
     height: 300px;
     z-index: 1;
     position: relative;
-    margin: ${props => props.margin && props.margin};
-    top: ${props => props.top && props.top};
-    right: ${props => props.right && props.right};
-    bottom: ${props => props.bottom && props.bottom};
-    left: ${props => props.left && props.left};
+    margin: ${(props) => props.margin && props.margin};
+    top: ${(props) => props.top && props.top};
+    right: ${(props) => props.right && props.right};
+    bottom: ${(props) => props.bottom && props.bottom};
+    left: ${(props) => props.left && props.left};
     padding: 10px;
     border: 2px solid #6dd5ed;
 
@@ -403,7 +403,7 @@ export const JCard4 = styled.figure`
       border-color: #2193b0;
     }
     figcaption {
-      box-shadow: ${props =>
+      box-shadow: ${(props) =>
         props.bs
           ? props.bs
           : ("0 1px 1px rgba(0, 0, 0, 0.22)",
@@ -422,7 +422,7 @@ export const JCard4 = styled.figure`
     padding: 125px 25px 25px;
     margin-top: -100px;
     display: inline-block;
-    box-shadow: ${props =>
+    box-shadow: ${(props) =>
       props.bs
         ? props.bs
         : ("0 1px 1px rgba(0, 0, 0, 0.11)",
@@ -540,7 +540,7 @@ export const DTestimonialCard = styled.div`
       }
 
       h5 {
-        color: ${props =>
+        color: ${(props) =>
           props.inverted
             ? ({ theme }) => theme.light
             : ({ theme }) => theme.dark};
@@ -556,7 +556,7 @@ export const DTestimonialCard = styled.div`
         box-shadow: inset -1.4px -1.4px 2px rgba(0, 0, 0, 0.3);
         text-align: left;
         position: relative;
-        color: ${props =>
+        color: ${(props) =>
           props.inverted
             ? ({ theme }) => theme.light
             : ({ theme }) => theme.dark};
@@ -567,7 +567,7 @@ export const DTestimonialCard = styled.div`
           position: absolute;
           font-size: 22px;
           opacity: 0.25;
-          color: ${props =>
+          color: ${(props) =>
             props.inverted
               ? ({ theme }) => theme.light
               : ({ theme }) => theme.dark};
@@ -587,7 +587,7 @@ export const DTestimonialCard = styled.div`
     }
   }
 
-  ${props =>
+  ${(props) =>
     props.basic &&
     "figure{background: transparent; figcaption{blockquote{box-shadow: none; background: transparent}}}"}
 `;

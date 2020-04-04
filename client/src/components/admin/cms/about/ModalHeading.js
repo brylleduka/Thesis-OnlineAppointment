@@ -8,12 +8,13 @@ import {
   Content,
   DSection,
   Overlay,
-  DGrid
+  DGrid,
 } from "../../../styled/containers";
 import { DButtonFree, DButton } from "../../../styled/utils";
 import Spinner from "../../../Spinner";
 import useUploadFile from "../../../../util/hooks/useUploadFile";
 import { BlockPicker } from "react-color";
+import toaster from "toasted-notes";
 
 const colors = [
   "#6dd5ed",
@@ -21,27 +22,27 @@ const colors = [
   "#fe8c00",
   "#E9E4F0",
   "#203A43",
-  "#FFFFFF"
+  "#FFFFFF",
 ];
 
-const ModalHeading = () => {
+const ModalHeading = ({ isAbout }) => {
   const fileInput = useRef();
   const [openHead, setOpenHead] = useState(false);
-  const [isDark, setIsDark] = useState(false);
-  const [isOverlay, setIsOverlay] = useState(false);
+  const [isDark, setIsDark] = useState(isAbout ? isAbout.dark : false);
+  const [isOverlay, setIsOverlay] = useState(isAbout ? isAbout.overlay : false);
   const [headers, setHeaders] = useState({
-    title: "",
-    subtitle: "",
-    paragraph: ""
+    title: isAbout ? isAbout.title : "",
+    subtitle: isAbout ? isAbout.subtitle : "",
+    paragraph: isAbout ? isAbout.paragraph : "",
   });
-  const [isColor, setIsColor] = useState("#FFFFFF");
+  const [isColor, setIsColor] = useState(isAbout ? isAbout.bgColor : "#FFFFFF");
 
-  const [
+  const {
     preview,
     selectedFile,
     setSelectedFile,
-    onSelectedFile
-  ] = useUploadFile();
+    onSelectedFile,
+  } = useUploadFile();
 
   const [updateAboutUs, { loading }] = useMutation(UPDATE_ABOUT_HEADER, {
     variables: {
@@ -49,19 +50,26 @@ const ModalHeading = () => {
       bgImg: selectedFile,
       bgColor: isColor,
       dark: isDark,
-      overlay: isOverlay
-    }
+      overlay: isOverlay,
+    },
+
+    onCompleted() {
+      setOpenHead(false);
+      toaster.notify("Update Successful", {
+        position: "bottom-right",
+      });
+    },
   });
 
   const handleInputClick = () => {
     fileInput.current.click();
   };
 
-  const handleChangeHeaders = e => {
+  const handleChangeHeaders = (e) => {
     setHeaders({ ...headers, [e.target.name]: e.target.value });
   };
 
-  const handleChangeComplete = color => {
+  const handleChangeComplete = (color) => {
     setIsColor(color.hex);
   };
 
@@ -89,11 +97,20 @@ const ModalHeading = () => {
       </DButtonFree>
       <Modal open={openHead} onClose={() => setOpenHead(false)} closeIcon>
         <Modal.Header>Update Header Content</Modal.Header>
-        <DGrid two gap="20px">
+        <DGrid custom="2fr 1fr" gap="20px">
           <Modal.Content style={{ padding: "10px" }}>
             <DSection width="100%" height="50vh" bgcolor={isColor}>
               <DImage dashed height="100%" width="100%">
-                {selectedFile && <img src={preview} alt="header" />}
+                {selectedFile ? (
+                  <img src={preview} alt="showcase" />
+                ) : (
+                  isAbout.bgImg && (
+                    <img
+                      src={`/images/cms/about/${isAbout.bgImg}`}
+                      alt="showcase"
+                    />
+                  )
+                )}
               </DImage>
 
               <Overlay bgc={isOverlay ? true : false}>
@@ -111,7 +128,7 @@ const ModalHeading = () => {
                   <h1 style={{ fontSize: "22px" }}>
                     {headers.title ? headers.title : "TITLE"}
                   </h1>
-                  <h3> {headers.subtitle ? headers.subtitle : "TITLE"}</h3>
+                  <h4> {headers.subtitle ? headers.subtitle : "SUBTITLE"}</h4>
                 </Content>
               </Overlay>
             </DSection>
@@ -140,7 +157,7 @@ const ModalHeading = () => {
                     style={{
                       cursor: "pointer",
                       color: "#2193b0",
-                      opacity: 0.75
+                      opacity: 0.75,
                     }}
                     className="icon_camera-custom"
                   />

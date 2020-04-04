@@ -16,11 +16,11 @@ const TeamSection = ({ cards }) => {
   const {
     data: data_employeesAR,
     loading: loading_employeesAR,
-    error
+    error,
   } = useQuery(FETCH_EMPLOYEES_NOT_ADMIN_QUERY, {
     variables: {
-      limit: 4
-    }
+      limit: 4,
+    },
   });
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const TeamSection = ({ cards }) => {
       margin="48px auto"
     >
       <FancyText size="40px">Our Team</FancyText>
-      <DGrid four margin="0 auto" gap="25px" style={{ marginBottom: "24px" }}>
+      <DGrid four gap="25px">
         {loading_employeesAR ? (
           <>
             <div style={styles.dloading}>
@@ -67,7 +67,7 @@ const TeamSection = ({ cards }) => {
           </>
         ) : (
           employeesAR &&
-          employeesAR.map(employee => (
+          employeesAR.map((employee) => (
             <JCard4 data-emp={employee._id} key={employee._id}>
               <div className="profile-image">
                 <img
@@ -110,8 +110,8 @@ const styles = {
     alignItems: "center",
     flexDirection: "column",
     width: "250px",
-    lineHeight: 2
-  }
+    lineHeight: 2,
+  },
 };
 
 export default TeamSection;

@@ -139,11 +139,10 @@ const typeDefs = gql`
     bgImg: String
     bgColor: String
     story: Story
-    mission: Mission
+    missionvision: MissionVision
   }
 
   type Story {
-    _id: ID
     title: String
     subtitle: String
     paragraph: String
@@ -151,13 +150,23 @@ const typeDefs = gql`
     alt: Boolean
   }
 
+  type MissionVision {
+    photo: String
+    alt: Boolean
+    mission: Mission
+    vision: Vision
+  }
+
   type Mission {
-    _id: ID
     title: String
     subtitle: String
     paragraph: String
-    photo: String
-    alt: Boolean
+  }
+
+  type Vision {
+    title: String
+    subtitle: String
+    paragraph: String
   }
 
   # INPUTS
@@ -240,16 +249,25 @@ const typeDefs = gql`
     bgColor: String
     dark: Boolean
     overlay: Boolean
+  }
+
+  input StoryInput {
+    title: String
+    subtitle: String
+    paragraph: String
+    photo: Upload
+    alt: Boolean
+  }
+
+  input MissionVisionInput {
     mtitle: String
     msubtitle: String
     mparagraph: String
-    mphoto: Upload
-    malt: Boolean
-    stitle: String
-    ssubtitle: String
-    sparagraph: String
-    sphoto: Upload
-    salt: Boolean
+    vtitle: String
+    vsubtitle: String
+    vparagraph: String
+    photo: Upload
+    alt: Boolean
   }
 
   type Query {
@@ -422,6 +440,8 @@ const typeDefs = gql`
 
     #CMSABOUT
     updateAboutUs(inputAbout: AboutInput): AboutCMS
+    updateStory(inputStory: StoryInput): AboutCMS
+    updateMission(inputMissionVision: MissionVisionInput): AboutCMS
   }
 `;
 

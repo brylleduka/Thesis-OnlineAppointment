@@ -18,7 +18,7 @@ const colors = [
   "#fe8c00",
   "#E9E4F0",
   "#203A43",
-  "#FFFFFF"
+  "#FFFFFF",
 ];
 
 const ModalSlide = ({ open, setOpen, showcase }) => {
@@ -33,15 +33,15 @@ const ModalSlide = ({ open, setOpen, showcase }) => {
   const [values, setValues] = useState({
     title: showcase ? showcase.title : "",
     subtitle: showcase ? showcase.subtitle : "",
-    paragraph: showcase ? showcase.paragraph : ""
+    paragraph: showcase ? showcase.paragraph : "",
   });
 
-  const [
+  const {
     preview,
     selectedFile,
     setSelectedFile,
-    onSelectedFile
-  ] = useUploadFile();
+    onSelectedFile,
+  } = useUploadFile();
 
   // ADD OR UPDATE
   const mutation = showcase ? UPDATE_SLIDE : ADD_NEW_SLIDE;
@@ -53,10 +53,10 @@ const ModalSlide = ({ open, setOpen, showcase }) => {
       bgImg: selectedFile,
       bgColor: isColor,
       position: isPosition,
-      dark: isDark
+      dark: isDark,
     },
     refetchQueries: [
-      { query: FETCH_THE_SHOWCASE, variables: { sectionName: "SHOWCASE" } }
+      { query: FETCH_THE_SHOWCASE, variables: { sectionName: "SHOWCASE" } },
     ],
     update() {
       if (!showcase) {
@@ -76,14 +76,14 @@ const ModalSlide = ({ open, setOpen, showcase }) => {
       } else {
         toaster.notify("Add New Slide Successfully");
       }
-    }
+    },
   });
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const handleChangeComplete = color => {
+  const handleChangeComplete = (color) => {
     setIsColor(color.hex);
   };
 
@@ -91,11 +91,11 @@ const ModalSlide = ({ open, setOpen, showcase }) => {
     setIsDark(!isDark);
   };
 
-  const handlePosition = event => {
+  const handlePosition = (event) => {
     setIsPosition(event.target.value);
   };
 
-  const handleSave = e => {
+  const handleSave = (e) => {
     e.preventDefault();
     addOrUpdateSlide();
   };
@@ -103,7 +103,7 @@ const ModalSlide = ({ open, setOpen, showcase }) => {
   return (
     <Modal size={"large"} open={open} onClose={() => setOpen(false)}>
       <Modal.Header>Add New Slide </Modal.Header>
-      <DGrid two gap="10px">
+      <DGrid custom="2fr 1fr" gap="10px">
         <Modal.Content style={{ padding: "10px" }}>
           <ImageSection
             isPosition={isPosition}

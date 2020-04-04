@@ -30,7 +30,7 @@ const About = () => {
               fontSize: "18px",
               fontWeight: 700,
               borderBottom: "2px solid",
-              paddingBottom: "5px"
+              paddingBottom: "5px",
             }}
           >
             About Us

@@ -16,19 +16,26 @@ const aboutCMS = Schema(
       subtitle: String,
       paragraph: String,
       photo: String,
-      alt: Boolean
+      alt: Boolean,
     },
-    mission: {
-      title: String,
-      subtitle: String,
-      paragraph: String,
+    missionvision: {
       photo: String,
-      alt: Boolean
+      alt: Boolean,
+      mission: {
+        title: String,
+        subtitle: String,
+        paragraph: String,
+      },
+      vision: {
+        title: String,
+        subtitle: String,
+        paragraph: String,
+      },
     },
-    contentName: String
+    contentName: String,
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

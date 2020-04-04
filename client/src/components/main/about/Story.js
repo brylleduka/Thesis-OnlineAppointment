@@ -2,7 +2,7 @@ import React from "react";
 import { DSection, Content, DImage } from "../../styled/containers";
 import useWindowSize from "../../../util/hooks/useWindowSize";
 
-const Story = ({ content }) => {
+const Story = ({ content, aboutUS }) => {
   const { width } = useWindowSize();
 
   return (
@@ -13,7 +13,13 @@ const Story = ({ content }) => {
         flex
         justify="space-around"
         align="center"
-        direct={width === 768 ? "column" : "row"}
+        direct={
+          width === 768
+            ? "column"
+            : aboutUS.missionvision.alt
+            ? "row-reverse"
+            : "row"
+        }
         margin="24px auto 0 auto"
         ref={content}
         id="story"
@@ -27,20 +33,16 @@ const Story = ({ content }) => {
           direct="column"
           pad="24px"
         >
-          <h3>Our Mission</h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero quia
-            at alias reiciendis voluptatum illo quidem natus quod porro
-            voluptatem? Obcaecati totam libero rerum nihil nemo, iusto aliquid
-            repellendus repudiandae?
-          </p>
-          <h3>Our Vision</h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero quia
-            at alias reiciendis voluptatum illo quidem natus quod porro
-            voluptatem? Obcaecati totam libero rerum nihil nemo, iusto aliquid
-            repellendus repudiandae?
-          </p>
+          <h3>{aboutUS && aboutUS.missionvision.mission.title}</h3>
+          {aboutUS && aboutUS.missionvision.mission.subtitle !== "" && (
+            <h4>{aboutUS.missionvision.mission.subtitle}</h4>
+          )}
+          <p>{aboutUS && aboutUS.missionvision.mission.paragraph}</p>
+          <h3>{aboutUS && aboutUS.missionvision.vision.title}</h3>
+          {aboutUS && aboutUS.missionvision.vision.subtitle !== "" && (
+            <h4>{aboutUS.missionvision.vision.subtitle}</h4>
+          )}
+          <p>{aboutUS && aboutUS.missionvision.vision.paragraph}</p>
         </Content>
         <Content
           flex
@@ -54,7 +56,11 @@ const Story = ({ content }) => {
         >
           <DImage height="100%">
             <img
-              src="https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+              src={
+                aboutUS.missionvision.photo
+                  ? `/images/cms/about/${aboutUS.missionvision.photo}`
+                  : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+              }
               alt="about"
             />
           </DImage>
@@ -67,7 +73,9 @@ const Story = ({ content }) => {
         flex
         justify="space-around"
         align="center"
-        direct={width === 768 ? "column" : "row"}
+        direct={
+          width === 768 ? "column" : aboutUS.story.alt ? "row-reverse" : "row"
+        }
       >
         <Content
           flex
@@ -81,7 +89,11 @@ const Story = ({ content }) => {
         >
           <DImage height="100%">
             <img
-              src="https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+              src={
+                aboutUS.story.photo
+                  ? `/images/cms/about/${aboutUS.story.photo}`
+                  : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+              }
               alt="about"
             />
           </DImage>
@@ -96,7 +108,8 @@ const Story = ({ content }) => {
           pad="20px"
           style={{ maxHeight: "90vh" }}
         >
-          <h3>Our Story</h3>
+          <h3>{aboutUS.story.title}</h3>
+          {aboutUS.story.subtitle !== "" && <h4>{aboutUS.story.subtitle}</h4>}
           <p
             style={{
               fontSize: "15px",
@@ -105,51 +118,10 @@ const Story = ({ content }) => {
               textAlign: "justify",
               overflowWrap: "break-word",
               overflow: "auto",
-              padding: "10px"
+              padding: "10px",
             }}
           >
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero quia
-            at alias reiciendis voluptatum illo quidem natus quod porro
-            voluptatem? Obcaecati totam libero rerum nihil nemo, iusto aliquid
-            repellendus repudiandae? Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Minima officiis nobis, nam voluptatem saepe quidem
-            aspernatur harum qui, esse quasi delectus, ipsa culpa velit. Lorem
-            ipsum dolor sit amet consectetur, adipisicing elit. Lorem ipsum
-            dolor sit amet consectetur, adipisicing elit. Vero quia at alias
-            reiciendis voluptatum illo quidem natus quod porro voluptatem?
-            Obcaecati totam libero rerum nihil nemo, iusto aliquid repellendus
-            repudiandae? Lorem ipsum dolor sit amet consectetur adipisicing
-            elit. Minima officiis nobis, nam voluptatem saepe quidem aspernatur
-            harum qui, esse quasi delectus, ipsa culpa velit. Lorem ipsum dolor
-            sit amet consectetur, adipisicing elit. Lorem ipsum dolor sit amet
-            consectetur, adipisicing elit. Vero quia at alias reiciendis
-            voluptatum illo quidem natus quod porro voluptatem? Obcaecati totam
-            libero rerum nihil nemo, iusto aliquid repellendus repudiandae?
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima
-            officiis nobis, nam voluptatem saepe quidem aspernatur harum qui,
-            esse quasi delectus, ipsa culpa velit. Lorem ipsum dolor sit amet
-            consectetur, adipisicing elit. Lorem ipsum dolor sit amet
-            consectetur, adipisicing elit. Vero quia at alias reiciendis
-            voluptatum illo quidem natus quod porro voluptatem? Obcaecati totam
-            libero rerum nihil nemo, iusto aliquid repellendus repudiandae?
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima
-            officiis nobis, nam voluptatem saepe quidem aspernatur harum qui,
-            esse quasi delectus, ipsa culpa velit. Lorem ipsum dolor sit amet
-            consectetur, adipisicing elit. Lorem ipsum dolor sit amet
-            consectetur, adipisicing elit. Vero quia at alias reiciendis
-            voluptatum illo quidem natus quod porro voluptatem? Obcaecati totam
-            libero rerum nihil nemo, iusto aliquid repellendus repudiandae?
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima
-            officiis nobis, nam voluptatem saepe quidem aspernatur harum qui,
-            esse quasi delectus, ipsa culpa velit. Lorem ipsum dolor sit amet
-            consectetur, adipisicing elit. Lorem ipsum dolor sit amet
-            consectetur, adipisicing elit. Vero quia at alias reiciendis
-            voluptatum illo quidem natus quod porro voluptatem? Obcaecati totam
-            libero rerum nihil nemo, iusto aliquid repellendus repudiandae?
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima
-            officiis nobis, nam voluptatem saepe quidem aspernatur harum qui,
-            esse quasi delectus, ipsa culpa velit. Lorem ipsum dolor sit amet
-            consectetur, adipisicing elit.
+            {aboutUS.story.paragraph}
           </p>
         </Content>
       </DSection>

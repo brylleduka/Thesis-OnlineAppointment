@@ -44,7 +44,7 @@ const Showcase = () => {
       <NewSlide />
       <div style={{ position: "relative" }}>
         {dataLoading ? (
-          <DShowCase height="70vh">
+          <DShowCase height="80vh">
             <DImage height="100%">
               <img
                 src="https://images.pexels.com/photos/3765134/pexels-photo-3765134.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
@@ -56,7 +56,7 @@ const Showcase = () => {
           <Slider {...settings}>
             {showcase.map(sc => (
               <DShowCase
-                height="70vh"
+                height="80vh"
                 key={sc._id}
                 background={sc.bgImg && `/images/cms/home/${sc.bgImg}`}
                 bgcolor={sc.bgColor}

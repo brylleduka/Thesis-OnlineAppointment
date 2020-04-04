@@ -46,18 +46,25 @@ const FETCH_ABOUT_CMS = gql`
       dark
       overlay
       story {
-        _id
         title
         subtitle
         paragraph
+        photo
         alt
       }
-      mission {
-        _id
-        title
-        subtitle
-        paragraph
+      missionvision {
+        photo
         alt
+        mission {
+          title
+          subtitle
+          paragraph
+        }
+        vision {
+          title
+          subtitle
+          paragraph
+        }
       }
     }
   }

@@ -11,7 +11,7 @@ const Heading = () => {
 
   const {
     data: dataAboutContent,
-    loading: loadAboutContent
+    loading: loadAboutContent,
   } = useQuery(FETCH_ABOUT_CMS, { variables: { contentName: "ABOUTUS" } });
 
   useEffect(() => {
@@ -46,12 +46,12 @@ const Heading = () => {
             style={{ minWidth: "90%", textAlign: "center" }}
             className={isAbout.dark ? "dark" : ""}
           >
-            <h1 style={{ fontSize: "38px" }}>About Us</h1>
-            <h3>The Concept of Beauty</h3>
+            <h1 style={{ fontSize: "38px" }}>{isAbout.title}</h1>
+            {isAbout.subtitle !== "" && <h4>{isAbout.subtitle}</h4>}
             <MouseScroll />
           </Content>
           <Overlay bgc={isAbout.overlay ? true : false} />
-          <ModalHeading />
+          <ModalHeading isAbout={dataAboutContent.aboutUsCMS} />
         </DSection>
       )}
     </>

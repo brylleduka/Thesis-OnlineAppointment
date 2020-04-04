@@ -14,7 +14,7 @@ const useUploadFile = () => {
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFile]);
 
-  const onSelectedFile = e => {
+  const onSelectedFile = (e) => {
     if (!e.target.files || e.target.files.length === 0) {
       setSelectedFile(undefined);
       return;
@@ -22,7 +22,7 @@ const useUploadFile = () => {
     setSelectedFile(e.target.files[0]);
   };
 
-  return [preview, selectedFile, setSelectedFile, onSelectedFile];
+  return { preview, selectedFile, setSelectedFile, onSelectedFile };
 };
 
 export default useUploadFile;

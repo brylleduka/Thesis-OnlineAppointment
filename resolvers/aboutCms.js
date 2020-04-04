@@ -13,7 +13,7 @@ module.exports = {
       } catch (err) {
         throw err;
       }
-    }
+    },
   },
   Mutation: {
     updateAboutUs: async (
@@ -26,25 +26,20 @@ module.exports = {
           bgImg,
           bgColor,
           dark,
-          overlay
+          overlay,
           //   mtitle,
           //   msubtitle,
           //   mparagraph,
           //   mphoto,
           //   malt,
-          //   stitle,
-          //   ssubtitle,
-          //   sparagraph,
-          //   sphoto,
-          //   salt
-        }
+        },
       }
     ) => {
       try {
         const about = await AboutCMS.findOne({ contentName: "ABOUTUS" });
 
         let bgImgFile;
-        // let sPhotoFile;
+
         // let mPhotoFile;
 
         if (about) {
@@ -60,7 +55,7 @@ module.exports = {
         if (bgImg instanceof stream.Readable || bgImg) {
           const { createReadStream, filename } = await bgImg;
 
-          await new Promise(res =>
+          await new Promise((res) =>
             createReadStream().pipe(
               createWriteStream(
                 path.join(__dirname, "../images/cms/about", filename)
@@ -109,7 +104,7 @@ module.exports = {
               bgImg: bgImgFile,
               bgColor,
               dark,
-              overlay
+              overlay,
               //   story: {
               //     title: stitle,
               //     subtitle: ssubtitle,
@@ -124,11 +119,11 @@ module.exports = {
               //     photo: missionFileName ? missionFileName : "",
               //     alt: malt
               //   }
-            }
+            },
           },
           {
             new: true,
-            upsert: true
+            upsert: true,
           }
         );
 
@@ -136,6 +131,130 @@ module.exports = {
       } catch (err) {
         throw err;
       }
-    }
-  }
+    },
+    updateStory: async (
+      _,
+      { inputStory: { title, subtitle, paragraph, photo, alt } }
+    ) => {
+      let sPhotoFile;
+      try {
+        const storyContent = await AboutCMS.findOne({ contentName: "ABOUTUS" });
+
+        if (storyContent) {
+          sPhotoFile = storyContent.story.photo || "";
+        } else {
+          sPhotoFile = "";
+        }
+
+        if (photo instanceof stream.Readable || photo) {
+          const { createReadStream, filename } = await photo;
+
+          await new Promise((res) =>
+            createReadStream().pipe(
+              createWriteStream(
+                path.join(__dirname, "../images/cms/about", filename)
+              ).on("close", res)
+            )
+          );
+
+          sPhotoFile = filename;
+        }
+
+        const storyUpdate = await AboutCMS.findOneAndUpdate(
+          { contentName: "ABOUTUS" },
+          {
+            $set: {
+              story: {
+                title,
+                subtitle,
+                paragraph,
+                photo: sPhotoFile,
+                alt,
+              },
+            },
+          },
+          {
+            new: true,
+            upsert: true,
+          }
+        );
+
+        return storyUpdate;
+      } catch (err) {
+        throw err;
+      }
+    },
+    updateMission: async (
+      _,
+      {
+        inputMissionVision: {
+          mtitle,
+          msubtitle,
+          mparagraph,
+          vtitle,
+          vsubtitle,
+          vparagraph,
+          photo,
+          alt,
+        },
+      }
+    ) => {
+      let sMissionFile;
+      try {
+        const missionContent = await AboutCMS.findOne({
+          contentName: "ABOUTUS",
+        });
+
+        if (missionContent) {
+          sMissionFile = missionContent.missionvision.photo || "";
+        } else {
+          sMissionFile = "";
+        }
+
+        if (photo instanceof stream.Readable || photo) {
+          const { createReadStream, filename } = await photo;
+
+          await new Promise((res) =>
+            createReadStream().pipe(
+              createWriteStream(
+                path.join(__dirname, "../images/cms/about", filename)
+              ).on("close", res)
+            )
+          );
+
+          sMissionFile = filename;
+        }
+
+        const missionUpdate = await AboutCMS.findOneAndUpdate(
+          { contentName: "ABOUTUS" },
+          {
+            $set: {
+              missionvision: {
+                photo: sMissionFile,
+                alt,
+                mission: {
+                  title: mtitle,
+                  subtitle: msubtitle,
+                  paragraph: mparagraph,
+                },
+                vision: {
+                  title: vtitle,
+                  subtitle: vsubtitle,
+                  paragraph: vparagraph,
+                },
+              },
+            },
+          },
+          {
+            new: true,
+            upsert: true,
+          }
+        );
+
+        return missionUpdate;
+      } catch (err) {
+        throw err;
+      }
+    },
+  },
 };
