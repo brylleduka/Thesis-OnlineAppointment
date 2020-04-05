@@ -115,7 +115,7 @@ const Showcase = ({ nextSection }) => {
                     dark={sc.dark ? true : false}
                   >
                     Book Appointment
-                    <Link to="/zessence/appointment" />
+                    <Link to="/appointment" />
                   </JButton>
                 </div>
               </Overlay>

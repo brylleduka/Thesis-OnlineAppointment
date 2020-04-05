@@ -18,7 +18,7 @@ const PromoSection1 = () => {
           aliquam culpa veniam harum deleniti nihil, aut quasi ipsam minus.
           Quidem!
         </p>
-        <Link to="/" className="btn">
+        <Link to="/appointment" className="btn">
           Book Now!
         </Link>
       </Content>
