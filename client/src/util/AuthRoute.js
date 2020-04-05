@@ -8,7 +8,7 @@ export const AdminAuthRoute = ({ component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={props =>
+      render={(props) =>
         employeeAuth ? (
           <Redirect to="/zeadmin/dashboard" />
         ) : (
@@ -25,8 +25,8 @@ export const UserAuthRoute = ({ component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={props =>
-        user ? <Redirect to="/zessence" /> : <Component {...props} />
+      render={(props) =>
+        user ? <Redirect to="/" /> : <Component {...props} />
       }
     />
   );

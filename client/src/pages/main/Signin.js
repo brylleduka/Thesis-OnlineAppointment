@@ -9,7 +9,7 @@ import {
 
 const Signin = props => {
   const { from } = props.location.state || {
-    from: { pathname: "/zessence/appointment" }
+    from: { pathname: "/appointment" }
   };
 
   const hist = props.history;

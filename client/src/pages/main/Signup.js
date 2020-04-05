@@ -5,12 +5,12 @@ import {
   Content,
   DSection,
   Overlay,
-  DContainer
+  DContainer,
 } from "../../components/styled/containers";
 
-const Signup = props => {
+const Signup = (props) => {
   const { from } = props.location.state || {
-    from: { pathname: "/zessence/home" }
+    from: { pathname: "/home" },
   };
 
   const hist = props.history;

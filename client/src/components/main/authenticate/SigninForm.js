@@ -112,7 +112,7 @@ const SigninForm = ({ hist, from }) => {
             fontWeight: "700"
           }}
         >
-          <Link to="/zessence/signup">
+          <Link to="/signup">
             <Icon name="arrow left" />
             Create your account
           </Link>

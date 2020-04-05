@@ -66,7 +66,7 @@ const ThankYou = props => {
           </DButton>
           <DButton
             as={Link}
-            to={userId ? `/zessence/account/${userId}` : `/zessence/login`}
+            to={userId ? `/account/${userId}` : `/login`}
           >
             Go to my account
           </DButton>
