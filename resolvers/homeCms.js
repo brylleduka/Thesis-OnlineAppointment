@@ -12,14 +12,17 @@ module.exports = {
       } catch (err) {
         throw err;
       }
-    }
+    },
   },
   Mutation: {
-    updateAboutSection: async (_, { title, subtitle, alt }) => {
+    updateAboutSection: async (_, { sectionName }) => {
       try {
+        const aboutSect = await HomeCMS.findOne({ sectionName });
+        console.log(aboutSect);
+
         const aboutSectionUpdate = await HomeCMS.findOneAndUpdate(
-          { sectionName: "ABOUT" },
-          { $set: { title, subtitle, alt } },
+          { sectionName },
+          { $set: { alt: !aboutSect.alt } },
           { new: true, upsert: true }
         );
 
@@ -41,8 +44,8 @@ module.exports = {
           position,
           grid,
           dark,
-          alt
-        }
+          alt,
+        },
       }
     ) => {
       try {
@@ -58,7 +61,7 @@ module.exports = {
         if (bgImg instanceof stream.Readable || bgImg) {
           const { createReadStream, filename } = await bgImg;
 
-          await new Promise(res =>
+          await new Promise((res) =>
             createReadStream().pipe(
               createWriteStream(
                 path.join(__dirname, "../images/cms/home", filename)
@@ -81,8 +84,8 @@ module.exports = {
               position,
               dark,
               grid,
-              alt
-            }
+              alt,
+            },
           },
           { new: true, upsert: true }
         );
@@ -91,6 +94,6 @@ module.exports = {
       } catch (err) {
         throw err;
       }
-    }
-  }
+    },
+  },
 };

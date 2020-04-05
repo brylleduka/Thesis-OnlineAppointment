@@ -9,12 +9,12 @@ import {
   DNavigation,
   DMainMenu,
   DRightMenu,
-  DropdownCustomNav
+  DropdownCustomNav,
 } from "../../styled/navigation";
 import Burger from "./Burger";
 import useScroll from "../../../util/hooks/useScroll";
 
-const Navigation = ({ open, setOpen }) => {
+const Navigation = ({ open, setOpen, match }) => {
   const scrolling = useScroll();
 
   const node = useRef();
@@ -24,7 +24,7 @@ const Navigation = ({ open, setOpen }) => {
 
   const handleLogout = () => {
     logout();
-    history.push("/zessence");
+    history.push("");
   };
 
   const trigger = (
@@ -37,7 +37,7 @@ const Navigation = ({ open, setOpen }) => {
     </>
   );
 
-  const scrollBehavior = el =>
+  const scrollBehavior = (el) =>
     el.scrollIntoView({ behavior: "smooth", block: "start" });
 
   return (
@@ -53,7 +53,7 @@ const Navigation = ({ open, setOpen }) => {
                 Signed is as <span>{user.firstName}</span>
               </li>
               <li>
-                <Link to={`/zessence/myaccount/${user.userId || user._id}`}>
+                <Link to={`/myaccount/${user.userId || user._id}`}>
                   My Account
                 </Link>
               </li>
@@ -65,11 +65,11 @@ const Navigation = ({ open, setOpen }) => {
             </div>
           ) : (
             <li>
-              <Link to="/zessence/login">Sign in</Link>
+              <Link to="/login">Sign in</Link>
             </li>
           )}
           <li>
-            <Link to="/zessence/appointment" className="btn">
+            <Link to="/appointment" className="btn">
               Book Appointment
             </Link>
           </li>
@@ -77,18 +77,20 @@ const Navigation = ({ open, setOpen }) => {
             <hr className="hr-one" />
           </li>
           <li>
-            <Link to="/zessence/#home" scroll={scrollBehavior}>
+            <Link to={`/#home`} scroll={scrollBehavior}>
               Home
             </Link>
           </li>
           <li>
-            <Link to="/zessence/services&rates/#services">Services</Link>
+            <Link to="/services&rates/#services" scroll={scrollBehavior}>
+              Services
+            </Link>
           </li>
 
-          {/* <Link to="/zessence/about">About&nbsp;Us</Link> */}
+          {/* <Link to="/about">About&nbsp;Us</Link> */}
           <DropdownCustomNav
             trigger={
-              <Link to="/zessence/about/#about" scroll={scrollBehavior}>
+              <Link to="/about/#about" scroll={scrollBehavior}>
                 About&nbsp;Us
               </Link>
             }
@@ -99,7 +101,7 @@ const Navigation = ({ open, setOpen }) => {
               <Dropdown.Item
                 className="customDropMenuItem"
                 as={Link}
-                to="/zessence/about/#story"
+                to="/about/#story"
                 scroll={scrollBehavior}
               >
                 Our Story
@@ -107,7 +109,7 @@ const Navigation = ({ open, setOpen }) => {
               <Dropdown.Item
                 className="customDropMenuItem"
                 as={Link}
-                to="/zessence/about/#team"
+                to="/about/#team"
                 scroll={scrollBehavior}
               >
                 Our Team
@@ -116,15 +118,15 @@ const Navigation = ({ open, setOpen }) => {
           </DropdownCustomNav>
 
           <li>
-            <Link to="/zessence/gallery/#gallery" scroll={scrollBehavior}>
+            <Link to="/gallery/#gallery" scroll={scrollBehavior}>
               Gallery
             </Link>
           </li>
           <li>
-            <Link to="/zessence/contact">Contact</Link>
+            <Link to="/contact">Contact</Link>
           </li>
           <li>
-            <Link to="/zessence/testimonials/#tstmnl" scroll={scrollBehavior}>
+            <Link to="/testimonials/#tstmnl" scroll={scrollBehavior}>
               Testimonials
             </Link>
           </li>
@@ -142,7 +144,7 @@ const Navigation = ({ open, setOpen }) => {
 
                   <Dropdown.Item>
                     <Link
-                      to={`/zessence/account/${user.userId || user._id}`}
+                      to={`/account/${user.userId || user._id}`}
                       className="account-right"
                       onClick={() => localStorage.setItem("account", "details")}
                     >
@@ -155,11 +157,11 @@ const Navigation = ({ open, setOpen }) => {
             </li>
           ) : (
             <li>
-              <Link to="/zessence/login">Sign in</Link>
+              <Link to="/login">Sign in</Link>
             </li>
           )}
           <li>
-            <Link to="/zessence/appointment" className="btn">
+            <Link to="/appointment" className="btn">
               Book Appointment
             </Link>
           </li>
@@ -170,7 +172,7 @@ const Navigation = ({ open, setOpen }) => {
 };
 
 Navigation.propTypes = {
-  open: bool.isRequired
+  open: bool.isRequired,
 };
 
 export default Navigation;

@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { DSection, Content, Overlay } from "../../styled/containers";
 import Slider from "react-slick";
 import { DTestimonialCard } from "../../styled/card";
+import { Rating } from "semantic-ui-react";
 
 const TestimonialCard = ({ content }) => {
+  const [rate, setIsRate] = useState(1);
   const settings = {
     dots: true,
 
@@ -11,10 +13,16 @@ const TestimonialCard = ({ content }) => {
     speed: 500,
     rows: 2,
     slidesPerRow: 3,
-    arrows: false
+    arrows: false,
   };
+
+  const handleRate = (e, { rating }) => {
+    setIsRate(rating);
+  };
+
   return (
     <DSection height="100%" width="100%" mcenter ref={content}>
+      {/* <Rating rating={rate} maxRating={5} onRate={handleRate} icon="star" /> */}
       <Content width="80%" height="100%" margin="0 auto" pad="50px 0">
         <Slider {...settings}>
           <DTestimonialCard>
@@ -43,7 +51,7 @@ const TestimonialCard = ({ content }) => {
               />
               <figcaption>
                 <h4>Gordon Norman</h4>
-                <h5>Accountant</h5>
+                <Rating rating={4} maxRating={5} icon="star" disabled />
                 <blockquote>
                   Wormwood : Calvin, how about you? Calvin : Hard to say ma'am.
                   I think my cerebellum has just fused.{" "}

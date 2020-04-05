@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { FETCH_THE_SHOWCASE } from "../../../util/graphql/cms";
 import { Link } from "react-router-dom";
 import { DShowCase, Overlay, DImage } from "../../styled/containers";
+import { JButton } from "../../styled/button";
 import Slider from "react-slick";
 import MouseScroll from "../../MouseScroll";
 
@@ -14,7 +15,7 @@ const Showcase = ({ nextSection }) => {
     if (ref.current)
       ref.current.scrollIntoView({
         behavior: "smooth",
-        block: "center"
+        block: "center",
       });
   }
 
@@ -26,8 +27,8 @@ const Showcase = ({ nextSection }) => {
     FETCH_THE_SHOWCASE,
     {
       variables: {
-        sectionName: "SHOWCASE"
-      }
+        sectionName: "SHOWCASE",
+      },
     }
   );
 
@@ -45,12 +46,11 @@ const Showcase = ({ nextSection }) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 5000
+    autoplaySpeed: 5000,
   };
 
   return (
     <div style={{ position: "relative" }} id="home">
-      <MouseScroll onClick={scrollDown} />
       {dataLoading ? (
         <DShowCase
           height="90vh"
@@ -60,7 +60,7 @@ const Showcase = ({ nextSection }) => {
         ></DShowCase>
       ) : (
         <Slider {...settings}>
-          {showcase.map(sc => (
+          {showcase.map((sc) => (
             <DShowCase
               height="90vh"
               key={sc._id}
@@ -110,11 +110,19 @@ const Showcase = ({ nextSection }) => {
                   <h1>{sc.title}</h1>
                   <h2>{sc.subtitle}</h2>
                   <p>{sc.paragraph}</p>
-                  <Link to="/zessence" className="btn">
+                  <JButton
+                    className={sc.dark ? "dark" : ""}
+                    dark={sc.dark ? true : false}
+                  >
                     Book Appointment
-                  </Link>
+                    <Link to="/zessence/appointment" />
+                  </JButton>
                 </div>
               </Overlay>
+              <MouseScroll
+                onClick={scrollDown}
+                inverted={sc.dark ? true : false}
+              />
             </DShowCase>
           ))}
         </Slider>
@@ -129,7 +137,7 @@ const absoluteCenter = {
   left: "50%",
   height: "50%",
   transform: "translate(-50%, -50%)",
-  display: "block"
+  display: "block",
 };
 
 export default Showcase;

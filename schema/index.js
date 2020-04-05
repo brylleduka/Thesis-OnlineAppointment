@@ -431,7 +431,7 @@ const typeDefs = gql`
     removeShowcase(showcaseId: ID!): Boolean
 
     #AboutSection
-    updateAboutSection(title: String, subtitle: String, alt: Boolean): HomeCMS
+    updateAboutSection(sectionName: String!): HomeCMS
     # CATEGORY SECTION
     updateHomeSection(
       sectionName: String

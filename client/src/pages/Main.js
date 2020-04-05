@@ -24,58 +24,38 @@ function Main({ match }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <Router>
+    <>
       <Navigation open={open} setOpen={setOpen} />
 
       <Switch>
-        <Route path={`${match.path}/`} component={Home} exact />
-        <Route path={`${match.path}/about`} component={About} exact />
-        <Route path={`${match.path}/contact`} component={Contact} exact />
-        <Route path={`${match.path}/gallery`} component={Gallery} exact />
-        <Route
-          path={`${match.path}/testimonials`}
-          component={Testimonials}
-          exact
-        />
-        <Route
-          path={`${match.path}/services&rates`}
-          component={Services}
-          exact
-        />
-        <Route path={`${match.path}/service/:_id`} component={Service} exact />
-        <Route
-          path={`${match.path}/verified/:emailToken`}
-          component={ThankYou}
-          exact
-        />
+        <Route path={`/`} component={Home} exact />
+        <Route path={`/about`} component={About} exact />
+        <Route path={`/contact`} component={Contact} exact />
+        <Route path={`/gallery`} component={Gallery} exact />
+        <Route path={`/testimonials`} component={Testimonials} exact />
+        <Route path={`/services&rates`} component={Services} exact />
+        <Route path={`/service/:_id`} component={Service} exact />
+        <Route path={`/verified/:emailToken`} component={ThankYou} exact />
         <UserPrivateRoute
-          path={`${match.path}/verifynotice`}
+          path={`/verifynotice`}
           component={VerifyNotice}
           exact
         />
-        <UserAuthRoute path={`${match.path}/signup`} component={Signup} exact />
-        <UserAuthRoute path={`${match.path}/login`} component={Signin} exact />
+        <UserAuthRoute path={`/signup`} component={Signup} exact />
+        <UserAuthRoute path={`/login`} component={Signin} exact />
+
+        <UserPrivateRoute path={`/account/:_id`} component={Account} exact />
 
         <UserPrivateRoute
-          path={`${match.path}/account/:_id`}
-          component={Account}
-          exact
-        />
-
-        <UserPrivateRoute
-          path={`${match.path}/myappointment/:_id`}
+          path={`/myappointment/:_id`}
           component={AppointmentDetails}
           exact
         />
-        <UserPrivateRoute
-          path={`${match.path}/appointment`}
-          component={Appointment}
-          exact
-        />
+        <UserPrivateRoute path={`/appointment`} component={Appointment} exact />
         <Route component={Page404} />
       </Switch>
       <Footer />
-    </Router>
+    </>
   );
 }
 

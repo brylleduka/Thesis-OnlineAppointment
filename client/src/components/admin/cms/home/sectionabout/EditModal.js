@@ -1,83 +1,56 @@
-import React, { useState } from "react";
+import React from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import { Popup, Icon, Dimmer, Loader } from "semantic-ui-react";
-import { DButton } from "../../../../styled/utils";
+import { Popup } from "semantic-ui-react";
+import Spinner from "../../../../Spinner";
 
 const EditModal = ({ aboutBool }) => {
-  const [isReverse, setIsReverse] = useState(aboutBool ? aboutBool : false);
-
   const [updateAboutSection, { loading }] = useMutation(UPDATE_ABOUT_SECTION, {
-    variables: {
-      alt: isReverse
-    }
+    variables: { sectionName: "ABOUT" },
   });
 
   const handleReverse = () => {
-    setIsReverse(!isReverse);
-  };
-
-  const handleSaveAbout = () => {
     updateAboutSection();
   };
 
   return (
-    <Popup
-      trigger={
-        <DButton>
-          <Icon name="edit" fitted />
-        </DButton>
-      }
-      on="click"
-      position="top center"
-    >
-      <div className="pretty p-switch">
-        <input
-          type="checkbox"
-          name="alt"
-          value={isReverse}
-          onChange={handleReverse}
-          checked={isReverse === true ? true : false}
-        />
-        <div className="state">
-          <label>{isReverse ? "Reverse" : "Default"}</label>
-        </div>
-      </div>
+    <>
       {loading ? (
-        <Dimmer active inverted>
-          <Loader size="mini" />
-        </Dimmer>
+        <Spinner small />
       ) : (
         <Popup
-          content="Save changes"
+          content="Toggle Position"
           trigger={
-            <Icon
-              name="save"
-              size="large"
-              color="green"
-              style={{ cursor: "pointer" }}
-              onClick={handleSaveAbout}
-            />
+            <div className="pretty p-switch p-fill p-toggle">
+              <input
+                type="checkbox"
+                name="alt"
+                value={aboutBool}
+                onChange={handleReverse}
+                checked={aboutBool === true ? true : false}
+              />
+              <div className="state p-primary p-on">
+                <label style={{ fontWeight: 500 }}>Reverse</label>
+              </div>
+              <div className="state p-warning p-off">
+                <label style={{ fontWeight: 500 }}>Default</label>
+              </div>
+            </div>
           }
           position="left center"
           size="tiny"
           inverted
         />
       )}
-    </Popup>
+    </>
   );
 };
 
 const UPDATE_ABOUT_SECTION = gql`
-  mutation updateAboutSection(
-    $title: String
-    $subtitle: String
-    $alt: Boolean
-  ) {
-    updateAboutSection(title: $title, subtitle: $subtitle, alt: $alt) {
+  mutation updateAboutSection($sectionName: String!) {
+    updateAboutSection(sectionName: $sectionName) {
       _id
-      title
-      subtitle
+      sectionName
       alt
     }
   }

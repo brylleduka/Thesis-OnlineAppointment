@@ -1,17 +1,20 @@
 import React, { useRef, useEffect, useState } from "react";
-import { FETCH_HOME_SECTION } from "../../../util/graphql/cms";
+import { FETCH_HOME_SECTION, FETCH_ABOUT_CMS } from "../../../util/graphql/cms";
 import { useQuery } from "@apollo/react-hooks";
 import { HashLink as Link } from "react-router-hash-link";
-import { Section2Styled } from "../../styled/containers";
+import { Section2Styled, Content } from "../../styled/containers";
 import { TweenMax, TimelineLite, Power3 } from "gsap";
 import ReadMore from "../utils/ReadMore";
+import parser from "html-react-parser";
+import Spinner from "../../Spinner";
 
 const AboutSection = ({ nextSection }) => {
   const [isAboutSection, setIsAboutSection] = useState({});
+  const [about, setAbout] = useState({});
 
   const {
     data: aboutChange,
-    loading: loadAboutChange
+    loading: loadAboutChange,
   } = useQuery(FETCH_HOME_SECTION, { variables: { sectionName: "ABOUT" } });
 
   useEffect(() => {
@@ -20,7 +23,15 @@ const AboutSection = ({ nextSection }) => {
     }
   }, [aboutChange]);
 
-  console.log(isAboutSection);
+  const { data: dataAbout, loading: loadAbout } = useQuery(FETCH_ABOUT_CMS, {
+    variables: { contentName: "ABOUTUS" },
+  });
+
+  useEffect(() => {
+    if (dataAbout) {
+      setAbout(dataAbout.aboutUsCMS);
+    }
+  }, [dataAbout]);
 
   let section2 = useRef(null);
   let images = useRef(null);
@@ -55,48 +66,75 @@ const AboutSection = ({ nextSection }) => {
 
   return (
     <Section2Styled
-      ref={el => (section2 = el)}
-      alt={isAboutSection && isAboutSection.alt === true ? true : false}
+      ref={(el) => (section2 = el)}
+      alt={isAboutSection.alt === true ? true : false}
     >
       <div className="sec2-container" ref={nextSection}>
         <div className="sec2-inner">
-          <div className="sec2-content">
-            <div className="sec2-content_inner">
-              <h1>
-                <div className="sec2-content_line">
-                  <div className="sec2-content_line-inner">Z Essence</div>
-                </div>
-                <div className="sec2-content_line">
-                  <div className="sec2-content_line-inner">Facial & Spa</div>
-                </div>
-              </h1>
-              <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam
-                labore dolore ad nemo, veritatis iure mollitia impedit. Quod, id
-                tempore? Lorem ipsum dolor sit amet, consectetur adipisicing
-                elit. Placeat dolorum repudiandae tempora, sunt nostrum
-                explicabo. Doloribus, quis est, corporis deserunt excepturi
-                praesentium fugit eius minus laudantium nesciunt modi temporibus
-                vitae.
-              </p>
-              <ReadMore>
-                <Link to="/zessence/about/#story">Learn More</Link>
-              </ReadMore>
+          {loadAbout ? (
+            <Content
+              margin="0 auto"
+              height="100%"
+              width="50%"
+              flex
+              justify="center"
+              align="center"
+            >
+              <Spinner medium />
+            </Content>
+          ) : (
+            <div className="sec2-content">
+              <div className="sec2-content_inner">
+                <h1>
+                  <div className="sec2-content_line">
+                    <div className="sec2-content_line-inner">{about.title}</div>
+                  </div>
+                  <div className="sec2-content_line">
+                    <div className="sec2-content_line-inner subtitle">
+                      {about.story && about.story.title}
+                    </div>
+                  </div>
+                </h1>
+                <p>
+                  {about.story &&
+                    (about.story.paragraph.length > 300
+                      ? parser(about.story.paragraph.substr(0, 300)) + "..."
+                      : parser(about.story.paragraph.substr(0, 300)))}
+                </p>
+                <ReadMore>
+                  <Link to="/zessence/about/#story">Learn More</Link>
+                </ReadMore>
+              </div>
             </div>
-          </div>
+          )}
+
           <div className="sec2-images">
-            <div className="sec2-images_inner" ref={el => (images = el)}>
+            <div className="sec2-images_inner" ref={(el) => (images = el)}>
               <div className="sec2-image imgs">
-                <img
-                  src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                  alt="about"
-                />
+                {loadAbout ? (
+                  <Spinner small />
+                ) : (
+                  <img
+                    src={
+                      about.story && about.story.photo
+                        ? `/images/cms/about/${about.story.photo}`
+                        : "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                    }
+                  />
+                )}
               </div>
               <div className="sec2-image imgs">
-                <img
-                  src="https://images.pexels.com/photos/3779501/pexels-photo-3779501.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                  alt="about"
-                />
+                {loadAbout ? (
+                  <Spinner small />
+                ) : (
+                  <img
+                    src={
+                      about.missionvision && about.missionvision.photo
+                        ? `/images/cms/about/${about.missionvision.photo}`
+                        : "https://images.pexels.com/photos/3779501/pexels-photo-3779501.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                    }
+                  />
+                )}
               </div>
             </div>
           </div>

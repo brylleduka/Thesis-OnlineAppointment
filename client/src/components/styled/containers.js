@@ -5,7 +5,7 @@ const columns = {
   three: "repeat(3, 1fr)",
   four: "repeat(4 , 1fr)",
   five: "repeat(5 , 1fr)",
-  six: "repeat(6,1fr)"
+  six: "repeat(6,1fr)",
 };
 
 const rows = {
@@ -13,7 +13,7 @@ const rows = {
   three: "repeat(3, 1fr)",
   four: "repeat(4 , 1fr)",
   five: "repeat(5 , 1fr)",
-  six: "repeat(6,1fr)"
+  six: "repeat(6,1fr)",
 };
 
 export const DContainer = styled.div`
@@ -25,10 +25,10 @@ export const DContainer = styled.div`
 
 export const DShowCase = styled.div`
   width: 100%;
-  height: ${props => (props.height ? props.height : "100vh")};
+  height: ${(props) => (props.height ? props.height : "100vh")};
   position: relative;
-  background: ${props => props.bgcolor && props.bgcolor};
-  background-image: url(${props => props.background && props.background});
+  background: ${(props) => props.bgcolor && props.bgcolor};
+  background-image: url(${(props) => props.background && props.background});
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -63,7 +63,7 @@ export const Overlay = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: ${props =>
+  background: ${(props) =>
     props.bg
       ? props.bg
       : props.bgr
@@ -75,20 +75,20 @@ export const Overlay = styled.div`
       : "rgba(0, 0, 0, 0)"};
   border-radius: inherit;
   z-index: 1;
-  display: ${props => props.flex && "flex"};
-  justify-content: ${props => props.justify && props.justify};
-  align-items: ${props => props.align && props.align};
-  flex-flow: ${props => props.flow && props.flow};
-  flex-direction: ${props => props.direct && props.direct};
-  padding: ${props => props.pad && props.pad};
-  cursor: ${props => props.pointer && "pointer"};
-  opacity: ${props => props.opac && props.opac};
+  display: ${(props) => props.flex && "flex"};
+  justify-content: ${(props) => props.justify && props.justify};
+  align-items: ${(props) => props.align && props.align};
+  flex-flow: ${(props) => props.flow && props.flow};
+  flex-direction: ${(props) => props.direct && props.direct};
+  padding: ${(props) => props.pad && props.pad};
+  cursor: ${(props) => props.pointer && "pointer"};
+  opacity: ${(props) => props.opac && props.opac};
   transition: opacity 0.3s ease;
 
   overflow: hidden;
 
   &:hover {
-    opacity: ${props => props.hovOpac && props.hovOpac};
+    opacity: ${(props) => props.hovOpac && props.hovOpac};
   }
 
   .overlay-box {
@@ -125,10 +125,10 @@ export const Overlay = styled.div`
   }
 
   .overlay-content {
-    width: ${props => (props.cwidth ? props.cwidth : "80%")};
-    text-align: ${props => (props.talign ? props.talign : "left")};
+    width: ${(props) => (props.cwidth ? props.cwidth : "80%")};
+    text-align: ${(props) => (props.talign ? props.talign : "left")};
     height: auto;
-    margin: ${props => (props.cmarg ? props.cmarg : "0 24px")};
+    margin: ${(props) => (props.cmarg ? props.cmarg : "0 24px")};
     padding: 10px 40px;
 
     h1,
@@ -149,7 +149,7 @@ export const Overlay = styled.div`
     }
 
     h1 {
-      font-size: ${props => (props.fs ? props.fs : "60px")};
+      font-size: ${(props) => (props.fs ? props.fs : "60px")};
       font-weight: 700;
       text-transform: uppercase;
     }
@@ -178,7 +178,7 @@ export const DGrid = styled.section`
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-columns: ${props =>
+  grid-template-columns: ${(props) =>
     props.two
       ? columns.two
       : props.three
@@ -190,8 +190,8 @@ export const DGrid = styled.section`
       : props.custom
       ? props.custom
       : "1fr"};
-  grid-gap: ${props => props.gap && props.gap};
-  grid-template-rows: ${props =>
+  grid-gap: ${(props) => props.gap && props.gap};
+  grid-template-rows: ${(props) =>
     props.row2
       ? rows.two
       : props.row3
@@ -203,10 +203,10 @@ export const DGrid = styled.section`
       : props.rowCustom
       ? props.rowCustom
       : "1fr"};
-  margin: ${props => props.margin && props.margin};
+  margin: ${(props) => props.margin && props.margin};
 
   .card-content {
-    border-radius: ${props => (props.circle ? "40% 40% 10px 10px" : "5px")};
+    border-radius: ${(props) => (props.circle ? "40% 40% 10px 10px" : "5px")};
     padding: 10px;
     background: #fff;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25), 0 2px 2px rgba(0, 0, 0, 0.2),
@@ -233,29 +233,29 @@ export const DGrid = styled.section`
   }
 
   @media (max-width: 1024px) {
-    grid-template-columns: ${props =>
+    grid-template-columns: ${(props) =>
       props.med10 ? props.med10 : "repeat(2, 1fr)"};
   }
 
   @media (max-width: 768px) {
-    grid-template-columns: ${props =>
+    grid-template-columns: ${(props) =>
       props.med7 ? props.med7 : "repeat(2, 1fr)"};
   }
 
   @media (max-width: 500px) {
-    grid-template-columns: ${props => (props.med5 ? props.med5 : "1fr")};
+    grid-template-columns: ${(props) => (props.med5 ? props.med5 : "1fr")};
   }
 `;
 
 export const DCard = styled.div`
   position: relative;
   border-radius: 10px;
-  padding: ${props => (props.p ? props.p : "10px")};
-  height: ${props => (props.dh ? props.dh : "300px")};
-  width: ${props => (props.dw ? props.dw : "250px")};
-  cursor: ${props => props.pointer && "pointer"};
-  display: ${props => props.flex && "flex"};
-  justify-content: ${props =>
+  padding: ${(props) => (props.p ? props.p : "10px")};
+  height: ${(props) => (props.dh ? props.dh : "300px")};
+  width: ${(props) => (props.dw ? props.dw : "250px")};
+  cursor: ${(props) => props.pointer && "pointer"};
+  display: ${(props) => props.flex && "flex"};
+  justify-content: ${(props) =>
     props.justifyCenter
       ? "center"
       : props.justifyAround
@@ -266,7 +266,7 @@ export const DCard = styled.div`
       ? "flex-end"
       : "flex-start"};
 
-  align-items: ${props =>
+  align-items: ${(props) =>
     props.alignCenter
       ? "center"
       : props.alignAround
@@ -276,11 +276,11 @@ export const DCard = styled.div`
       : props.alignFend
       ? "flex-end"
       : "flex-start"};
-  flex-direction: ${props => props.fcol && "column"};
+  flex-direction: ${(props) => props.fcol && "column"};
 
   overflow: hidden;
-  background: ${props => (props.bg ? props.bg : "#ffffff")};
-  box-shadow: ${props =>
+  background: ${(props) => (props.bg ? props.bg : "#ffffff")};
+  box-shadow: ${(props) =>
     props.bs
       ? props.bs
       : ("0 1px 1px rgba(0, 0, 0, 0.12)",
@@ -338,23 +338,23 @@ export const DCard = styled.div`
 `;
 
 export const DSection = styled.section`
-  height: ${props => (props.height ? props.height : "400px")};
-  width: ${props => (props.width ? props.width : "100%")};
-  margin: ${props =>
+  height: ${(props) => (props.height ? props.height : "400px")};
+  width: ${(props) => (props.width ? props.width : "100%")};
+  margin: ${(props) =>
     props.margin ? props.margin : props.mcenter ? "0 auto" : "0"};
-  padding: ${props => props.pad && props.pad};
-  background: ${props => props.bgcolor && props.bgcolor};
-  background-image: url(${props => props.background && props.background});
+  padding: ${(props) => props.pad && props.pad};
+  background: ${(props) => props.bgcolor && props.bgcolor};
+  background-image: url(${(props) => props.background && props.background});
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
 
-  display: ${props => props.flex && "flex"};
-  justify-content: ${props => props.justify && props.justify};
-  align-items: ${props => props.align && props.align};
-  flex-flow: ${props => props.flow && props.flow};
-  flex-direction: ${props => props.direct && props.direct};
+  display: ${(props) => props.flex && "flex"};
+  justify-content: ${(props) => props.justify && props.justify};
+  align-items: ${(props) => props.align && props.align};
+  flex-flow: ${(props) => props.flow && props.flow};
+  flex-direction: ${(props) => props.direct && props.direct};
   position: relative;
 
   @media (max-width: 768px) {
@@ -367,28 +367,29 @@ export const DSection = styled.section`
 `;
 
 export const Content = styled.div`
-  height: ${props => props.height && props.height};
-  width: ${props => (props.width ? props.width : props.fluid ? "100%" : "50%")};
-  padding: ${props => props.pad && props.pad};
-  display: ${props => props.flex && "flex"};
-  justify-content: ${props => props.justify && props.justify};
-  align-items: ${props => props.align && props.align};
-  flex-flow: ${props => props.flow && props.flow};
-  flex-direction: ${props => props.direct && props.direct};
+  height: ${(props) => props.height && props.height};
+  width: ${(props) =>
+    props.width ? props.width : props.fluid ? "100%" : "50%"};
+  padding: ${(props) => props.pad && props.pad};
+  display: ${(props) => props.flex && "flex"};
+  justify-content: ${(props) => props.justify && props.justify};
+  align-items: ${(props) => props.align && props.align};
+  flex-flow: ${(props) => props.flow && props.flow};
+  flex-direction: ${(props) => props.direct && props.direct};
   letter-spacing: 2px;
   position: relative;
-  margin: ${props => props.margin && props.margin};
-  background: url('${props =>
+  margin: ${(props) => props.margin && props.margin};
+  background: url('${(props) =>
     props.background && props.background}') no-repeat center center/cover;
-  background-attachment: ${props => props.fixed && "fixed"};
-  background-color: ${props => props.bgcolor && props.bgcolor};
-  border-radius: ${props =>
+  background-attachment: ${(props) => props.fixed && "fixed"};
+  background-color: ${(props) => props.bgcolor && props.bgcolor};
+  border-radius: ${(props) =>
     props.rounded
       ? "10px"
       : props.br1
       ? "0% 24% 26% 39% / 20% 0% 100% 0% "
       : "0"};
-  box-shadow: ${props =>
+  box-shadow: ${(props) =>
     props.bs &&
     ("0 1px 1px rgba(0, 0, 0, 0.12)",
     "0 2px 2px rgba(0, 0, 0, 0.12)",
@@ -396,7 +397,7 @@ export const Content = styled.div`
     "0 6px 8px rgba(0, 0, 0, 0.12)",
     "0 8px 16px rgba(0, 0, 0, 0.12)")};
   z-index: 2;
-  font-weight: ${props => props.weight && props.weight};
+  font-weight: ${(props) => props.weight && props.weight};
 
   h2 {
     text-transform: uppercase;
@@ -408,12 +409,12 @@ export const Content = styled.div`
   h4,
   p,
   span {
-    color: ${props => props.color && props.color};
+    color: ${(props) => props.color && props.color};
   }
 
   p {
     margin: 10px 0 20px;
-    font-size: ${props => (props.size ? props.size : "14px")};
+    font-size: ${(props) => (props.size ? props.size : "14px")};
   }
   .content-edit {
     color: ${({ theme }) => theme.blue};
@@ -424,28 +425,28 @@ export const Content = styled.div`
   }
 
   img {
-    max-height: ${props => (props.imgHeight ? props.imgHeight : "300px")};
-    width: ${props => (props.imgWidth ? props.imgWidth : "100%")};
-    border-radius: ${props => props.circle && "50%"};
+    max-height: ${(props) => (props.imgHeight ? props.imgHeight : "300px")};
+    width: ${(props) => (props.imgWidth ? props.imgWidth : "100%")};
+    border-radius: ${(props) => props.circle && "50%"};
     object-fit: contain;
   }
 `;
 
 export const DImage = styled.div`
-  height: ${props => (props.height ? props.height : "300px")};
-  width: ${props => (props.width ? props.width : "auto")};
+  height: ${(props) => (props.height ? props.height : "300px")};
+  width: ${(props) => (props.width ? props.width : "auto")};
   position: relative;
   overflow: hidden;
-  border-radius: ${props =>
+  border-radius: ${(props) =>
     props.circle ? "50%" : props.rounded ? "20px" : "0"};
-  border: ${props =>
+  border: ${(props) =>
     props.bordered
       ? "1px solid #000"
       : props.dashed
       ? "1px dashed #ccc"
       : "none"};
-  margin: ${props => (props.m ? props.m : "0 auto")};
-  padding: ${props => props.pad && props.pad};
+  margin: ${(props) => (props.m ? props.m : "0 auto")};
+  padding: ${(props) => props.pad && props.pad};
   img {
     display: inline;
     margin: 0 auto;
@@ -518,11 +519,11 @@ export const DFooter = styled.footer`
 
 export const Section2Styled = styled.div`
   position: relative;
-  visibility: ${props => (props.visible ? "visible" : "hidden")};
+  visibility: ${(props) => (props.visible ? "visible" : "hidden")};
   max-height: 100vh;
   min-height: 30vh;
   height: 100%;
-  width: ${props => (props.width ? props.width : "90%")};
+  width: ${(props) => (props.width ? props.width : "90%")};
   margin: 24px auto;
   text-align: center;
 
@@ -546,7 +547,7 @@ export const Section2Styled = styled.div`
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      ${props => props.alt && "flex-direction: row-reverse"};
+      ${(props) => props.alt && "flex-direction: row-reverse"};
       margin: 0 auto;
       height: 100vh;
 
@@ -560,7 +561,9 @@ export const Section2Styled = styled.div`
           h1 {
             font-weight: 500;
             font-size: 32px;
-            margin-bottom: 24px .sec2-content_line {
+            text-align: left;
+            margin-bottom: 24px;
+            .sec2-content_line {
               margin: 0;
               height: 44px;
               overflow: hidden;
@@ -631,4 +634,7 @@ export const Section2Styled = styled.div`
       display: none;
     }
   }
+
+  .subtitle {
+    font-size: 18px;
 `;

@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 import Main from "./pages/Main";
 import Admin from "./pages/Admin";
@@ -19,9 +19,10 @@ function App() {
       <ThemeProvider theme={theme}>
         <Router>
           <Switch>
-            <Redirect from="/" to="/zessence" exact />
-            <Route path="/zessence" component={Main} />
+            {/* <Redirect from="/" to="/zessence" exact /> */}
             <Route path="/zeadmin" component={Admin} />
+            <Route path="/" component={Main} />
+
             <Route component={Page404} />
           </Switch>
         </Router>

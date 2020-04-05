@@ -1,13 +1,8 @@
 import React from "react";
 import { SpinnerRing } from "./styled/loader";
-const Spinner = ({ small, large, medium, inverted }) => {
+const Spinner = (props) => {
   return (
-    <SpinnerRing
-      small={small}
-      large={large}
-      medium={medium}
-      inverted={inverted}
-    >
+    <SpinnerRing {...props}>
       <div></div>
       <div></div>
       <div></div>

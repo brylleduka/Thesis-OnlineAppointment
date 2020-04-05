@@ -40,7 +40,7 @@ export const DMouseScroll = styled.div`
       &::after {
         top: 50%;
         left: 50%;
-        border: 1px solid rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(0, 0, 0, 0.5);
       }
     }
   }
@@ -57,7 +57,7 @@ export const DMouseScroll = styled.div`
       content: "";
       width: 100%;
       height: 100%;
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      border: 1px solid rgba(0, 0, 0, 0.25);
       transform: translate(-50%, -50%);
       border-radius: 100%;
       transition: all 0.3s ease-in-out;
@@ -81,29 +81,29 @@ export const DMouseScroll = styled.div`
     width: 2px;
     padding: 3px 5px;
     height: 15px;
-    border: 2px solid #fff;
+    border: 2px solid #232323;
     border-radius: 25px;
     opacity: 0.75;
     box-sizing: content-box;
-    background: #fff;
+    background: #232323;
   }
 
   .scroller {
     width: 2px;
     height: 5px;
     border-radius: 25%;
-    background-color: #000;
+    background-color: #fff;
     animation-name: ${scroll};
     animation-duration: 2.2s;
     animation-timing-function: cubic-bezier(0.15, 0.41, 0.69, 0.94);
     animation-iteration-count: infinite;
   }
 
-  ${props =>
+  ${(props) =>
     props.inverted &&
-    ".mousey{background: #232323; border-color: #232323;} .scroller{background-color: #fff;} .scroll-downs{&::before,&::after{border-color: rgba(0,0,0,0.25)}} &:hover{.scroll-downs{&::before,&::after{border-color: rgba(0,0,0,0.5)}}}"}
+    ".mousey{background: #ffffff; border-color: #ffffff;} .scroller{background-color: #232323;} .scroll-downs{&::before,&::after{border-color: rgba(255,255,255,0.25)}} &:hover{.scroll-downs{&::before,&::after{border-color: rgba(255,255,255,0.5)}}}"}
 
-  ${props =>
+  ${(props) =>
     props.basic &&
     ".mousey{background: transparent; border-width: 1px;} .scroller{background-color: #fff;} "}
 `;

@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 import { AdminAuthRoute } from "../util/AuthRoute";
 import { PrivateRoute } from "../util/PrivateRoute";
@@ -29,11 +29,12 @@ import Page404 from "../pages/Page404";
 
 const Admin = () => {
   return (
-    <Router>
+    <>
       <Switch>
-        <Redirect from="/zeadmin" to="/zeadmin/signin" exact />
         <AdminAuthRoute path="/zeadmin/signin" component={Signin} exact />
+
         <PrivateRoute exact path="/zeadmin/dashboard" component={Dashboard} />
+        <Redirect from="/zeadmin" to="/zeadmin/dashboard" exact />
         <PrivateRoute
           exact
           path="/zeadmin/appointment/:_id"
@@ -80,7 +81,7 @@ const Admin = () => {
         <PrivateRoute exact path="/zeadmin/report" component={FileReport} />
         <Route component={Page404} />
       </Switch>
-    </Router>
+    </>
   );
 };
 
