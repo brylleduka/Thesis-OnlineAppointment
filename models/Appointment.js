@@ -8,17 +8,17 @@ const appointmentSchema = new Schema(
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",
-      autopopulate: true
+      autopopulate: true,
     },
     employee: {
       type: Schema.Types.ObjectId,
       ref: "Employee",
-      autopopulate: true
+      autopopulate: true,
     },
     service: {
       type: Schema.Types.ObjectId,
       ref: "Service",
-      autopopulate: true
+      autopopulate: true,
     },
     status: String,
     slot_start: String,
@@ -29,13 +29,13 @@ const appointmentSchema = new Schema(
     view: Boolean,
     reschedule: {
       appointmentId: {
-        type: Schema.Types.ObjectId
+        type: Schema.Types.ObjectId,
       },
-      new: Boolean
-    }
+      new: Boolean,
+    },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

@@ -69,7 +69,6 @@ const ModalMissionVision = ({ isMissionVision }) => {
       <DButtonFree
         top={0}
         right={0}
-        style={{ zIndex: 2 }}
         onClick={() => setOpenMission(true)}
         style={{ zIndex: 3 }}
       >

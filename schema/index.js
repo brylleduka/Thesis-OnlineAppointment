@@ -97,7 +97,17 @@ const typeDefs = gql`
     createdAt: String
     updatedAt: String
   }
-  #
+  # Testimonial
+  type Testimonial {
+    _id: ID!
+    rating: Int
+    message: String!
+    view: Boolean
+    user: User
+    createdAt: String
+    updatedAt: String
+  }
+  #CMS
 
   type HomeCMS {
     _id: ID
@@ -219,6 +229,11 @@ const typeDefs = gql`
     categoryId: ID
   }
 
+  input TestimonialInput {
+    rating: Int
+    message: String
+  }
+
   input ShowcaseContentInput {
     title: String
     subtitle: String
@@ -298,6 +313,10 @@ const typeDefs = gql`
     inquiries: [Inquiry]
     inquiriesRead(read: Boolean): [Inquiry]
     inquiry(_id: ID!): Inquiry
+    # Testimonial
+    testimonials: [Testimonial]
+    testimonial(_id: ID!): Testimonial
+    testimonialsView(limit: Int): [Testimonial]
     # CMS
     showcaseCMS(sectionName: String): ShowcaseCMS
     homeCMS(sectionName: String): HomeCMS
@@ -410,6 +429,7 @@ const typeDefs = gql`
     ): Service
     deleteService(_id: ID!): Boolean
     addServicePhoto(_id: ID!, file: Upload): Boolean
+
     # INQ
     sendInquiry(
       name: String
@@ -420,6 +440,11 @@ const typeDefs = gql`
     ): Inquiry
     readInquiry(_id: ID): Boolean
     replyInquiry(_id: ID!, email: String, message: String): Inquiry
+
+    # Testimonial
+    addTestimonial(inputTestimonial: TestimonialInput): Testimonial
+    toggleTestimonial(_id: ID!): Testimonial
+    updateTestimonial(_id: ID!, rating: Int, message: String): Testimonial
 
     # CMSHOME
     # SHOWCASE

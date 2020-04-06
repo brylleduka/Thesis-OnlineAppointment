@@ -94,6 +94,7 @@ const SectionAbout = () => {
                         ? `/images/cms/about/${about.story.photo}`
                         : "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
                     }
+                    alt="about"
                   />
                 )}
               </div>
@@ -107,6 +108,7 @@ const SectionAbout = () => {
                         ? `/images/cms/about/${about.missionvision.photo}`
                         : "https://images.pexels.com/photos/3779501/pexels-photo-3779501.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
                     }
+                    alt="about"
                   />
                 )}
               </div>

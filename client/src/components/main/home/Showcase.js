@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_THE_SHOWCASE } from "../../../util/graphql/cms";
 import { Link } from "react-router-dom";
-import { DShowCase, Overlay, DImage } from "../../styled/containers";
+import { DShowCase, Overlay } from "../../styled/containers";
 import { JButton } from "../../styled/button";
 import Slider from "react-slick";
 import MouseScroll from "../../MouseScroll";
 
 const Showcase = ({ nextSection }) => {
-  const mql = window.matchMedia("(max-width: 768px)");
   const [showcase, setShowcase] = useState([]);
 
   function scrollView(ref) {

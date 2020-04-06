@@ -23,9 +23,9 @@ module.exports = {
     appointments: async () => {
       try {
         const getAllAppointments = await Appointment.find({
-          $or: [{ status: "DONE" }, { status: "CANCELLED" }]
+          $or: [{ status: "DONE" }, { status: "CANCELLED" }],
         }).sort({
-          createdAt: -1
+          createdAt: -1,
         });
 
         return getAllAppointments;
@@ -35,7 +35,7 @@ module.exports = {
     },
     currentAppointments: async () => {
       const getCurrentAppointments = await Appointment.find({
-        $or: [{ status: "VERIFIED" }]
+        $or: [{ status: "VERIFIED" }],
       }).sort({ createdAt: -1 });
 
       return getCurrentAppointments;
@@ -45,8 +45,8 @@ module.exports = {
         $or: [
           { status: "CANCELLED" },
           { status: "DONE" },
-          { status: "RESCHEDULED" }
-        ]
+          { status: "RESCHEDULED" },
+        ],
       }).sort({ updatedAt: -1 });
 
       return historyAppointments;
@@ -54,7 +54,7 @@ module.exports = {
     appointmentsByStatus: async (_, { status }) => {
       try {
         const appointmentStatus = await Appointment.find({ status }).sort({
-          createdAt: -1
+          createdAt: -1,
         });
 
         return appointmentStatus;
@@ -70,8 +70,8 @@ module.exports = {
           $or: [
             { status: "PENDING" },
             { status: "VERIFIED" },
-            { status: "DONE" }
-          ]
+            { status: "DONE" },
+          ],
         });
 
         return checkAppointments;
@@ -84,7 +84,7 @@ module.exports = {
         const { userId: user } = Auth(context);
 
         const getMyAppointments = await Appointment.find({
-          user
+          user,
         }).sort({ createdAt: -1 });
 
         return getMyAppointments;
@@ -98,7 +98,7 @@ module.exports = {
 
         const getCurrentAppointment = await Appointment.find({
           user,
-          $or: [{ status: "PENDING" }, { status: "VERIFIED" }]
+          $or: [{ status: "PENDING" }, { status: "VERIFIED" }],
         }).sort({ createdAt: -1 });
 
         return getCurrentAppointment;
@@ -115,15 +115,15 @@ module.exports = {
           $or: [
             { status: "CANCELLED" },
             { status: "DONE" },
-            { status: "RESCHEDULED" }
-          ]
+            { status: "RESCHEDULED" },
+          ],
         }).sort({ updatedAt: -1 });
 
         return getAppointmentHistory;
       } catch (err) {
         throw err;
       }
-    }
+    },
   },
   Mutation: {
     createGuestAppointment: async (
@@ -133,7 +133,7 @@ module.exports = {
         lastName,
         email,
         contact,
-        appointmentInput: { serviceId, employeeId, date, slot_start, message }
+        appointmentInput: { serviceId, employeeId, date, slot_start, message },
       }
     ) => {
       try {
@@ -146,7 +146,7 @@ module.exports = {
           lastName,
           email,
           contact,
-          password: hashedPassword
+          password: hashedPassword,
         });
 
         await newGuestUser.save();
@@ -154,7 +154,7 @@ module.exports = {
         const checkTime = await Appointment.findOne({
           employee: employeeId,
           date: new Date(date).toISOString(),
-          slot_start
+          slot_start,
         });
 
         if (checkTime) {
@@ -174,7 +174,7 @@ module.exports = {
           duration,
           slot_start,
           message,
-          status: "VERIFIED"
+          status: "VERIFIED",
         });
 
         const result = await newAppointment.save();
@@ -184,7 +184,7 @@ module.exports = {
           to: email, // list of receivers
           subject: "Appointment Confirmation",
           text: "Good Day", // plain text body
-          html: `Your appointment details`
+          html: `Your appointment details`,
         });
 
         return result;
@@ -196,7 +196,7 @@ module.exports = {
       _,
       {
         userId,
-        appointmentInput: { serviceId, employeeId, date, slot_start, message }
+        appointmentInput: { serviceId, employeeId, date, slot_start, message },
       }
     ) => {
       try {
@@ -205,13 +205,13 @@ module.exports = {
 
         const checkAppointment = await Appointment.findOne({
           user: userId,
-          $or: [{ status: "PENDING" }, { status: "VERIFIED" }]
+          $or: [{ status: "PENDING" }, { status: "VERIFIED" }],
         });
 
         const checkTime = await Appointment.findOne({
           employee: employeeId,
           date: new Date(date).toISOString(),
-          slot_start
+          slot_start,
         });
 
         if (checkAppointment) {
@@ -235,7 +235,7 @@ module.exports = {
           duration,
           slot_start,
           message,
-          status: "VERIFIED"
+          status: "VERIFIED",
         });
 
         const result = await newAppointment.save();
@@ -245,7 +245,7 @@ module.exports = {
           to: userEmail, // list of receivers
           subject: "Appointment Confirmation",
           text: "Good Day", // plain text body
-          html: `Your appointment has been set`
+          html: `Your appointment has been set`,
         });
 
         return result;
@@ -256,7 +256,7 @@ module.exports = {
     createAppointment: async (
       _,
       {
-        appointmentInput: { serviceId, employeeId, date, slot_start, message }
+        appointmentInput: { serviceId, employeeId, date, slot_start, message },
       },
       context
     ) => {
@@ -269,7 +269,7 @@ module.exports = {
 
         const checkAppointment = await Appointment.findOne({
           user,
-          $or: [{ status: "PENDING" }, { status: "VERIFIED" }]
+          $or: [{ status: "PENDING" }, { status: "VERIFIED" }],
         });
 
         const checkTime = await Appointment.findOne({
@@ -279,8 +279,8 @@ module.exports = {
           $or: [
             { status: "PENDING" },
             { status: "VERIFIED" },
-            { status: "DONE" }
-          ]
+            { status: "DONE" },
+          ],
         });
 
         if (!user) {
@@ -310,7 +310,7 @@ module.exports = {
           duration,
           slot_start,
           message,
-          status: "PENDING"
+          status: "PENDING",
         });
 
         const result = await newAppointment.save();
@@ -320,7 +320,7 @@ module.exports = {
 
           process.env.EMAIL_KEY,
           {
-            expiresIn: "1d"
+            expiresIn: "1d",
           },
           (err, emailToken) => {
             const url = `http://www.zessencefacialandspa.com/zessence/verified/${emailToken}`;
@@ -331,7 +331,7 @@ module.exports = {
               subject: "Appointment Confirmation",
               text: "Good Day", // plain text body
               temp: "index",
-              url
+              url,
             });
           }
         );
@@ -353,12 +353,7 @@ module.exports = {
 
         const date = moment(appointmentDay.date).format("M/D/YYYY");
 
-        if (
-          date <=
-          moment()
-            .add(12, "h")
-            .format("M/D/YYYY")
-        ) {
+        if (date <= moment().add(12, "h").format("M/D/YYYY")) {
           errors.invalidCancellation =
             "You can't cancel your appointment. If you wish to cancel your appointment, please contact our hotline";
           throw new UserInputError("Error", { errors });
@@ -373,7 +368,7 @@ module.exports = {
             to: userEmail,
             subject: "Appointment Cancellation",
             text: `${userName}, we received your cancellation notice, and we want to let you know that we are sorry to hear of your decisions. If you would, please tell us why you have made this decision so our company can provide better service in the future.`,
-            temp: "cancel"
+            temp: "cancel",
           });
 
           return result;
@@ -401,7 +396,7 @@ module.exports = {
           to: userEmail,
           subject: "Appointment Cancellation",
           text: `${userName}, we received your cancellation notice, and we want to let you know that we are sorry to hear of your decisions. If you would, please tell us why you have made this decision so our company can provide better service in the future.`,
-          temp: "cancel"
+          temp: "cancel",
         });
 
         return result;
@@ -439,7 +434,7 @@ module.exports = {
         _id,
         status,
         isAdmin,
-        appointmentInput: { serviceId, employeeId, date, slot_start, message }
+        appointmentInput: { serviceId, employeeId, date, slot_start, message },
       }
     ) => {
       let errors = {};
@@ -457,7 +452,7 @@ module.exports = {
       const checkTime = await Appointment.findOne({
         employee: employeeId,
         date: new Date(date).toISOString(),
-        slot_start
+        slot_start,
       });
 
       // if (checkAppointment) {
@@ -487,8 +482,8 @@ module.exports = {
         view: false,
         reschedule: {
           appointmentId: _id,
-          new: true
-        }
+          new: true,
+        },
       });
 
       const result = await rescheduleAppointment.save();
@@ -499,8 +494,8 @@ module.exports = {
           $set: {
             status: "RESCHEDULED",
             note: "For Rescheduling",
-            reschedule: { appointmentId: rescheduleAppointment, new: false }
-          }
+            reschedule: { appointmentId: rescheduleAppointment, new: false },
+          },
         }
       );
 
@@ -510,7 +505,7 @@ module.exports = {
 
           process.env.EMAIL_KEY,
           {
-            expiresIn: "1d"
+            expiresIn: "1d",
           },
           (err, emailToken) => {
             const url = `http://www.zessencefacialandspa.com/zessence/verified/${emailToken}`;
@@ -520,7 +515,7 @@ module.exports = {
               to: userEmail, // list of receivers
               subject: "Appointment Confirmation",
               text: "Good Day", // plain text body
-              temp: "index"
+              temp: "index",
             });
           }
         );
@@ -530,11 +525,11 @@ module.exports = {
           to: userEmail, // list of receivers
           subject: "Appointment Rescheduling",
           text: "Good Day", // plain text body
-          temp: "index"
+          temp: "index",
         });
       }
 
       return result;
-    }
-  }
+    },
+  },
 };
