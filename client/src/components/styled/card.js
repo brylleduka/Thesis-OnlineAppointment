@@ -99,7 +99,6 @@ export const JCard = styled.figure`
     }
 
     h3 {
-      font-family: "Teko", sans-serif;
       font-size: ${(props) => (props.titleSize ? props.titleSize : "36px")};
       font-weight: 700;
       line-height: 1em;
@@ -474,13 +473,16 @@ export const DTestimonialCard = styled.div`
   padding: 10px;
   outline: 0;
   border: 0;
+  position: relative;
+  width: ${(props) => (props.width ? props.width : "100%")};
 
   figure {
     position: relative;
     float: left;
     overflow: hidden;
     margin: 0 auto;
-    min-width: 230px;
+    min-width: 90%;
+    max-width: 100%;
     width: 100%;
     color: #000000;
     text-align: center;
@@ -488,14 +490,15 @@ export const DTestimonialCard = styled.div`
     background: #2193b0;
     background: -webkit-linear-gradient(
       to bottom,
-      rgba(248, 181, 0, 0.4),
-      #2193b0
+      rgba(255, 255, 255, 0.4),
+      rgba(33, 147, 176, 0.7)
     );
     background: linear-gradient(
       to bottom,
-      rgba(248, 181, 0, 0.2),
+      rgba(255, 255, 255, 0.4),
       rgba(33, 147, 176, 0.7)
     );
+
     padding: 15px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -509,15 +512,24 @@ export const DTestimonialCard = styled.div`
       transition: all 0.35s ease;
     }
 
-    img {
+    .profile {
       width: 100px;
-      border-radius: 50%;
+      height: 100px;
+      border-radius: 100%;
       display: inline-block;
+      position: relative;
+      overflow: hidden;
       -webkit-box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.4);
       box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.4);
       margin-bottom: 10px;
       border: solid 5px #fe8c00;
       border-color: ${({ theme }) => theme.blue};
+
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
     }
 
     figcaption {
@@ -532,13 +544,15 @@ export const DTestimonialCard = styled.div`
 
       h5,
       h4 {
-        font-weight: 300;
+        text-transform: uppercase;
+        font-weight: 500;
       }
 
       h4 {
-        color: #ffffff;
+        color: #274046;
       }
 
+      h4,
       h5 {
         color: ${(props) =>
           props.inverted
@@ -556,6 +570,7 @@ export const DTestimonialCard = styled.div`
         box-shadow: inset -1.4px -1.4px 2px rgba(0, 0, 0, 0.3);
         text-align: left;
         position: relative;
+
         color: ${(props) =>
           props.inverted
             ? ({ theme }) => theme.light

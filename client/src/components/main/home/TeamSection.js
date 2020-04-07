@@ -43,7 +43,7 @@ const TeamSection = ({ cards }) => {
       height="100%"
       margin="48px auto"
     >
-      <FancyText size="40px">Our Team</FancyText>
+      <FancyText size="28px">Our Team</FancyText>
       <DGrid four gap="25px">
         {loading_employeesAR ? (
           <>

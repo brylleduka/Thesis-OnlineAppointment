@@ -17,16 +17,16 @@ const ripple = keyframes`
 
 // BUTTONS
 export const DButton = styled.button`
-  font-size: ${props => (props.fSize ? props.fSize : "16px")};
-  height: ${props => (props.size ? props.size : "36px")};
-  width: ${props =>
+  font-size: ${(props) => (props.fSize ? props.fSize : "16px")};
+  height: ${(props) => (props.size ? props.size : "36px")};
+  width: ${(props) =>
     props.fluid ? "100%" : props.width ? props.width : "auto"};
   display: inline-block;
-  padding: ${props => (props.pad ? props.pad : "6px 16px")};
+  padding: ${(props) => (props.pad ? props.pad : "6px 16px")};
   line-height: 1.42857143;
-  margin: 1.5%;
+  margin: ${(props) => (props.center ? "1.5% auto" : "1.5%")};
   text-align: center;
-  text-transform: ${props => props.text || "capitalize"};
+  text-transform: ${(props) => props.text || "capitalize"};
   letter-spacing: 1.5px;
   white-space: nowrap;
   vertical-align: middle;
@@ -37,11 +37,11 @@ export const DButton = styled.button`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  border-radius: ${props =>
+  border-radius: ${(props) =>
     props.radius ? props.radius : props.circle ? "50%" : "5px"};
-  border-width: ${props => (props.basic ? "1px" : "0")};
-  border-style: ${props => props.basic && "solid"};
-  border-color: ${props =>
+  border-width: ${(props) => (props.basic ? "1px" : "0")};
+  border-style: ${(props) => props.basic && "solid"};
+  border-color: ${(props) =>
     props.alert
       ? ({ theme }) => theme.red
       : props.warning
@@ -54,9 +54,9 @@ export const DButton = styled.button`
       ? ({ theme }) => theme.bluer
       : ({ theme }) => theme.blue};
       
-  color: ${props => (props.color ? props.color : ({ theme }) => theme.light)};
+  color: ${(props) => (props.color ? props.color : ({ theme }) => theme.light)};
 
-  background: ${props =>
+  background: ${(props) =>
     props.basic
       ? "transparent"
       : props.alert
@@ -71,7 +71,7 @@ export const DButton = styled.button`
       ? ({ theme }) => theme.bluer
       : ({ theme }) => theme.blue};
 
-  ${props =>
+  ${(props) =>
     props.disabled &&
     "background: #E9E4F0; color: #D3CCE3; &:hover:{opacity: 1}"}
 
@@ -80,7 +80,8 @@ export const DButton = styled.button`
 
   &:hover {
    opacity: 0.8;
-   background: ${props =>
+   color: #fff;
+   background: ${(props) =>
      props.alert
        ? ({ theme }) => theme.red
        : props.warning
@@ -145,26 +146,26 @@ export const DButton = styled.button`
 
 export const DButtonFree = styled(DButton)`
   position: absolute;
-  top: ${props => props.top && props.top};
-  left: ${props => props.left && props.left};
-  bottom: ${props => props.bottom && props.bottom};
-  right: ${props => props.right && props.right};
+  top: ${(props) => props.top && props.top};
+  left: ${(props) => props.left && props.left};
+  bottom: ${(props) => props.bottom && props.bottom};
+  right: ${(props) => props.right && props.right};
 `;
 
 // LABELS
 export const DLabel = styled.label`
-  font-size: ${props => (props.size ? props.size : "12px")};
-  color: ${props => (props.color ? props.color : "#000")};
-  letter-spacing: ${props => (props.ls ? props.ls : "1px")};
-  font-weight: ${props => props.weight && props.weight};
-  padding: ${props => (props.pad ? props.pad : "5px 10px")};
-  margin: ${props => (props.m ? props.m : "1%")};
-  background: ${props => props.bgcolor && props.bgcolor};
-  border-radius: ${props => props.rounded && "10px"};
-  text-transform: ${props => props.tt && props.tt};
-  width: ${props => (props.w ? props.w : "auto")};
-  display: ${props => props.flex && "flex"};
-  justify-content: ${props =>
+  font-size: ${(props) => (props.size ? props.size : "12px")};
+  color: ${(props) => (props.color ? props.color : "#000")};
+  letter-spacing: ${(props) => (props.ls ? props.ls : "1px")};
+  font-weight: ${(props) => props.weight && props.weight};
+  padding: ${(props) => (props.pad ? props.pad : "5px 10px")};
+  margin: ${(props) => (props.m ? props.m : "1%")};
+  background: ${(props) => props.bgcolor && props.bgcolor};
+  border-radius: ${(props) => props.rounded && "10px"};
+  text-transform: ${(props) => props.tt && props.tt};
+  width: ${(props) => (props.w ? props.w : "auto")};
+  display: ${(props) => props.flex && "flex"};
+  justify-content: ${(props) =>
     props.justifyCenter
       ? "center"
       : props.justifyAround
@@ -175,7 +176,7 @@ export const DLabel = styled.label`
       ? "flex-end"
       : "flex-start"};
 
-  align-items: ${props =>
+  align-items: ${(props) =>
     props.alignCenter
       ? "center"
       : props.alignAround
@@ -185,11 +186,11 @@ export const DLabel = styled.label`
       : props.alignFend
       ? "flex-end"
       : "flex-start"};
-  flex-direction: ${props => props.fcol && "column"};
+  flex-direction: ${(props) => props.fcol && "column"};
 
   &:hover {
-    opacity: ${props => props.hover && "0.8"};
-    cursor: ${props => props.hover && "pointer"};
+    opacity: ${(props) => props.hover && "0.8"};
+    cursor: ${(props) => props.hover && "pointer"};
   }
 `;
 
@@ -229,23 +230,23 @@ export const DAccordion = styled.section`
   width: 90%;
 
   .accordion-title {
-    background: ${props => (props.bg ? props.bg : ({ theme }) => theme.dark)};
-    color: ${props => (props.color ? props.color : "#fff")};
+    background: ${(props) => (props.bg ? props.bg : ({ theme }) => theme.dark)};
+    color: ${(props) => (props.color ? props.color : "#fff")};
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border: none;
     outline: none;
-    border-radius: ${props =>
+    border-radius: ${(props) =>
       props.oblong ? "25px" : props.rounded ? "15px" : "0"};
     transition: background-color 0.6s ease;
 
     &:hover,
     &.active {
-      background: ${props =>
+      background: ${(props) =>
         props.activeBg ? props.activeBg : ({ theme }) => theme.blue};
-      color: ${props =>
+      color: ${(props) =>
         props.hoverColorText ? props.hoverColorText : "#232323"};
     }
 
@@ -257,10 +258,10 @@ export const DAccordion = styled.section`
     }
 
     p {
-      font-size: ${props => (props.fs ? props.fs : "12px")};
+      font-size: ${(props) => (props.fs ? props.fs : "12px")};
       font-weight: 500;
-      padding: ${props => (props.pad ? props.pad : "10px 20px")};
-      text-transform: ${props =>
+      padding: ${(props) => (props.pad ? props.pad : "10px 20px")};
+      text-transform: ${(props) =>
         props.uc ? "uppercase" : props.lc ? "lowercase" : "capitalize"};
       margin: 0;
       width: 95%;
@@ -322,7 +323,7 @@ export const Toasted = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  background: ${props =>
+  background: ${(props) =>
     props.status === "error"
       ? "rgba(229, 80, 57,0.9)"
       : props.status === "success"
@@ -372,7 +373,7 @@ export const ReadMore = styled.p`
     &:after {
       content: "\f061";
       font-family: FontAwesome;
-      ${props =>
+      ${(props) =>
         props.hover === 0
           ? "margin-left: 5px;opacity: 1;"
           : "margin-left: -10px; opacity: 0;"};

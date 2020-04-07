@@ -14,34 +14,32 @@ const SigninForm = ({ hist, from }) => {
   const context = useContext(AuthContext);
   const [values, setValues] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
 
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(_, { data: { userLogin: userData } }) {
       context.login(userData);
-    
 
       values.email = "";
       values.password = "";
-
       return hist.push(from);
     },
     refetchQueries: [{ query: FETCH_MY_APPOINTMENTS }],
-    onCompleted(result) {
+    onCompleted() {
       console.log("success");
     },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
-    variables: values
+    variables: values,
   });
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     loginUser();
@@ -109,7 +107,7 @@ const SigninForm = ({ hist, from }) => {
             marginTop: "1rem",
             textTransform: "uppercase",
             fontSize: "12px",
-            fontWeight: "700"
+            fontWeight: "700",
           }}
         >
           <Link to="/signup">

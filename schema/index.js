@@ -317,6 +317,7 @@ const typeDefs = gql`
     testimonials: [Testimonial]
     testimonial(_id: ID!): Testimonial
     testimonialsView(limit: Int): [Testimonial]
+    userTestimonial(userId: ID): Testimonial
     # CMS
     showcaseCMS(sectionName: String): ShowcaseCMS
     homeCMS(sectionName: String): HomeCMS

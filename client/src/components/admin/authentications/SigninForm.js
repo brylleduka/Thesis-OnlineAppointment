@@ -6,13 +6,15 @@ import { AuthContext } from "../../../context/auth";
 import { Content } from "../../styled/containers";
 import { DButton } from "../../styled/utils";
 import { Form, Label, Dimmer, Loader, Input, Icon } from "semantic-ui-react";
+import { useHistory } from "react-router-dom";
 
 const SigninForm = () => {
+  const history = useHistory();
   const [errors, setErrors] = useState({});
   const context = useContext(AuthContext);
   const { handleChange, handleSubmit, values } = useForm(adminLoginCallback, {
     employeeId: "",
-    password: ""
+    password: "",
   });
 
   const [loginEmployee, { loading }] = useMutation(EMPLOYEE_LOGIN_MUTATION, {
@@ -22,12 +24,13 @@ const SigninForm = () => {
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
-    variables: values
+    variables: values,
   });
 
   function adminLoginCallback() {
     loginEmployee();
   }
+
   return (
     <Content width="100%" height="100%" flex justify="center" align="center">
       <Form noValidate onSubmit={handleSubmit} style={{ width: "80%" }}>

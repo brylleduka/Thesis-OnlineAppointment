@@ -51,7 +51,7 @@
   line-height: 1;
 
   opacity: 0.75;
-  color: #ffffff;
+  color: #dbd2d2;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -137,6 +137,7 @@
 .slick-dots li button:hover,
 .slick-dots li button:focus {
   outline: none;
+  mix-blend-mode: difference;
 }
 .slick-dots li button:hover:before,
 .slick-dots li button:focus:before {
@@ -165,5 +166,6 @@
 }
 .slick-dots li.slick-active button:before {
   opacity: 0.75;
-  color: #ffffff;
+  /* color: #ffffff; */
+  mix-blend-mode: difference;
 }

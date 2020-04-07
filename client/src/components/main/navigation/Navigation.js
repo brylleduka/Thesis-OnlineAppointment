@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useEffect, useState } from "react";
+import React, { useRef, useContext } from "react";
 import { AuthContext } from "../../../context/auth";
 import { bool } from "prop-types";
 import { useOnClickOutside } from "./navHook";
@@ -14,17 +14,18 @@ import {
 import Burger from "./Burger";
 import useScroll from "../../../util/hooks/useScroll";
 
-const Navigation = ({ open, setOpen, match }) => {
+const Navigation = ({ open, setOpen }) => {
   const scrolling = useScroll();
 
   const node = useRef();
   useOnClickOutside(node, () => setOpen(false));
-  let history = useHistory();
+  // let history = useHistory();
+
   const { user, logout } = useContext(AuthContext);
 
   const handleLogout = () => {
     logout();
-    history.push("");
+    // history.push("");
   };
 
   const trigger = (
@@ -134,7 +135,7 @@ const Navigation = ({ open, setOpen, match }) => {
         <DRightMenu scrolled={scrolling ? true : false}>
           {user ? (
             <li>
-              <Dropdown trigger={trigger}>
+              <Dropdown trigger={trigger} className="avatarLog">
                 <Dropdown.Menu>
                   <Dropdown.Item disabled>
                     <span style={{ fontSize: "10px" }}>
@@ -148,7 +149,7 @@ const Navigation = ({ open, setOpen, match }) => {
                       className="account-right"
                       onClick={() => localStorage.setItem("account", "details")}
                     >
-                      Account
+                      My Account
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>

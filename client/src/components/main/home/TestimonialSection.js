@@ -13,7 +13,7 @@ const TestimonialSection = () => {
     speed: 1000,
     autoplaySpeed: 4000,
     slidesToShow: 1,
-    slidesToScroll: 1
+    slidesToScroll: 1,
   };
   return (
     <DSection
@@ -158,7 +158,7 @@ const TestimonialSection = () => {
         justify="center"
         pad="20px"
       >
-        <FancyText size="40px" alt>
+        <FancyText size="28px" alt>
           What Our Client Say
         </FancyText>
       </Overlay>

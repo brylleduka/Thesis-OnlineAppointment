@@ -28,8 +28,8 @@ const CategorySection = ({ setRef }) => {
     FETCH_HOME_SECTION,
     {
       variables: {
-        sectionName: "CATEGORY"
-      }
+        sectionName: "CATEGORY",
+      },
     }
   );
 
@@ -64,7 +64,7 @@ const CategorySection = ({ setRef }) => {
         {categorySection && (
           <>
             {categorySection.title !== "" && (
-              <FancyText size="38px" alt={categorySection.dark ? true : false}>
+              <FancyText size="28px" alt={categorySection.dark ? true : false}>
                 {categorySection.title}
               </FancyText>
             )}
@@ -89,7 +89,7 @@ const CategorySection = ({ setRef }) => {
               four={categorySection.grid === 4 ? true : false}
               gap="20px"
             >
-              {isCategories.map(category => (
+              {isCategories.map((category) => (
                 <JCard key={category._id}>
                   <img
                     src={

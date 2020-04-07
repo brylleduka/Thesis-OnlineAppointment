@@ -1,10 +1,12 @@
 import styled from "styled-components";
 
 export const DFancyText = styled.h1`
-  font-size: ${props => (props.size ? props.size : "22px")};
+  font-size: ${(props) => (props.size ? props.size : "22px")};
   letter-spacing: 2px;
   margin: 24px auto;
   text-align: center;
+  font-family: "Playfair Display";
+  font-weight: 500;
   text-transform: uppercase;
   display: table;
   white-space: nowrap;
@@ -13,7 +15,7 @@ export const DFancyText = styled.h1`
   &:after {
     border-top-width: 2px;
     border-top-style: solid;
-    border-top-color: ${props =>
+    border-top-color: ${(props) =>
       props.color
         ? props.color
         : props.alt

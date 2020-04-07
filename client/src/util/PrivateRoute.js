@@ -8,14 +8,14 @@ export const PrivateRoute = ({ component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={props =>
+      render={(props) =>
         employeeAuth ? (
           <Component {...props} />
         ) : (
           <Redirect
             to={{
               pathname: "/zeadmin/signin",
-              state: { from: props.location }
+              state: { from: props.location },
             }}
           />
         )
@@ -33,14 +33,14 @@ export const UserPrivateRoute = ({ component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={props =>
+      render={(props) =>
         user ? (
           <Component {...props} />
         ) : (
           <Redirect
             to={{
               pathname: "/login",
-              state: { from: props.location }
+              state: { from: props.location },
             }}
           />
         )

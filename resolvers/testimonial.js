@@ -36,6 +36,15 @@ module.exports = {
         throw err;
       }
     },
+    userTestimonial: async (_, { userId }) => {
+      try {
+        const userReview = await Testimonial.findOne({ user: userId });
+
+        return userReview;
+      } catch (err) {
+        throw err;
+      }
+    },
   },
   Mutation: {
     addTestimonial: async (

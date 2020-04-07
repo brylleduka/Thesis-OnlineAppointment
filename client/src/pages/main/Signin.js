@@ -4,12 +4,12 @@ import {
   DGrid,
   Content,
   DSection,
-  DContainer
+  DContainer,
 } from "../../components/styled/containers";
 
-const Signin = props => {
+const Signin = (props) => {
   const { from } = props.location.state || {
-    from: { pathname: "/appointment" }
+    from: { pathname: "/" },
   };
 
   const hist = props.history;

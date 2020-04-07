@@ -3,7 +3,7 @@ import { Dropdown } from "semantic-ui-react";
 
 export const DNavigation = styled.nav`
   width: 100%;
-  background: ${props => (props.bg ? props.bg : "rgba(255,255,255,1)")};
+  background: ${(props) => (props.bg ? props.bg : "rgba(255,255,255,1)")};
   position: fixed;
   top: 0;
   right: 0;
@@ -64,7 +64,7 @@ export const DNavigation = styled.nav`
     }
   }
 
-  ${props =>
+  ${(props) =>
     props.scrolled &&
     "background: rgba(0,0,0,0.4); height: 12vh; transition: all 0.2s ease-in-out;"};
 `;
@@ -80,7 +80,7 @@ export const DMenu = styled.ul`
     color: ${({ theme }) => theme.dark};
   }
 
-  ${props => props.scrolled && "li a {color: #fff}"};
+  ${(props) => props.scrolled && "li a {color: #fff}"};
 
   li a:hover,
   &.active {
@@ -250,7 +250,7 @@ export const DRightMenu = styled(DMenu)`
     color: #232323;
   }
 
-  ${props => props.scrolled && "li a {color: #fff}"};
+  ${(props) => props.scrolled && ".avatarLog {color: #fff}"};
 
   li:first-child {
     padding: 10px;
@@ -386,7 +386,7 @@ export const DropdownCustomNav = styled(Dropdown)`
     color: ${({ theme }) => theme.primary} !important;
   }
 
-  ${props => props.scrolled && "color: #fff; a {color: #fff}"};
+  ${(props) => props.scrolled && "color: #fff; a {color: #fff}"};
 
   @media (max-width: 1024px) {
     a {
