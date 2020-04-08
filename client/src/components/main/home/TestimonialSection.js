@@ -1,20 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useQuery } from "@apollo/react-hooks";
+import { FETCH_TESTIMONIALS } from "../../../util/graphql/testimonial";
 import { DSection, Content, Overlay } from "../../styled/containers";
 import Slider from "react-slick";
 import { DTestimonialCard } from "../../styled/card";
+import { Rating } from "semantic-ui-react";
 import FancyText from "../../FancyText";
+import Spinner from "../../Spinner";
 
 const TestimonialSection = () => {
-  const settings = {
-    dots: true,
-    fade: true,
-    infinite: true,
-    autoplay: true,
-    speed: 1000,
-    autoplaySpeed: 4000,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
+  const [reviews, setReviews] = useState([]);
+
+  const { data: dataReviews, loading: loadReviews } = useQuery(
+    FETCH_TESTIMONIALS
+  );
+
+  useEffect(() => {
+    if (dataReviews) {
+      setReviews(dataReviews.testimonials);
+    }
+  }, [dataReviews]);
+
   return (
     <DSection
       height="100vh"
@@ -28,129 +34,48 @@ const TestimonialSection = () => {
       justify="center"
       align="center"
     >
-      <Content width="80%" height="auto" margin="auto" pad="50px 0">
-        <Slider {...settings}>
-          <DTestimonialCard basic inverted>
-            <figure className="testimonial">
-              <img
-                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample3.jpg"
-                alt="profile-sample3"
-                className="profile"
-              />
-              <figcaption>
-                <h4>Eleanor Crisp</h4>
-                <h5>UX Design</h5>
-                <blockquote>
-                  Dad buried in landslide! Jubilant throngs fill streets!
-                  Stunned father inconsolable - demands recount!
-                </blockquote>
-              </figcaption>
-            </figure>
-          </DTestimonialCard>
-          <DTestimonialCard basic inverted>
-            <figure className="testimonial">
-              <img
-                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample5.jpg"
-                alt="profile-sample5"
-                className="profile"
-              />
-              <figcaption>
-                <h4>Gordon Norman</h4>
-                <h5>Accountant</h5>
-                <blockquote>
-                  Wormwood : Calvin, how about you? Calvin : Hard to say ma'am.
-                  I think my cerebellum has just fused.{" "}
-                </blockquote>
-              </figcaption>
-            </figure>
-          </DTestimonialCard>
-          <DTestimonialCard basic inverted>
-            <figure className="testimonial">
-              <img
-                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample6.jpg"
-                alt="profile-sample6"
-                className="profile"
-              />
-              <figcaption>
-                <h4>Sue Shei</h4>
-                <h5>Public Relations</h5>
-                <blockquote>
-                  The strength to change what I can, the inability to accept
-                  what I can't and the incapacity to tell the difference.
-                </blockquote>
-              </figcaption>
-            </figure>
-          </DTestimonialCard>
-          <DTestimonialCard basic inverted>
-            <figure className="testimonial">
-              <img
-                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample3.jpg"
-                alt="profile-sample3"
-                className="profile"
-              />
-              <figcaption>
-                <h4>Eleanor Crisp</h4>
-                <h5>UX Design</h5>
-                <blockquote>
-                  Dad buried in landslide! Jubilant throngs fill streets!
-                  Stunned father inconsolable - demands recount!
-                </blockquote>
-              </figcaption>
-            </figure>
-          </DTestimonialCard>
-          <DTestimonialCard basic inverted>
-            <figure className="testimonial">
-              <img
-                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample5.jpg"
-                alt="profile-sample5"
-                className="profile"
-              />
-              <figcaption>
-                <h4>Gordon Norman</h4>
-                <h5>Accountant</h5>
-                <blockquote>
-                  Wormwood : Calvin, how about you? Calvin : Hard to say ma'am.
-                  I think my cerebellum has just fused.{" "}
-                </blockquote>
-              </figcaption>
-            </figure>
-          </DTestimonialCard>
-          <DTestimonialCard basic inverted>
-            <figure className="testimonial">
-              <img
-                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample6.jpg"
-                alt="profile-sample6"
-                className="profile"
-              />
-              <figcaption>
-                <h4>Sue Shei</h4>
-                <h5>Public Relations</h5>
-                <blockquote>
-                  The strength to change what I can, the inability to accept
-                  what I can't and the incapacity to tell the difference.
-                </blockquote>
-              </figcaption>
-            </figure>
-          </DTestimonialCard>
-          <DTestimonialCard basic inverted>
-            <figure className="testimonial">
-              <img
-                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample3.jpg"
-                alt="profile-sample3"
-                className="profile"
-              />
-              <figcaption>
-                <h4>Eleanor Crisp</h4>
-                <h5>UX Design</h5>
-                <blockquote>
-                  Dad buried in landslide! Jubilant throngs fill streets!
-                  Stunned father inconsolable - demands recount!
-                </blockquote>
-              </figcaption>
-            </figure>
-          </DTestimonialCard>
-        </Slider>
-      </Content>
+      {loadReviews ? (
+        <Spinner inverted medium />
+      ) : (
+        <Content width="80%" height="auto" margin="auto" pad="50px 0">
+          <Slider {...settings}>
+            {reviews &&
+              reviews.map((rev) => (
+                <DTestimonialCard basic inverted>
+                  <figure className="testimonial">
+                    <div className="profile">
+                      <img
+                        src={
+                          rev.user.photo
+                            ? `/images/users/${rev.user.photo}`
+                            : "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample3.jpg"
+                        }
+                        alt="profile-sample3"
+                      />
+                    </div>
+
+                    <figcaption>
+                      <h4>
+                        {rev.user.firstName} {rev.user.lastName}{" "}
+                      </h4>
+                      <Rating
+                        rating={rev.rating}
+                        maxRating={5}
+                        icon="star"
+                        disabled
+                      />
+                      <blockquote>
+                        Dad buried in landslide! Jubilant throngs fill streets!
+                        Stunned father inconsolable - demands recount!
+                      </blockquote>
+                    </figcaption>
+                  </figure>
+                </DTestimonialCard>
+              ))}
+          </Slider>
+        </Content>
+      )}
+
       <Overlay
         bg={"rgba(0,0,0,0.5)"}
         className="dark"
@@ -164,6 +89,17 @@ const TestimonialSection = () => {
       </Overlay>
     </DSection>
   );
+};
+
+const settings = {
+  dots: true,
+  fade: true,
+  infinite: true,
+  autoplay: true,
+  speed: 1000,
+  autoplaySpeed: 4000,
+  slidesToShow: 1,
+  slidesToScroll: 1,
 };
 
 export default TestimonialSection;
