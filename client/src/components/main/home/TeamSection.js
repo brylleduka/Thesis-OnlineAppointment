@@ -91,12 +91,12 @@ const TeamSection = ({ cards }) => {
                 </p>
                 <ReadMore hover={0}>Read More</ReadMore>
               </figcaption>
-              <Link to="/zessence/about" className="linkToPage" />
+              <Link to="/about" className="linkToPage" />
             </JCard4>
           ))
         )}
       </DGrid>
-      <Link to="/zessence/about/#team" className="btn btn-blue">
+      <Link to="/about/#team" className="btn btn-blue">
         Learn More
       </Link>
     </DSection>

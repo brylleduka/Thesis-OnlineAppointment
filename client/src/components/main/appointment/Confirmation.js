@@ -64,7 +64,7 @@ const Confirmation = ({
     },
     onCompleted(data) {
       setOpen(false);
-      history.push("/zessence/verifynotice");
+      history.push("/verifynotice");
       if (data) {
         toaster.notify(
           ({ onClose }) => (

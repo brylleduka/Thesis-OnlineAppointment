@@ -54,7 +54,18 @@ export const DButton = styled.button`
       ? ({ theme }) => theme.bluer
       : ({ theme }) => theme.blue};
       
-  color: ${(props) => (props.color ? props.color : ({ theme }) => theme.light)};
+  color: ${(props) =>
+    props.red
+      ? ({ theme }) => theme.red
+      : props.yellow
+      ? ({ theme }) => theme.yellow
+      : props.green
+      ? ({ theme }) => theme.green
+      : props.primary
+      ? ({ theme }) => theme.primary
+      : props.bluer
+      ? ({ theme }) => theme.bluer
+      : ({ theme }) => theme.light};
 
   background: ${(props) =>
     props.basic

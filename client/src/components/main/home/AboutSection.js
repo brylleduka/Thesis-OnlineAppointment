@@ -102,7 +102,7 @@ const AboutSection = ({ nextSection }) => {
                       : parser(about.story.paragraph.substr(0, 300)))}
                 </p>
                 <ReadMore>
-                  <Link to="/zessence/about/#story">Learn More</Link>
+                  <Link to="/about/#story">Learn More</Link>
                 </ReadMore>
               </div>
             </div>

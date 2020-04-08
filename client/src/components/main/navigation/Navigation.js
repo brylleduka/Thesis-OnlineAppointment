@@ -96,7 +96,7 @@ const Navigation = ({ open, setOpen }) => {
               </Link>
             }
             simple
-            scrolled={scrolling ? true : false}
+            scrolled={scrolling ? true : undefined}
           >
             <Dropdown.Menu className="customDropMenu">
               <Dropdown.Item

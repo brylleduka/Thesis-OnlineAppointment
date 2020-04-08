@@ -1,7 +1,35 @@
 const Testimonial = require("../models/Testimonial");
-const User = require("../models/User");
 const Auth = require("../utils/check-auth");
 const { UserInputError, ApolloError } = require("apollo-server-express");
+const Filter = require("bad-words");
+
+const filter = new Filter();
+let profanity = [
+  "gago",
+  "potangina",
+  "putangina",
+  "potangama",
+  "putangama",
+  "tangina",
+  "hayop",
+  "mang",
+  "putang",
+  "kadyot",
+  "hayop",
+  "puke",
+  "titi",
+  "tite",
+  "deputa",
+  "rape",
+  "kantot",
+  "kantutan",
+  "fuckyou",
+  "tits",
+  "boobs",
+  "pussy",
+];
+
+filter.addWords(...profanity);
 
 module.exports = {
   Query: {
@@ -65,7 +93,7 @@ module.exports = {
           const review = new Testimonial({
             rating,
             view: false,
-            message,
+            message: filter.clean(message),
             user,
           });
 
@@ -82,9 +110,9 @@ module.exports = {
       let errors = {};
 
       try {
-        const updateReview = await Testimonial.updateOne(
+        const updateReview = await Testimonial.findOneAndUpdate(
           { _id },
-          { $set: { rating, message } },
+          { $set: { rating, message: filter.clean(message) } },
           { new: true }
         );
 

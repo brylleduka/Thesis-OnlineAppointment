@@ -104,7 +104,7 @@ const Services = () => {
                       <ReadMore hover={0}>View Services</ReadMore>
                     </div>
                   </figcaption>
-                  <Link to={`/zessence/service/${category._id}`}></Link>
+                  <Link to={`/service/${category._id}`}></Link>
                 </JCard>
               ))
             )}

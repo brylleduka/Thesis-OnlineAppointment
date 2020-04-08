@@ -323,7 +323,7 @@ module.exports = {
             expiresIn: "1d",
           },
           (err, emailToken) => {
-            const url = `http://www.zessencefacialandspa.com/zessence/verified/${emailToken}`;
+            const url = `http://www.zessencefacialandspa.com/verified/${emailToken}`;
 
             transportMail({
               from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
@@ -508,7 +508,7 @@ module.exports = {
             expiresIn: "1d",
           },
           (err, emailToken) => {
-            const url = `http://www.zessencefacialandspa.com/zessence/verified/${emailToken}`;
+            const url = `http://www.zessencefacialandspa.com/verified/${emailToken}`;
 
             transportMail({
               from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',

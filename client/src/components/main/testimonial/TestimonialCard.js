@@ -7,6 +7,7 @@ import { DTestimonialCard } from "../../styled/card";
 import { Rating } from "semantic-ui-react";
 import Review from "./Review";
 import Skeleton from "react-loading-skeleton";
+import moment from "moment";
 
 const TestimonialCard = ({ content }) => {
   const [isTestimonials, setIsTestimonials] = useState([]);
@@ -65,12 +66,12 @@ const TestimonialCard = ({ content }) => {
                           style={{
                             position: "absolute",
                             top: 0,
-                            right: 0,
-                            fontSize: "9px",
-                            color: "#ccc",
+                            right: "10px",
+                            fontSize: "10px",
+                            color: "#bbb",
                           }}
                         >
-                          2/23/2020
+                          {moment(parseInt(testimonial.updatedAt)).format("LL")}
                         </span>
                         {testimonial.message}
                       </blockquote>
@@ -91,6 +92,20 @@ const settings = {
   speed: 500,
   rows: 2,
   slidesPerRow: 3,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesPerRow: 2,
+      },
+    },
+    {
+      breakpoint: 768,
+      settings: {
+        slidesPerRow: 1,
+      },
+    },
+  ],
 };
 
 export default TestimonialCard;

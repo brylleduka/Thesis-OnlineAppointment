@@ -7,6 +7,8 @@ const FETCH_TESTIMONIALS = gql`
       rating
       message
       view
+      createdAt
+      updatedAt
       user {
         _id
         firstName
@@ -24,6 +26,8 @@ const FETCH_USER_REVIEW = gql`
       rating
       message
       view
+      createdAt
+      updatedAt
       user {
         _id
         firstName

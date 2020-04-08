@@ -61,7 +61,7 @@ const ThankYou = props => {
           align="center"
           margin="0 auto"
         >
-          <DButton as={Link} to="/zessence">
+          <DButton as={Link} to="/">
             Explore
           </DButton>
           <DButton

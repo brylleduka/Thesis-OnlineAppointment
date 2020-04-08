@@ -5,12 +5,15 @@ import { AuthContext } from "../../../context/auth";
 import { Content } from "../../styled/containers";
 import { DTestimonialCard } from "../../styled/card";
 import { DButton } from "../../styled/utils";
-import { Rating, Icon, Popup } from "semantic-ui-react";
+import { Icon } from "semantic-ui-react";
+import ModalReview from "./ModalReview";
 import Spinner from "../../Spinner";
+import toaster from "toasted-notes";
 
 const Review = () => {
   const { user } = useContext(AuthContext);
   const [userReview, setUserReview] = useState({});
+  const [openReview, setOpenReview] = useState(false);
 
   const { data: dataUserReview, loading: loadUserReview } = useQuery(
     FETCH_USER_REVIEW,
@@ -25,6 +28,14 @@ const Review = () => {
     }
   }, [dataUserReview]);
 
+  const handleOpenReview = () => {
+    if (user) {
+      setOpenReview(true);
+    } else {
+      toaster.notify("You must sign in n order to write a review. Thank you!");
+    }
+  };
+
   return (
     <Content
       width="100%"
@@ -35,72 +46,21 @@ const Review = () => {
       direct="column"
       margin="1rem auto"
     >
-      <DButton
-        basic
-        radius="25px"
-        color={({ theme }) => theme.bluer}
-        center
-        bluer
-      >
-        <Icon name="pencil" />
-        Write a review
-      </DButton>
-      {user && userReview ? (
-        loadUserReview ? (
-          <Spinner medium />
-        ) : (
-          <DTestimonialCard width="50%">
-            <div
-              style={{
-                position: "absolute",
-                top: "20px",
-                right: "20px",
-                zIndex: 3,
-              }}
-            >
-              <Popup
-                content="Edit your review"
-                trigger={
-                  <Icon
-                    name="edit"
-                    fitted
-                    size="large"
-                    style={{ cursor: "pointer" }}
-                    color="blue"
-                  />
-                }
-              />
-            </div>
-            <figure className="testimonial">
-              <div className="profile">
-                <img
-                  src={
-                    userReview.user && userReview.user.photo !== null
-                      ? `/images/users/${userReview.user.photo}`
-                      : "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample3.jpg"
-                  }
-                  alt="profile-sample3"
-                />
-              </div>
-
-              <figcaption>
-                <h4>
-                  {userReview.user &&
-                    userReview.user.firstName + " " + userReview.user.lastName}
-                </h4>
-                <Rating
-                  rating={userReview.rating}
-                  maxRating={5}
-                  icon="star"
-                  disabled
-                />
-                <blockquote>{userReview.message}</blockquote>
-              </figcaption>
-            </figure>
-          </DTestimonialCard>
-        )
+      {loadUserReview ? (
+        <Spinner medium />
       ) : (
-        ""
+        <>
+          <DButton basic radius="25px" center bluer onClick={handleOpenReview}>
+            <Icon name="pencil" />
+            Write a review
+          </DButton>
+          <ModalReview
+            openReview={openReview}
+            setOpenReview={setOpenReview}
+            userReview={dataUserReview && dataUserReview.userTestimonial}
+            user={user}
+          />
+        </>
       )}
     </Content>
   );
