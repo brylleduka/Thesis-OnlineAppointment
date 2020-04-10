@@ -128,7 +128,7 @@ module.exports = {
       try {
         const testify = await Testimonial.findById(_id);
 
-        const reviewUpdate = await Testimonial.updateOne(
+        const reviewUpdate = await Testimonial.findOneAndUpdate(
           { _id },
           { $set: { view: !testify.view } },
           { new: true }

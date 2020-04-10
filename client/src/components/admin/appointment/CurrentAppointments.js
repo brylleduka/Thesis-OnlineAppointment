@@ -26,35 +26,35 @@ const CurrentAppointments = () => {
     {
       name: "Appointment ID",
       selector: "_id",
-      sortable: true
+      sortable: true,
     },
     {
       name: "Aesthetician",
-      selector: "employee",
+      selector: "employee.lastName",
       wrap: true,
       sortable: true,
-      format: row => `${row.employee.firstName} ${row.employee.lastName}`
+      format: (row) => `${row.employee.firstName} ${row.employee.lastName}`,
     },
     {
       name: "Service",
       selector: "service",
       wrap: true,
       sortable: true,
-      format: row => `${row.service.name}`
+      format: (row) => `${row.service.name}`,
     },
     {
       name: "Date",
       selector: "date",
       wrap: true,
       sortable: true,
-      format: row => `${moment(parseInt(row.date)).format("LL")}`
+      format: (row) => `${moment(parseInt(row.date)).format("LL")}`,
     },
     {
       name: "Status",
       selector: "status",
       wrap: true,
       sortable: true,
-      cell: row => (
+      cell: (row) => (
         <span
           style={
             row.status === "PENDING"
@@ -66,17 +66,17 @@ const CurrentAppointments = () => {
         >
           {row.status}
         </span>
-      )
+      ),
     },
     {
       name: "Actions",
 
-      cell: row => (
+      cell: (row) => (
         <DButton as={Link} to={`/zeadmin/appointment/${row._id}`}>
           <Eye size="18px" style={{ color: "white" }} />
         </DButton>
-      )
-    }
+      ),
+    },
   ];
 
   return (
@@ -95,7 +95,7 @@ const CurrentAppointments = () => {
           title={title}
           columns={columns}
           data={currentAppointmentData.currentAppointments.map(
-            currAppoint => currAppoint
+            (currAppoint) => currAppoint
           )}
           responsive
           customStyles={customStyles}
@@ -113,34 +113,34 @@ const CurrentAppointments = () => {
 const customStyles = {
   headRow: {
     style: {
-      border: "none"
-    }
+      border: "none",
+    },
   },
   headCells: {
     style: {
       color: "#202124",
-      fontSize: "14px"
-    }
+      fontSize: "14px",
+    },
   },
   rows: {
     style: {
       fontSize: "14px",
       fontWeight: "700",
-      color: "#000"
+      color: "#000",
     },
     highlightOnHoverStyle: {
       backgroundColor: "rgb(230, 244, 244)",
       borderBottomColor: "#FFFFFF",
       borderRadius: "25px",
-      outline: "1px solid #FFFFFF"
-    }
+      outline: "1px solid #FFFFFF",
+    },
   },
   pagination: {
     style: {
       marginTop: "10px",
-      border: "none"
-    }
-  }
+      border: "none",
+    },
+  },
 };
 
 const title = (

@@ -38,4 +38,23 @@ const FETCH_USER_REVIEW = gql`
   }
 `;
 
-export { FETCH_TESTIMONIALS, FETCH_USER_REVIEW };
+const FETCH_VIEWS = gql`
+  query testimonialsView($limit: Int) {
+    testimonialsView(limit: $limit) {
+      _id
+      rating
+      message
+      view
+      createdAt
+      updatedAt
+      user {
+        _id
+        firstName
+        lastName
+        photo
+      }
+    }
+  }
+`;
+
+export { FETCH_TESTIMONIALS, FETCH_USER_REVIEW, FETCH_VIEWS };

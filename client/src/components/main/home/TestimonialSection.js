@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { FETCH_TESTIMONIALS } from "../../../util/graphql/testimonial";
+import { FETCH_VIEWS } from "../../../util/graphql/testimonial";
 import { DSection, Content, Overlay } from "../../styled/containers";
 import Slider from "react-slick";
 import { DTestimonialCard } from "../../styled/card";
@@ -11,13 +11,15 @@ import Spinner from "../../Spinner";
 const TestimonialSection = () => {
   const [reviews, setReviews] = useState([]);
 
-  const { data: dataReviews, loading: loadReviews } = useQuery(
-    FETCH_TESTIMONIALS
-  );
+  const { data: dataReviews, loading: loadReviews } = useQuery(FETCH_VIEWS, {
+    variables: {
+      limit: 0,
+    },
+  });
 
   useEffect(() => {
     if (dataReviews) {
-      setReviews(dataReviews.testimonials);
+      setReviews(dataReviews.testimonialsView);
     }
   }, [dataReviews]);
 
@@ -64,10 +66,7 @@ const TestimonialSection = () => {
                         icon="star"
                         disabled
                       />
-                      <blockquote>
-                        Dad buried in landslide! Jubilant throngs fill streets!
-                        Stunned father inconsolable - demands recount!
-                      </blockquote>
+                      <blockquote>{rev.message}</blockquote>
                     </figcaption>
                   </figure>
                 </DTestimonialCard>

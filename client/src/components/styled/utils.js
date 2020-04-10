@@ -1,5 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import { Icon } from "semantic-ui-react";
+import { DotsVerticalRounded } from "@styled-icons/boxicons-regular/DotsVerticalRounded";
 
 const ripple = keyframes`
 
@@ -410,4 +411,12 @@ export const ScrollUp = styled(Icon)`
   height: 50%;
   transform: translate(-50%, -50%);
   display: block;
+`;
+
+export const DotsVertical = styled(DotsVerticalRounded)`
+  color: #232323;
+  &:hover {
+    border-radius: 100%;
+    background: #ccc;
+  }
 `;

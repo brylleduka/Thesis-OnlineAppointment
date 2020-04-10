@@ -25,6 +25,7 @@ import Signin from "./admin/Signin";
 import FileReport from "./admin/FileReport";
 import Home from "./admin/cms/Home";
 import About from "./admin/cms/About";
+import Testimonial from "./admin/cms/Testimonial";
 import Page404 from "../pages/Page404";
 
 const Admin = () => {
@@ -78,6 +79,11 @@ const Admin = () => {
         <PrivateRoute exact path="/zeadmin/service/:_id" component={Service} />
         <PrivateRoute exact path="/zeadmin/cms_home" component={Home} />
         <PrivateRoute exact path="/zeadmin/cms_about" component={About} />
+        <PrivateRoute
+          exact
+          path="/zeadmin/cms_testimonial"
+          component={Testimonial}
+        />
         <PrivateRoute exact path="/zeadmin/report" component={FileReport} />
         <Route component={Page404} />
       </Switch>

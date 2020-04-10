@@ -204,6 +204,7 @@ export const DGrid = styled.section`
       ? props.rowCustom
       : "1fr"};
   margin: ${(props) => props.margin && props.margin};
+ 
 
   .card-content {
     border-radius: ${(props) => (props.circle ? "40% 40% 10px 10px" : "5px")};
