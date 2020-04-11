@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 const FETCH_TESTIMONIALS = gql`
-  query testimonials {
-    testimonials {
+  query testimonials($active: Boolean) {
+    testimonials(active: $active) {
       _id
       rating
       message

@@ -314,7 +314,7 @@ const typeDefs = gql`
     inquiriesRead(read: Boolean): [Inquiry]
     inquiry(_id: ID!): Inquiry
     # Testimonial
-    testimonials: [Testimonial]
+    testimonials(active: Boolean): [Testimonial]
     testimonial(_id: ID!): Testimonial
     testimonialsView(limit: Int): [Testimonial]
     userTestimonial(userId: ID): Testimonial
@@ -446,7 +446,8 @@ const typeDefs = gql`
     addTestimonial(inputTestimonial: TestimonialInput): Testimonial
     toggleTestimonial(_id: ID!): Testimonial
     updateTestimonial(_id: ID!, rating: Int, message: String): Testimonial
-
+    archiveTestimonial(_id: ID!): Boolean
+    deleteTestimonial(_id: ID!): Boolean
     # CMSHOME
     # SHOWCASE
     addNewShowCase(inputShowcaseContent: ShowcaseContentInput): ShowcaseCMS

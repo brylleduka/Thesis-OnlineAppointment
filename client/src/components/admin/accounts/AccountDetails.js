@@ -5,6 +5,7 @@ import { Edit } from "@styled-icons/boxicons-regular/Edit";
 import AccountModal from "./AccountModal";
 import PersonalModal from "./PersonalModal";
 import SecurityModal from "./SecurityModal";
+import moment from "moment";
 
 const AccountDetails = ({ employee, fetchEmployee }) => {
   const [personalModal, setPersonalModal] = useState(false);
@@ -73,9 +74,7 @@ const AccountDetails = ({ employee, fetchEmployee }) => {
                   align="center"
                   pad="10px 15px"
                 >
-                  {new Date(
-                    parseInt(employee.dateOfBirth)
-                  ).toLocaleDateString()}
+                  {moment(parseInt(employee.dateOfBirth)).format("LL")}
                 </Content>
               </Content>
               <Content width="100%" flex justify="center">

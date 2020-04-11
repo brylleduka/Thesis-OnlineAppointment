@@ -1,6 +1,10 @@
 const Testimonial = require("../models/Testimonial");
 const Auth = require("../utils/check-auth");
-const { UserInputError, ApolloError } = require("apollo-server-express");
+const {
+  UserInputError,
+  ApolloError,
+  ForbiddenError,
+} = require("apollo-server-express");
 const Filter = require("bad-words");
 
 const filter = new Filter();
@@ -33,9 +37,9 @@ filter.addWords(...profanity);
 
 module.exports = {
   Query: {
-    testimonials: async () => {
+    testimonials: async (_, { active }) => {
       try {
-        const getTestimonials = await Testimonial.find().sort({
+        const getTestimonials = await Testimonial.find({ active }).sort({
           createdAt: -1,
         });
 
@@ -55,9 +59,9 @@ module.exports = {
     },
     testimonialsView: async (_, { limit }) => {
       try {
-        const getViewTestimonial = await Testimonial.find({ view: true }).limit(
-          limit ? limit : 0
-        );
+        const getViewTestimonial = await Testimonial.find({
+          $and: [{ view: true }, { active: true }],
+        }).limit(limit ? limit : 0);
 
         return getViewTestimonial;
       } catch (err) {
@@ -93,6 +97,7 @@ module.exports = {
           const review = new Testimonial({
             rating,
             view: false,
+            active: true,
             message: filter.clean(message),
             user,
           });
@@ -138,6 +143,40 @@ module.exports = {
       } catch (err) {
         errors.errorApollo = "Something went wrong";
         throw new ApolloError("Apollo Error", { errors });
+      }
+    },
+    archiveTestimonial: async (_, { _id }, context) => {
+      errors = {};
+      const { role: authRole, level: authLevel } = Auth(context);
+      try {
+        if (authRole !== "ADMIN") {
+          errors.unauth = "You are not authorized to make this action";
+          throw new UserInputError("Not Authorized", { errors });
+        }
+
+        await Testimonial.findOneAndUpdate(
+          { _id },
+          { $set: { view: false, active: false } },
+          { new: true }
+        );
+        return true;
+      } catch (err) {
+        throw err;
+      }
+    },
+    deleteTestimonial: async (_, { _id }, context) => {
+      errors = {};
+      const { role: authRole } = Auth(context);
+      try {
+        if (authRole !== "ADMIN") {
+          errors.unauth = "You are not authorized to make this action";
+          throw new ForbiddenError("Not Authorized", { errors });
+        }
+
+        await Testimonial.findOneAndDelete({ _id });
+        return true;
+      } catch (err) {
+        throw err;
       }
     },
   },

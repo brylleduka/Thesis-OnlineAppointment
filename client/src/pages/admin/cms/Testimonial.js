@@ -8,13 +8,15 @@ import { DSection, Content } from "../../../components/styled/containers";
 
 import ToggleView from "../../../components/admin/testimonial/ToggleView";
 import MenuView from "../../../components/admin/testimonial/MenuView";
+import Spinner from "../../../components/Spinner";
 
 const Testimonial = () => {
   const [reviews, setReviews] = useState([]);
 
-  const { data: dataReviews, loading: loadReviews } = useQuery(
-    FETCH_TESTIMONIALS
-  );
+  const {
+    data: dataReviews,
+    loading: loadReviews,
+  } = useQuery(FETCH_TESTIMONIALS, { variables: { active: true } });
 
   useEffect(() => {
     if (dataReviews) {
@@ -75,6 +77,10 @@ const Testimonial = () => {
             paginationRowsPerPageOptions={paginationRowsPerPageOptions}
             highlightOnHover
             pointerOnHover
+            progressPending={loadReviews}
+            progressComponent={
+              <Spinner content="Please wait while we fetch our data..." />
+            }
           />
         </Content>
       </DSection>

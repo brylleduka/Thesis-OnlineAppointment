@@ -10,6 +10,7 @@ const testimonialSchema = new Schema(
       type: String,
     },
     view: Boolean,
+    active: Boolean,
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",

@@ -12,9 +12,10 @@ import moment from "moment";
 const TestimonialCard = ({ content }) => {
   const [isTestimonials, setIsTestimonials] = useState([]);
 
-  const { data: dataTestimonials, loading: loadTestimonials } = useQuery(
-    FETCH_TESTIMONIALS
-  );
+  const {
+    data: dataTestimonials,
+    loading: loadTestimonials,
+  } = useQuery(FETCH_TESTIMONIALS, { variables: { active: true } });
 
   useEffect(() => {
     if (dataTestimonials) {

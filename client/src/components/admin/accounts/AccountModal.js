@@ -9,7 +9,7 @@ import toaster from "toasted-notes";
 const AccountModal = ({ employeeModal, setEmployeeModal, employee }) => {
   const [isRole, setIsRole] = useState(employee.role);
 
-  const handleRoleChange = e => {
+  const handleRoleChange = (e) => {
     setIsRole(e.target.value);
   };
 
@@ -27,8 +27,8 @@ const AccountModal = ({ employeeModal, setEmployeeModal, employee }) => {
     },
     variables: {
       userId: employee._id,
-      role: isRole
-    }
+      role: isRole,
+    },
   });
 
   const updateEmployeeRole = () => {

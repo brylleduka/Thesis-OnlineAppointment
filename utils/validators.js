@@ -1,7 +1,6 @@
 const regex = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
 const regexNum = /^[-+]?[0-9]*(\.[0-9]+)$/;
 
-
 const validateUserCreateInput = (
   firstName,
   lastName,
@@ -45,7 +44,7 @@ const validateUserCreateInput = (
 
   return {
     errors,
-    valid: Object.keys(errors).length < 1
+    valid: Object.keys(errors).length < 1,
   };
 };
 
@@ -66,7 +65,7 @@ const validateUserLoginInput = (email, password) => {
 
   return {
     errors,
-    valid: Object.keys(errors).length < 1
+    valid: Object.keys(errors).length < 1,
   };
 };
 
@@ -84,7 +83,7 @@ const validateEmployeeLoginInput = (empId, password) => {
 
   return {
     errors,
-    valid: Object.keys(errors).length < 1
+    valid: Object.keys(errors).length < 1,
   };
 };
 
@@ -128,7 +127,7 @@ const validateEmployeeInput = (
 
   return {
     errors,
-    valid: Object.keys(errors).length < 1
+    valid: Object.keys(errors).length < 1,
   };
 };
 
@@ -149,7 +148,7 @@ const validateServiceInput = (name, duration, price) => {
 
   return {
     errors,
-    valid: Object.keys(errors).length < 1
+    valid: Object.keys(errors).length < 1,
   };
 };
 
@@ -158,5 +157,5 @@ module.exports = {
   validateUserLoginInput,
   validateEmployeeLoginInput,
   validateEmployeeInput,
-  validateServiceInput
+  validateServiceInput,
 };

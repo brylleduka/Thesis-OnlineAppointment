@@ -3,24 +3,24 @@ import { FETCH_CURRENT_APPOINTMENTS } from "../../../util/graphql/appointment";
 import { useQuery } from "@apollo/react-hooks";
 import { Link } from "react-router-dom";
 import DataTable from "react-data-table-component";
-import { DSection, DGrid, Content } from "../../styled/containers";
+import { Content } from "../../styled/containers";
 import { DButton, DLabel } from "../../styled/utils";
-import Skeleton from "../../Skeleton";
 import { Eye } from "styled-icons/fa-regular/Eye";
+import Spinner from "../../Spinner";
 import moment from "moment";
 
 const CurrentAppointments = () => {
-  // const [currentAppointments, setCurrentAppointments] = useState([]);
+  const [isCurrentAppoint, setIsCurrentAppoint] = useState([]);
 
   const { loading, data: currentAppointmentData } = useQuery(
     FETCH_CURRENT_APPOINTMENTS
   );
 
-  // useEffect(() => {
-  //   if (currentAppointmentData) {
-  //     setCurrentAppointments(currentAppointmentData.currentAppointments);
-  //   }
-  // }, [currentAppointmentData]);
+  useEffect(() => {
+    if (currentAppointmentData) {
+      setIsCurrentAppoint(currentAppointmentData.currentAppointments);
+    }
+  }, [currentAppointmentData]);
 
   const columns = [
     {
@@ -88,24 +88,22 @@ const CurrentAppointments = () => {
       align="center"
       margin="5vh 0"
     >
-      {!currentAppointmentData ? (
-        <h4>Loading..</h4>
-      ) : (
-        <DataTable
-          title={title}
-          columns={columns}
-          data={currentAppointmentData.currentAppointments.map(
-            (currAppoint) => currAppoint
-          )}
-          responsive
-          customStyles={customStyles}
-          pagination={true}
-          paginationPerPage={5}
-          paginationRowsPerPageOptions={paginationRowsPerPageOptions}
-          highlightOnHover
-          pointerOnHover
-        />
-      )}
+      <DataTable
+        title={title}
+        columns={columns}
+        data={isCurrentAppoint.map((currAppoint) => currAppoint)}
+        responsive
+        customStyles={customStyles}
+        pagination={true}
+        paginationPerPage={5}
+        paginationRowsPerPageOptions={paginationRowsPerPageOptions}
+        highlightOnHover
+        pointerOnHover
+        progressPending={loading}
+        progressComponent={
+          <Spinner content="Please wait while we fetch our data..." />
+        }
+      />
     </Content>
   );
 };
@@ -154,7 +152,7 @@ const title = (
     style={{ marginTop: "10vh" }}
     rounded
   >
-    Apointment List
+    Appointment List
   </DLabel>
 );
 const paginationRowsPerPageOptions = [5, 10, 15, 20];

@@ -12,7 +12,7 @@ const Appointments = () => {
   const [open, setOpen] = useState(false);
   return (
     <Layout>
-      <DSection width="90%" height="100%">
+      <DSection width="90%" mcenter height="100%">
         <Content
           flex
           justify="space-between"

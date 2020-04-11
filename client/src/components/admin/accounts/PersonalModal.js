@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import DatePicker from "react-datepicker";
-import { DLabel, DButton, Toasted } from "../../styled/utils";
+import { DLabel, DButton } from "../../styled/utils";
 import { Modal, Form } from "semantic-ui-react";
 import Spinner from "../../Spinner";
 import toaster from "toasted-notes";
+import Toasted from "../../Toasted";
 
 const PersonalModal = ({ personalOpen, setPersonalOpen, employee }) => {
   // const [errors, setErrors] = useState({});
   const [startDate, setStartDate] = useState(
-    new Date(parseInt(employee.dateOfBirth))
+    employee.dateOfBirth ? new Date(parseInt(employee.dateOfBirth)) : new Date()
   );
 
   const [values, setValues] = useState({
@@ -18,10 +19,10 @@ const PersonalModal = ({ personalOpen, setPersonalOpen, employee }) => {
     firstName: employee.firstName,
     lastName: employee.lastName,
     contact: employee.contact,
-    email: employee.email
+    email: employee.email,
   });
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
@@ -29,22 +30,19 @@ const PersonalModal = ({ personalOpen, setPersonalOpen, employee }) => {
     onCompleted(result) {
       setPersonalOpen(false);
       toaster.notify(({ onClose }) => (
-        <Toasted status={"success"}>
-          <span className="description">Updated Successfully</span>
-          <span className="close" onClick={onClose}>
-            &times;
-          </span>
+        <Toasted success onClick={onClose}>
+          Updated Successfully
         </Toasted>
       ));
     },
     variables: {
       employeeId: employee._id,
       dateOfBirth: startDate,
-      ...values
-    }
+      ...values,
+    },
   });
 
-  const handleDateChanged = date => {
+  const handleDateChanged = (date) => {
     setStartDate(date);
   };
 

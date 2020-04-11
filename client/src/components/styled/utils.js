@@ -336,14 +336,14 @@ export const Toasted = styled.div`
   align-items: center;
   width: 100%;
   background: ${(props) =>
-    props.status === "error"
+    props.alert
       ? "rgba(229, 80, 57,0.9)"
-      : props.status === "success"
+      : props.success
       ? "rgba(46, 213, 115,0.9)"
-      : props.status === "warning"
+      : props.warning
       ? "rgba(254, 211, 48,0.9)"
-      : "rgba(69, 170, 242,1.0)"};
-  height: 50px;
+      : "rgba(255, 255, 255,1.0)"};
+  height: auto;
   border-radius: 10px;
   padding: 2%;
   position: relative;
@@ -357,18 +357,19 @@ export const Toasted = styled.div`
     height: 100%;
     text-align: center;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .close {
-    height: 100%;
+    height: 90%;
+    margin: 1% auto;
     padding: 1%;
     border-left: 1px solid rgba(245, 246, 250, 0.4);
     color: #fff;
     position: absolute;
     right: 1%;
     top: 0;
-    font-size: 18px;
+    fontweight: bold;
     cursor: pointer;
   }
 `;
