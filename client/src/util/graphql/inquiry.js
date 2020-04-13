@@ -10,6 +10,8 @@ const FETCH_INQUIRIES = gql`
       message
       to
       reply
+      createdAt
+      updatedAt
     }
   }
 `;

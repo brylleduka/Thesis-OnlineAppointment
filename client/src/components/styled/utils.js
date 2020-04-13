@@ -1,6 +1,7 @@
 import styled, { keyframes } from "styled-components";
 import { Icon } from "semantic-ui-react";
 import { DotsVerticalRounded } from "@styled-icons/boxicons-regular/DotsVerticalRounded";
+import { Link } from "react-router-dom";
 
 const ripple = keyframes`
 
@@ -419,5 +420,16 @@ export const DotsVertical = styled(DotsVerticalRounded)`
   &:hover {
     border-radius: 100%;
     background: #ccc;
+  }
+`;
+
+export const DLink = styled(Link)`
+  color: ${(props) => (props.color ? props.color : "#232323")} !important;
+  font-size: ${(props) => (props.size ? props.size : "12px")};
+  padding-bottom: 5px;
+  &:hover {
+    color: ${({ theme }) => theme.secondary} !important;
+    border-bottom: ${(props) => props.borderb && "1px solid #232323"};
+    border-bottom-color: ${({ theme }) => theme.secondary};
   }
 `;

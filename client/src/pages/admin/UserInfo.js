@@ -10,7 +10,7 @@ import { Breadcrumb } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import AppointmentModal from "../../components/admin/client/AppointmentModal";
 
-const UserInfo = props => {
+const UserInfo = (props) => {
   const clientId = props.match.params._id;
   const [isClient, setIsClient] = useState({});
 
@@ -18,8 +18,8 @@ const UserInfo = props => {
     FETCH_USER_ACCOUNT,
     {
       variables: {
-        userId: clientId
-      }
+        userId: clientId,
+      },
     }
   );
 
@@ -47,7 +47,7 @@ const UserInfo = props => {
             <Breadcrumb.Section>
               {isClient && (
                 <span>
-                  {isClient.firstName} {isClient.lastName}'s
+                  {isClient.firstName} {isClient.lastName}'s Info
                 </span>
               )}
             </Breadcrumb.Section>

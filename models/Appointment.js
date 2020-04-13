@@ -21,6 +21,7 @@ const appointmentSchema = new Schema(
       autopopulate: true,
     },
     status: String,
+    active:Boolean,
     slot_start: String,
     duration: Number,
     date: Date,

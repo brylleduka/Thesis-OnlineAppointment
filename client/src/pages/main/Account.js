@@ -6,13 +6,13 @@ import {
   DSection,
   DGrid,
   DContainer,
-  Content
+  Content,
 } from "../../components/styled/containers";
 import AccountContentOne from "../../components/main/user/AccountContentOne";
 import AccountContentTwo from "../../components/main/user/AccountContentTwo";
 import Skeleton from "react-loading-skeleton";
 
-const Account = props => {
+const Account = (props) => {
   const { user } = useContext(AuthContext);
   const userId = props.match.params._id;
 
@@ -29,8 +29,8 @@ const Account = props => {
     FETCH_USER_ACCOUNT,
     {
       variables: {
-        userId
-      }
+        userId,
+      },
     }
   );
 

@@ -22,7 +22,7 @@ const Appointments = () => {
         >
           <Breadcrumb size={"huge"}>
             <Breadcrumb.Section as={Link} to="/zeadmin/appointments" active>
-              Appointment
+              Appointment List
             </Breadcrumb.Section>
           </Breadcrumb>
           <DButton onClick={() => setOpen(true)}>New Appointment</DButton>

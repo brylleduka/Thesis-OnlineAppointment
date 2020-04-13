@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { Content } from "../../styled/containers";
 import { DButton, DLabel } from "../../styled/utils";
-import { Eye } from "styled-icons/fa-regular/Eye";
+import { Eye } from "@styled-icons/fa-regular/Eye";
+import { Grid } from "@styled-icons/boxicons-solid/Grid";
 import Spinner from "../../Spinner";
 import moment from "moment";
 
@@ -24,9 +25,12 @@ const CurrentAppointments = () => {
 
   const columns = [
     {
-      name: "Appointment ID",
-      selector: "_id",
-      sortable: true,
+      cell: () => <Grid size="22px" color="green" />,
+      width: "56px",
+      style: {
+        borderBottom: "1px solid #fff",
+        marginBottom: "-1px",
+      },
     },
     {
       name: "Aesthetician",
@@ -72,8 +76,14 @@ const CurrentAppointments = () => {
       name: "Actions",
 
       cell: (row) => (
-        <DButton as={Link} to={`/zeadmin/appointment/${row._id}`}>
-          <Eye size="18px" style={{ color: "white" }} />
+        <DButton
+          basic
+          green
+          confirm
+          as={Link}
+          to={`/zeadmin/appointment/${row._id}`}
+        >
+          <Eye size="22px" />
         </DButton>
       ),
     },
@@ -89,7 +99,6 @@ const CurrentAppointments = () => {
       margin="5vh 0"
     >
       <DataTable
-        title={title}
         columns={columns}
         data={isCurrentAppoint.map((currAppoint) => currAppoint)}
         responsive
@@ -141,20 +150,6 @@ const customStyles = {
   },
 };
 
-const title = (
-  <DLabel
-    size="18px"
-    bgcolor="#6dd5ed"
-    tt="uppercase"
-    weight="700"
-    pad="10px 25px"
-    color="#fff"
-    style={{ marginTop: "10vh" }}
-    rounded
-  >
-    Appointment List
-  </DLabel>
-);
 const paginationRowsPerPageOptions = [5, 10, 15, 20];
 
 export default CurrentAppointments;

@@ -204,7 +204,6 @@ export const DGrid = styled.section`
       ? props.rowCustom
       : "1fr"};
   margin: ${(props) => props.margin && props.margin};
- 
 
   .card-content {
     border-radius: ${(props) => (props.circle ? "40% 40% 10px 10px" : "5px")};
@@ -256,6 +255,7 @@ export const DCard = styled.div`
   width: ${(props) => (props.dw ? props.dw : "250px")};
   cursor: ${(props) => props.pointer && "pointer"};
   display: ${(props) => props.flex && "flex"};
+  margin: ${(props) => (props.mcenter ? "0 auto" : props.margin)};
   justify-content: ${(props) =>
     props.justifyCenter
       ? "center"
@@ -384,6 +384,10 @@ export const Content = styled.div`
     props.background && props.background}') no-repeat center center/cover;
   background-attachment: ${(props) => props.fixed && "fixed"};
   background-color: ${(props) => props.bgcolor && props.bgcolor};
+  border-width: ${(props) => props.bordered && "1px"};
+  border-style: ${(props) => props.bordered && "solid"};
+  border-color: ${(props) =>
+    props.bordbtm && "transparent transparent #ccc transparent"};
   border-radius: ${(props) =>
     props.rounded
       ? "10px"
