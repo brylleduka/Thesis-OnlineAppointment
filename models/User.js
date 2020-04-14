@@ -8,27 +8,28 @@ const userSchema = new Schema(
     pseudoUserId: String,
     firstName: {
       type: String,
-      required: true
+      required: true,
     },
     lastName: {
       type: String,
-      required: true
+      required: true,
     },
     contact: Number,
     email: {
       type: String,
-      required: true
+      required: true,
     },
     dateOfBirth: Date,
     address: String,
     photo: String,
     password: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
+    active: Boolean,
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal } from "semantic-ui-react";
 import { DButton } from "../../styled/utils";
 import { DGrid } from "../../styled/containers";
@@ -9,10 +9,8 @@ import NewConfirm from "./NewConfirm";
 const AppointmentModal = ({ clientId }) => {
   const [open, setOpen] = useState(false);
 
-  const [service, setService] = useState([]);
-  const [serviceEmp, setServiceEmp] = useState([]);
   const [values, setValues] = useState({
-    category: ""
+    category: "",
   });
   const [serviceValue, setServiceValue] = useState("");
   const [employeeVal, setEmployeeVal] = useState("");
@@ -21,22 +19,23 @@ const AppointmentModal = ({ clientId }) => {
   );
   const [selectedTime, setSelectedTime] = useState("");
 
+
+
   return (
     <>
       <DButton onClick={() => setOpen(true)}>New Appointment</DButton>
       <Modal open={open} onClose={() => setOpen(false)}>
         <Modal.Header>New Appointment</Modal.Header>
         <Modal.Content>
-          <DGrid two>
+          <DGrid custom="1fr 2fr">
             <AppointmentInputs
               values={values}
               setValues={setValues}
               employeeVal={employeeVal}
-              setService={setService}
-              setServiceEmp={setServiceEmp}
               serviceValue={serviceValue}
               setServiceValue={setServiceValue}
               setEmployeeVal={setEmployeeVal}
+          
             />
             <AppointDate
               setStartDate={setStartDate}
@@ -45,6 +44,7 @@ const AppointmentModal = ({ clientId }) => {
               startDate={startDate}
               employeeVal={employeeVal}
               serviceValue={serviceValue}
+          
             />
           </DGrid>
         </Modal.Content>

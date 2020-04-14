@@ -4,28 +4,28 @@ import { useDropzone } from "react-dropzone";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import {
   FETCH_CATEGORY_QUERY,
-  FETCH_ALL_CATEGORIES_QUERY
+  FETCH_ALL_CATEGORIES_QUERY,
 } from "../../util/graphql/service";
 import Layout from "../../components/admin/layout/Layout";
 import {
   Content,
   DGrid,
   DSection,
-  Overlay
+  Overlay,
 } from "../../components/styled/containers";
 import CategoryDetails from "../../components/admin/services/CategoryDetails";
 import ServiceList from "../../components/admin/services/ServiceList";
-import Skeleton from "../../components/Skeleton";
+
 import Spinner from "../../components/Spinner";
 
-const Category = props => {
+const Category = (props) => {
   const categoryId = props.match.params._id;
   const [category, setCategory] = useState({});
 
   const { data, loading: dataLoading, error } = useQuery(FETCH_CATEGORY_QUERY, {
     variables: {
-      categoryId
-    }
+      categoryId,
+    },
   });
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const Category = props => {
 
   // DROPZONE
   const [addCategoryPhoto, { loading }] = useMutation(UPLOAD_CATEGORY_PHOTO, {
-    refetchQueries: [{ query: FETCH_ALL_CATEGORIES_QUERY }]
+    refetchQueries: [{ query: FETCH_ALL_CATEGORIES_QUERY }],
   });
 
   const onDrop = useCallback(
@@ -64,19 +64,28 @@ const Category = props => {
     <Layout>
       {dataLoading ? (
         <>
-          <Skeleton width="100%" />
+          <Spinner content="Please wait while we fetch our data" />
         </>
       ) : (
-        <DSection margin="20px 0">
-          <h2>{data.category.name}</h2>
+        <>
           <DGrid>
-            <DSection width="100%" height="100%">
+            <DSection
+              flex
+              mcenter
+              justify="space-around"
+              align="center"
+              direct="column"
+              pad="24px 0"
+              width="90%"
+              height="100%"
+            >
+              <h2>{data.category.name}</h2>
               <DGrid
                 custom="450px 1fr"
                 gap="10px"
                 style={{
                   borderBottom: "1px solid #ccc",
-                  paddingBottom: "20px"
+                  paddingBottom: "20px",
                 }}
               >
                 <Content
@@ -138,7 +147,7 @@ const Category = props => {
             </DSection>
             <ServiceList categoryId={data.category._id} />
           </DGrid>
-        </DSection>
+        </>
       )}
     </Layout>
   );

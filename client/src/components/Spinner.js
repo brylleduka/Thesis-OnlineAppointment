@@ -2,23 +2,18 @@ import React from "react";
 import { SpinnerRing } from "./styled/loader";
 const Spinner = (props) => {
   return (
-    <div style={styled}>
-      <SpinnerRing {...props}>
+    <SpinnerRing {...props}>
+      <div className="ring">
         <div></div>
         <div></div>
         <div></div>
         <div></div>
-      </SpinnerRing>
-      <div style={{ fontWeight: 700 }}>{props.content}</div>
-    </div>
+      </div>
+      <div className="content-text">{props.content}</div>
+    </SpinnerRing>
   );
 };
 
-const styled = {
-  display: "flex",
-  justifyContent: "space-around",
-  alignItems: "center",
-  flexDirection: "column",
-};
+
 
 export default Spinner;

@@ -73,7 +73,10 @@ const AppointmentDetails = (props) => {
               align="center"
             >
               <Breadcrumb size={"large"}>
-                <Breadcrumb.Section as={Link} to="/zeadmin/appointments">
+                <Breadcrumb.Section
+                  style={{ color: "#2980B9" }}
+                  onClick={() => history.goBack()}
+                >
                   <h3>Appointments</h3>
                 </Breadcrumb.Section>
                 <Breadcrumb.Divider icon="right chevron" />

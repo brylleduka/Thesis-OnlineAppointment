@@ -8,7 +8,7 @@ import {
   Content,
   DSection,
   DGrid,
-  Overlay
+  Overlay,
 } from "../../components/styled/containers";
 // import { Bar, Doughnut } from "react-chartjs-2";
 import Cards from "../../components/admin/dashboard/Cards";
@@ -102,8 +102,16 @@ const Dashboard = () => {
 
   return (
     <Layout>
-      <Cards />
-      <DSection height="100%" margin="20px 0 20px 0">
+      <DSection
+        height="100%"
+        width="90%"
+        flex
+        justify="center"
+        align="center"
+        direct="column"
+        mcenter
+      >
+        <Cards />
         <DGrid gap="40px">
           {/* <DGrid two>
             <Content width="100%" height="auto">
@@ -116,18 +124,10 @@ const Dashboard = () => {
           </DGrid> */}
 
           <Content height="40vh" width="100%">
-            {loading ? (
-              <Overlay flex justify="center" align="center">
-                <h2>Loading...</h2>
-              </Overlay>
-            ) : (
-              appointments && (
-                <UpcommingAppointments
-                  appointments={appointments}
-                  loading={loading}
-                />
-              )
-            )}
+            <UpcommingAppointments
+              appointments={appointments}
+              loading={loading}
+            />
           </Content>
         </DGrid>
       </DSection>
