@@ -6,6 +6,7 @@ import { DSection, Content } from "../../styled/containers";
 import { DButton, DLabel } from "../../styled/utils";
 import DataTable from "react-data-table-component";
 import { Eye } from "styled-icons/fa-regular/Eye";
+import { Grid } from "@styled-icons/boxicons-solid/Grid";
 import Spinner from "../../Spinner";
 import NewService from "./NewService";
 import parse from "html-react-parser";
@@ -18,8 +19,8 @@ const ServiceList = ({ categoryId }) => {
     FETCH_SERVICES_QUERY,
     {
       variables: {
-        categoryId
-      }
+        categoryId,
+      },
     }
   );
 
@@ -31,15 +32,18 @@ const ServiceList = ({ categoryId }) => {
 
   const columns = [
     {
-      name: "Service ID",
-      selector: "_id",
-      sortable: true
+      cell: () => <Grid size="22px" color="green" />,
+      width: "56px",
+      style: {
+        borderBottom: "1px solid #fff",
+        marginBottom: "-1px",
+      },
     },
     {
       name: "Thumbnail",
       selector: "photo",
       grow: 0,
-      cell: row => (
+      cell: (row) => (
         <img
           height="84px"
           width="56px"
@@ -50,19 +54,19 @@ const ServiceList = ({ categoryId }) => {
               : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
           }
         />
-      )
+      ),
     },
     {
       name: "Title",
       selector: "name",
       wrap: true,
-      sortable: true
+      sortable: true,
     },
     {
       name: "Description",
       selector: "description",
       wrap: true,
-      format: row => {
+      format: (row) => {
         const length = 20;
         const descript = row.description;
 
@@ -72,7 +76,7 @@ const ServiceList = ({ categoryId }) => {
             : descript.substring(0, length);
 
         return <p style={{ fontWeight: 500 }}>{parse(trimString)}</p>;
-      }
+      },
     },
 
     {
@@ -80,43 +84,47 @@ const ServiceList = ({ categoryId }) => {
       selector: "duration",
       wrap: true,
       sortable: true,
-      cell: row => <span style={{ fontWeight: 500 }}>{row.duration} min</span>
+      cell: (row) => (
+        <span style={{ fontWeight: 500 }}>{row.duration} min</span>
+      ),
     },
     {
       name: "Actions",
-      cell: row => (
-        <DButton as={Link} to={`/zeadmin/service/${row._id}`}>
-          <Eye size="18px" style={{ color: "white" }} />
+      wrap: true,
+      cell: (row) => (
+        <DButton fluid as={Link} to={`/zeadmin/service/${row._id}`}>
+          <Eye size="22px" />
         </DButton>
-      )
-    }
+      ),
+      width: "100px",
+    },
   ];
 
   const customStyles = {
     headRow: {
       style: {
-        border: "none"
-      }
+        border: "none",
+      },
     },
     headCells: {
       style: {
         color: "#202124",
-        fontSize: "14px"
-      }
+        fontSize: "14px",
+      },
     },
     rows: {
       style: {
         fontSize: "14px",
         fontWeight: "700",
-        color: "#000"
+        color: "#000",
       },
       highlightOnHoverStyle: {
         backgroundColor: "rgb(230, 244, 244)",
         borderBottomColor: "#FFFFFF",
         borderRadius: "25px",
-        outline: "1px solid #FFFFFF"
-      }
-    }
+        outline: "1px solid #FFFFFF",
+      },
+    },
   };
 
   const title = (
@@ -135,32 +143,29 @@ const ServiceList = ({ categoryId }) => {
 
   const paginationRowsPerPageOptions = [5, 10, 15, 20];
   return (
-    <DSection height="100%" width="90%">
-      <Content width="100%" flex justify="flex-end" align="center">
+    <>
+      <Content width="100%" flex justify="space-between" align="center">
+        <h3>Services</h3>
         <DButton onClick={() => setOpen(true)}>New Service</DButton>
       </Content>
-      {loading_services ? (
-        <Spinner medium />
-      ) : (
-        <Content width="100%" margin="20px 0">
-          <DataTable
-            title={title}
-            columns={columns}
-            data={services.map(service => service)}
-            responsive={true}
-            pagination
-            paginationPerPage={5}
-            paginationRowsPerPageOptions={paginationRowsPerPageOptions}
-            progressComponent={<Spinner medium />}
-            customStyles={customStyles}
-            highlightOnHover
-            pointerOnHover
-          />
-        </Content>
-      )}
+      <DataTable
+        columns={columns}
+        data={services.map((service) => service)}
+        responsive={true}
+        pagination
+        paginationPerPage={5}
+        paginationRowsPerPageOptions={paginationRowsPerPageOptions}
+        customStyles={customStyles}
+        highlightOnHover
+        pointerOnHover
+        progressPending={loading_services}
+        progressComponent={
+          <Spinner content="Please wait while we fetch our data..." />
+        }
+      />
 
       <NewService categoryId={categoryId} open={open} setOpen={setOpen} />
-    </DSection>
+    </>
   );
 };
 

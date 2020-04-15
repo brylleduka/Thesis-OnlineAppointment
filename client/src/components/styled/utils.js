@@ -24,7 +24,7 @@ export const DButton = styled.button`
   width: ${(props) =>
     props.fluid ? "100%" : props.width ? props.width : "auto"};
   display: inline-block;
-  padding: ${(props) => (props.pad ? props.pad : "6px 16px")};
+  padding: ${(props) => (props.pad ? props.pad : "4px 8px")};
   line-height: 1.42857143;
   margin: ${(props) => (props.center ? "1.5% auto" : "1.5%")};
   text-align: center;
@@ -348,6 +348,7 @@ export const Toasted = styled.div`
   border-radius: 10px;
   padding: 2%;
   position: relative;
+  z-index: 5;
 
   .description {
     display: flex;
@@ -417,6 +418,8 @@ export const ScrollUp = styled(Icon)`
 
 export const DotsVertical = styled(DotsVerticalRounded)`
   color: #232323;
+  cursor: pointer;
+
   &:hover {
     border-radius: 100%;
     background: #ccc;

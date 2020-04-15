@@ -102,7 +102,12 @@ ul {
 }
 
 .jodit_toolbar_btn-image,
-.jodit_toolbar_btn-fullsize {
+.jodit_toolbar_btn-fullsize,
+.jodit_toolbar_btn-table,
+.jodit_toolbar_btn-copyformat,
+.jodit_toolbar_btn-source,
+.jodit_toolbar_btn-separator,
+.jodit_statusbar {
   display: none;
 }
 
