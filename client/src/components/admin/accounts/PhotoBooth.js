@@ -7,11 +7,7 @@ import { Camera } from "@styled-icons/boxicons-solid/Camera";
 import Carousel, { Modal, ModalGateway } from "react-images";
 import Spinner from "../../Spinner";
 
-const PhotoBooth = ({
-  id,
-  photo,
-  fetchEmployee,
-}) => {
+const PhotoBooth = ({ id, photo, fetchEmployee }) => {
   // LIGHT BOX
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
   const openLightbox = () => {
@@ -28,10 +24,10 @@ const PhotoBooth = ({
       {
         query: fetchEmployee,
         variables: {
-          employeeId: id
-        }
-      }
-    ]
+          employeeId: id,
+        },
+      },
+    ],
   });
 
   const onDrop = useCallback(
@@ -53,8 +49,8 @@ const PhotoBooth = ({
     {
       src: photo
         ? `/images/employees/${photo}`
-        : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-    }
+        : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    },
   ];
 
   return (

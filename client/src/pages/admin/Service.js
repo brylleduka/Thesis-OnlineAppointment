@@ -4,41 +4,57 @@ import { useDropzone } from "react-dropzone";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import {
   FETCH_ALL_SERVICES_QUERY,
-  FETCH_SINGLE_SERVICE_QUERY
+  FETCH_SINGLE_SERVICE_QUERY,
 } from "../../util/graphql/service";
-
 import Layout from "../../components/admin/layout/Layout";
-import Skeleton from "../../components/Skeleton";
+import { Breadcrumb } from "semantic-ui-react";
 import {
   DGrid,
   DSection,
   Content,
-  Overlay
+  DCard,
+  DImage,
 } from "../../components/styled/containers";
 import Spinner from "../../components/Spinner";
+import Carousel, { Modal, ModalGateway } from "react-images";
+import DCamera from "../../components/DCamera";
 import ServiceDetails from "../../components/admin/services/ServiceDetails";
+import useWindowSize from "../../util/hooks/useWindowSize";
+import toaster from "toasted-notes";
+import Toasted from "../../components/Toasted";
 
-const Service = props => {
+const Service = (props) => {
   const serviceId = props.match.params._id;
-  const [service, setService] = useState([]);
+  const [service, setService] = useState({});
+  const [viewerIsOpen, setViewerIsOpen] = useState(false);
+  const { width: wid } = useWindowSize();
 
   const { data: serviceData, loading: serviceLoading, error } = useQuery(
     FETCH_SINGLE_SERVICE_QUERY,
     {
       variables: {
-        serviceId
-      }
+        serviceId,
+      },
     }
   );
   useEffect(() => {
     if (serviceData) {
       setService(serviceData.service);
     }
-  }, []);
+  }, [serviceData]);
+
+  // LIGHT BOX
+  const openLightbox = () => {
+    setViewerIsOpen(true);
+  };
+
+  const closeLightbox = () => {
+    setViewerIsOpen(false);
+  };
 
   // DROPZONE
   const [addServicePhoto, { loading }] = useMutation(UPLOAD_SERVICE_PHOTO, {
-    refetchQueries: [{ query: FETCH_ALL_SERVICES_QUERY }]
+    refetchQueries: [{ query: FETCH_ALL_SERVICES_QUERY }],
   });
 
   const onDrop = useCallback(
@@ -56,9 +72,107 @@ const Service = props => {
     );
   };
 
+  const images = [
+    {
+      src: service.photo
+        ? `/images/service/${service.photo}`
+        : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    },
+  ];
+
   return (
     <Layout>
-      {serviceLoading ? (
+      <DSection
+        width="90%"
+        height="100%"
+        flex
+        justify="space-around"
+        align="center"
+        direct="column"
+        mcenter
+      >
+        {serviceLoading ? (
+          <Spinner content="Please wait while we fetch our data..." />
+        ) : (
+          <>
+            <Content
+              flex
+              justify="space-between"
+              align="center"
+              width="100%"
+              margin="24px auto"
+            >
+              <Breadcrumb size={"huge"}>
+                <Breadcrumb.Section link>Category</Breadcrumb.Section>
+                <Breadcrumb.Divider>/</Breadcrumb.Divider>
+                <Breadcrumb.Section active>{service.name}</Breadcrumb.Section>
+              </Breadcrumb>
+            </Content>
+            <Content width="100%" height="100%" margin="24px auto">
+              <DGrid
+                custom="1fr 3fr"
+                med10="2fr 4fr"
+                med7="2fr 4fr"
+                gap={wid < 768 ? "10px" : "20px"}
+              >
+                <Content
+                  width="100%"
+                  height="100%"
+                  flex
+                  justify="flex-start"
+                  align="center"
+                  mcenter
+                  direct="column"
+                >
+                  <DCard
+                    dw={wid < 524 ? "50%" : "100%"}
+                    dh="250px"
+                    mcenter
+                    p="0px"
+                  >
+                    {loading ? (
+                      <Spinner content="Loading..." medium />
+                    ) : (
+                      <DImage height="100%" width="100%">
+                        <img
+                          src={
+                            service.photo
+                              ? `/images/service/${service.photo}`
+                              : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                          }
+                          alt={service.name}
+                          onClick={openLightbox}
+                        />
+                      </DImage>
+                    )}
+                  </DCard>
+                  <DCamera {...getRootProps()} color="green" size="22px">
+                    <input {...getInputProps()} />
+                  </DCamera>
+                  <ModalGateway>
+                    {viewerIsOpen ? (
+                      <Modal onClose={closeLightbox}>
+                        <Carousel views={images} />
+                      </Modal>
+                    ) : null}
+                  </ModalGateway>
+                </Content>
+                <Content width="100%" height="100%">
+                  <DGrid gap="10px">
+                    <DCard dw="100%" dh="100%" p="10px 20px">
+                      <ServiceDetails
+                        service={serviceData.service}
+                        serviceHistoryCallback={serviceHistoryCallback}
+                      />
+                    </DCard>
+                  </DGrid>
+                </Content>
+              </DGrid>
+            </Content>
+          </>
+        )}
+      </DSection>
+      {/* {serviceLoading ? (
         <Skeleton />
       ) : (
         <DGrid style={{ margin: "20px 0" }}>
@@ -132,7 +246,7 @@ const Service = props => {
             serviceHistoryCallback={serviceHistoryCallback}
           />
         </DGrid>
-      )}
+      )} */}
     </Layout>
   );
 };

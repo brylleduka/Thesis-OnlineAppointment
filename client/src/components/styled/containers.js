@@ -452,6 +452,7 @@ export const DImage = styled.div`
       : "none"};
   margin: ${(props) => (props.m ? props.m : "0 auto")};
   padding: ${(props) => props.pad && props.pad};
+  cursor: pointer;
   img {
     display: inline;
     margin: 0 auto;

@@ -11,23 +11,27 @@ import {
   Content,
   DGrid,
   DSection,
-  Overlay,
   DCard,
   DImage,
 } from "../../components/styled/containers";
-import { DButton } from "../../components/styled/utils";
 import CategoryDetails from "../../components/admin/services/CategoryDetails";
 import ServiceList from "../../components/admin/services/ServiceList";
 import { Breadcrumb } from "semantic-ui-react";
 import Spinner from "../../components/Spinner";
+import Carousel, { Modal, ModalGateway } from "react-images";
+import DCamera from "../../components/DCamera";
 import useWindowSize from "../../util/hooks/useWindowSize";
+import toaster from "toasted-notes";
+import Toasted from "../../components/Toasted";
 
 const Category = (props) => {
   const categoryId = props.match.params._id;
   const [category, setCategory] = useState({});
+
+  const [viewerIsOpen, setViewerIsOpen] = useState(false);
   const { width: wid } = useWindowSize();
 
-  const { data, loading: dataLoading, error } = useQuery(FETCH_CATEGORY_QUERY, {
+  const { data, loading: dataLoading } = useQuery(FETCH_CATEGORY_QUERY, {
     variables: {
       categoryId,
     },
@@ -39,9 +43,25 @@ const Category = (props) => {
     }
   }, [data]);
 
+  // LIGHT BOX
+  const openLightbox = () => {
+    setViewerIsOpen(true);
+  };
+
+  const closeLightbox = () => {
+    setViewerIsOpen(false);
+  };
+
   // DROPZONE
   const [addCategoryPhoto, { loading }] = useMutation(UPLOAD_CATEGORY_PHOTO, {
     refetchQueries: [{ query: FETCH_ALL_CATEGORIES_QUERY }],
+    onCompleted() {
+      toaster.notify(({ onClose }) => (
+        <Toasted success onClick={onClose}>
+          Upload Success
+        </Toasted>
+      ));
+    },
   });
 
   const onDrop = useCallback(
@@ -51,15 +71,15 @@ const Category = (props) => {
     [addCategoryPhoto]
   );
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
-  if (error) {
-    return (
-      <DSection>
-        <h2>Something went wrong</h2>
-      </DSection>
-    );
-  }
+  const images = [
+    {
+      src: category.photo
+        ? `/images/service/${category.photo}`
+        : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    },
+  ];
 
   const historyCallback = () => {
     props.history.push("/zeadmin/categories");
@@ -114,16 +134,32 @@ const Category = (props) => {
                     mcenter
                     p="0px"
                   >
-                    <DImage height="100%" width="100%">
-                      <img
-                        src={
-                          category.photo !== null
-                            ? `/images/service/${category.photo}`
-                            : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                        }
-                      />
-                    </DImage>
+                    {loading ? (
+                      <Spinner content="Loading..." medium />
+                    ) : (
+                      <DImage height="100%" width="100%">
+                        <img
+                          src={
+                            category.photo
+                              ? `/images/service/${category.photo}`
+                              : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                          }
+                          alt={category.name}
+                          onClick={openLightbox}
+                        />
+                      </DImage>
+                    )}
                   </DCard>
+                  <DCamera {...getRootProps()} color="green" size="22px">
+                    <input {...getInputProps()} />
+                  </DCamera>
+                  <ModalGateway>
+                    {viewerIsOpen ? (
+                      <Modal onClose={closeLightbox}>
+                        <Carousel views={images} />
+                      </Modal>
+                    ) : null}
+                  </ModalGateway>
                 </Content>
                 <Content width="100%" height="100%">
                   <DGrid gap="10px">

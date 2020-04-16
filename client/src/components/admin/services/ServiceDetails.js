@@ -9,12 +9,12 @@ import toaster from "toasted-notes";
 import {
   DGrid,
   DSection,
-  Content
+  Content,
 } from "../../../components/styled/containers";
 import ServiceConfirmDelete from "./ServiceConfirmDelete";
 
 const config = {
-  readonly: false
+  readonly: false,
 };
 
 const ServiceDetails = ({ service, serviceHistoryCallback }) => {
@@ -26,8 +26,9 @@ const ServiceDetails = ({ service, serviceHistoryCallback }) => {
   const { values, handleChange, handleSubmit } = useForm(
     updateServiceCallback,
     {
-      title: service.name,
-      price: service.price
+      title: service && service.name,
+      price: service && service.price,
+      duration: service && service.duration,
     }
   );
 
@@ -36,8 +37,8 @@ const ServiceDetails = ({ service, serviceHistoryCallback }) => {
       serviceId: service._id,
       title: values.title,
       price: parseFloat(values.price),
-      duration: parseInt(parseFloat(values.duration) * 60),
-      description: content
+      duration: parseInt(values.duration),
+      description: content,
     },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
@@ -51,7 +52,7 @@ const ServiceDetails = ({ service, serviceHistoryCallback }) => {
           </span>
         </Toasted>
       ));
-    }
+    },
   });
 
   function updateServiceCallback() {
@@ -63,17 +64,9 @@ const ServiceDetails = ({ service, serviceHistoryCallback }) => {
   return (
     <>
       <DSection pad="20px 0" height="100%">
-        <DGrid two gap="10px">
+        <DGrid gap="10px">
           <Content width="100%">
             <Form noValidate>
-              <Form.Field inline>
-                <Label style={styles.label}>ID</Label>
-                <input
-                  value={service._id}
-                  style={{ width: "60%", cursor: "default" }}
-                  readOnly
-                />
-              </Form.Field>
               <Form.Field inline>
                 <Label style={styles.label}>Title</Label>
                 <input
@@ -85,21 +78,20 @@ const ServiceDetails = ({ service, serviceHistoryCallback }) => {
               </Form.Field>
               <Form.Field inline>
                 <Label style={styles.label}>Duration</Label>
-                <DLabel>{service.duration} min</DLabel>
+                <DLabel>{values.duration} min</DLabel>
                 <select
                   name="duration"
                   value={values.duration}
                   onChange={handleChange}
-                  className="ui dropdown"
                 >
-                  <option></option>
-                  <option value="0.5">30 mins</option>
-                  <option value="0.75">45 mins</option>
-                  <option value="1">60 mins</option>
-                  <option value="1.5">90 mins</option>
-                  <option value="2">120 mins</option>
-                  <option value="2.5">180 mins</option>
-                  <option value="3">210 mins</option>
+                  {/* <option></option> */}
+                  <option value="30">30 mins</option>
+                  <option value="45">45 mins</option>
+                  <option value="60">60 mins</option>
+                  <option value="90">90 mins</option>
+                  <option value="120">120 mins</option>
+                  <option value="180">180 mins</option>
+                  <option value="210">210 mins</option>
                 </select>
               </Form.Field>
               <Form.Field inline>
@@ -119,20 +111,21 @@ const ServiceDetails = ({ service, serviceHistoryCallback }) => {
               value={content}
               config={config}
               tabIndex={1} // tabIndex of textarea
-              onBlur={newContent => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
+              onBlur={(newContent) => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
               // onChange={newContent => {}}
             />
           </Content>
+          <Content width="100%" flex justify="flex-end">
+            <DButton confirm onClick={handleSubmit}>
+              {loading ? "Loading..." : "Save"}
+            </DButton>
+            <DButton alert onClick={() => setOpen(true)}>
+              Delete
+            </DButton>
+          </Content>
         </DGrid>
       </DSection>
-      <Content width="100%" flex justify="flex-end">
-        <DButton confirm onClick={handleSubmit}>
-          {loading ? "Loading..." : "Save"}
-        </DButton>
-        <DButton alert onClick={() => setOpen(true)}>
-          Delete
-        </DButton>
-      </Content>
+
       <ServiceConfirmDelete
         open={open}
         setOpen={setOpen}
@@ -145,8 +138,8 @@ const ServiceDetails = ({ service, serviceHistoryCallback }) => {
 const styles = {
   label: {
     width: "20%",
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
 };
 
 export const UPDATE_SERVICE_DETAILS = gql`

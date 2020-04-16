@@ -1,6 +1,8 @@
 import styled, { keyframes } from "styled-components";
 import { Icon } from "semantic-ui-react";
+
 import { DotsVerticalRounded } from "@styled-icons/boxicons-regular/DotsVerticalRounded";
+
 import { Link } from "react-router-dom";
 
 const ripple = keyframes`
