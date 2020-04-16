@@ -4,8 +4,9 @@ import { useMutation } from "@apollo/react-hooks";
 import { useForm } from "../../../util/hooks/useForm";
 import { Form, Label } from "semantic-ui-react";
 import JoditEditor from "jodit-react";
-import { Toasted, DButton, DLabel } from "../../../components/styled/utils";
+import { DButton, DLabel } from "../../../components/styled/utils";
 import toaster from "toasted-notes";
+import Toasted from "../../../components/Toasted";
 import {
   DGrid,
   DSection,
@@ -45,11 +46,8 @@ const ServiceDetails = ({ service, serviceHistoryCallback }) => {
     },
     onCompleted() {
       toaster.notify(({ onClose }) => (
-        <Toasted status={"success"}>
-          <span className="description">Service Updated</span>
-          <span className="close" onClick={onClose}>
-            &times;
-          </span>
+        <Toasted success onClick={onClose}>
+          Service Updated
         </Toasted>
       ));
     },

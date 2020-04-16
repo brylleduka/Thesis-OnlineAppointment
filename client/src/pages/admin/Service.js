@@ -14,7 +14,9 @@ import {
   Content,
   DCard,
   DImage,
+  Overlay,
 } from "../../components/styled/containers";
+import ReadMore from "../../components/main/utils/ReadMore";
 import Spinner from "../../components/Spinner";
 import Carousel, { Modal, ModalGateway } from "react-images";
 import DCamera from "../../components/DCamera";
@@ -22,6 +24,7 @@ import ServiceDetails from "../../components/admin/services/ServiceDetails";
 import useWindowSize from "../../util/hooks/useWindowSize";
 import toaster from "toasted-notes";
 import Toasted from "../../components/Toasted";
+import { Link } from "react-router-dom";
 
 const Service = (props) => {
   const serviceId = props.match.params._id;
@@ -129,11 +132,13 @@ const Service = (props) => {
                     dh="250px"
                     mcenter
                     p="0px"
+                    grayzoom
+                    overlaying
                   >
                     {loading ? (
                       <Spinner content="Loading..." medium />
                     ) : (
-                      <DImage height="100%" width="100%">
+                      <DImage height="100%" width="100%" grayscaling>
                         <img
                           src={
                             service.photo
@@ -145,6 +150,29 @@ const Service = (props) => {
                         />
                       </DImage>
                     )}
+                    <Overlay
+                      bgc
+                      width="100%"
+                      height="100%"
+                      flex
+                      justify="center"
+                      align="center"
+                      initbox
+                    >
+                      <div className="overlay-box">
+                        <div className="overlay-box__content dark">
+                          <h3 className="title">{service.name}</h3>
+
+                          <p>
+                            Lorem ipsum dolor sit, amet consectetur adipisicing
+                            elit. Dolor voluptates inventore labore deserunt fa
+                          </p>
+                          <ReadMore center size="14px">
+                            Learn More
+                          </ReadMore>
+                        </div>
+                      </div>
+                    </Overlay>
                   </DCard>
                   <DCamera {...getRootProps()} color="green" size="22px">
                     <input {...getInputProps()} />

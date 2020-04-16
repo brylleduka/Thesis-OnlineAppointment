@@ -59,7 +59,7 @@ const Appointment = () => {
                 opac="0"
                 bg={"rgba(0,0,0,0.7)"}
                 flex
-                jusitfy="center"
+                justify="center"
                 align="center"
               >
                 <div className="overlay-box">

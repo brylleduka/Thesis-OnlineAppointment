@@ -379,14 +379,17 @@ export const Toasted = styled.div`
 `;
 
 export const ReadMore = styled.p`
-  text-align: right;
+  text-align: ${(props) =>
+    props.center ? "center" : props.left ? "left" : "right"};
   cursor: pointer !important;
 
   span {
-    color: ${({ theme }) => theme.secondary};
+    color: ${(props) =>
+      props.color ? props.color : ({ theme }) => theme.secondary};
     display: inline-block;
     position: relative;
     font-weight: 700;
+    font-size: ${(props) => (props.size ? props.size : "12px")};
     &:after {
       content: "\f061";
       font-family: FontAwesome;

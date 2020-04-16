@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const columns = {
   two: "repeat(2, 1fr)",
@@ -53,124 +53,6 @@ export const DShowCase = styled.div`
     height: 100%;
     width: auto;
     object-fit: cover;
-  }
-`;
-
-export const Overlay = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: ${(props) =>
-    props.bg
-      ? props.bg
-      : props.bgr
-      ? "linear-gradient(270deg, rgba(0,0,0,0.4) 8%, rgba(255,255,255,0) 100%)"
-      : props.bgl
-      ? "linear-gradient(90deg, rgba(0,0,0,0.4) 8%, rgba(255,255,255,0) 100%)"
-      : props.bgc
-      ? "rgba(0,0,0,0.4)"
-      : "rgba(0, 0, 0, 0)"};
-  border-radius: inherit;
-  z-index: 1;
-  display: ${(props) => props.flex && "flex"};
-  justify-content: ${(props) => props.justify && props.justify};
-  align-items: ${(props) => props.align && props.align};
-  flex-flow: ${(props) => props.flow && props.flow};
-  flex-direction: ${(props) => props.direct && props.direct};
-  padding: ${(props) => props.pad && props.pad};
-  cursor: ${(props) => props.pointer && "pointer"};
-  opacity: ${(props) => props.opac && props.opac};
-  transition: opacity 0.3s ease;
-
-  overflow: hidden;
-
-  &:hover {
-    opacity: ${(props) => props.hovOpac && props.hovOpac};
-  }
-
-  .overlay-box {
-    width: 0;
-    height: 100%;
-
-    border: 1px solid white;
-    margin: 0 auto;
-    transform: rotate(45deg);
-    transition: width 0.4s ease-in-out;
-
-    .overlay-box__content {
-      display: flex;
-      justify-content: flex-start;
-      align-items: flex-start;
-
-      text-align: center;
-      transform: rotate(-45deg);
-      h1 {
-        transform: translateY(80px);
-        transition: transform 0.4s ease-in-out;
-      }
-    }
-  }
-
-  &:hover .overlay-box {
-    width: 100%;
-  }
-
-  &:hover .overlay-box .overlay-box__content {
-    h1 {
-      transform: translateY(20px);
-    }
-  }
-
-  .overlay-content {
-    width: ${(props) => (props.cwidth ? props.cwidth : "80%")};
-    text-align: ${(props) => (props.talign ? props.talign : "left")};
-    height: auto;
-    margin: ${(props) => (props.cmarg ? props.cmarg : "0 24px")};
-    padding: 10px 40px;
-
-    h1,
-    h2,
-    p {
-      letter-spacing: 5px;
-      line-height: 1.4;
-    }
-
-    h3,
-    h4,
-    .ps {
-      letter-spacing: 1px;
-      line-height: 1.4;
-    }
-    .ps {
-      font-size: 10px;
-    }
-
-    h1 {
-      font-size: ${(props) => (props.fs ? props.fs : "60px")};
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .overlay-content {
-      min-width: 90%;
-      h1 {
-        font-size: 32px;
-      }
-      h1,
-      p {
-        letter-spacing: 2px;
-        line-height: 2;
-      }
-    }
-  }
-
-  @media (max-width: 500px) {
-    grid-template-columns: 1fr;
   }
 `;
 
@@ -247,97 +129,6 @@ export const DGrid = styled.section`
   }
 `;
 
-export const DCard = styled.div`
-  position: relative;
-  border-radius: 10px;
-  padding: ${(props) => (props.p ? props.p : "10px")};
-  height: ${(props) => (props.dh ? props.dh : "300px")};
-  width: ${(props) => (props.dw ? props.dw : "250px")};
-  cursor: ${(props) => props.pointer && "pointer"};
-  display: ${(props) => props.flex && "flex"};
-  margin: ${(props) => (props.mcenter ? "0 auto" : props.margin)};
-  justify-content: ${(props) =>
-    props.justifyCenter
-      ? "center"
-      : props.justifyAround
-      ? "space-around"
-      : props.justifyBetween
-      ? "space-between"
-      : props.jusitfyFend
-      ? "flex-end"
-      : "flex-start"};
-
-  align-items: ${(props) =>
-    props.alignCenter
-      ? "center"
-      : props.alignAround
-      ? "space-around"
-      : props.alignBetween
-      ? "space-between"
-      : props.alignFend
-      ? "flex-end"
-      : "flex-start"};
-  flex-direction: ${(props) => props.fcol && "column"};
-
-  overflow: hidden;
-  background: ${(props) => (props.bg ? props.bg : "#ffffff")};
-  box-shadow: ${(props) =>
-    props.bs
-      ? props.bs
-      : ("0 1px 1px rgba(0, 0, 0, 0.12)",
-        "0 2px 2px rgba(0, 0, 0, 0.12)",
-        "0 4px 4px rgba(0, 0, 0, 0.12)",
-        "0 6px 8px rgba(0, 0, 0, 0.12)",
-        "0 8px 16px rgba(0, 0, 0, 0.12)")};
-
-  .card-details {
-    padding: 0 10px;
-    margin: 16px 0;
-
-    h3 {
-      margin-bottom: 5px;
-    }
-    p {
-      font-size: 13px;
-    }
-    a {
-      display: inline-block;
-      padding: 10px 0;
-      color: #0067b8;
-      text-transform: uppercase;
-      font-weight: 700;
-    }
-  }
-
-  .camera {
-    position: absolute;
-    bottom: 15%;
-    right: 25%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-    background: ${({ theme }) => theme.primary};
-    border-radius: 50%;
-    height: 25px;
-    width: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2px;
-    cursor: pointer;
-
-    &:hover {
-      background: ${({ theme }) => theme.blue};
-    }
-
-    &:focus,
-    &:active {
-      background: darken(${({ theme }) => theme.primary}, 12%);
-      outline: none;
-      border: none;
-    }
-  }
-`;
-
 export const DSection = styled.section`
   height: ${(props) => (props.height ? props.height : "400px")};
   width: ${(props) => (props.width ? props.width : "100%")};
@@ -403,6 +194,7 @@ export const Content = styled.div`
     "0 8px 16px rgba(0, 0, 0, 0.12)")};
   z-index: 2;
   font-weight: ${(props) => props.weight && props.weight};
+  overflow: visible;
 
   h2 {
     text-transform: uppercase;
@@ -437,6 +229,136 @@ export const Content = styled.div`
   }
 `;
 
+export const Overlay = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: ${(props) =>
+    props.bg
+      ? props.bg
+      : props.bgr
+      ? "linear-gradient(270deg, rgba(0,0,0,0.4) 8%, rgba(255,255,255,0) 100%)"
+      : props.bgl
+      ? "linear-gradient(90deg, rgba(0,0,0,0.4) 8%, rgba(255,255,255,0) 100%)"
+      : props.bgc
+      ? "rgba(0,0,0,0.4)"
+      : "rgba(0, 0, 0, 0)"};
+  border-radius: inherit;
+  z-index: 1;
+  display: ${(props) => props.flex && "flex"};
+  justify-content: ${(props) => props.justify && props.justify};
+  align-items: ${(props) => props.align && props.align};
+  flex-flow: ${(props) => props.flow && props.flow};
+  flex-direction: ${(props) => props.direct && props.direct};
+  padding: ${(props) => props.pad && props.pad};
+  cursor: ${(props) => props.pointer && "pointer"};
+  opacity: ${(props) => props.opac && props.opac};
+  transition: opacity 0.6s ease;
+  overflow: hidden;
+
+  &:hover {
+    opacity: ${(props) => props.hovOpac && props.hovOpac};
+  }
+
+  .overlay-box {
+    width: ${(props) => (props.initbox ? "110%" : "0")};
+    height: 110%;
+    border: 1px solid white;
+    margin: 0 auto;
+    transform: rotate(45deg);
+    transform-origin: center;
+    transition: width 0.4s ease-in-out;
+
+    .overlay-box__content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100%;
+      width: 85%;
+      text-align: center;
+      margin: auto;
+      transform: rotate(-45deg);
+
+      .title {
+        text-transform: uppercase;
+        margin: 1px auto;
+      }
+      p {
+        height: auto;
+        font-size: 11px;
+      }
+
+      .title,
+      p {
+        border: 1px solid #fff;
+      }
+    }
+  }
+
+  &:hover .overlay-box {
+    width: 100%;
+  }
+
+  &:hover .overlay-box .overlay-box__content {
+    h1 {
+      transform: translateY(20px);
+    }
+  }
+
+  .overlay-content {
+    width: ${(props) => (props.cwidth ? props.cwidth : "80%")};
+    text-align: ${(props) => (props.talign ? props.talign : "left")};
+    height: auto;
+    margin: ${(props) => (props.cmarg ? props.cmarg : "0 24px")};
+    padding: 10px 40px;
+
+    h1,
+    h2,
+    p {
+      letter-spacing: 5px;
+      line-height: 1.4;
+    }
+
+    h3,
+    h4,
+    .ps {
+      letter-spacing: 1px;
+      line-height: 1.4;
+    }
+    .ps {
+      font-size: 10px;
+    }
+
+    h1 {
+      font-size: ${(props) => (props.fs ? props.fs : "60px")};
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .overlay-content {
+      min-width: 90%;
+      h1 {
+        font-size: 32px;
+      }
+      h1,
+      p {
+        letter-spacing: 2px;
+        line-height: 2;
+      }
+    }
+  }
+
+  @media (max-width: 500px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
 export const DImage = styled.div`
   height: ${(props) => (props.height ? props.height : "300px")};
   width: ${(props) => (props.width ? props.width : "auto")};
@@ -459,7 +381,129 @@ export const DImage = styled.div`
     height: 100%;
     width: 100%;
     object-fit: cover;
+    ${(props) =>
+      props.grayscaling &&
+      css`
+        filter: grayscale(100%);
+        transition: all 0.6s ease-in-out;
+      `}
   }
+`;
+
+export const DCard = styled.div`
+  position: relative;
+  border-radius: 10px;
+  padding: ${(props) => (props.p ? props.p : "10px")};
+  height: ${(props) => (props.dh ? props.dh : "300px")};
+  width: ${(props) => (props.dw ? props.dw : "250px")};
+  cursor: ${(props) => props.pointer && "pointer"};
+  display: ${(props) => props.flex && "flex"};
+  margin: ${(props) => (props.mcenter ? "0 auto" : props.margin)};
+  justify-content: ${(props) =>
+    props.justifyCenter
+      ? "center"
+      : props.justifyAround
+      ? "space-around"
+      : props.justifyBetween
+      ? "space-between"
+      : props.jusitfyFend
+      ? "flex-end"
+      : "flex-start"};
+
+  align-items: ${(props) =>
+    props.alignCenter
+      ? "center"
+      : props.alignAround
+      ? "space-around"
+      : props.alignBetween
+      ? "space-between"
+      : props.alignFend
+      ? "flex-end"
+      : "flex-start"};
+  flex-direction: ${(props) => props.fcol && "column"};
+
+  overflow: hidden;
+  background: ${(props) => (props.bg ? props.bg : "#ffffff")};
+  box-shadow: ${(props) =>
+    props.bs
+      ? props.bs
+      : ("0 1px 1px rgba(0, 0, 0, 0.12)",
+        "0 2px 2px rgba(0, 0, 0, 0.12)",
+        "0 4px 4px rgba(0, 0, 0, 0.12)",
+        "0 6px 8px rgba(0, 0, 0, 0.12)",
+        "0 8px 16px rgba(0, 0, 0, 0.12)")};
+
+  .card-details {
+    padding: 0 10px;
+    margin: 16px 0;
+
+    h3 {
+      margin-bottom: 5px;
+    }
+    p {
+      font-size: 13px;
+    }
+  }
+
+  a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+  }
+
+  .camera {
+    position: absolute;
+    bottom: 15%;
+    right: 25%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    background: ${({ theme }) => theme.primary};
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    cursor: pointer;
+
+    &:hover {
+      background: ${({ theme }) => theme.blue};
+    }
+
+    &:focus,
+    &:active {
+      background: darken(${({ theme }) => theme.primary}, 12%);
+      outline: none;
+      border: none;
+    }
+  }
+  ${(props) =>
+    props.grayzoom &&
+    css`
+      &:hover {
+        ${DImage} {
+          img {
+            filter: grayscale(0);
+            transform: scale(1.2);
+          }
+        }
+      }
+    `}
+
+  ${(props) =>
+    props.overlaying &&
+    css`
+      &:hover {
+        ${Overlay} {
+          opacity: 0;
+          pointer-events: none;
+        }
+      }
+    `}
 `;
 
 export const DFooterLinks = styled.section`

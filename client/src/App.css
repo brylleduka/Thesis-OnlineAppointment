@@ -106,10 +106,20 @@ ul {
 .jodit_toolbar_btn-table,
 .jodit_toolbar_btn-copyformat,
 .jodit_toolbar_btn-source,
-.jodit_toolbar_btn-separator,
-.jodit_statusbar {
+.jodit_toolbar_btn-separator {
   display: none;
 }
+/* .jodit_toolbar_list .jodit_toolbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  overflow: visible;
+  height: 500px;
+}
+.jodit_toolbar_list .jodit_toolbar li {
+  margin: 2px;
+} */
 
 .rdt_Table {
   height: auto !important;
@@ -159,6 +169,22 @@ ul {
   );
 }
 /* END CUSTOM MODAL */
+
+/* EDITOR */
+.editorck {
+  display: none;
+  height: 100%;
+  max-height: 250px;
+  min-height: 200px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.editorck.active {
+  display: block;
+}
 
 /* MEDIA QUERY */
 

@@ -4,11 +4,19 @@ import { FETCH_ALL_CATEGORIES_QUERY } from "../../util/graphql/service";
 
 import { Link } from "react-router-dom";
 import Layout from "../../components/admin/layout/Layout";
-import { Content, DGrid, DSection } from "../../components/styled/containers";
+import {
+  Content,
+  DGrid,
+  DSection,
+  DCard,
+  Overlay,
+  DImage,
+} from "../../components/styled/containers";
 import { JCard } from "../../components/styled/card";
 import NewCategory from "../../components/admin/services/NewCategory";
 import { DButton } from "../../components/styled/utils";
 import Spinner from "../../components/Spinner";
+import ReadMore from "../../components/main/utils/ReadMore";
 import parser from "html-react-parser";
 
 const Categories = () => {
@@ -57,21 +65,50 @@ const Categories = () => {
           ) : (
             <DGrid three gap="15px" margin="40px 0">
               {categories.map((category) => (
-                <JCard>
-                  <img
-                    src={
-                      category.photo !== null
-                        ? `/images/service/${category.photo}`
-                        : "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample108.jpg"
-                    }
-                    alt={category.name}
-                  />
-                  <figcaption>
-                    <h3>{parser(category.name)}</h3>
-                    <p>{parser(category.description)}</p>
-                  </figcaption>
+                <DCard
+                  dw={"90%"}
+                  dh="250px"
+                  mcenter
+                  p="0px"
+                  grayzoom
+                  overlaying
+                >
+                  <DImage height="100%" width="100%" grayscaling>
+                    <img
+                      src={
+                        category.photo
+                          ? `/images/service/${category.photo}`
+                          : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                      }
+                      alt={category.name}
+                    />
+                  </DImage>
+
+                  <Overlay
+                    bgc
+                    width="100%"
+                    height="100%"
+                    flex
+                    justify="center"
+                    align="center"
+                    initbox
+                  >
+                    <div className="overlay-box">
+                      <div className="overlay-box__content dark">
+                        <h3 className="title">{category.name}</h3>
+                        <p>
+                          {category.description.length > 80
+                            ? parser(category.description.substr(0, 80) + "...")
+                            : parser(category.description.substr(0, 80))}
+                        </p>
+                        <ReadMore center size="14px">
+                          Learn More
+                        </ReadMore>
+                      </div>
+                    </div>
+                  </Overlay>
                   <Link to={`/zeadmin/category/${category._id}`} />
-                </JCard>
+                </DCard>
               ))}
             </DGrid>
           )}
