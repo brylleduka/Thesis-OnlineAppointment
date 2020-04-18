@@ -1,13 +1,14 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { DotsVerticalRounded } from "@styled-icons/boxicons-regular/DotsVerticalRounded";
-import { DotsHorizontal } from "@styled-icons/boxicons-regular/DotsHorizontal";
 import { IconWrap } from "./styled/utils";
 import { Popup } from "semantic-ui-react";
 
 const MenuStyledDots = styled.div`
   position: absolute;
-  z-index: 2;
+  width: auto;
+  height: auto;
+  z-index: 5;
   ${(props) =>
     props.middle &&
     css`

@@ -26,10 +26,10 @@ const AccountContentOne = ({ handleAppointments, handleDetails, userInfo }) => {
       {
         query: FETCH_USER_ACCOUNT,
         variables: {
-          userId: userInfo._id
-        }
-      }
-    ]
+          userId: userInfo._id,
+        },
+      },
+    ],
   });
 
   const onDrop = useCallback(

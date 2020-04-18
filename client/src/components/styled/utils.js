@@ -161,7 +161,7 @@ export const DButton = styled.button`
     props.flex &&
     css`
       display: flex;
-      justify-content: center;
+      justify-content: space-around;
       align-items: center;
     `};
 `;
@@ -495,6 +495,18 @@ export const IconWrap = styled.div`
           background: #ccc;
         `}
     }
+
+    ${(props) =>
+      props.bottomcenter &&
+      css`
+        z-index: 20;
+        position: absolute;
+        bottom: 2%;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.6);
+      `};
   }
 `;
 

@@ -1,34 +1,36 @@
-import React, { useState, useEffect, useCallback } from "react";
-import gql from "graphql-tag";
-import { useDropzone } from "react-dropzone";
-import { useQuery, useMutation } from "@apollo/react-hooks";
-
-import {
-  FETCH_EMPLOYEE_QUERY,
-  FETCH_ALL_EMPLOYEES_QUERY
-} from "../../util/graphql/employee";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useQuery } from "@apollo/react-hooks";
+import { Breadcrumb } from "semantic-ui-react";
+import { FETCH_EMPLOYEE_QUERY } from "../../util/graphql/employee";
 import Layout from "../../components/admin/layout/Layout";
-import {
-  DGrid,
-  DSection,
-  Content,
-  Overlay
-} from "../../components/styled/containers";
-import EmployeeDetails from "../../components/admin/employees/EmployeeDetails";
-import EmployeeServices from "../../components/admin/employees/EmployeeServices";
-import Skeleton from "../../components/Skeleton";
+import { DGrid, DSection, Content } from "../../components/styled/containers";
 import Spinner from "../../components/Spinner";
+import useWindowSize from "../../util/hooks/useWindowSize";
+import PhotoBooth from "../../components/admin/employees/PhotoBooth";
+import Info from "../../components/admin/employees/Info";
 
-const Employee = props => {
+const Employee = (props) => {
   const employeeId = props.match.params._id;
+  const { width: wid } = useWindowSize();
   const [employee, setEmployee] = useState({});
+
+  //Storing switch key to localstorage
+  const stored = localStorage.getItem("empInfo");
+  const [isEmpInfo, setIsEmpInfo] = useState(
+    stored === "emp_details"
+      ? "emp_details"
+      : stored === "emp_sched"
+      ? "emp_sched"
+      : "emp_details"
+  );
 
   const { data: employeeData, loading: employeeLoading } = useQuery(
     FETCH_EMPLOYEE_QUERY,
     {
       variables: {
-        employeeId
-      }
+        employeeId,
+      },
     }
   );
 
@@ -38,24 +40,68 @@ const Employee = props => {
     }
   }, [employeeData]);
 
-  // DROPZONE
-  const [addEmployeePhoto, { loading }] = useMutation(UPLOAD_EMPLOYEE_PHOTO, {
-    refetchQueries: [{ query: FETCH_ALL_EMPLOYEES_QUERY }]
-  });
-
-  const onDrop = useCallback(
-    ([file]) => {
-      addEmployeePhoto({ variables: { employeeId, file } });
-    },
-    [addEmployeePhoto]
-  );
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const handleDetails = () => {
+    setIsEmpInfo("emp_details");
+    localStorage.setItem("empInfo", "emp_details");
+  };
+  const handleSchedule = () => {
+    setIsEmpInfo("emp_sched");
+    localStorage.setItem("empInfo", "emp_sched");
+  };
 
   return (
     <Layout>
-      {employeeLoading ? (
-        <Skeleton />
+      <DSection
+        width="90%"
+        height="100%"
+        mcenter
+        flex
+        justify="space-around"
+        align="center"
+        direct="column"
+      >
+        {employeeLoading ? (
+          <Spinner content="Please wait while we fetch our data..." />
+        ) : (
+          <>
+            <Content
+              flex
+              justify="space-between"
+              align="center"
+              width="100%"
+              margin="24px auto"
+            >
+              <Breadcrumb size={"huge"}>
+                <Breadcrumb.Section as={Link} to="/zeadmin/employees">
+                  Employee
+                </Breadcrumb.Section>
+                <Breadcrumb.Divider>/</Breadcrumb.Divider>
+                <Breadcrumb.Section
+                  active
+                >{`${employee.firstName} ${employee.lastName}'s Info`}</Breadcrumb.Section>
+              </Breadcrumb>
+            </Content>
+            <Content width="100%" height="100%" margin="24px auto">
+              <DGrid
+                custom="1fr 3fr"
+                med10="2fr 4fr"
+                med7="2fr 4fr"
+                gap={wid < 768 ? "10px" : "20px"}
+              >
+                <PhotoBooth
+                  employee={employee}
+                  employeeId={employeeId}
+                  handleDetails={handleDetails}
+                  handleSchedule={handleSchedule}
+                />
+                <Info isEmpInfo={isEmpInfo} employee={employee} />
+              </DGrid>
+            </Content>
+          </>
+        )}
+      </DSection>
+      {/* {employeeLoading ? (
+        <Spinner content="Please wait while we fetch our data..." />
       ) : (
         <DGrid gap="15px" margin="40px 0">
           <DSection
@@ -118,15 +164,9 @@ const Employee = props => {
           </DSection>
           <EmployeeDetails employee={employeeData.employee} />
         </DGrid>
-      )}
+      )} */}
     </Layout>
   );
 };
-
-const UPLOAD_EMPLOYEE_PHOTO = gql`
-  mutation addEmployeePhoto($employeeId: ID!, $file: Upload) {
-    addEmployeePhoto(_id: $employeeId, file: $file)
-  }
-`;
 
 export default Employee;

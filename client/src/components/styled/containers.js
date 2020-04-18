@@ -375,17 +375,18 @@ export const DImage = styled.div`
   margin: ${(props) => (props.m ? props.m : "0 auto")};
   padding: ${(props) => props.pad && props.pad};
   cursor: pointer;
+
   img {
     display: inline;
     margin: 0 auto;
     height: 100%;
     width: 100%;
     object-fit: cover;
+    transition: all 0.6s ease-in-out;
     ${(props) =>
       props.grayscaling &&
       css`
         filter: grayscale(100%);
-        transition: all 0.6s ease-in-out;
       `}
   }
 `;

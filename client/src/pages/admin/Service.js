@@ -19,12 +19,10 @@ import { IconWrap } from "../../components/styled/utils";
 import { Camera } from "@styled-icons/boxicons-solid/Camera";
 import Spinner from "../../components/Spinner";
 import Carousel, { Modal, ModalGateway } from "react-images";
-import DCamera from "../../components/DCamera";
 import ServiceDetails from "../../components/admin/services/ServiceDetails";
 import useWindowSize from "../../util/hooks/useWindowSize";
 import toaster from "toasted-notes";
 import Toasted from "../../components/Toasted";
-import { Link } from "react-router-dom";
 
 const Service = (props) => {
   const serviceId = props.match.params._id;
@@ -58,6 +56,13 @@ const Service = (props) => {
   // DROPZONE
   const [addServicePhoto, { loading }] = useMutation(UPLOAD_SERVICE_PHOTO, {
     refetchQueries: [{ query: FETCH_ALL_SERVICES_QUERY }],
+    onCompleted() {
+      toaster.notify(({ onClose }) => (
+        <Toasted success onClick={onClose}>
+          Image Uploaded
+        </Toasted>
+      ));
+    },
   });
 
   const onDrop = useCallback(
@@ -132,6 +137,7 @@ const Service = (props) => {
                     dh="250px"
                     mcenter
                     p="0px"
+                    grayzoom
                   >
                     {loading ? (
                       <Spinner content="Loading..." medium />
@@ -148,15 +154,17 @@ const Service = (props) => {
                         />
                       </DImage>
                     )}
+                    <IconWrap
+                      {...getRootProps()}
+                      bg={({ theme }) => theme.bluer}
+                      circle
+                      bottomcenter
+                    >
+                      <Camera size="22px" title="Upload" />
+                      <input {...getInputProps()} />
+                    </IconWrap>
                   </DCard>
-                  <IconWrap
-                    {...getRootProps()}
-                    bg={({ theme }) => theme.bluer}
-                    circle
-                  >
-                    <Camera size="22px" title="Upload" />
-                    <input {...getInputProps()} />
-                  </IconWrap>
+
                   <ModalGateway>
                     {viewerIsOpen ? (
                       <Modal onClose={closeLightbox}>

@@ -139,6 +139,7 @@ const Category = (props) => {
                     dh="250px"
                     mcenter
                     p="0px"
+                    grayzoom
                   >
                     {loading ? (
                       <Spinner content="Loading..." medium />
@@ -155,15 +156,16 @@ const Category = (props) => {
                         />
                       </DImage>
                     )}
+                    <IconWrap
+                      {...getRootProps()}
+                      bg={({ theme }) => theme.bluer}
+                      circle
+                      bottomcenter
+                    >
+                      <Camera size="22px" title="Upload" />
+                      <input {...getInputProps()} />
+                    </IconWrap>
                   </DCard>
-                  <IconWrap
-                    {...getRootProps()}
-                    bg={({ theme }) => theme.bluer}
-                    circle
-                  >
-                    <Camera size="22px" title="Upload" />
-                    <input {...getInputProps()} />
-                  </IconWrap>
 
                   <ModalGateway>
                     {viewerIsOpen ? (

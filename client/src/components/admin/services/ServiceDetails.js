@@ -20,10 +20,6 @@ import Spinner from "../../../components/Spinner";
 import DTextArea from "../../../components/DTextArea";
 import parser from "html-react-parser";
 
-// const config = {
-//   removePlugins: ["Table", "ImageUpload", "ImageTextAlternative", "MediaEmbed"],
-// };
-
 const ServiceDetails = ({ service, serviceHistoryCallback }) => {
   const [open, setOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -49,6 +45,7 @@ const ServiceDetails = ({ service, serviceHistoryCallback }) => {
     },
 
     onCompleted() {
+      setIsEdit(false);
       toaster.notify(({ onClose }) => (
         <Toasted success onClick={onClose}>
           Service Updated

@@ -71,7 +71,7 @@ const ServiceList = ({ categoryId }) => {
       selector: "description",
       wrap: true,
       format: (row) => {
-        const length = 20;
+        const length = 50;
         const descript = row.description;
 
         const trimString =
