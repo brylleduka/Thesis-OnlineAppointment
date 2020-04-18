@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_SERVICES_QUERY } from "../../../util/graphql/service";
 import { Link } from "react-router-dom";
-import { DSection, Content } from "../../styled/containers";
-import { DButton, DLabel } from "../../styled/utils";
+import { Content } from "../../styled/containers";
+import { DButton, DLabel, IconWrap } from "../../styled/utils";
 import DataTable from "react-data-table-component";
 import { Eye } from "styled-icons/fa-regular/Eye";
 import { Grid } from "@styled-icons/boxicons-solid/Grid";
@@ -32,7 +32,11 @@ const ServiceList = ({ categoryId }) => {
 
   const columns = [
     {
-      cell: () => <Grid size="22px" color="green" />,
+      cell: () => (
+        <IconWrap color={({ theme }) => theme.bluer}>
+          <Grid size="22px" />
+        </IconWrap>
+      ),
       width: "56px",
       style: {
         borderBottom: "1px solid #fff",
@@ -90,13 +94,13 @@ const ServiceList = ({ categoryId }) => {
     },
     {
       name: "Actions",
-      wrap: true,
       cell: (row) => (
-        <DButton fluid as={Link} to={`/zeadmin/service/${row._id}`}>
-          <Eye size="22px" />
+        <DButton flex width="56px" size="36px">
+          <Link to={`/zeadmin/service/${row._id}`} className="flex-center">
+            <Eye size="22px" title="View Service Information" />
+          </Link>
         </DButton>
       ),
-      width: "100px",
     },
   ];
 
@@ -126,20 +130,6 @@ const ServiceList = ({ categoryId }) => {
       },
     },
   };
-
-  const title = (
-    <DLabel
-      size="22px"
-      bgcolor="#6dd5ed"
-      tt="uppercase"
-      weight="700"
-      pad="10px 25px"
-      color="#fff"
-      rounded
-    >
-      Service List
-    </DLabel>
-  );
 
   const paginationRowsPerPageOptions = [5, 10, 15, 20];
   return (

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import gql from "graphql-tag";
 import Layout from "../../components/admin/layout/Layout";
 import DataTable from "react-data-table-component";
 import { FETCH_INQUIRIES } from "../../util/graphql/inquiry";
-import { useQuery, useMutation } from "@apollo/react-hooks";
-import { DButton, DLabel } from "../../components/styled/utils";
-import { DSection, Content } from "../../components/styled/containers";
+import { useQuery } from "@apollo/react-hooks";
+import { DButton } from "../../components/styled/utils";
+import { DSection } from "../../components/styled/containers";
 import { Popup, Icon, Breadcrumb } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { Grid } from "@styled-icons/boxicons-solid/Grid";
+import { Eye } from "styled-icons/fa-regular/Eye";
 import Spinner from "../../components/Spinner";
 import ReplyModal from "../../components/admin/inquiry/ReplyModal";
 import moment from "moment";
@@ -74,8 +74,8 @@ const Inquiry = () => {
       cell: (row) => (
         <Popup
           trigger={
-            <DButton value={row._id} onClick={handleRow}>
-              <Icon name="eye" fitted />
+            <DButton flex value={row._id} onClick={handleRow}>
+              <Eye size="18px" />
             </DButton>
           }
           mouseEnterDelay={500}

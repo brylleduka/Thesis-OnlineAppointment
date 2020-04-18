@@ -3,7 +3,7 @@ import { useQuery, useLazyQuery } from "@apollo/react-hooks";
 import {
   FETCH_ALL_CATEGORIES_QUERY,
   FETCH_SERVICES_QUERY,
-  FETCH_SINGLE_SERVICE_QUERY
+  FETCH_SINGLE_SERVICE_QUERY,
 } from "../../../util/graphql/service";
 import { Form } from "semantic-ui-react";
 import { Content } from "../../styled/containers";
@@ -14,23 +14,23 @@ const NewAppointmentInput = ({
   serviceValue,
   setServiceValue,
   employeeVal,
-  setEmployeeVal
+  setEmployeeVal,
 }) => {
   //CATEGORY
   const {
     loading: loading_categories,
     data: data_categories,
-    error
+    error,
   } = useQuery(FETCH_ALL_CATEGORIES_QUERY);
 
   //SERVICE
   const [
     loadService,
-    { called, loading: loading_services, data: data_services }
+    { called, loading: loading_services, data: data_services },
   ] = useLazyQuery(FETCH_SERVICES_QUERY, {
     variables: {
-      categoryId: categoryVal
-    }
+      categoryId: categoryVal,
+    },
   });
 
   //EMPLOYEE
@@ -39,29 +39,29 @@ const NewAppointmentInput = ({
     {
       called: calledServiceEmp,
       loading: loading_serviceEmp,
-      data: data_serviceEmp
-    }
+      data: data_serviceEmp,
+    },
   ] = useLazyQuery(FETCH_SINGLE_SERVICE_QUERY, {
     variables: {
-      serviceId: serviceValue
-    }
+      serviceId: serviceValue,
+    },
   });
 
   //Handle Changes
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     e.preventDefault();
     setCategoryVal(e.target.value);
     loadService();
   };
 
-  const handleServiceChange = e => {
+  const handleServiceChange = (e) => {
     e.preventDefault();
     setServiceValue(e.target.value);
     loadServiceEmp();
   };
 
-  const handleEmployeeChange = e => {
+  const handleEmployeeChange = (e) => {
     e.preventDefault();
     setEmployeeVal(e.target.value);
   };
@@ -94,7 +94,7 @@ const NewAppointmentInput = ({
             >
               <option></option>
               {data_categories.categories &&
-                data_categories.categories.map(category => (
+                data_categories.categories.map((category) => (
                   <option value={category._id} key={category._id}>
                     {category.name}
                   </option>
@@ -121,12 +121,12 @@ const NewAppointmentInput = ({
                 position: "relative",
                 outline: "0",
                 visibility: "visible",
-                textAlign: "left"
+                textAlign: "left",
               }}
             >
               <option></option>
               {data_services &&
-                data_services.services.map(service => (
+                data_services.services.map((service) => (
                   <option key={service._id} value={service._id}>
                     {service.name}
                   </option>
@@ -146,11 +146,10 @@ const NewAppointmentInput = ({
               name="employee"
               value={employeeVal}
               onChange={handleEmployeeChange}
-              className="ui fluid dropdown"
             >
               <option></option>
               {data_serviceEmp &&
-                data_serviceEmp.service.employees.map(servEmp => (
+                data_serviceEmp.service.employees.map((servEmp) => (
                   <option key={servEmp._id} value={servEmp._id}>
                     {servEmp.firstName}
                   </option>

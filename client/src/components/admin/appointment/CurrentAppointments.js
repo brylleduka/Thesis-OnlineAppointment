@@ -76,13 +76,7 @@ const CurrentAppointments = () => {
       name: "Actions",
 
       cell: (row) => (
-        <DButton
-          basic
-          green
-          confirm
-          as={Link}
-          to={`/zeadmin/appointment/${row._id}`}
-        >
+        <DButton as={Link} to={`/zeadmin/appointment/${row._id}`} flex>
           <Eye size="22px" />
         </DButton>
       ),

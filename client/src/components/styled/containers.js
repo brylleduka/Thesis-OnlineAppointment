@@ -294,7 +294,7 @@ export const Overlay = styled.div`
 
       .title,
       p {
-        border: 1px solid #fff;
+        letter-spacing: 2px;
       }
     }
   }

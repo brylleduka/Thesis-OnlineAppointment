@@ -427,13 +427,21 @@ const AppointmentDetails = (props) => {
                   direct="column"
                   margin="0 auto"
                 >
-                  <DButton confirm fluid onClick={() => setOpenDone(true)}>
+                  <DButton
+                    confirm
+                    fluid="true"
+                    onClick={() => setOpenDone(true)}
+                  >
                     <Icon name="calendar check" /> Confirm
                   </DButton>
-                  <DButton fluid>
+                  <DButton fluid="true">
                     <Icon name="calendar alternate" /> Rebook
                   </DButton>
-                  <DButton alert fluid onClick={() => setOpenCancel(true)}>
+                  <DButton
+                    alert
+                    fluid="true"
+                    onClick={() => setOpenCancel(true)}
+                  >
                     <Icon name="delete calendar" /> Cancel
                   </DButton>
                 </Content>

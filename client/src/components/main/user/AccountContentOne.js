@@ -76,10 +76,10 @@ const AccountContentOne = ({ handleAppointments, handleDetails, userInfo }) => {
           </ModalGateway>
         </DCard>
         <DCard dh="100%" flex fcol justifyBetween>
-          <DButton onClick={handleDetails} fluid>
+          <DButton onClick={handleDetails} fluid="true">
             Account Details
           </DButton>
-          <DButton onClick={handleAppointments} fluid>
+          <DButton onClick={handleAppointments} fluid="true">
             Appointments
           </DButton>
         </DCard>

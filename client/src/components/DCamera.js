@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import { Camera } from "@styled-icons/boxicons-solid/Camera";
 

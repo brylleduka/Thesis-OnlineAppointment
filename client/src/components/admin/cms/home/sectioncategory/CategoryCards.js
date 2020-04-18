@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_ALL_CATEGORIES_QUERY } from "../../../../../util/graphql/service";
-import { DGrid, Content } from "../../../../styled/containers";
-import { JCard } from "../../../../styled/card";
+import {
+  DGrid,
+  Content,
+  Overlay,
+  DImage,
+  DCard,
+} from "../../../../styled/containers";
+import useWindowSize from "../../../../../util/hooks/useWindowSize";
+import ReadMore from "../../../../ReadMore";
 import Skeleton from "react-loading-skeleton";
 import parser from "html-react-parser";
 
 const CategoryCards = ({ gridCount }) => {
+  const { width: wid } = useWindowSize();
   const [isCategories, setIsCategories] = useState([]);
   const { data, loading } = useQuery(FETCH_ALL_CATEGORIES_QUERY);
 
@@ -31,31 +39,51 @@ const CategoryCards = ({ gridCount }) => {
           four={gridCount === 4 ? true : false}
           gap="20px"
         >
-          {isCategories.map(category => (
-            <JCard
-              titleSize="24px"
-              height="calc(100% - 30%)"
+          {isCategories.map((category) => (
+            <DCard
               key={category._id}
+              dw={wid < 524 ? "70%" : "90%"}
+              dh="250px"
+              mcenter
+              p="0px"
+              grayzoom
+              overlaying
             >
-              <img
-                src={
-                  category.photo !== null
-                    ? `/images/service/${category.photo}`
-                    : "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample108.jpg"
-                }
-                alt={category.name}
-              />
-              <figcaption>
-                <h3>{parser(category.name)}</h3>
-                <div className="description">
-                  <p>
-                    {category.description.length > 50
-                      ? parser(category.description.substr(0, 50) + "...")
-                      : parser(category.description.substr(0, 50))}
-                  </p>
+              <DImage height="100%" width="100%" grayscaling>
+                <img
+                  src={
+                    category.photo
+                      ? `/images/service/${category.photo}`
+                      : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                  }
+                  alt={category.name}
+                />
+              </DImage>
+
+              <Overlay
+                bgc
+                width="100%"
+                height="100%"
+                flex
+                justify="center"
+                align="center"
+                initbox
+              >
+                <div className="overlay-box">
+                  <div className="overlay-box__content dark">
+                    <h3 className="title">{category.name}</h3>
+
+                    {category.description.length > 100
+                      ? parser(category.description.substr(0, 100) + "...")
+                      : parser(category.description.substr(0, 100))}
+
+                    <ReadMore center size="14px">
+                      Learn More
+                    </ReadMore>
+                  </div>
                 </div>
-              </figcaption>
-            </JCard>
+              </Overlay>
+            </DCard>
           ))}
         </DGrid>
       )}

@@ -118,7 +118,7 @@ const AppointmentInputs = ({
               name="category"
               value={values.category}
               onChange={handleChange}
-              className="ui fluid dropdown input-custom"
+              className="input-custom"
             >
               <option value="" disabled>
                 Select Categories...
@@ -157,7 +157,7 @@ const AppointmentInputs = ({
                   visibility: "visible",
                   textAlign: "left",
                 }}
-                className="ui fluid dropdown input-custom"
+                className="input-custom"
               >
                 <option value="" disabled>
                   Select Services...
@@ -185,7 +185,7 @@ const AppointmentInputs = ({
                 name="employee"
                 value={employeeVal}
                 onChange={handleEmployeeChange}
-                className="ui fluid dropdown input-custom"
+                className="input-custom"
               >
                 <option value="" disabled>
                   Select Aesthetician...

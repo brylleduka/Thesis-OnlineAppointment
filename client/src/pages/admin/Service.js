@@ -14,9 +14,9 @@ import {
   Content,
   DCard,
   DImage,
-  Overlay,
 } from "../../components/styled/containers";
-import ReadMore from "../../components/main/utils/ReadMore";
+import { IconWrap } from "../../components/styled/utils";
+import { Camera } from "@styled-icons/boxicons-solid/Camera";
 import Spinner from "../../components/Spinner";
 import Carousel, { Modal, ModalGateway } from "react-images";
 import DCamera from "../../components/DCamera";
@@ -67,7 +67,7 @@ const Service = (props) => {
     [addServicePhoto]
   );
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   const serviceHistoryCallback = () => {
     const pus = props.history.replace(
@@ -132,13 +132,11 @@ const Service = (props) => {
                     dh="250px"
                     mcenter
                     p="0px"
-                    grayzoom
-                    overlaying
                   >
                     {loading ? (
                       <Spinner content="Loading..." medium />
                     ) : (
-                      <DImage height="100%" width="100%" grayscaling>
+                      <DImage height="100%" width="100%">
                         <img
                           src={
                             service.photo
@@ -150,33 +148,15 @@ const Service = (props) => {
                         />
                       </DImage>
                     )}
-                    <Overlay
-                      bgc
-                      width="100%"
-                      height="100%"
-                      flex
-                      justify="center"
-                      align="center"
-                      initbox
-                    >
-                      <div className="overlay-box">
-                        <div className="overlay-box__content dark">
-                          <h3 className="title">{service.name}</h3>
-
-                          <p>
-                            Lorem ipsum dolor sit, amet consectetur adipisicing
-                            elit. Dolor voluptates inventore labore deserunt fa
-                          </p>
-                          <ReadMore center size="14px">
-                            Learn More
-                          </ReadMore>
-                        </div>
-                      </div>
-                    </Overlay>
                   </DCard>
-                  <DCamera {...getRootProps()} color="green" size="22px">
+                  <IconWrap
+                    {...getRootProps()}
+                    bg={({ theme }) => theme.bluer}
+                    circle
+                  >
+                    <Camera size="22px" title="Upload" />
                     <input {...getInputProps()} />
-                  </DCamera>
+                  </IconWrap>
                   <ModalGateway>
                     {viewerIsOpen ? (
                       <Modal onClose={closeLightbox}>

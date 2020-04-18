@@ -1,10 +1,13 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { useForm } from "../../../util/hooks/useForm";
-import { Form, Label } from "semantic-ui-react";
-import JoditEditor from "jodit-react";
-import { DButton, DLabel } from "../../../components/styled/utils";
+import { Form, Label, Popup, Grid } from "semantic-ui-react";
+import CKEditor from "@ckeditor/ckeditor5-react";
+import DecoupledEditor from "@ckeditor/ckeditor5-build-decoupled-document";
+import { DButton, DLabel, IconWrap } from "../../../components/styled/utils";
+import MenuDots from "../../../components/MenuDots";
+import { Edit, Trash } from "@styled-icons/boxicons-solid";
 import toaster from "toasted-notes";
 import Toasted from "../../../components/Toasted";
 import {
@@ -13,15 +16,18 @@ import {
   Content,
 } from "../../../components/styled/containers";
 import ServiceConfirmDelete from "./ServiceConfirmDelete";
+import Spinner from "../../../components/Spinner";
+import DTextArea from "../../../components/DTextArea";
+import parser from "html-react-parser";
 
-const config = {
-  readonly: false,
-};
+// const config = {
+//   removePlugins: ["Table", "ImageUpload", "ImageTextAlternative", "MediaEmbed"],
+// };
 
 const ServiceDetails = ({ service, serviceHistoryCallback }) => {
   const [open, setOpen] = useState(false);
-  const [errors, setErrors] = useState({});
-  const editor = useRef(null);
+  const [isEdit, setIsEdit] = useState(false);
+  // const [errors, setErrors] = useState({});
   const [content, setContent] = useState(service.description);
 
   const { values, handleChange, handleSubmit } = useForm(
@@ -41,9 +47,7 @@ const ServiceDetails = ({ service, serviceHistoryCallback }) => {
       duration: parseInt(values.duration),
       description: content,
     },
-    onError(err) {
-      setErrors(err.graphQLErrors[0].extensions.exception.errors);
-    },
+
     onCompleted() {
       toaster.notify(({ onClose }) => (
         <Toasted success onClick={onClose}>
@@ -57,70 +61,169 @@ const ServiceDetails = ({ service, serviceHistoryCallback }) => {
     updateService();
   }
 
-  console.log(errors);
+  const handleEdit = () => {
+    setIsEdit(true);
+  };
 
   return (
     <>
       <DSection pad="20px 0" height="100%">
+        <MenuDots topright medium>
+          <Grid divided columns={2}>
+            <Grid.Column>
+              <DButton confirm onClick={handleEdit} flex>
+                <IconWrap mcenter>
+                  <Edit size="22px" title="Update Content" />
+                </IconWrap>
+              </DButton>
+            </Grid.Column>
+            <Grid.Column>
+              <DButton alert flex onClick={() => setOpen(true)}>
+                <IconWrap mcenter>
+                  <Trash size="22px" title="Archive or Permanently Delete" />
+                </IconWrap>
+              </DButton>
+            </Grid.Column>
+          </Grid>
+        </MenuDots>
+
         <DGrid gap="10px">
           <Content width="100%">
             <Form noValidate>
               <Form.Field inline>
                 <Label style={styles.label}>Title</Label>
-                <input
-                  name="title"
-                  value={values.title}
-                  onChange={handleChange}
-                  style={{ width: "60%" }}
-                />
+                {isEdit ? (
+                  <input
+                    name="title"
+                    value={values.title}
+                    onChange={handleChange}
+                    style={{ width: "60%" }}
+                  />
+                ) : (
+                  <DLabel
+                    flex
+                    justifyEnd
+                    alignCenter
+                    weight={700}
+                    w={"50%"}
+                    size="22px"
+                  >
+                    {values.title}
+                  </DLabel>
+                )}
               </Form.Field>
               <Form.Field inline>
                 <Label style={styles.label}>Duration</Label>
-                <DLabel>{values.duration} min</DLabel>
-                <select
-                  name="duration"
-                  value={values.duration}
-                  onChange={handleChange}
-                >
-                  {/* <option></option> */}
-                  <option value="30">30 mins</option>
-                  <option value="45">45 mins</option>
-                  <option value="60">60 mins</option>
-                  <option value="90">90 mins</option>
-                  <option value="120">120 mins</option>
-                  <option value="180">180 mins</option>
-                  <option value="210">210 mins</option>
-                </select>
+                {isEdit ? (
+                  <select
+                    name="duration"
+                    value={values.duration}
+                    onChange={handleChange}
+                  >
+                    {/* <option></option> */}
+                    <option value="30">30 mins</option>
+                    <option value="45">45 mins</option>
+                    <option value="60">60 mins</option>
+                    <option value="90">90 mins</option>
+                    <option value="120">120 mins</option>
+                    <option value="180">180 mins</option>
+                    <option value="210">210 mins</option>
+                  </select>
+                ) : (
+                  <DLabel
+                    flex
+                    justifyEnd
+                    alignCenter
+                    weight={700}
+                    w={"50%"}
+                    size="22px"
+                  >
+                    {values.duration} min
+                  </DLabel>
+                )}
               </Form.Field>
               <Form.Field inline>
                 <Label style={styles.label}>Price</Label>
-                <input
-                  name="price"
-                  value={values.price}
-                  onChange={handleChange}
-                  style={{ width: "60%" }}
-                />
+                {isEdit ? (
+                  <input
+                    name="price"
+                    value={values.price}
+                    onChange={handleChange}
+                    style={{ width: "60%" }}
+                  />
+                ) : (
+                  <DLabel
+                    flex
+                    justifyEnd
+                    alignCenter
+                    weight={700}
+                    w={"50%"}
+                    size="22px"
+                  >
+                    Php {values.price}
+                  </DLabel>
+                )}
               </Form.Field>
             </Form>
           </Content>
-          <Content width="100%">
-            <JoditEditor
-              ref={editor}
-              value={content}
-              config={config}
-              tabIndex={1} // tabIndex of textarea
-              onBlur={(newContent) => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
-              // onChange={newContent => {}}
-            />
+          <Content
+            width="100%"
+            height="100%"
+            flex
+            justify="flex-start"
+            align="flex-start"
+            direct="column"
+            margin="12px auto"
+          >
+            <Label style={styles.label}>Description</Label>
+
+            <Content
+              width="90%"
+              height="auto"
+              flex
+              justify="flex-start"
+              align="center"
+              pad="3px 15px"
+              margin="0 auto"
+            >
+              <DTextArea par active={isEdit ? true : null}>
+                <CKEditor
+                  onInit={(editor) => {
+                    // Insert the toolbar before the editable area.
+                    editor.ui
+                      .getEditableElement()
+                      .parentElement.insertBefore(
+                        editor.ui.view.toolbar.element,
+                        editor.ui.getEditableElement()
+                      );
+                  }}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    setContent(data);
+                  }}
+                  editor={DecoupledEditor}
+                  data={content}
+                />
+              </DTextArea>
+              <DTextArea active={!isEdit ? true : null}>
+                {parser(content)}
+              </DTextArea>
+            </Content>
           </Content>
-          <Content width="100%" flex justify="flex-end">
-            <DButton confirm onClick={handleSubmit}>
-              {loading ? "Loading..." : "Save"}
-            </DButton>
-            <DButton alert onClick={() => setOpen(true)}>
-              Delete
-            </DButton>
-          </Content>
+          {isEdit && (
+            <Content width="100%" flex justify="flex-end">
+              <DButton confirm onClick={handleSubmit}>
+                {loading ? (
+                  <Spinner row small inverted content="Loading..." />
+                ) : (
+                  "Save"
+                )}
+              </DButton>
+              <DButton alert onClick={() => setIsEdit(false)}>
+                Cancel
+              </DButton>
+            </Content>
+          )}
         </DGrid>
       </DSection>
 

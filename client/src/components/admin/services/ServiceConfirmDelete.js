@@ -10,33 +10,33 @@ const ServiceConfirmDelete = ({
   open,
   setOpen,
   service,
-  serviceHistoryCallback
+  serviceHistoryCallback,
 }) => {
   const [deleteService] = useMutation(DELETE_SERVICE_MUTATION, {
     update(cache) {
       const data = cache.readQuery({
         query: FETCH_SERVICES_QUERY,
         variables: {
-          categoryId: service.category._id
-        }
+          categoryId: service.category._id,
+        },
       });
 
-      data.services = data.services.filter(serv => serv._id !== service._id);
+      data.services = data.services.filter((serv) => serv._id !== service._id);
 
       cache.writeQuery({
         query: FETCH_SERVICES_QUERY,
         variables: {
-          categoryId: service.category._id
+          categoryId: service.category._id,
         },
-        data: { services: [...data.services] }
+        data: { services: [...data.services] },
       });
     },
     onCompleted(data) {
       serviceHistoryCallback();
     },
     variables: {
-      serviceId: service._id
-    }
+      serviceId: service._id,
+    },
   });
 
   const handleDeleteService = () => {

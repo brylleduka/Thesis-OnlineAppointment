@@ -19,8 +19,18 @@ body {
 /* END SCROLL STYLE */
 
 a {
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+
   color: #262626;
   text-decoration: none;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 ul {
   list-style: none;
@@ -173,14 +183,16 @@ ul {
 /* EDITOR */
 .editorck {
   display: none;
-  height: 100%;
+  height: auto;
+  min-height: 50px;
   max-height: 250px;
-  min-height: 200px;
   width: 100%;
   margin: 0 auto;
   position: relative;
   overflow-y: auto;
   overflow-x: hidden;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 .editorck.active {
   display: block;

@@ -14,15 +14,17 @@ import {
   DCard,
   DImage,
 } from "../../components/styled/containers";
+import { IconWrap } from "../../components/styled/utils";
+import { Camera } from "@styled-icons/boxicons-solid/Camera";
 import CategoryDetails from "../../components/admin/services/CategoryDetails";
 import ServiceList from "../../components/admin/services/ServiceList";
 import { Breadcrumb } from "semantic-ui-react";
 import Spinner from "../../components/Spinner";
 import Carousel, { Modal, ModalGateway } from "react-images";
-import DCamera from "../../components/DCamera";
 import useWindowSize from "../../util/hooks/useWindowSize";
 import toaster from "toasted-notes";
 import Toasted from "../../components/Toasted";
+import Page404 from "../Page404";
 
 const Category = (props) => {
   const categoryId = props.match.params._id;
@@ -31,7 +33,7 @@ const Category = (props) => {
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
   const { width: wid } = useWindowSize();
 
-  const { data, loading: dataLoading } = useQuery(FETCH_CATEGORY_QUERY, {
+  const { data, loading: dataLoading, error } = useQuery(FETCH_CATEGORY_QUERY, {
     variables: {
       categoryId,
     },
@@ -84,6 +86,10 @@ const Category = (props) => {
   const historyCallback = () => {
     props.history.push("/zeadmin/categories");
   };
+
+  if (error) {
+    return <Page404 />;
+  }
 
   return (
     <Layout>
@@ -150,9 +156,15 @@ const Category = (props) => {
                       </DImage>
                     )}
                   </DCard>
-                  <DCamera {...getRootProps()} color="green" size="22px">
+                  <IconWrap
+                    {...getRootProps()}
+                    bg={({ theme }) => theme.bluer}
+                    circle
+                  >
+                    <Camera size="22px" title="Upload" />
                     <input {...getInputProps()} />
-                  </DCamera>
+                  </IconWrap>
+
                   <ModalGateway>
                     {viewerIsOpen ? (
                       <Modal onClose={closeLightbox}>
@@ -179,94 +191,6 @@ const Category = (props) => {
           </>
         )}
       </DSection>
-
-      {/* {dataLoading ? (
-        <>
-          <Spinner content="Please wait while we fetch our data" />
-        </>
-      ) : (
-        <>
-          <DGrid>
-            <DSection
-              flex
-              mcenter
-              justify="space-around"
-              align="center"
-              direct="column"
-              pad="24px 0"
-              width="90%"
-              height="100%"
-            >
-              <h2>{data.category.name}</h2>
-              <DGrid
-                custom="450px 1fr"
-                gap="10px"
-                style={{
-                  borderBottom: "1px solid #ccc",
-                  paddingBottom: "20px",
-                }}
-              >
-                <Content
-                  height="100%"
-                  width="100%"
-                  flex
-                  justify="center"
-                  align="center"
-                  imgHeight="350px"
-                  {...getRootProps()}
-                >
-                  <input {...getInputProps()} />
-                  {isDragActive ? (
-                    <Overlay
-                      flex
-                      justify="center"
-                      align="center"
-                      bg="rgba(0, 0, 0, 0.6)"
-                    >
-                      <h3>Drop Image</h3>
-                    </Overlay>
-                  ) : (
-                    <>
-                      {loading ? (
-                        <Spinner medium inverted />
-                      ) : (
-                        <img
-                          src={
-                            data.category.photo !== null
-                              ? `/images/service/${data.category.photo}`
-                              : // `/images/${photo}`
-                                "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                          }
-                          alt="Category"
-                        />
-                      )}
-
-                      <Overlay
-                        opac="0"
-                        hovOpac="1"
-                        pointer
-                        className="dark"
-                        flex
-                        justify="center"
-                        align="center"
-                        bg="rgba(0, 0, 0, 0.6)"
-                      >
-                        <h2>Click or Drop an Image</h2>
-                      </Overlay>
-                    </>
-                  )}
-                </Content>
-
-                <CategoryDetails
-                  category={data.category}
-                  historyCallback={historyCallback}
-                />
-              </DGrid>
-            </DSection>
-            <ServiceList categoryId={data.category._id} />
-          </DGrid>
-        </>
-      )} */}
     </Layout>
   );
 };

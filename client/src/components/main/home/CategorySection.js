@@ -3,14 +3,22 @@ import { useQuery } from "@apollo/react-hooks";
 import { FETCH_ALL_CATEGORIES_QUERY } from "../../../util/graphql/service";
 import { FETCH_HOME_SECTION } from "../../../util/graphql/cms";
 import { Link } from "react-router-dom";
-import { DGrid, DSection, Content } from "../../styled/containers";
-import { JCard } from "../../styled/card";
+import {
+  DGrid,
+  DSection,
+  Content,
+  Overlay,
+  DCard,
+  DImage,
+} from "../../styled/containers";
 import FancyText from "../../FancyText";
 import Skeleton from "react-loading-skeleton";
 import parser from "html-react-parser";
 import ReadMore from "../utils/ReadMore";
+import useWindowSize from "../../../util/hooks/useWindowSize";
 
 const CategorySection = ({ setRef }) => {
+  const { width: wid } = useWindowSize();
   const [isCategories, setIsCategories] = useState([]);
   const [categorySection, setCategorySection] = useState({});
 
@@ -90,28 +98,51 @@ const CategorySection = ({ setRef }) => {
               gap="20px"
             >
               {isCategories.map((category) => (
-                <JCard key={category._id}>
-                  <img
-                    src={
-                      category.photo !== null
-                        ? `/images/service/${category.photo}`
-                        : "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample108.jpg"
-                    }
-                    alt={category.name}
-                  />
-                  <figcaption>
-                    <h3>{parser(category.name)}</h3>
-                    <div className="description">
-                      <p>
-                        {category.description.length > 50
-                          ? parser(category.description.substr(0, 50) + "...")
-                          : parser(category.description.substr(0, 50))}
-                      </p>
-                      <ReadMore hover={0}>View Services</ReadMore>
+                <DCard
+                  key={category._id}
+                  dw={wid < 524 ? "70%" : "90%"}
+                  dh="250px"
+                  mcenter
+                  p="0px"
+                  grayzoom
+                  overlaying
+                >
+                  <DImage height="100%" width="100%" grayscaling>
+                    <img
+                      src={
+                        category.photo
+                          ? `/images/service/${category.photo}`
+                          : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                      }
+                      alt={category.name}
+                    />
+                  </DImage>
+
+                  <Overlay
+                    bgc
+                    width="100%"
+                    height="100%"
+                    flex
+                    justify="center"
+                    align="center"
+                    initbox
+                  >
+                    <div className="overlay-box">
+                      <div className="overlay-box__content dark">
+                        <h3 className="title">{category.name}</h3>
+
+                        {category.description.length > 100
+                          ? parser(category.description.substr(0, 100) + "...")
+                          : parser(category.description.substr(0, 100))}
+
+                        <ReadMore center size="14px">
+                          Learn More
+                        </ReadMore>
+                      </div>
                     </div>
-                  </figcaption>
-                  <Link to={`/service/${category._id}`}></Link>
-                </JCard>
+                  </Overlay>
+                  <Link to={`/zeadmin/category/${category._id}`} />
+                </DCard>
               ))}
             </DGrid>
           )}

@@ -18,8 +18,10 @@ import { DButton } from "../../components/styled/utils";
 import Spinner from "../../components/Spinner";
 import ReadMore from "../../components/main/utils/ReadMore";
 import parser from "html-react-parser";
+import useWindowSize from "../../util/hooks/useWindowSize";
 
 const Categories = () => {
+  const { width: wid } = useWindowSize();
   const [open, setOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const { loading, data, error } = useQuery(FETCH_ALL_CATEGORIES_QUERY);
@@ -66,7 +68,8 @@ const Categories = () => {
             <DGrid three gap="15px" margin="40px 0">
               {categories.map((category) => (
                 <DCard
-                  dw={"90%"}
+                  key={category._id}
+                  dw={wid < 524 ? "70%" : "90%"}
                   dh="250px"
                   mcenter
                   p="0px"
@@ -96,11 +99,11 @@ const Categories = () => {
                     <div className="overlay-box">
                       <div className="overlay-box__content dark">
                         <h3 className="title">{category.name}</h3>
-                        <p>
-                          {category.description.length > 80
-                            ? parser(category.description.substr(0, 80) + "...")
-                            : parser(category.description.substr(0, 80))}
-                        </p>
+
+                        {category.description.length > 100
+                          ? parser(category.description.substr(0, 100) + "...")
+                          : parser(category.description.substr(0, 100))}
+
                         <ReadMore center size="14px">
                           Learn More
                         </ReadMore>

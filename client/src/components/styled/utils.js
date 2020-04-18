@@ -1,8 +1,7 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 import { Icon } from "semantic-ui-react";
-
 import { DotsVerticalRounded } from "@styled-icons/boxicons-regular/DotsVerticalRounded";
-
+import { StyledIconBase } from "@styled-icons/styled-icon";
 import { Link } from "react-router-dom";
 
 const ripple = keyframes`
@@ -26,7 +25,7 @@ export const DButton = styled.button`
   width: ${(props) =>
     props.fluid ? "100%" : props.width ? props.width : "auto"};
   display: inline-block;
-  padding: ${(props) => (props.pad ? props.pad : "4px 8px")};
+  padding: ${(props) => (props.pad ? props.pad : "4px 10px")};
   line-height: 1.42857143;
   margin: ${(props) => (props.center ? "1.5% auto" : "1.5%")};
   text-align: center;
@@ -157,6 +156,14 @@ export const DButton = styled.button`
     color: #fff;
     &:hover: #fff
   }
+
+  ${(props) =>
+    props.flex &&
+    css`
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    `};
 `;
 
 export const DButtonFree = styled(DButton)`
@@ -394,9 +401,15 @@ export const ReadMore = styled.p`
       content: "\f061";
       font-family: FontAwesome;
       ${(props) =>
-        props.hover === 0
-          ? "margin-left: 5px;opacity: 1;"
-          : "margin-left: -10px; opacity: 0;"};
+        props.hover
+          ? css`
+              margin-left: -10px;
+              opacity: 0;
+            `
+          : css`
+              margin-left: 5px;
+              opacity: 1;
+            `};
       vertical-align: middle;
       transition: margin 0.3s, opacity 0.3s;
     }
@@ -419,6 +432,70 @@ export const ScrollUp = styled(Icon)`
   height: 50%;
   transform: translate(-50%, -50%);
   display: block;
+`;
+
+export const IconCustom = styled(Icon)`
+  cursor: pointer;
+  opacity: 0.8;
+  transition: all 0.5s ease;
+  margin: 2%;
+  &:hover {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+`;
+
+export const IconWrap = styled.div`
+  ${StyledIconBase} {
+    color: ${(props) => (props.color ? props.color : "#fff")};
+    cursor: pointer;
+    opacity: 0.8;
+    transition: all 0.5s ease;
+    margin: ${(props) =>
+      props.mcenter ? "0 auto" : props.margin ? props.margin : "5px"};
+    outline: none;
+    padding: 3px;
+
+    ${(props) =>
+      props.small
+        ? css`
+            width: 25px;
+            height: 25px;
+          `
+        : props.medium
+        ? css`
+            width: 30px;
+            height: 30px;
+          `
+        : props.large
+        ? css`
+            width: 36px;
+            height: 36px;
+          `
+        : css`
+            width: 25px;
+            height: 25px;
+          `};
+
+    background: ${(props) => props.bg && props.bg};
+    ${(props) =>
+      props.circle &&
+      css`
+        border-radius: 100%;
+      `};
+
+    &:hover {
+      opacity: 1;
+      transform: scale(1.1);
+
+      ${(props) =>
+        props.menu &&
+        css`
+          border-radius: 100%;
+          background: #ccc;
+        `}
+    }
+  }
 `;
 
 export const DotsVertical = styled(DotsVerticalRounded)`

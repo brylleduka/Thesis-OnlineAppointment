@@ -93,7 +93,7 @@ const SigninForm = ({ hist, from }) => {
             onChange={handleChange}
           />
         </Form.Field>
-        <DButton type="submit" fluid size="3rem" fSize="18px" text="uppercase">
+        <DButton type="submit" fluid="true" size="3rem" fSize="18px" text="uppercase">
           {loading ? (
             <Dimmer active style={{ background: "transparent" }}>
               <Loader />
