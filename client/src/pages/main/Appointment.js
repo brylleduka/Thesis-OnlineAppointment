@@ -7,7 +7,7 @@ import {
   DSection,
   Content,
   DGrid,
-  Overlay
+  Overlay,
 } from "../../components/styled/containers";
 import { DButton } from "../../components/styled/utils";
 import Confirmation from "../../components/main/appointment/Confirmation";
@@ -18,7 +18,7 @@ const Appointment = () => {
   const [open, setOpen] = useState(false);
 
   const [values, setValues] = useState({
-    category: ""
+    category: "",
   });
   const [serviceValue, setServiceValue] = useState("");
   const [employeeVal, setEmployeeVal] = useState("");
@@ -44,32 +44,32 @@ const Appointment = () => {
       </DSection>
       <DSection width="100%" height="100%">
         <DGrid two>
-            <DSection
-              width="100%"
+          <DSection
+            width="100%"
+            flex
+            justify="center"
+            align="center"
+            background={
+              "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            }
+            height="100vh"
+          >
+            <Overlay
+              hovOpac="1"
+              opac="0"
+              bg={"rgba(0,0,0,0.7)"}
               flex
               justify="center"
               align="center"
-              background={
-                "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-              }
-              height="100vh"
             >
-              <Overlay
-                hovOpac="1"
-                opac="0"
-                bg={"rgba(0,0,0,0.7)"}
-                flex
-                justify="center"
-                align="center"
-              >
-                <div className="overlay-box">
-                  <div className="overlay-box__content dark">
-                    <h1>Advertisement</h1>
-                  </div>
+              <div className="overlay-box">
+                <div className="overlay-box__content dark">
+                  <h1>Advertisement</h1>
                 </div>
-              </Overlay>
-            </DSection>
-        
+              </div>
+            </Overlay>
+          </DSection>
+
           <DGrid>
             <AppointmentInputs
               values={values}
@@ -88,6 +88,7 @@ const Appointment = () => {
                   startDate={startDate}
                   employeeVal={employeeVal}
                   serviceValue={serviceValue}
+                  calendarSize={"calendar_large"}
                 />
                 <Content width="100%" flex justify="center" align="center">
                   <DButton

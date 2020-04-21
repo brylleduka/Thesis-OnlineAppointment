@@ -27,6 +27,7 @@ const AppointDate = ({
   startDate,
   employeeVal,
   serviceValue,
+  calendarSize,
 }) => {
   let days = [];
   let times = [];
@@ -117,6 +118,11 @@ const AppointDate = ({
           selected={startDate}
           minDate={new Date().setDate(new Date().getDate() + 1)}
           onChange={handleDateChanged}
+          peekNextMonth
+          showMonthDropdown
+          showYearDropdown
+          dropdownMode="select"
+          calendarClassName={calendarSize}
           inline
         />
       </Content>

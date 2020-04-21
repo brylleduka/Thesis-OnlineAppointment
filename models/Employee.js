@@ -7,49 +7,56 @@ const employeeSchema = new Schema(
   {
     empId: {
       type: String,
-      required: true
+      required: true,
     },
     title: {
       type: String,
-      required: true
+      required: true,
     },
     firstName: {
       type: String,
-      required: true
+      required: true,
     },
     lastName: {
       type: String,
-      required: true
+      required: true,
     },
     contact: String,
     email: {
       type: String,
-      required: true
+      required: true,
     },
     photo: String,
     bio: String,
-    role: String,
     dateOfBirth: Date,
+    certificates: [
+      {
+        title: String,
+        description: String,
+        photo: String,
+      },
+    ],
+    role: String,
     level: Number,
     password: {
       type: String,
-      required: true
+      required: true,
     },
     services: [
       {
         type: Schema.Types.ObjectId,
         ref: "Service",
-        autopopulate: true
-      }
+        autopopulate: true,
+      },
     ],
     schedule: {
       type: Schema.Types.ObjectId,
       ref: "Schedule",
-      autopopulate: true
-    }
+      autopopulate: true,
+    },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

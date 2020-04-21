@@ -3,8 +3,11 @@ const Schedule = require("../models/Schedule");
 const Service = require("../models/Service");
 const { UserInputError, ForbiddenError } = require("apollo-server-express");
 const Auth = require("../utils/check-auth");
-const { validateEmployeeLoginInput } = require("../utils/validators");
-const { createWriteStream, createReadStream } = require("fs");
+const {
+  validateEmployeeLoginInput,
+  validateEmployeePersonal,
+} = require("../utils/validators");
+const { createWriteStream } = require("fs");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const path = require("path");
@@ -23,7 +26,7 @@ module.exports = {
     employeesByRole: async (_, { role }) => {
       try {
         const employeesRole = await Employee.find({ role }).sort({
-          createdAt: -1
+          createdAt: -1,
         });
 
         return employeesRole;
@@ -34,10 +37,10 @@ module.exports = {
     aestheticiansReceps: async (_, { limit }) => {
       try {
         const employeesAesthe = await Employee.find({
-          role: { $ne: "ADMIN" }
+          role: { $ne: "ADMIN" },
         })
           .sort({
-            createdAt: -1
+            createdAt: -1,
           })
           .limit(limit ? limit : 0);
 
@@ -54,7 +57,7 @@ module.exports = {
       } catch (err) {
         throw err;
       }
-    }
+    },
   },
   Mutation: {
     employeeLogin: async (_, { empId, password }) => {
@@ -84,7 +87,7 @@ module.exports = {
 
           process.env.REFRESH_SECRET_KEY,
           {
-            expiresIn: "1d"
+            expiresIn: "1d",
           }
         );
 
@@ -97,7 +100,7 @@ module.exports = {
       _,
       {
         employeeInput: { title, firstName, lastName, contact, email, role },
-        scheduleInput: { day, workStart, workLength, breakStart, breakLength }
+        scheduleInput: { day, workStart, workLength, breakStart, breakLength },
       },
       context
     ) => {
@@ -125,7 +128,7 @@ module.exports = {
           workStart,
           workLength,
           breakStart,
-          breakLength
+          breakLength,
         });
 
         await newSchedule.save();
@@ -143,7 +146,7 @@ module.exports = {
           role,
           level,
           password: hashedPassword,
-          schedule: newSchedule
+          schedule: newSchedule,
         });
 
         const result = await newEmployee.save();
@@ -156,7 +159,7 @@ module.exports = {
     addEmployeePhoto: async (_, { _id, file }) => {
       try {
         const { createReadStream, filename } = await file;
-        await new Promise(res =>
+        await new Promise((res) =>
           createReadStream().pipe(
             createWriteStream(
               path.join(__dirname, "../images/employees", filename)
@@ -193,7 +196,7 @@ module.exports = {
         breakStart,
         breakLength,
         password,
-        oldpassword
+        oldpassword,
       },
       context
     ) => {
@@ -229,12 +232,15 @@ module.exports = {
         if (email) {
           updateEmployee.email = email;
         }
-        if (bio) {
-          updateEmployee.bio = bio;
-        }
+        //bio
+        updateEmployee.bio = bio;
 
         if (role) {
           updateEmployee.role = role;
+        }
+
+        if (dateOfBirth) {
+          updateEmployee.dateOfBirth = new Date(dateOfBirth).toISOString();
         }
 
         if (day) {
@@ -253,10 +259,6 @@ module.exports = {
 
         if (breakLength) {
           updateSchedule.breakLength = breakLength;
-        }
-
-        if (dateOfBirth) {
-          updateEmployee.dateOfBirth = new Date(dateOfBirth).toISOString();
         }
 
         if (password && oldpassword) {
@@ -287,16 +289,70 @@ module.exports = {
         await Schedule.updateOne(
           { _id: scheduleId._id },
 
-          updateSchedule
+          updateSchedule,
+          {
+            new: true,
+          }
         );
 
-     
-
         const updated = await Employee.findByIdAndUpdate(_id, updateEmployee, {
-          new: true
+          new: true,
         });
 
         return updated;
+      } catch (err) {
+        throw err;
+      }
+    },
+    updatePersonalEmployee: async (
+      _,
+      { _id, title, firstName, lastName, contact, dateOfBirth, email, bio }
+    ) => {
+      try {
+        const regex = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
+        const regexNum = /^\d+$/;
+        const { errors, valid } = validateEmployeePersonal(
+          firstName,
+          lastName,
+          email
+        );
+
+        if (!valid) {
+          throw new UserInputError("Employee Input Error", { errors });
+        }
+
+        if (!regexNum.test(contact)) {
+          errors.contactX = "Contact Number must contain only numbers";
+          throw new UserInputError("Contact Number Error", { errors });
+        } else {
+          if (contact.length !== 11) {
+            errors.contactNum = "Contact number must be 11 digits";
+            throw new UserInputError("Contact Length Error", { errors });
+          }
+        }
+
+        if (!email.match(regex)) {
+          errors.emailX = "Email must be a valid  email address";
+          throw new UserInputError("Email Error", { errors });
+        }
+
+        const updatePersonal = await Employee.findOneAndUpdate(
+          { _id },
+          {
+            $set: {
+              title,
+              firstName,
+              lastName,
+              contact,
+              dateOfBirth,
+              email,
+              bio,
+            },
+          },
+          { new: true }
+        );
+
+        return updatePersonal;
       } catch (err) {
         throw err;
       }
@@ -356,6 +412,6 @@ module.exports = {
       } catch (err) {
         throw err;
       }
-    }
-  }
+    },
+  },
 };

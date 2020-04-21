@@ -386,6 +386,7 @@ const typeDefs = gql`
 
     updateEmployee(
       _id: ID!
+      empId: String
       title: String
       firstName: String
       lastName: String
@@ -401,6 +402,24 @@ const typeDefs = gql`
       workLength: Int
       breakStart: String
       breakLength: Int
+    ): Employee
+
+    updatePersonalEmployee(
+      _id: ID!
+      title: String
+      firstName: String
+      lastName: String
+      contact: String
+      email: String
+      bio: String
+      dateOfBirth: String
+    ): Employee
+
+    updateAccountEmployee(_id: ID!, empId: String, role: String): Employee
+    updateSecurityEmployee(
+      _id: ID!
+      password: String
+      oldpassword: String
     ): Employee
 
     addEmployeePhoto(_id: ID!, file: Upload): Boolean

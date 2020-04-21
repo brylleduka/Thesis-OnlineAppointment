@@ -19,10 +19,6 @@ body {
 /* END SCROLL STYLE */
 
 a {
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-
   color: #262626;
   text-decoration: none;
 }
@@ -90,6 +86,8 @@ ul {
   margin-right: 10px;
 }
 
+/* INPUT */
+
 .input-custom {
   width: 100%;
   height: 38px;
@@ -104,56 +102,21 @@ ul {
   letter-spacing: "1px";
 }
 
+select {
+  padding: 3px 5px;
+  width: auto;
+  height: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 5px;
+  outline: none;
+}
+
 /* Accordion */
 
 .navlink-active {
   background: #2980b9;
   color: white;
 }
-
-.jodit_toolbar_btn-image,
-.jodit_toolbar_btn-fullsize,
-.jodit_toolbar_btn-table,
-.jodit_toolbar_btn-copyformat,
-.jodit_toolbar_btn-source,
-.jodit_toolbar_btn-separator {
-  display: none;
-}
-/* .jodit_toolbar_list .jodit_toolbar {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-direction: column;
-  overflow: visible;
-  height: 500px;
-}
-.jodit_toolbar_list .jodit_toolbar li {
-  margin: 2px;
-} */
-
-.rdt_Table {
-  height: auto !important;
-}
-/* CAROUSEL */
-.swiper-pagination-bullet {
-  background-color: white !important;
-  border: none !important;
-  outline: none !important;
-}
-.swiper-button-next,
-.swiper-button-prev {
-  color: white !important;
-  opacity: 0.7;
-}
-.swiper-button-next:hover,
-.swiper-button-prev:hover {
-  opacity: 1;
-}
-.swiper-button-next:after,
-.swiper-button-prev:after {
-  font-size: 22px !important;
-}
-/* END CAROUSEL */
 
 /* CUSTOM MODAL */
 .modal-content2 {
@@ -180,23 +143,23 @@ ul {
 }
 /* END CUSTOM MODAL */
 
-/* EDITOR */
-.editorck {
-  display: none;
-  height: auto;
-  min-height: 50px;
-  max-height: 250px;
-  width: 100%;
-  margin: 0 auto;
-  position: relative;
-  overflow-y: auto;
-  overflow-x: hidden;
-  border: 1px solid #ccc;
+/* CALENDAR */
+
+.datepicker {
+  padding: 10px;
+  width: auto;
+  height: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.4);
   border-radius: 5px;
+  outline: none;
 }
-.editorck.active {
-  display: block;
+.calendar_large .react-datepicker__day-name,
+.calendar_large .react-datepicker__day,
+.calendar_large .react-datepicker__time-name {
+  width: 3rem !important;
+  line-height: 3rem !important;
 }
+/* END CALENDAR */
 
 /* MEDIA QUERY */
 

@@ -8,7 +8,7 @@ const { createWriteStream } = require("fs");
 const path = require("path");
 const {
   validateUserCreateInput,
-  validateUserLoginInput
+  validateUserLoginInput,
 } = require("../utils/validators");
 
 module.exports = {
@@ -26,7 +26,7 @@ module.exports = {
       const getUser = await User.findById(_id);
 
       return getUser;
-    }
+    },
   },
   Mutation: {
     register: async (
@@ -60,7 +60,7 @@ module.exports = {
           firstName,
           lastName,
           email,
-          password: hashedPassword
+          password: hashedPassword,
         });
 
         const result = await newUser.save();
@@ -94,7 +94,7 @@ module.exports = {
 
           process.env.REFRESH_SECRET_KEY,
           {
-            expiresIn: "1d"
+            expiresIn: "1d",
           }
         );
 
@@ -113,7 +113,7 @@ module.exports = {
         email,
         dateOfBirth,
         password,
-        oldpassword
+        oldpassword,
       }
     ) => {
       try {
@@ -155,7 +155,7 @@ module.exports = {
         }
 
         const updated = await User.findByIdAndUpdate(_id, updateUser, {
-          new: true
+          new: true,
         });
 
         return updated;
@@ -166,7 +166,7 @@ module.exports = {
     addUserPhoto: async (_, { _id, file }) => {
       try {
         const { createReadStream, filename } = await file;
-        await new Promise(res =>
+        await new Promise((res) =>
           createReadStream().pipe(
             createWriteStream(
               path.join(__dirname, "../images/users", filename)
@@ -180,6 +180,6 @@ module.exports = {
       } catch (err) {
         throw err;
       }
-    }
-  }
+    },
+  },
 };

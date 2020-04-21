@@ -95,7 +95,6 @@ const CategoryDetails = ({ category, historyCallback }) => {
             align="flex-start"
             direct="column"
             margin="12px auto"
-            style={{ overflow: "visible !important" }}
           >
             <Label style={styles.label}>Title</Label>
             {isEdit ? (
@@ -155,7 +154,7 @@ const CategoryDetails = ({ category, historyCallback }) => {
               pad="3px 15px"
               margin="0 auto"
             >
-              <DTextArea par active={isEdit ? true : null}>
+              <DTextArea active={isEdit ? true : null}>
                 <CKEditor
                   onInit={(editor) => {
                     // Insert the toolbar before the editable area.
@@ -184,7 +183,7 @@ const CategoryDetails = ({ category, historyCallback }) => {
             <Content flex justify="flex-end" align="center" width="100%">
               <DButton type="submit" onClick={handleSubmit}>
                 {loading ? (
-                  <Spinner small inverted content="Loading..." />
+                  <Spinner small row inverted content="Loading..." />
                 ) : (
                   "Save"
                 )}

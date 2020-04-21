@@ -175,7 +175,7 @@ const Service = (props) => {
                 </Content>
                 <Content width="100%" height="100%">
                   <DGrid gap="10px">
-                    <DCard dw="100%" dh="100%" p="10px 20px">
+                    <DCard dw="100%" dh="100%" p="10px 20px" overf>
                       <ServiceDetails
                         service={serviceData.service}
                         serviceHistoryCallback={serviceHistoryCallback}

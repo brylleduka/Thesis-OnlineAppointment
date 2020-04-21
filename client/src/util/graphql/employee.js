@@ -80,6 +80,7 @@ const FETCH_EMPLOYEE_QUERY = gql`
       photo
       role
       dateOfBirth
+      bio
       schedule {
         _id
         day
@@ -105,5 +106,5 @@ const FETCH_EMPLOYEE_QUERY = gql`
 export {
   FETCH_ALL_EMPLOYEES_QUERY,
   FETCH_EMPLOYEE_QUERY,
-  FETCH_EMPLOYEES_NOT_ADMIN_QUERY
+  FETCH_EMPLOYEES_NOT_ADMIN_QUERY,
 };

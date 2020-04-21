@@ -1,5 +1,5 @@
 const regex = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
-const regexNum = /^[-+]?[0-9]*(\.[0-9]+)$/;
+const regexNum = /^\d+$/;
 
 const validateUserCreateInput = (
   firstName,
@@ -92,7 +92,6 @@ const validateEmployeeInput = (
   empId,
   firstName,
   lastName,
-  contact,
   email,
   role,
   day,
@@ -101,7 +100,7 @@ const validateEmployeeInput = (
   breakStart,
   breakLength
 ) => {
-  const errors = {};
+  let errors = {};
 
   if (empId.trim() === "") {
     errors.empId = "Employee ID must not be empty";
@@ -123,6 +122,27 @@ const validateEmployeeInput = (
 
   if (role.trim() === "") {
     errors.role = "Role must not be selected";
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1,
+  };
+};
+
+//New Employee Validate
+const validateEmployeePersonal = (firstName, lastName, email) => {
+  let errors = {};
+
+  if (firstName.trim() === "") {
+    errors.firstName = "First Name must not be empty";
+  }
+  if (lastName.trim() === "") {
+    errors.lastName = "Last Name must not be empty";
+  }
+
+  if (email.trim() === "") {
+    errors.email = "Email must not be empty";
   }
 
   return {
@@ -157,5 +177,6 @@ module.exports = {
   validateUserLoginInput,
   validateEmployeeLoginInput,
   validateEmployeeInput,
+  validateEmployeePersonal,
   validateServiceInput,
 };

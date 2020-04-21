@@ -16,10 +16,10 @@ const PersonalModal = ({ personalOpen, setPersonalOpen, userInfo }) => {
   const [values, setValues] = useState({
     firstName: userInfo.firstName,
     lastName: userInfo.lastName,
-    contact: userInfo.contact
+    contact: userInfo.contact,
   });
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
@@ -41,11 +41,11 @@ const PersonalModal = ({ personalOpen, setPersonalOpen, userInfo }) => {
     variables: {
       userId: userInfo._id,
       dateOfBirth: startDate,
-      ...values
-    }
+      ...values,
+    },
   });
 
-  const handleDateChanged = date => {
+  const handleDateChanged = (date) => {
     setStartDate(date);
   };
 

@@ -40,6 +40,9 @@ export const DButton = styled.button`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+
+
+
   border-radius: ${(props) =>
     props.radius ? props.radius : props.circle ? "50%" : "5px"};
   border-width: ${(props) => (props.basic ? "1px" : "0")};
@@ -87,7 +90,12 @@ export const DButton = styled.button`
 
   ${(props) =>
     props.disabled &&
-    "background: #E9E4F0; color: #D3CCE3; &:hover:{opacity: 1}"}
+    css`
+      background: #e9e4f0;
+      color: #d3cce3;
+    `};
+
+
 
   font-weight: 700;
   outline: 0;
@@ -176,14 +184,15 @@ export const DButtonFree = styled(DButton)`
 
 // LABELS
 export const DLabel = styled.label`
+  position: relative;
   font-size: ${(props) => (props.size ? props.size : "12px")};
-  color: ${(props) => (props.color ? props.color : "#000")};
+  color: #000;
   letter-spacing: ${(props) => (props.ls ? props.ls : "1px")};
   font-weight: ${(props) => props.weight && props.weight};
   padding: ${(props) => (props.pad ? props.pad : "5px 10px")};
-  margin: ${(props) => (props.m ? props.m : "1%")};
+  margin: ${(props) => (props.m ? props.m : "2%")};
   background: ${(props) => props.bgcolor && props.bgcolor};
-  border-radius: ${(props) => props.rounded && "10px"};
+  border-radius: ${(props) => props.rounded && "5px"};
   text-transform: ${(props) => props.tt && props.tt};
   width: ${(props) => (props.w ? props.w : "auto")};
   display: ${(props) => props.flex && "flex"};
@@ -214,6 +223,31 @@ export const DLabel = styled.label`
     opacity: ${(props) => props.hover && "0.8"};
     cursor: ${(props) => props.hover && "pointer"};
   }
+
+  ${(props) =>
+    props.pointer &&
+    css`
+      color: #ffffff;
+      background: ${(props) =>
+        props.color ? props.color : ({ theme }) => theme.bluer};
+
+      &:before {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-width: 1px;
+        border-color: red red red transparent;
+        background: ${(props) =>
+          props.color ? props.color : ({ theme }) => theme.bluer};
+
+        top: 100%;
+        left: 50%;
+        margin-left: -4px;
+        content: "";
+        transform: rotate(45deg);
+        margin-top: -4px;
+      }
+    `};
 `;
 
 // ACCORDION
@@ -364,8 +398,12 @@ export const Toasted = styled.div`
     justify-content: center;
     align-items: center;
     color: #fff;
+    min-width: 200px;
+    max-width: 500px;
     width: 100%;
     height: 100%;
+    min-height: 50px;
+
     text-align: center;
     font-weight: 700;
     font-size: 14px;
@@ -455,6 +493,31 @@ export const IconWrap = styled.div`
       props.mcenter ? "0 auto" : props.margin ? props.margin : "5px"};
     outline: none;
     padding: 3px;
+    visibility: visible;
+    pointer-events: all;
+    transition: visibility 200ms, opacity 0.3s ease-in-out;
+
+    ${(props) =>
+      props.circle &&
+      css`
+        border-radius: 50%;
+      `};
+
+    ${(props) =>
+      props.shadow &&
+      css`
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.12),
+          0 4px 4px rgba(0, 0, 0, 0.12), 0 8px 8px rgba(0, 0, 0, 0.12),
+          0 16px 16px rgba(0, 0, 0, 0.12);
+      `};
+
+    ${(props) =>
+      props.invisible &&
+      css`
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+      `};
 
     ${(props) =>
       props.small
@@ -505,7 +568,16 @@ export const IconWrap = styled.div`
         left: 0;
         right: 0;
         margin: 0 auto;
-        box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.6);
+      `};
+
+    ${(props) =>
+      props.topright &&
+      css`
+        z-index: 20;
+        position: absolute;
+        top: 2%;
+        right: 0;
+        margin: 0 auto;
       `};
   }
 `;
@@ -528,5 +600,50 @@ export const DLink = styled(Link)`
     color: ${({ theme }) => theme.secondary} !important;
     border-bottom: ${(props) => props.borderb && "1px solid #232323"};
     border-bottom-color: ${({ theme }) => theme.secondary};
+  }
+`;
+
+export const DInput = styled.input`
+  padding: 10px;
+  width: auto;
+  height: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 5px;
+  outline: none;
+
+  ${(props) =>
+    props.error &&
+    css`
+      background: #fff6f6;
+      color: #ce9a99;
+      font-weight: 700;
+      border-color: #ce9a99;
+    `};
+
+  ${(props) =>
+    props.fluid &&
+    css`
+      width: 100%;
+    `};
+  &:focus {
+    box-shadow: 0 0 2px 1px ${({ theme }) => theme.primary};
+  }
+`;
+
+export const DSelect = styled.select`
+  padding: 10px;
+  width: auto;
+  height: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 5px;
+  outline: none;
+
+  ${(props) =>
+    props.fluid &&
+    css`
+      width: 100%;
+    `};
+  &:focus {
+    box-shadow: 0 0 2px 1px ${({ theme }) => theme.primary};
   }
 `;

@@ -9,11 +9,11 @@ const DTextAreaStyled = styled.div`
   width: 100%;
   margin: 0 auto;
   position: relative;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: visible;
   border: 1px solid rgba(189, 195, 199, 0.8);
   border-radius: 5px;
   padding: 5px;
+  color: ${(props) => (props.color ? props.color : ({ theme }) => theme.dark)};
 
   ${(props) =>
     props.par &&

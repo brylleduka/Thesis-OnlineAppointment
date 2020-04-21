@@ -183,7 +183,7 @@ const ServiceDetails = ({ service, serviceHistoryCallback }) => {
               pad="3px 15px"
               margin="0 auto"
             >
-              <DTextArea par active={isEdit ? true : null}>
+              <DTextArea active={isEdit ? true : null}>
                 <CKEditor
                   onInit={(editor) => {
                     // Insert the toolbar before the editable area.

@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 
 const keyring = keyframes`
   0% {
@@ -26,16 +26,16 @@ export const SpinnerRing = styled.div`
         : props.small
         ? "30px"
         : props.medium
-        ? "60px"
-        : "100px"};
+        ? "90px"
+        : "10em"};
     height: ${(props) =>
       props.tiny
         ? "15px"
         : props.small
         ? "30px"
         : props.medium
-        ? "60px"
-        : "100px"};
+        ? "90px"
+        : "12em"};
 
     div {
       box-sizing: border-box;
@@ -47,16 +47,16 @@ export const SpinnerRing = styled.div`
           : props.small
           ? "24px"
           : props.medium
-          ? "48px"
-          : "72px"};
+          ? "72px"
+          : "10em"};
       height: ${(props) =>
         props.tiny
           ? "12px"
           : props.small
           ? "24px"
           : props.medium
-          ? "48px"
-          : "72px"};
+          ? "72px"
+          : "10em"};
       margin: ${(props) =>
         props.tiny
           ? "2px"
@@ -72,14 +72,14 @@ export const SpinnerRing = styled.div`
           ? "2px solid #fff"
           : props.medium
           ? "3px solid #fff"
-          : "5px  solid #fff"};
+          : "4px  solid #fff"};
 
       border-radius: 50%;
-      animation: ${keyring} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+      animation: ${keyring} 1.2s infinite linear; //cubic-bezier(0.5, 0, 0.5, 1) infinite
       border-color: ${(props) =>
         props.inverted
-          ? "#fff transparent transparent transparent"
-          : "#203A43 transparent transparent transparent"};
+          ? "#fff rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.2)"
+          : "#203A43 rgba(32, 58, 67, 0.2) rgba(32, 58, 67, 0.2) rgba(32, 58, 67, 0.2)"};
     }
 
     div:nth-child(1) {

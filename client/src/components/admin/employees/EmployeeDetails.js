@@ -4,17 +4,14 @@ import { useMutation } from "@apollo/react-hooks";
 import { useForm } from "../../../util/hooks/useForm";
 import { Form, Label } from "semantic-ui-react";
 import { Content, DGrid, DSection } from "../../styled/containers";
-import {
-  Toasted,
-  DButton
-} from "../../styled/utils";
+import { Toasted, DButton } from "../../styled/utils";
 import toaster from "toasted-notes";
 import JoditEditor from "jodit-react";
 import CheckboxGroup from "react-checkbox-group";
 import Spinner from "../../Spinner";
 
 const config = {
-  readonly: false
+  readonly: false,
 };
 let daay = [];
 
@@ -38,7 +35,7 @@ const EmployeeDetails = ({ employee }) => {
       workStart: employee.schedule.workStart,
       workLength: employee.schedule.workLength / 60,
       breakStart: employee.schedule.breakStart,
-      breakLength: employee.schedule.breakLength / 60
+      breakLength: employee.schedule.breakLength / 60,
     }
   );
 
@@ -56,7 +53,7 @@ const EmployeeDetails = ({ employee }) => {
       workLength: parseInt(parseFloat(values.workLength) * 60),
       breakLength: parseInt(parseFloat(values.breakLength) * 60),
       day: days,
-      bio: content
+      bio: content,
     },
     onError(err) {
       console.log(err);
@@ -71,7 +68,7 @@ const EmployeeDetails = ({ employee }) => {
           </span>
         </Toasted>
       ));
-    }
+    },
   });
 
   function updateEmployeeCallback() {
@@ -148,8 +145,8 @@ const EmployeeDetails = ({ employee }) => {
                   value={content}
                   config={config}
                   tabIndex={1} // tabIndex of textarea
-                  onBlur={newContent => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
-                  onChange={newContent => {}}
+                  onBlur={(newContent) => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
+                  onChange={(newContent) => {}}
                 />
               </Form.Field>
               <DButton>Change Password</DButton>
@@ -160,7 +157,7 @@ const EmployeeDetails = ({ employee }) => {
             <Form style={{ padding: "40px 0 0 0" }}>
               <Form.Group inline>
                 <CheckboxGroup name="days" value={days} onChange={setDays}>
-                  {Checkbox => (
+                  {(Checkbox) => (
                     <>
                       <div className="pretty p-default p-curve p-thick p-smooth">
                         <Checkbox value="Sun" />

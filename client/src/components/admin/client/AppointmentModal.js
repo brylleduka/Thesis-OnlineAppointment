@@ -19,8 +19,6 @@ const AppointmentModal = ({ clientId }) => {
   );
   const [selectedTime, setSelectedTime] = useState("");
 
-
-
   return (
     <>
       <DButton onClick={() => setOpen(true)}>New Appointment</DButton>
@@ -35,7 +33,6 @@ const AppointmentModal = ({ clientId }) => {
               serviceValue={serviceValue}
               setServiceValue={setServiceValue}
               setEmployeeVal={setEmployeeVal}
-          
             />
             <AppointDate
               setStartDate={setStartDate}
@@ -44,7 +41,6 @@ const AppointmentModal = ({ clientId }) => {
               startDate={startDate}
               employeeVal={employeeVal}
               serviceValue={serviceValue}
-          
             />
           </DGrid>
         </Modal.Content>

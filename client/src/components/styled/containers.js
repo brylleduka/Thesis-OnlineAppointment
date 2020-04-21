@@ -163,7 +163,7 @@ export const Content = styled.div`
   width: ${(props) =>
     props.width ? props.width : props.fluid ? "100%" : "50%"};
   padding: ${(props) => props.pad && props.pad};
-  display: ${(props) => props.flex && "flex"};
+  display: ${(props) => (props.flex ? "flex" : "block")};
   justify-content: ${(props) => props.justify && props.justify};
   align-items: ${(props) => props.align && props.align};
   flex-flow: ${(props) => props.flow && props.flow};
@@ -194,7 +194,6 @@ export const Content = styled.div`
     "0 8px 16px rgba(0, 0, 0, 0.12)")};
   z-index: 2;
   font-weight: ${(props) => props.weight && props.weight};
-  overflow: visible;
 
   h2 {
     text-transform: uppercase;
@@ -421,9 +420,9 @@ export const DCard = styled.div`
       : props.alignFend
       ? "flex-end"
       : "flex-start"};
-  flex-direction: ${(props) => props.fcol && "column"};
+  flex-direction: ${(props) => (props.fcol ? "column" : "row")};
 
-  overflow: hidden;
+  overflow: ${(props) => (props.overf ? "visible" : "hidden")};
   background: ${(props) => (props.bg ? props.bg : "#ffffff")};
   box-shadow: ${(props) =>
     props.bs

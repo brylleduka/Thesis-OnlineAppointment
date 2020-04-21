@@ -94,7 +94,10 @@ const Employee = (props) => {
                   handleDetails={handleDetails}
                   handleSchedule={handleSchedule}
                 />
-                <Info isEmpInfo={isEmpInfo} employee={employee} />
+                <Info
+                  isEmpInfo={isEmpInfo}
+                  employee={employeeData && employeeData.employee}
+                />
               </DGrid>
             </Content>
           </>
