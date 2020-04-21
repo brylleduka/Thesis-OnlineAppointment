@@ -4,7 +4,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { FETCH_EMPLOYEE_QUERY } from "../../../util/graphql/employee";
 import { AuthContext } from "../../../context/auth";
 import { DCard, Content } from "../../styled/containers";
-import { DLabel, IconWrap, DSelect, DInput, DButton } from "../../styled/utils";
+import { DLabel, IconWrap, DSelect, DButton } from "../../styled/utils";
 import { Edit } from "@styled-icons/boxicons-regular/Edit";
 import { Cancel } from "@styled-icons/material/Cancel";
 import Spinner from "../../Spinner";
@@ -17,8 +17,8 @@ const EmployeeCard = ({ employee }) => {
   const [isEditEmpAcct, setIsEditEmpAcct] = useState(false);
 
   const [empAcctValue, setEmpAcctValue] = useState({
-    empId: employee.empId,
     role: employee.role,
+    level: employee.level,
   });
 
   const [updateEmpAcct, { loading: loadEmpAcct }] = useMutation(
@@ -26,8 +26,8 @@ const EmployeeCard = ({ employee }) => {
     {
       variables: {
         employeeId: employee._id,
-        empId: empAcctValue.empId,
         role: empAcctValue.role,
+        level: parseInt(empAcctValue.level),
       },
       refetchQueries: [
         {
@@ -35,6 +35,15 @@ const EmployeeCard = ({ employee }) => {
           variables: { employeeId: employee._id },
         },
       ],
+      onError(err) {
+        if (err.graphQLErrors[0].extensions.exception.errors.notauth) {
+          toaster.notify(({ onClose }) => (
+            <Toasted alert onClick={onClose}>
+              {err.graphQLErrors[0].extensions.exception.errors.notauth}
+            </Toasted>
+          ));
+        }
+      },
       onCompleted() {
         setIsEditEmpAcct(false);
         toaster.notify(({ onClose }) => (
@@ -47,7 +56,7 @@ const EmployeeCard = ({ employee }) => {
   );
 
   const handleEmpAcctValue = (e) => {
-    setEmpAcctValue({ [e.target.name]: e.target.value });
+    setEmpAcctValue({ ...empAcctValue, [e.target.name]: e.target.value });
   };
 
   const handleEditEmplAcct = () => {
@@ -68,26 +77,28 @@ const EmployeeCard = ({ employee }) => {
         align="center"
       >
         <h3>Employee Details</h3>
-
-        <IconWrap
-          invisible={isEditEmpAcct ? true : null}
-          color={"green"}
-          medium
-          title={"Update Info"}
-          topright
-        >
-          <Edit onClick={handleEditEmplAcct} />
-        </IconWrap>
-
-        <IconWrap
-          invisible={!isEditEmpAcct ? true : null}
-          color={"red"}
-          medium
-          title={"Cancel Update"}
-          topright
-        >
-          <Cancel onClick={handleEditEmplAcct} />
-        </IconWrap>
+        {(employeeAuth.role === "ADMIN" || employeeAuth.level > 2) && (
+          <>
+            <IconWrap
+              invisible={isEditEmpAcct ? true : null}
+              color={"green"}
+              medium
+              title={"Update Info"}
+              topright
+            >
+              <Edit onClick={handleEditEmplAcct} />
+            </IconWrap>
+            <IconWrap
+              invisible={!isEditEmpAcct ? true : null}
+              color={"red"}
+              medium
+              title={"Cancel Update"}
+              topright
+            >
+              <Cancel onClick={handleEditEmplAcct} />
+            </IconWrap>
+          </>
+        )}
       </Content>
 
       <Content
@@ -124,7 +135,7 @@ const EmployeeCard = ({ employee }) => {
             align="center"
             pad="5px 10px"
           >
-            {isEditEmpAcct &&
+            {/* {isEditEmpAcct &&
             (employeeAuth.role === "ADMIN" || employeeAuth.level >= 3) ? (
               <DInput
                 fluid
@@ -136,7 +147,11 @@ const EmployeeCard = ({ employee }) => {
               <DLabel flex justifyEnd alignCenter weight={500} size="16px">
                 {employee.empId}
               </DLabel>
-            )}
+            )} */}
+
+            <DLabel flex justifyEnd alignCenter weight={500} size="16px">
+              {employee.empId}
+            </DLabel>
           </Content>
         </Content>
         <Content
@@ -164,7 +179,8 @@ const EmployeeCard = ({ employee }) => {
             align="center"
             pad="5px 10px"
           >
-            {isEditEmpAcct ? (
+            {isEditEmpAcct &&
+            (employeeAuth.role === "ADMIN" || employeeAuth.level > 2) ? (
               <DSelect
                 name="role"
                 value={empAcctValue.role}
@@ -176,6 +192,50 @@ const EmployeeCard = ({ employee }) => {
             ) : (
               <DLabel flex justifyEnd alignCenter weight={700} size="16px">
                 {employee.role}
+              </DLabel>
+            )}
+          </Content>
+        </Content>
+
+        <Content
+          height="auto"
+          width="100%"
+          flex
+          justify="flex-start"
+          align="center"
+        >
+          <DLabel
+            flex
+            justifyEnd
+            alignCenter
+            weight={700}
+            w={"40%"}
+            size="14px"
+          >
+            Level:
+          </DLabel>
+          <Content
+            height="auto"
+            width="100%"
+            flex
+            justify="flex-start"
+            align="center"
+            pad="5px 10px"
+          >
+            {isEditEmpAcct &&
+            (employeeAuth.role === "ADMIN" || employeeAuth.level > 2) ? (
+              <DSelect
+                name="level"
+                value={empAcctValue.level}
+                onChange={handleEmpAcctValue}
+              >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </DSelect>
+            ) : (
+              <DLabel flex justifyEnd alignCenter weight={700} size="16px">
+                {employee.level}
               </DLabel>
             )}
           </Content>
@@ -197,11 +257,12 @@ const EmployeeCard = ({ employee }) => {
 };
 
 export const UPDATE_EMPLOYEE_ACCT = gql`
-  mutation updateEmployee($employeeId: ID!, $empId: String, $role: String) {
-    updateEmployee(_id: $employeeId, empId: $empId, role: $role) {
+  mutation updateAccountEmployee($employeeId: ID!, $role: String, $level: Int) {
+    updateAccountEmployee(_id: $employeeId, emprole: $role, emplevel: $level) {
       _id
       empId
       role
+      level
     }
   }
 `;

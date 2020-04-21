@@ -14,6 +14,7 @@ const FETCH_ALL_EMPLOYEES_QUERY = gql`
       email
       photo
       role
+      level
       schedule {
         _id
         day
@@ -47,6 +48,7 @@ const FETCH_EMPLOYEES_NOT_ADMIN_QUERY = gql`
       photo
       bio
       role
+      level
       schedule {
         _id
         day
@@ -79,6 +81,7 @@ const FETCH_EMPLOYEE_QUERY = gql`
       email
       photo
       role
+      level
       dateOfBirth
       bio
       schedule {

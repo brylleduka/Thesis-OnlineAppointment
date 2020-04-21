@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../../../context/auth";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { FETCH_EMPLOYEE_QUERY } from "../../../util/graphql/employee";
@@ -6,7 +7,6 @@ import { DCard, Content } from "../../styled/containers";
 import { DLabel, IconWrap, DInput, DSelect, DButton } from "../../styled/utils";
 import { Edit } from "@styled-icons/boxicons-regular/Edit";
 import { Cancel } from "@styled-icons/material/Cancel";
-import { Label } from "semantic-ui-react";
 import DatePicker from "react-datepicker";
 import Spinner from "../../Spinner";
 import toaster from "toasted-notes";
@@ -21,6 +21,7 @@ const regex = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\
 const regexNum = /^\d+$/;
 
 const PersonalCard = ({ employee }) => {
+  const { employeeAuth } = useContext(AuthContext);
   const [errors, setErrors] = useState({});
   const [isEditPersonal, setIsEditPersonal] = useState(false);
   const [startDate, setStartDate] = useState(
@@ -96,26 +97,29 @@ const PersonalCard = ({ employee }) => {
         align="center"
       >
         <h3>Personal Details</h3>
+        {(employeeAuth.role === "ADMIN" || employeeAuth.level > 2) && (
+          <>
+            <IconWrap
+              invisible={isEditPersonal ? true : null}
+              color={"green"}
+              medium
+              title={"Update Info"}
+              topright
+            >
+              <Edit onClick={handleEditPersonal} />
+            </IconWrap>
 
-        <IconWrap
-          invisible={isEditPersonal ? true : null}
-          color={"green"}
-          medium
-          title={"Update Info"}
-          topright
-        >
-          <Edit onClick={handleEditPersonal} />
-        </IconWrap>
-
-        <IconWrap
-          invisible={!isEditPersonal ? true : null}
-          color={"red"}
-          medium
-          title={"Cancel Update"}
-          topright
-        >
-          <Cancel onClick={handleEditPersonal} />
-        </IconWrap>
+            <IconWrap
+              invisible={!isEditPersonal ? true : null}
+              color={"red"}
+              medium
+              title={"Cancel Update"}
+              topright
+            >
+              <Cancel onClick={handleEditPersonal} />
+            </IconWrap>
+          </>
+        )}
       </Content>
 
       <Content
@@ -189,9 +193,27 @@ const PersonalCard = ({ employee }) => {
                 justify="flex-start"
                 align="center"
                 pad="5px 10px"
+                direct="column"
               >
+                {personalValue.firstName.trim() !== "" ? (
+                  ""
+                ) : errors.firstName ? (
+                  <DLabel rounded pointer color={({ theme }) => theme.red}>
+                    {errors.firstName}
+                  </DLabel>
+                ) : (
+                  ""
+                )}
+
                 <DInput
                   fluid
+                  error={
+                    personalValue.firstName.trim() !== ""
+                      ? null
+                      : errors.firstName
+                      ? true
+                      : null
+                  }
                   type="text"
                   name="firstName"
                   value={personalValue.firstName}
@@ -223,8 +245,25 @@ const PersonalCard = ({ employee }) => {
                 justify="flex-start"
                 align="center"
                 pad="5px 10px"
+                direct="column"
               >
+                {personalValue.lastName.trim() !== "" ? (
+                  ""
+                ) : errors.lastName ? (
+                  <DLabel rounded pointer color={({ theme }) => theme.red}>
+                    {errors.lastName}
+                  </DLabel>
+                ) : (
+                  ""
+                )}
                 <DInput
+                  error={
+                    personalValue.lastName.trim() !== ""
+                      ? null
+                      : errors.lastName
+                      ? true
+                      : null
+                  }
                   fluid
                   type="text"
                   name="lastName"

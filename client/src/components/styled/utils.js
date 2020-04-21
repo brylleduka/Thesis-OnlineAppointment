@@ -492,10 +492,15 @@ export const IconWrap = styled.div`
     margin: ${(props) =>
       props.mcenter ? "0 auto" : props.margin ? props.margin : "5px"};
     outline: none;
-    padding: 3px;
+    padding: ${(props) => (props.pad ? props.pad : "0")};
     visibility: visible;
     pointer-events: all;
     transition: visibility 200ms, opacity 0.3s ease-in-out;
+    ${(props) =>
+      props.bgcolor &&
+      css`
+        background-color: ${props.bgcolor};
+      `};
 
     ${(props) =>
       props.circle &&
@@ -518,12 +523,23 @@ export const IconWrap = styled.div`
         opacity: 0;
         pointer-events: none;
       `};
+    ${(props) =>
+      props.size &&
+      css`
+        width: ${props.size};
+        height: ${props.size};
+      `};
 
     ${(props) =>
-      props.small
+      props.tiny
         ? css`
-            width: 25px;
-            height: 25px;
+            width: 18px;
+            height: 18px;
+          `
+        : props.small
+        ? css`
+            width: 22px;
+            height: 22px;
           `
         : props.medium
         ? css`

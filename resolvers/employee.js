@@ -224,14 +224,13 @@ module.exports = {
         if (lastName) {
           updateEmployee.lastName = lastName;
         }
-
-        if (contact) {
-          updateEmployee.contact = contact;
-        }
-
         if (email) {
           updateEmployee.email = email;
         }
+
+        //contact
+        updateEmployee.contact = contact;
+
         //bio
         updateEmployee.bio = bio;
 
@@ -353,6 +352,31 @@ module.exports = {
         );
 
         return updatePersonal;
+      } catch (err) {
+        throw err;
+      }
+    },
+    updateAccountEmployee: async (_, { _id, emprole, emplevel }, context) => {
+      let errors = {};
+      try {
+        const { role: authRole, level } = Auth(context);
+
+        if (authRole !== "ADMIN" || level < 3) {
+          errors.notauth = "You are not authorized to do this action";
+          throw new UserInputError("not authorized to do this action", {
+            errors,
+          });
+        }
+
+        const accountUpdate = await Employee.findByIdAndUpdate(
+          _id,
+          {
+            $set: { role: emprole, level: emplevel },
+          },
+          { new: true }
+        );
+
+        return accountUpdate;
       } catch (err) {
         throw err;
       }

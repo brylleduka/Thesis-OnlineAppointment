@@ -415,7 +415,7 @@ const typeDefs = gql`
       dateOfBirth: String
     ): Employee
 
-    updateAccountEmployee(_id: ID!, empId: String, role: String): Employee
+    updateAccountEmployee(_id: ID!, emprole: String, emplevel: Int): Employee
     updateSecurityEmployee(
       _id: ID!
       password: String
