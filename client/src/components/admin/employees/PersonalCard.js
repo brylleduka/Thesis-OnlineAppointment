@@ -87,7 +87,6 @@ const PersonalCard = ({ employee }) => {
     updatePersonalEmployee();
   };
 
-  console.log(content);
 
   return (
     <DCard dw="100%" dh="100%" flex fcol justifyBetween overf>

@@ -20,7 +20,7 @@ const EmployeeDelete = ({ employee }) => {
         </DButton>
         <Popup
           trigger={
-            <IconWrap circle shadow color="grey" tiny mcenter title="Info">
+            <IconWrap circle shadow color="primary" tiny mcenter title="Info">
               <Question />
             </IconWrap>
           }

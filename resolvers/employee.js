@@ -381,6 +381,31 @@ module.exports = {
         throw err;
       }
     },
+    updateSchedule: async (
+      _,
+      { _id, day, workStart, workLength, breakStart, breakLength }
+    ) => {
+      try {
+        const employee = await Employee.findById(_id);
+        const scheduleId = employee.schedule;
+
+        const updateSchedule = await Schedule.findOneAndUpdate(
+          { _id: scheduleId },
+          {
+            $set: {
+              day: day,
+              workStart: workStart,
+              workLength: workLength,
+              breakStart: breakStart,
+              breakLength: breakLength,
+            },
+          }
+        );
+        return updateSchedule;
+      } catch (err) {
+        throw err;
+      }
+    },
     deleteEmployee: async (_, { _id }, context) => {
       try {
         const { role, level } = Auth(context);

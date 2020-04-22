@@ -421,6 +421,15 @@ const typeDefs = gql`
       password: String
       oldpassword: String
     ): Employee
+    updateSchedule(
+      _id: ID!
+      day: [String]
+      dateOfBirth: String
+      workStart: String
+      workLength: Int
+      breakStart: String
+      breakLength: Int
+    ): Employee
 
     addEmployeePhoto(_id: ID!, file: Upload): Boolean
     deleteEmployee(_id: ID!): Boolean #admin only

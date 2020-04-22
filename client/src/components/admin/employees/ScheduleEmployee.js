@@ -1,26 +1,96 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../../../context/auth";
+import gql from "graphql-tag";
+import { useMutation } from "@apollo/react-hooks";
+import { FETCH_EMPLOYEE_QUERY } from "../../../util/graphql/employee";
 import { DGrid, DCard, Content } from "../../styled/containers";
-import { DLabel, IconWrap, DInput, DSelect, DButton } from "../../styled/utils";
+import { DLabel, IconWrap, DSelect, DButton } from "../../styled/utils";
 import CheckboxGroup from "react-checkbox-group";
 import { Edit } from "@styled-icons/boxicons-regular/Edit";
 import { Cancel } from "@styled-icons/material/Cancel";
+import { Save } from "@styled-icons/boxicons-solid/Save";
 import useWindowSize from "../../../util/hooks/useWindowSize";
+import Spinner from "../../Spinner";
+import toaster from "toasted-notes";
+import Toasted from "../../Toasted";
+import styled from "styled-components";
+
+const CheckLabel = styled.label`
+  font-weight: ${(props) =>
+    props.weight === "fw500" ? "500 !important" : "700 !important"};
+  color: ${(props) =>
+    props.color === "bluer"
+      ? ({ theme }) => theme.bluer
+      : props.color === "blue"
+      ? "rgba(33, 147, 176, 0.7)"
+      : props.color === "dark"
+      ? ({ theme }) => theme.dark
+      : props.color === "grey"
+      ? ({ theme }) => theme.grey
+      : ({ theme }) => theme.secondary};
+  text-transform: ${(props) => (props.textt ? props.textt : "none")};
+`;
 
 const ScheduleEmployee = ({ employee }) => {
   const { width: wid } = useWindowSize();
   const { employeeAuth } = useContext(AuthContext);
   const [days, setDays] = useState(employee.schedule.day);
   const [isEditSched, setIsEditSched] = useState(false);
+  const [schedValues, setSchedValues] = useState({
+    workStart: employee.schedule.workStart,
+    workLength: employee.schedule.workLength / 60,
+    breakStart: employee.schedule.breakStart,
+    breakLength: employee.schedule.breakLength / 60,
+  });
+
+  const [updateSchedule, { loading: loadSchedule }] = useMutation(
+    UPDATE_EMPLOYEE_SCHEDULE,
+    {
+      variables: {
+        employeeId: employee._id,
+        workStart: schedValues.workStart,
+        breakStart: schedValues.breakStart,
+        workLength: parseInt(parseFloat(schedValues.workLength) * 60),
+        breakLength: parseInt(parseFloat(schedValues.breakLength) * 60),
+        day: days,
+      },
+      refetchQueries: [
+        {
+          query: FETCH_EMPLOYEE_QUERY,
+          variables: { employeeId: employee._id },
+        },
+      ],
+      onError(err) {
+        console.log(err);
+        //   setErrors(err.graphQLErrors[0].extensions.exception.errors);
+      },
+      onCompleted() {
+        setIsEditSched(false);
+        toaster.notify(({ onClose }) => (
+          <Toasted success onClick={onClose}>
+            Schedule Updated
+          </Toasted>
+        ));
+      },
+    }
+  );
 
   const handleEditSched = () => {
     setIsEditSched(!isEditSched);
   };
 
+  const handleSchedChange = (e) => {
+    setSchedValues({ ...schedValues, [e.target.name]: e.target.value });
+  };
+
+  const handleUpdateSched = () => {
+    updateSchedule();
+  };
+
   return (
     <Content width="100%" height="100%">
       <DGrid gap="10px" med10="1fr" med7="1fr">
-        <DCard dw="100%" dh="100%" p="10px 20px">
+        <DCard dw="100%" dh="100%" p="10px" flex fcol justifyBetween>
           <Content
             flex
             width="100%"
@@ -60,14 +130,14 @@ const ScheduleEmployee = ({ employee }) => {
             )}
           </Content>
           <Content height="100%" width="100%">
-            <DGrid two gap="10px">
+            <DGrid custom="1fr 2fr">
               <Content
                 flex
-                width="80%"
+                width="90%"
                 height="300px"
                 flex
-                justify="flex-start"
-                align="flex-start"
+                justify="center"
+                align="center"
                 direct="column"
                 margin="0 auto"
                 style={
@@ -101,122 +171,157 @@ const ScheduleEmployee = ({ employee }) => {
                     {(Checkbox) => (
                       <>
                         <div className="pretty p-default p-curve p-thick p-smooth p-toggle">
-                          <Checkbox value="Sun" />
+                          <Checkbox
+                            value="Sun"
+                            disabled={isEditSched ? false : true}
+                          />
                           <div className="state p-info-o p-on">
-                            <label
-                              style={{ fontWeight: 700, color: "#2193b0" }}
+                            <CheckLabel
+                              textt="uppercase"
+                              color={isEditSched ? "bluer" : "blue"}
                             >
                               Sunday
-                            </label>
+                            </CheckLabel>
                           </div>
                           <div className="state p-off">
-                            <label
-                              style={{ fontWeight: 700, color: "#D3CCE3" }}
+                            <CheckLabel
+                              textt="uppercase"
+                              color={isEditSched ? "dark" : "grey"}
                             >
                               Sunday
-                            </label>
+                            </CheckLabel>
                           </div>
                         </div>
                         <div className="pretty p-default p-curve p-thick p-smooth p-toggle">
-                          <Checkbox value="Mon" />
+                          <Checkbox
+                            value="Mon"
+                            disabled={isEditSched ? false : true}
+                          />
                           <div className="state p-info-o p-on">
-                            <label
-                              style={{ fontWeight: 700, color: "#2193b0" }}
+                            <CheckLabel
+                              textt="uppercase"
+                              color={isEditSched ? "bluer" : "blue"}
                             >
                               Monday
-                            </label>
+                            </CheckLabel>
                           </div>
                           <div className="state p-off">
-                            <label
-                              style={{ fontWeight: 700, color: "#D3CCE3" }}
+                            <CheckLabel
+                              textt="uppercase"
+                              color={isEditSched ? "dark" : "grey"}
                             >
                               Monday
-                            </label>
+                            </CheckLabel>
                           </div>
                         </div>
                         <div className="pretty p-default p-curve p-thick p-smooth p-toggle">
-                          <Checkbox value="Tue" />
+                          <Checkbox
+                            value="Tue"
+                            disabled={isEditSched ? false : true}
+                          />
                           <div className="state p-info-o p-on">
-                            <label
-                              style={{ fontWeight: 700, color: "#2193b0" }}
+                            <CheckLabel
+                              textt="uppercase"
+                              color={isEditSched ? "bluer" : "blue"}
                             >
                               Tuesday
-                            </label>
+                            </CheckLabel>
                           </div>
                           <div className="state p-off">
-                            <label
-                              style={{ fontWeight: 700, color: "#D3CCE3" }}
+                            <CheckLabel
+                              textt="uppercase"
+                              color={isEditSched ? "dark" : "grey"}
                             >
                               Tuesday
-                            </label>
+                            </CheckLabel>
                           </div>
                         </div>
                         <div className="pretty p-default p-curve p-thick p-smooth p-toggle">
-                          <Checkbox value="Wed" />
+                          <Checkbox
+                            value="Wed"
+                            disabled={isEditSched ? false : true}
+                          />
                           <div className="state p-info-o p-on">
-                            <label
-                              style={{ fontWeight: 700, color: "#2193b0" }}
+                            <CheckLabel
+                              textt="uppercase"
+                              color={isEditSched ? "bluer" : "blue"}
                             >
                               Wednesday
-                            </label>
+                            </CheckLabel>
                           </div>
                           <div className="state p-off">
-                            <label
-                              style={{ fontWeight: 700, color: "#D3CCE3" }}
+                            <CheckLabel
+                              textt="uppercase"
+                              color={isEditSched ? "dark" : "grey"}
                             >
                               Wednesday
-                            </label>
+                            </CheckLabel>
                           </div>
                         </div>
                         <div className="pretty p-default p-curve p-thick p-smooth p-toggle">
-                          <Checkbox value="Thu" />
+                          <Checkbox
+                            value="Thu"
+                            disabled={isEditSched ? false : true}
+                          />
                           <div className="state p-info-o p-on">
-                            <label
-                              style={{ fontWeight: 700, color: "#2193b0" }}
+                            <CheckLabel
+                              textt="uppercase"
+                              color={isEditSched ? "bluer" : "blue"}
                             >
                               Thursday
-                            </label>
+                            </CheckLabel>
                           </div>
                           <div className="state p-off">
-                            <label
-                              style={{ fontWeight: 700, color: "#D3CCE3" }}
+                            <CheckLabel
+                              textt="uppercase"
+                              color={isEditSched ? "dark" : "grey"}
                             >
                               Thursday
-                            </label>
+                            </CheckLabel>
                           </div>
                         </div>
                         <div className="pretty p-default p-curve p-thick p-smooth p-toggle">
-                          <Checkbox value="Fri" />
+                          <Checkbox
+                            value="Fri"
+                            disabled={isEditSched ? false : true}
+                          />
                           <div className="state p-info-o p-on">
-                            <label
-                              style={{ fontWeight: 700, color: "#2193b0" }}
+                            <CheckLabel
+                              textt="uppercase"
+                              color={isEditSched ? "bluer" : "blue"}
                             >
                               Friday
-                            </label>
+                            </CheckLabel>
                           </div>
                           <div className="state p-off">
-                            <label
-                              style={{ fontWeight: 700, color: "#D3CCE3" }}
+                            <CheckLabel
+                              textt="uppercase"
+                              color={isEditSched ? "dark" : "grey"}
                             >
                               Friday
-                            </label>
+                            </CheckLabel>
                           </div>
                         </div>
                         <div className="pretty p-default p-curve p-thick p-smooth p-toggle">
-                          <Checkbox value="Sat" />
+                          <Checkbox
+                            value="Sat"
+                            disabled={isEditSched ? false : true}
+                          />
                           <div className="state p-info-o p-on">
-                            <label
-                              style={{ fontWeight: 700, color: "#2193b0" }}
+                            <CheckLabel
+                              textt="uppercase"
+                              color={isEditSched ? "bluer" : "blue"}
                             >
                               Saturday
-                            </label>
+                            </CheckLabel>
                           </div>
                           <div className="state p-off">
-                            <label
-                              style={{ fontWeight: 700, color: "#D3CCE3" }}
+                            <CheckLabel
+                              textt="uppercase"
+                              color={isEditSched ? "dark" : "grey"}
                             >
                               Saturday
-                            </label>
+                            </CheckLabel>
                           </div>
                         </div>
                       </>
@@ -225,8 +330,8 @@ const ScheduleEmployee = ({ employee }) => {
                 </Content>
               </Content>
               <Content
-                height="auto"
-                width="90%"
+                height="300px"
+                width="100%"
                 margin="0 auto"
                 flex
                 justify="flex-start"
@@ -245,6 +350,7 @@ const ScheduleEmployee = ({ employee }) => {
                   flex
                   justify="space-around"
                   align="center"
+                  margin="5px auto"
                 >
                   <Content
                     height="auto"
@@ -253,18 +359,41 @@ const ScheduleEmployee = ({ employee }) => {
                     justify="center"
                     align="center"
                     direct="column"
+                    pad="5px 10px"
                   >
-                    <DLabel weight={500} size="13px" rounded bgcolor="#ccc">
+                    <DLabel weight={500} size="13px" rounded bluer>
                       Start of Work
                     </DLabel>
-                    <DSelect>
-                      <option>9:00 AM</option>
-                      <option>9:00 AM</option>
-                      <option>9:00 AM</option>
-                      <option>9:00 AM</option>
-                      <option>9:00 AM</option>
-                      <option>9:00 AM</option>
-                    </DSelect>
+                    {isEditSched ? (
+                      <DSelect
+                        name="workStart"
+                        onChange={handleSchedChange}
+                        value={schedValues.workStart}
+                      >
+                        <option value="6:00 AM">6:00 AM</option>
+                        <option value="7:00 AM">7:00 AM</option>
+                        <option value="8:00 AM">8:00 AM</option>
+                        <option value="9:00 AM">9:00 AM</option>
+                        <option value="10:00 AM">10:00 AM</option>
+                        <option value="11:00 AM">11:00 AM</option>
+                        <option value="12:00 PM">12:00 PM</option>
+                        <option value="1:00 PM">1:00 PM</option>
+                        <option value="2:00 PM">2:00 PM</option>
+                        <option value="3:00 PM">3:00 PM</option>
+                        <option value="4:00 PM">4:00 PM</option>
+                        <option value="5:00 PM">5:00 PM</option>
+                        <option value="6:00 PM">6:00 PM</option>
+                        <option value="7:00 PM">7:00 PM</option>
+                        <option value="8:00 PM">8:00 PM</option>
+                        <option value="9:00 PM">9:00 PM</option>
+                        <option value="10:00 PM">10:00 PM</option>
+                        <option value="11:00 PM">11:00 PM</option>
+                      </DSelect>
+                    ) : (
+                      <DLabel weight={700} size="16px" flex justifyCenter>
+                        {employee.schedule.workStart}
+                      </DLabel>
+                    )}
                   </Content>
                   <Content
                     height="auto"
@@ -274,17 +403,39 @@ const ScheduleEmployee = ({ employee }) => {
                     align="center"
                     direct="column"
                   >
-                    <DLabel weight={500} size="13px" rounded bgcolor="#ccc">
-                      Start of Work
+                    <DLabel weight={500} size="13px" rounded bluer>
+                      Work Length
                     </DLabel>
-                    <DSelect>
-                      <option>9:00 AM</option>
-                      <option>9:00 AM</option>
-                      <option>9:00 AM</option>
-                      <option>9:00 AM</option>
-                      <option>9:00 AM</option>
-                      <option>9:00 AM</option>
-                    </DSelect>
+                    {isEditSched ? (
+                      <DSelect
+                        onChange={handleSchedChange}
+                        value={schedValues.workLength}
+                        name="workLength"
+                      >
+                        <option></option>
+                        <option value="3">3 hours</option>
+                        <option value="4">4 hours</option>
+                        <option value="5">5 hours</option>
+                        <option value="6">6 hours</option>
+                        <option value="7">7 hours</option>
+                        <option value="8">8 hours</option>
+                        <option value="9">9 hours</option>
+                        <option value="10">10 hours</option>
+                        <option value="11">11 hours</option>
+                        <option value="12">12 hours</option>
+                      </DSelect>
+                    ) : (
+                      <DLabel weight={700} size="16px" flex justifyCenter>
+                        {employee.schedule.workLength / 60 === 0.5
+                          ? employee.schedule.workLength
+                          : employee.schedule.workLength / 60}{" "}
+                        {employee.schedule.workLength / 60 === 0.5
+                          ? "mins"
+                          : employee.schedule.workLength / 60 === 1
+                          ? "hour"
+                          : "hours"}
+                      </DLabel>
+                    )}
                   </Content>
                 </Content>
                 <Content
@@ -293,6 +444,7 @@ const ScheduleEmployee = ({ employee }) => {
                   flex
                   justify="space-around"
                   align="center"
+                  margin="5px auto"
                 >
                   <Content
                     height="auto"
@@ -302,17 +454,40 @@ const ScheduleEmployee = ({ employee }) => {
                     align="center"
                     direct="column"
                   >
-                    <DLabel weight={500} size="13px" rounded bgcolor="#ccc">
+                    <DLabel weight={500} size="13px" rounded bluer>
                       Start of Break
                     </DLabel>
-                    <DSelect>
-                      <option>9:00 AM</option>
-                      <option>9:00 AM</option>
-                      <option>9:00 AM</option>
-                      <option>9:00 AM</option>
-                      <option>9:00 AM</option>
-                      <option>9:00 AM</option>
-                    </DSelect>
+                    {isEditSched ? (
+                      <DSelect
+                        onChange={handleSchedChange}
+                        value={schedValues.breakStart}
+                        name="breakStart"
+                      >
+                        <option></option>
+                        <option value="6:00 AM">6:00 AM</option>
+                        <option value="7:00 AM">7:00 AM</option>
+                        <option value="8:00 AM">8:00 AM</option>
+                        <option value="9:00 AM">9:00 AM</option>
+                        <option value="10:00 AM">10:00 AM</option>
+                        <option value="11:00 AM">11:00 AM</option>
+                        <option value="12:00 PM">12:00 PM</option>
+                        <option value="1:00 PM">1:00 PM</option>
+                        <option value="2:00 PM">2:00 PM</option>
+                        <option value="3:00 PM">3:00 PM</option>
+                        <option value="4:00 PM">4:00 PM</option>
+                        <option value="5:00 PM">5:00 PM</option>
+                        <option value="6:00 PM">6:00 PM</option>
+                        <option value="7:00 PM">7:00 PM</option>
+                        <option value="8:00 PM">8:00 PM</option>
+                        <option value="9:00 PM">9:00 PM</option>
+                        <option value="10:00 PM">10:00 PM</option>
+                        <option value="11:00 PM">11:00 PM</option>
+                      </DSelect>
+                    ) : (
+                      <DLabel weight={700} size="16px" flex justifyCenter>
+                        {employee.schedule.breakStart}
+                      </DLabel>
+                    )}
                   </Content>
                   <Content
                     height="auto"
@@ -322,26 +497,93 @@ const ScheduleEmployee = ({ employee }) => {
                     align="center"
                     direct="column"
                   >
-                    <DLabel weight={500} size="13px" rounded bgcolor="#ccc">
-                      Break Hour(s)
+                    <DLabel weight={500} size="13px" rounded bluer>
+                      Break Length
                     </DLabel>
-                    <DSelect>
-                      <option>9:00 AM</option>
-                      <option>9:00 AM</option>
-                      <option>9:00 AM</option>
-                      <option>9:00 AM</option>
-                      <option>9:00 AM</option>
-                      <option>9:00 AM</option>
-                    </DSelect>
+                    {isEditSched ? (
+                      <DSelect
+                        onChange={handleSchedChange}
+                        value={schedValues.breakLength}
+                        name="breakLength"
+                      >
+                        <option></option>
+                        <option value={"0.5"}>30 mins</option>
+                        <option value={"1"}>1 hour</option>
+                        <option value="2">2 hours</option>
+                        <option value="3">3 hours</option>
+                        <option value="4">4 hours</option>
+                      </DSelect>
+                    ) : (
+                      <DLabel weight={700} size="16px" flex justifyCenter>
+                        {employee.schedule.breakLength / 60 === 0.5
+                          ? employee.schedule.breakLength
+                          : employee.schedule.breakLength / 60}{" "}
+                        {employee.schedule.breakLength / 60 === 0.5
+                          ? "mins"
+                          : employee.schedule.breakLength / 60 === 1
+                          ? "hour"
+                          : "hours"}
+                      </DLabel>
+                    )}
                   </Content>
                 </Content>
               </Content>
             </DGrid>
           </Content>
+          {isEditSched && (
+            <Content
+              flex
+              width="100%"
+              height="100%"
+              justify="flex-end"
+              align="center"
+            >
+              <DButton confirm flex onClick={handleUpdateSched}>
+                {loadSchedule ? (
+                  <Spinner tiny row inverted content="Loading..." />
+                ) : (
+                  <>
+                    <Save size="22px" title="Update Content" />
+                    Save
+                  </>
+                )}
+              </DButton>
+            </Content>
+          )}
         </DCard>
       </DGrid>
     </Content>
   );
 };
+
+const UPDATE_EMPLOYEE_SCHEDULE = gql`
+  mutation updateSchedule(
+    $employeeId: ID!
+    $day: [String]
+    $workStart: String
+    $workLength: Int
+    $breakStart: String
+    $breakLength: Int
+  ) {
+    updateSchedule(
+      _id: $employeeId
+      day: $day
+      workStart: $workStart
+      workLength: $workLength
+      breakStart: $breakStart
+      breakLength: $breakLength
+    ) {
+      _id
+      schedule {
+        _id
+        day
+        workStart
+        workLength
+        breakLength
+        breakStart
+      }
+    }
+  }
+`;
 
 export default ScheduleEmployee;

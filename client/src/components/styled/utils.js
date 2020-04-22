@@ -188,7 +188,7 @@ export const DLabel = styled.label`
   font-size: ${(props) => (props.size ? props.size : "12px")};
   color: #000;
   letter-spacing: ${(props) => (props.ls ? props.ls : "1px")};
-  font-weight: ${(props) => props.weight && props.weight};
+  font-weight: ${(props) => (props.weight ? props.weight : 500)};
   padding: ${(props) => (props.pad ? props.pad : "5px 10px")};
   margin: ${(props) => (props.m ? props.m : "2%")};
   background: ${(props) => props.bgcolor && props.bgcolor};
@@ -223,6 +223,43 @@ export const DLabel = styled.label`
     opacity: ${(props) => props.hover && "0.8"};
     cursor: ${(props) => props.hover && "pointer"};
   }
+
+  ${(props) =>
+    props.primary &&
+    css`
+      background: ${({ theme }) => theme.primary};
+      color: #ffffff;
+    `};
+  ${(props) =>
+    props.secondary &&
+    css`
+      background: ${({ theme }) => theme.secondary};
+      color: #ffffff;
+    `};
+  ${(props) =>
+    props.bluer &&
+    css`
+      background: ${({ theme }) => theme.bluer};
+      color: #ffffff;
+    `};
+  ${(props) =>
+    props.blue &&
+    css`
+      background: ${({ theme }) => theme.blue};
+      color: #ffffff;
+    `};
+  ${(props) =>
+    props.default &&
+    css`
+      background: ${({ theme }) => theme.grey};
+      color: ${({ theme }) => theme.dark};
+    `};
+  ${(props) =>
+    props.dark &&
+    css`
+      background: ${({ theme }) => theme.dark};
+      color: ${({ theme }) => theme.light};
+    `};
 
   ${(props) =>
     props.pointer &&
@@ -490,7 +527,9 @@ export const IconCustom = styled(Icon)`
 export const IconWrap = styled.div`
   ${StyledIconBase} {
     color: ${(props) =>
-      props.color === "bluer"
+      props.color === "primary"
+        ? ({ theme }) => theme.primary
+        : props.color === "bluer"
         ? ({ theme }) => theme.bluer
         : props.color === "red"
         ? ({ theme }) => theme.red
@@ -569,7 +608,8 @@ export const IconWrap = styled.div`
             height: 25px;
           `};
 
-    background: ${(props) => props.bg && props.bg};
+    background: ${(props) => (props.bg ? props.bg : "transparent")};
+
     ${(props) =>
       props.circle &&
       css`

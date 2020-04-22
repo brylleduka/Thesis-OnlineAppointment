@@ -128,20 +128,6 @@ const Employees = () => {
     },
   };
 
-  const title = (
-    <DLabel
-      size="22px"
-      bgcolor="#6dd5ed"
-      tt="uppercase"
-      weight="700"
-      pad="10px 25px"
-      color="#fff"
-      customStyles={customStyles}
-      rounded
-    >
-      Employee List
-    </DLabel>
-  );
   const paginationRowsPerPageOptions = [5, 10, 15, 20];
 
   return (
@@ -154,24 +140,24 @@ const Employees = () => {
             <DButton onClick={() => setOpen(true)}>New Employee</DButton>
           )}
         </Content>
-        {loading_employeesAR ? (
-          <Spinner content="Please wait while we fetch your data..." />
-        ) : (
-          <Content width="100%" margin="20px 0">
-            <DataTable
-              title={title}
-              columns={columns}
-              data={employeesAR.map((aesrep) => aesrep)}
-              responsive
-              customStyles={customStyles}
-              pagination={true}
-              paginationPerPage={5}
-              paginationRowsPerPageOptions={paginationRowsPerPageOptions}
-              highlightOnHover
-              pointerOnHover
-            />
-          </Content>
-        )}
+
+        <Content width="100%" margin="20px 0">
+          <DataTable
+            columns={columns}
+            data={employeesAR.map((aesrep) => aesrep)}
+            responsive
+            customStyles={customStyles}
+            pagination={true}
+            paginationPerPage={5}
+            paginationRowsPerPageOptions={paginationRowsPerPageOptions}
+            highlightOnHover
+            pointerOnHover
+            progressPending={loading_employeesAR}
+            progressComponent={
+              <Spinner content="Please wait while we fetch our data..." />
+            }
+          />
+        </Content>
       </DSection>
       <NewEmployee open={open} setOpen={setOpen} />
     </Layout>

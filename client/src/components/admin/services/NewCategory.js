@@ -4,9 +4,12 @@ import { useMutation } from "@apollo/react-hooks";
 import { useForm } from "../../../util/hooks/useForm";
 import { FETCH_ALL_CATEGORIES_QUERY } from "../../../util/graphql/service";
 
-import { Modal, Form } from "semantic-ui-react";
+import { Modal, Form, Label } from "semantic-ui-react";
+import CKEditor from "@ckeditor/ckeditor5-react";
 import { DButton } from "../../styled/utils";
-import JoditEditor from "jodit-react";
+import { Content } from "../../styled/containers";
+import DTextArea from "../../DTextArea";
+import DecoupledEditor from "@ckeditor/ckeditor5-build-decoupled-document";
 import toaster from "toasted-notes";
 
 const NewCategory = ({ open, setOpen }) => {
@@ -17,7 +20,7 @@ const NewCategory = ({ open, setOpen }) => {
   const { values, handleChange, handleSubmit } = useForm(
     createCategoryCallback,
     {
-      title: ""
+      title: "",
     }
   );
 
@@ -26,31 +29,31 @@ const NewCategory = ({ open, setOpen }) => {
     {
       variables: {
         title: values.title,
-        description: content
+        description: content,
       },
 
       update(cache, result) {
         setOpen(false);
         const data = cache.readQuery({
-          query: FETCH_ALL_CATEGORIES_QUERY
+          query: FETCH_ALL_CATEGORIES_QUERY,
         });
 
         const newCategory = result.data.createCategory;
         cache.writeQuery({
           query: FETCH_ALL_CATEGORIES_QUERY,
-          data: { categories: [newCategory, ...data.categories] }
+          data: { categories: [newCategory, ...data.categories] },
         });
 
         values.name = "";
         content = "";
       },
-      onCompleted(result) {
+      onCompleted() {
         toaster.notify("New Category Add Successfully");
       },
       onError(err) {
         setErrors(err.graphQLErrors[0].extensions.exception.errors);
         toaster.notify("Something went Wrong");
-      }
+      },
     }
   );
 
@@ -59,7 +62,7 @@ const NewCategory = ({ open, setOpen }) => {
   }
 
   const config = {
-    readonly: false
+    readonly: false,
   };
 
   return (
@@ -75,25 +78,78 @@ const NewCategory = ({ open, setOpen }) => {
               value={values.title}
               onChange={handleChange}
             />
-            <label>Description</label>
 
-            <JoditEditor
-              ref={editor}
-              value={content}
-              config={config}
-              tabIndex={1} // tabIndex of textarea
-              onBlur={newContent => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
-              onChange={newContent => {}}
-            />
+            <Content
+              width="100%"
+              height="100%"
+              flex
+              justify="flex-start"
+              align="flex-start"
+              direct="column"
+              margin="12px auto"
+            >
+              <Label style={styles.label}>Description</Label>
+              <Content
+                width="100%"
+                height="auto"
+                flex
+                justify="flex-start"
+                align="center"
+                pad="3px 5px"
+                margin="0 auto"
+              >
+                <DTextArea active>
+                  <CKEditor
+                    onInit={(editor) => {
+                      // Insert the toolbar before the editable area.
+                      editor.ui
+                        .getEditableElement()
+                        .parentElement.insertBefore(
+                          editor.ui.view.toolbar.element,
+                          editor.ui.getEditableElement()
+                        );
+                    }}
+                    onChange={(event, editor) => {
+                      const data = editor.getData();
+                      setContent(data);
+                    }}
+                    editor={DecoupledEditor}
+                    data={content}
+                  />
+                </DTextArea>
+              </Content>
+            </Content>
           </Form.Field>
           <Modal.Actions>
-            <DButton alert onClick={() => setOpen(false)}>No</DButton>
-            <DButton confirm type="submit">Yes</DButton>
+            <Content
+              width="100%"
+              height="100%"
+              flex
+              justify="flex-end"
+              align="center"
+            >
+              <DButton alert onClick={() => setOpen(false)}>
+                No
+              </DButton>
+              <DButton confirm type="submit">
+                Yes
+              </DButton>
+            </Content>
           </Modal.Actions>
         </Form>
       </Modal.Content>
     </Modal>
   );
+};
+
+const styles = {
+  label: {
+    width: "auto",
+    textAlign: "center",
+    fontWeight: 700,
+    fontSize: "14px",
+    marginBottom: "1rem",
+  },
 };
 
 const CREATE_NEW_CATEGORY_MUTATION = gql`
