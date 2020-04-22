@@ -13,7 +13,7 @@ import Spinner from "../../Spinner";
 const config = {
   readonly: false,
 };
-let daay = [];
+
 
 const EmployeeDetails = ({ employee }) => {
   const [open, setOpen] = useState(false);

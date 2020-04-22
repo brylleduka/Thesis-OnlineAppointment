@@ -248,6 +248,10 @@ export const DLabel = styled.label`
         margin-top: -4px;
       }
     `};
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
 `;
 
 // ACCORDION
@@ -485,7 +489,16 @@ export const IconCustom = styled(Icon)`
 
 export const IconWrap = styled.div`
   ${StyledIconBase} {
-    color: ${(props) => (props.color ? props.color : "#fff")};
+    color: ${(props) =>
+      props.color === "bluer"
+        ? ({ theme }) => theme.bluer
+        : props.color === "red"
+        ? ({ theme }) => theme.red
+        : props.color === "green"
+        ? ({ theme }) => theme.green
+        : props.color === "grey"
+        ? ({ theme }) => theme.grey
+        : "#fff"};
     cursor: pointer;
     opacity: 0.8;
     transition: all 0.5s ease;

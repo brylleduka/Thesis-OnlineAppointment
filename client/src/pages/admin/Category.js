@@ -161,8 +161,10 @@ const Category = (props) => {
                       bg={({ theme }) => theme.bluer}
                       circle
                       bottomcenter
+                      small
+                      pad="2px"
                     >
-                      <Camera size="22px" title="Upload" />
+                      <Camera title="Upload" />
                       <input {...getInputProps()} />
                     </IconWrap>
                   </DCard>

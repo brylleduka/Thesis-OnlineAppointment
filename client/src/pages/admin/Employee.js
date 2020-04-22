@@ -5,10 +5,12 @@ import { Breadcrumb } from "semantic-ui-react";
 import { FETCH_EMPLOYEE_QUERY } from "../../util/graphql/employee";
 import Layout from "../../components/admin/layout/Layout";
 import { DGrid, DSection, Content } from "../../components/styled/containers";
+
 import Spinner from "../../components/Spinner";
 import useWindowSize from "../../util/hooks/useWindowSize";
 import PhotoBooth from "../../components/admin/employees/PhotoBooth";
 import Info from "../../components/admin/employees/Info";
+import EmployeeDelete from "../../components/admin/employees/EmployeeDelete";
 
 const Employee = (props) => {
   const employeeId = props.match.params._id;
@@ -94,10 +96,20 @@ const Employee = (props) => {
                   handleDetails={handleDetails}
                   handleSchedule={handleSchedule}
                 />
-                <Info
-                  isEmpInfo={isEmpInfo}
-                  employee={employeeData && employeeData.employee}
-                />
+                <Content
+                  flex
+                  direct="column"
+                  width="100%"
+                  height="100%"
+                  justify="space-around"
+                  align="center"
+                >
+                  <Info
+                    isEmpInfo={isEmpInfo}
+                    employee={employeeData && employeeData.employee}
+                  />
+                  <EmployeeDelete employee={employee} />
+                </Content>
               </DGrid>
             </Content>
           </>

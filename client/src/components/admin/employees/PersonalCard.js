@@ -16,11 +16,13 @@ import moment from "moment";
 import parser from "html-react-parser";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import DecoupledEditor from "@ckeditor/ckeditor5-build-decoupled-document";
+import useWindowSize from "../../../util/hooks/useWindowSize";
 
 const regex = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
 const regexNum = /^\d+$/;
 
 const PersonalCard = ({ employee }) => {
+  const { width: wid } = useWindowSize();
   const { employeeAuth } = useContext(AuthContext);
   const [errors, setErrors] = useState({});
   const [isEditPersonal, setIsEditPersonal] = useState(false);
@@ -96,7 +98,9 @@ const PersonalCard = ({ employee }) => {
         justify="space-between"
         align="center"
       >
-        <h3>Personal Details</h3>
+        <DLabel size={wid < 768 ? "18px !important" : "22px"} weight={700}>
+          Personal Details
+        </DLabel>
         {(employeeAuth.role === "ADMIN" || employeeAuth.level > 2) && (
           <>
             <IconWrap
@@ -123,7 +127,7 @@ const PersonalCard = ({ employee }) => {
       </Content>
 
       <Content
-        width="80%"
+        width={wid < 768 ? "90%" : "80%"}
         height="100%"
         margin="0 auto"
         flex
@@ -465,7 +469,14 @@ const PersonalCard = ({ employee }) => {
                 />
               </>
             ) : (
-              <DLabel flex justifyEnd alignCenter weight={500} size="16px">
+              <DLabel
+                flex
+                justifyEnd
+                alignCenter
+                weight={500}
+                size="16px"
+                style={{ wordWrap: "break-word" }}
+              >
                 {employee.email}
               </DLabel>
             )}

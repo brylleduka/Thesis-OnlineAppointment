@@ -72,7 +72,7 @@ const PhotoBooth = ({
       direct="column"
     >
       <DCard
-        dw={wid < 524 ? "50%" : "100%"}
+        dw={wid < 524 ? "70%" : "100%"}
         dh="250px"
         mcenter
         p="0px"
@@ -98,17 +98,19 @@ const PhotoBooth = ({
           bg={({ theme }) => theme.bluer}
           circle
           bottomcenter
+          small
+          pad="3px"
         >
-          <Camera size="22px" title="Upload" />
+          <Camera title="Upload" />
           <input {...getInputProps()} />
         </IconWrap>
       </DCard>
 
-      <DButton width="80%" flex="true" onClick={handleDetails}>
+      <DButton width="180px" flex="true" onClick={handleDetails}>
         <UserDetail size="22px" />
         Details
       </DButton>
-      <DButton width="80%" flex="true" onClick={handleSchedule}>
+      <DButton width="180px" flex="true" onClick={handleSchedule}>
         <Schedule size="22px" title="Employee's Schdule Tab" />
         Schedule
       </DButton>
