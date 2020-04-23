@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { Dashboard } from "styled-icons/material/Dashboard";
 import { BookContent } from "styled-icons/boxicons-solid/BookContent";
-import { CalendarEvent } from "styled-icons/boxicons-regular/CalendarEvent";
+// import { CalendarEvent } from "styled-icons/boxicons-regular/CalendarEvent";
 import { Service } from "styled-icons/remix-line/Service";
 import { MessageSquare } from "@styled-icons/boxicons-solid/MessageSquare";
 import { ShortText } from "@styled-icons/material/ShortText";
@@ -28,7 +28,7 @@ const SideNav = () => {
       </NavItem>
       <NavItem>
         <NavLink to="/zeadmin/appointments">
-          <CalendarEvent size="16px" />
+          <BookContent size="16px" />
           <span>Appointments</span>
         </NavLink>
       </NavItem>

@@ -1,6 +1,7 @@
 const Employee = require("../models/Employee");
 const Schedule = require("../models/Schedule");
 const Service = require("../models/Service");
+const Category = require("../models/Category");
 const { UserInputError, ForbiddenError } = require("apollo-server-express");
 const Auth = require("../utils/check-auth");
 const {
@@ -426,22 +427,24 @@ module.exports = {
         throw err;
       }
     },
-    addService: async (_, { employeeId, serviceId }) => {
+    addService: async (_, { employeeId, categoryId }) => {
       try {
-        await Employee.updateOne(
+        const employeeCategory = await Employee.findOneAndUpdate(
           { _id: employeeId },
-          { $addToSet: { services: serviceId } }
+          { $addToSet: { categoryServices: categoryId } },
+          { new: true }
         );
 
-        await Service.updateMany(
-          { _id: serviceId },
-          { $addToSet: { employees: employeeId } }
+        await Category.updateMany(
+          { _id: categoryId },
+          { $addToSet: { employees: employeeId } },
+          { new: true }
         );
 
-        const employee = await Employee.findById(employeeId);
+        // const employee = await Employee.findById(employeeId);
         // const service = await Service.findById(serviceId);
 
-        return employee;
+        return employeeCategory;
       } catch (err) {
         throw err;
       }

@@ -10,7 +10,7 @@ export const DFancyText = styled.h1`
   text-transform: uppercase;
   display: table;
   white-space: nowrap;
-
+  overflow: hidden;
   &:before,
   &:after {
     border-top-width: 2px;
@@ -26,12 +26,21 @@ export const DFancyText = styled.h1`
     position: relative;
     top: 0.5em;
     width: 100px;
-    min-width: 50px;
+    min-width: 30px;
   }
   &:before {
     right: 3%;
   }
   &:after {
     left: 3%;
+  }
+  @media (max-width: 768px) {
+    margin: 0 auto;
+
+    font-size: 18px;
+  }
+
+  @media (max-width: 360px) {
+    font-size: 16px;
   }
 `;

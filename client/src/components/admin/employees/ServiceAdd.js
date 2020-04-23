@@ -27,36 +27,35 @@ const ServiceAdd = ({ open, setOpen, employeeId }) => {
   const [addService, { loading }] = useMutation(ADD_SERVICES_MUTATION, {
     variables: {
       employeeId: employeeId,
-      serviceId: services
+      serviceId: services,
     },
+    refetchQueries: [{ query: FETCH_ALL_CATEGORIES_QUERY }],
 
-    update(cache, result) {
-      setOpen(false);
-      const data = cache.readQuery({
-        query:
-          (FETCH_THE_ADD_SERVICE, { variables: { employeeId: employeeId } })
-      });
+    // update(cache, result) {
+    //   setOpen(false);
+    //   const data = cache.readQuery({
+    //     query:
+    //       (FETCH_THE_ADD_SERVICE, { variables: { employeeId: employeeId } }),
+    //   });
 
-      const newEmployee = result.data.addService;
-      cache.writeQuery({
-        query:
-          (FETCH_THE_ADD_SERVICE, { variables: { employeeId: employeeId } }),
-        data: { employee: [newEmployee, ...data.employee] }
-      });
-    },
+    //   const newEmployee = result.data.addService;
+    //   cache.writeQuery({
+    //     query:
+    //       (FETCH_THE_ADD_SERVICE, { variables: { employeeId: employeeId } }),
+    //     data: { employee: [newEmployee, ...data.employee] },
+    //   });
+    // },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
-    onCompleted(result) {
+    onCompleted() {
       toaster.notify("Success");
-    }
+    },
   });
 
   const handleAddService = () => {
     addService();
   };
-
-  console.log(errors);
 
   return (
     <Modal size="small" open={open}>
@@ -65,53 +64,48 @@ const ServiceAdd = ({ open, setOpen, employeeId }) => {
         {loadingCategory ? (
           <h3>Loading...</h3>
         ) : (
-          <Form>
-            <DGrid two gap="10px">
-              {categories.map(category => (
-                <Form.Group
-                  style={{ display: "flex", flexDirection: "column" }}
-                  key={category._id}
-                >
-                  <h4>{category.name}</h4>
-                  <CheckboxGroup
-                    name="services"
-                    value={services}
-                    onChange={setServices}
-                  >
-                    {Checkbox => (
-                      <DGrid two gap="5px">
-                        {category.services.map(service => (
-                          <div className="pretty p-default p-curve p-thick p-smooth">
-                            <Checkbox value={service._id} key={service._id} />
-                            <div className="state p-info-o">
-                              <label>{service.name}</label>
-                            </div>
-                          </div>
-                        ))}
-                      </DGrid>
-                    )}
-                  </CheckboxGroup>
-                </Form.Group>
-              ))}
-            </DGrid>
-          </Form>
+          <DGrid two gap="10px">
+            <CheckboxGroup
+              name="services"
+              value={services}
+              onChange={setServices}
+            >
+              {(Checkbox) => (
+                <DGrid two gap="5px">
+                  {categories.map((category) => (
+                    <div
+                      className="pretty p-default p-curve p-thick p-smooth"
+                      key={category._id}
+                    >
+                      <Checkbox value={category._id} key={category._id} />
+                      <div className="state p-info-o">
+                        <label>{category.name}</label>
+                      </div>
+                    </div>
+                  ))}
+                </DGrid>
+              )}
+            </CheckboxGroup>
+          </DGrid>
         )}
       </Modal.Content>
       <Modal.Actions>
         <DButton confirm type="submit" onClick={handleAddService}>
           {loading ? <Spinner small inverted /> : "Add"}
         </DButton>
-        <DButton alert onClick={() => setOpen(false)}>Exit</DButton>
+        <DButton alert onClick={() => setOpen(false)}>
+          Exit
+        </DButton>
       </Modal.Actions>
     </Modal>
   );
 };
 
 const ADD_SERVICES_MUTATION = gql`
-  mutation addService($employeeId: ID!, $serviceId: [ID]) {
-    addService(employeeId: $employeeId, serviceId: $serviceId) {
+  mutation addService($employeeId: ID!, $categoryId: [ID]) {
+    addService(employeeId: $employeeId, categoryId: $categoryId) {
       _id
-      services {
+      categoryServices {
         _id
         name
       }
@@ -119,16 +113,16 @@ const ADD_SERVICES_MUTATION = gql`
   }
 `;
 
-const FETCH_THE_ADD_SERVICE = gql`
-  query employee($employeeId: ID!) {
-    employee(_id: $employeeId) {
-      _id
-      services {
-        _id
-        name
-      }
-    }
-  }
-`;
+// const FETCH_THE_ADD_SERVICE = gql`
+//   query employee($employeeId: ID!) {
+//     employee(_id: $employeeId) {
+//       _id
+//       services {
+//         _id
+//         name
+//       }
+//     }
+//   }
+// `;
 
 export default ServiceAdd;

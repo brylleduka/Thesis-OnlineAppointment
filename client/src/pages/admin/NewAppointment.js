@@ -16,7 +16,7 @@ const NewAppointment = () => {
     firstName: "",
     lastName: "",
     contact: "",
-    email: ""
+    email: "",
   });
 
   const [categories, setCategories] = useState([]);

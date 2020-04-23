@@ -23,11 +23,9 @@ const FETCH_ALL_EMPLOYEES_QUERY = gql`
         breakStart
         breakLength
       }
-      services {
+      categoryServices {
         _id
         name
-        price
-        duration
         description
         photo
       }
@@ -57,11 +55,9 @@ const FETCH_EMPLOYEES_NOT_ADMIN_QUERY = gql`
         breakStart
         breakLength
       }
-      services {
+      categoryServices {
         _id
         name
-        price
-        duration
         description
         photo
       }
@@ -92,11 +88,9 @@ const FETCH_EMPLOYEE_QUERY = gql`
         breakStart
         breakLength
       }
-      services {
+      categoryServices {
         _id
         name
-        price
-        duration
         description
         photo
       }

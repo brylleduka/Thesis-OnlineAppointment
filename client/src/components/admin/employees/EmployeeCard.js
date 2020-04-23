@@ -10,8 +10,10 @@ import { Cancel } from "@styled-icons/material/Cancel";
 import Spinner from "../../Spinner";
 import toaster from "toasted-notes";
 import Toasted from "../../Toasted";
+import useWindowSize from "../../../util/hooks/useWindowSize";
 
 const EmployeeCard = ({ employee }) => {
+  const { width: wid } = useWindowSize();
   const { employeeAuth } = useContext(AuthContext);
 
   const [isEditEmpAcct, setIsEditEmpAcct] = useState(false);
@@ -76,24 +78,31 @@ const EmployeeCard = ({ employee }) => {
         justify="space-between"
         align="center"
       >
-        <h3>Employee Details</h3>
+        <DLabel size={wid < 768 ? "18px !important" : "22px"} weight={700}>
+          Personal Details
+        </DLabel>
         {(employeeAuth.role === "ADMIN" || employeeAuth.level > 2) && (
           <>
             <IconWrap
               invisible={isEditEmpAcct ? true : null}
-              color={"green"}
+              bgcolor={({ theme }) => theme.green}
               medium
               title={"Update Info"}
               topright
+              circle
+              shadow
+              pad="3px"
             >
               <Edit onClick={handleEditEmplAcct} />
             </IconWrap>
             <IconWrap
               invisible={!isEditEmpAcct ? true : null}
-              color={"red"}
               medium
               title={"Cancel Update"}
               topright
+              circle
+              shadow
+              color="red"
             >
               <Cancel onClick={handleEditEmplAcct} />
             </IconWrap>

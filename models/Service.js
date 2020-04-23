@@ -7,7 +7,7 @@ const serviceSchema = new Schema(
   {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     duration: Number,
     price: Number,
@@ -16,18 +16,11 @@ const serviceSchema = new Schema(
     category: {
       type: Schema.Types.ObjectId,
       ref: "Category",
-      autopopulate: true
+      autopopulate: true,
     },
-    employees: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Employee",
-        autopopulate: true
-      }
-    ]
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

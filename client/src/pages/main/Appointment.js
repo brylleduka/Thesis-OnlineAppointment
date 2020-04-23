@@ -13,13 +13,9 @@ import { DButton } from "../../components/styled/utils";
 import Confirmation from "../../components/main/appointment/Confirmation";
 
 const Appointment = () => {
-  const mql = window.matchMedia("(max-width: 768px)");
-
   const [open, setOpen] = useState(false);
 
-  const [values, setValues] = useState({
-    category: "",
-  });
+  const [categoryValue, setCategoryValue] = useState("");
   const [serviceValue, setServiceValue] = useState("");
   const [employeeVal, setEmployeeVal] = useState("");
   const [startDate, setStartDate] = useState(
@@ -72,8 +68,8 @@ const Appointment = () => {
 
           <DGrid>
             <AppointmentInputs
-              values={values}
-              setValues={setValues}
+              categoryValue={categoryValue}
+              setCategoryValue={setCategoryValue}
               employeeVal={employeeVal}
               serviceValue={serviceValue}
               setServiceValue={setServiceValue}
@@ -95,14 +91,14 @@ const Appointment = () => {
                     size="50px"
                     onClick={() => setOpen(true)}
                     basic={
-                      (values.category === "" ||
+                      (categoryValue === "" ||
                         serviceValue === "" ||
                         employeeVal === "" ||
                         selectedTime === "") &&
                       true
                     }
                     disabled={
-                      values.category === "" ||
+                      categoryValue === "" ||
                       serviceValue === "" ||
                       employeeVal === "" ||
                       selectedTime === ""

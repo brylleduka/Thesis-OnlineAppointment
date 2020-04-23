@@ -25,14 +25,15 @@ module.exports = {
       } catch (err) {
         throw err;
       }
-    }
+    },
   },
   Mutation: {
     createCategory: async (_, { categoryInput }) => {
       try {
         const newCategory = new Category({
           name: categoryInput.name,
-          description: categoryInput.description
+          description: categoryInput.description,
+          active: true,
         });
 
         const saved = await newCategory.save();
@@ -55,7 +56,7 @@ module.exports = {
         }
 
         const updated = await Category.findByIdAndUpdate(_id, updateCateg, {
-          new: true
+          new: true,
         });
 
         return updated;
@@ -67,7 +68,7 @@ module.exports = {
     addCategoryPhoto: async (_, { _id, file }) => {
       try {
         const { createReadStream, filename } = await file;
-        await new Promise(res =>
+        await new Promise((res) =>
           createReadStream().pipe(
             createWriteStream(
               path.join(__dirname, "../images/service", filename)
@@ -90,7 +91,7 @@ module.exports = {
       try {
         const services = await Service.find({ category: _id });
 
-        await services.map(async service => {
+        await services.map(async (service) => {
           await Employee.updateMany({}, { $pull: { services: service._id } });
         });
         await Service.deleteMany({ category: _id });
@@ -100,6 +101,6 @@ module.exports = {
       } catch (err) {
         throw err;
       }
-    }
-  }
+    },
+  },
 };

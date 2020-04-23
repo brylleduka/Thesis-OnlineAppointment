@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { FETCH_USERS_ACCOUNT } from "../../util/graphql/user";
 import Layout from "../../components/admin/layout/Layout";
 import { Link } from "react-router-dom";
-import { Eye } from "styled-icons/fa-regular/Eye";
+import { Eye } from "styled-icons/fa-regular";
 import { DButton, DLabel } from "../../components/styled/utils";
 import { Content, DSection } from "../../components/styled/containers";
 import DataTable from "react-data-table-component";

@@ -24,7 +24,7 @@ const NewEmployee = ({ setOpen, open }) => {
       workStart: "",
       workLength: "",
       breakStart: "",
-      breakLength: ""
+      breakLength: "",
     }
   );
 
@@ -40,43 +40,44 @@ const NewEmployee = ({ setOpen, open }) => {
       workLength: parseInt(values.workLength) * 60,
       breakStart: values.breakStart,
       breakLength: parseInt(values.breakLength) * 60,
-      day: days
+      day: days,
     },
+    refetchQueries: [{ query: FETCH_EMPLOYEES_NOT_ADMIN_QUERY }],
 
-    update(cache, result) {
-      setOpen(false);
-      const data = cache.readQuery({
-        query: FETCH_EMPLOYEES_NOT_ADMIN_QUERY
-      });
+    // update(cache, result) {
+    //   setOpen(false);
+    //   const data = cache.readQuery({
+    //     query: FETCH_EMPLOYEES_NOT_ADMIN_QUERY,
+    //   });
 
-      const newEmployee = result.data.createEmployee;
-      cache.writeQuery({
-        query: FETCH_EMPLOYEES_NOT_ADMIN_QUERY,
-        data: {
-          aestheticiansReceps: [newEmployee, ...data.aestheticiansReceps]
-        }
-      });
+    //   const newEmployee = result.data.createEmployee;
+    //   cache.writeQuery({
+    //     query: FETCH_EMPLOYEES_NOT_ADMIN_QUERY,
+    //     data: {
+    //       aestheticiansReceps: [newEmployee, ...data.aestheticiansReceps],
+    //     },
+    //   });
 
-      values.title = "";
-      values.firstName = "";
-      values.lastName = "";
-      values.contact = "";
-      values.email = "";
-      values.role = "";
-      values.workStart = "";
-      values.workLength = "";
-      values.breakStart = "";
-      values.breakLength = "";
-      days = [];
-    },
+    //   values.title = "";
+    //   values.firstName = "";
+    //   values.lastName = "";
+    //   values.contact = "";
+    //   values.email = "";
+    //   values.role = "";
+    //   values.workStart = "";
+    //   values.workLength = "";
+    //   values.breakStart = "";
+    //   values.breakLength = "";
+    //   days = [];
+    // },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
-    }
+    },
   });
 
-  const handleDayChange = val => {
-    setDays(val);
-  };
+  // const handleDayChange = (val) => {
+  //   setDays(val);
+  // };
 
   function createEmployeeCallback() {
     createEmployee();
@@ -154,7 +155,7 @@ const NewEmployee = ({ setOpen, open }) => {
             <Content width="100%">
               <Form.Group inline>
                 <CheckboxGroup name="days" value={days} onChange={setDays}>
-                  {Checkbox => (
+                  {(Checkbox) => (
                     <>
                       <div class="pretty p-default p-curve p-thick p-smooth">
                         <Checkbox value="Sun" />
@@ -310,7 +311,9 @@ const NewEmployee = ({ setOpen, open }) => {
         </Form>
       </Modal.Content>
       <Modal.Actions>
-        <DButton alert onClick={() => setOpen(false)}>No</DButton>
+        <DButton alert onClick={() => setOpen(false)}>
+          No
+        </DButton>
         <DButton confirm type="submit" onClick={handleSubmit}>
           Yes
         </DButton>
@@ -367,14 +370,6 @@ const CREATE_EMPLOYEE_MUTATION = gql`
         workLength
         breakStart
         breakLength
-      }
-      services {
-        _id
-        name
-        price
-        duration
-        description
-        photo
       }
     }
   }

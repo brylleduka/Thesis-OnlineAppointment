@@ -42,10 +42,10 @@ const employeeSchema = new Schema(
       type: String,
       required: true,
     },
-    services: [
+    categoryServices: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Service",
+        ref: "Category",
         autopopulate: true,
       },
     ],
@@ -54,6 +54,7 @@ const employeeSchema = new Schema(
       ref: "Schedule",
       autopopulate: true,
     },
+    active: Boolean,
   },
   {
     timestamps: true,

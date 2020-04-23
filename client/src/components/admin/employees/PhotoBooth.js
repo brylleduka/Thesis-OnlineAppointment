@@ -97,9 +97,11 @@ const PhotoBooth = ({
           {...getRootProps()}
           bg={({ theme }) => theme.bluer}
           circle
+          shadow
           bottomcenter
           small
           pad="3px"
+          bgcolor={({ theme }) => theme.bluer}
         >
           <Camera title="Upload" />
           <input {...getInputProps()} />

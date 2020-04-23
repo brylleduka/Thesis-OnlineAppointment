@@ -97,6 +97,7 @@ export const SpinnerRing = styled.div`
     margin: 0 2px;
     letter-spacing: 2px;
     font-weight: 700;
+    text-align: center;
     font-size: ${(props) =>
       props.tiny
         ? "12px"

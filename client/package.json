@@ -46,7 +46,7 @@
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.2",
     "styled-components": "^5.0.1",
-    "styled-icons": "^9.4.0",
+    "styled-icons": "^10.2.1",
     "toasted-notes": "^3.2.0"
   },
   "scripts": {

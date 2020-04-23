@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { ArrowRight } from "styled-icons/material/ArrowRight";
+import { ArrowRight } from "styled-icons/material";
 import { DAccordion } from "./styled/utils";
 
 const Accordion = props => {

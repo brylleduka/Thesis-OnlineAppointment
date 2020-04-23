@@ -7,6 +7,8 @@ import { DCard, Content } from "../../styled/containers";
 import { DLabel, IconWrap, DInput, DSelect, DButton } from "../../styled/utils";
 import { Edit } from "@styled-icons/boxicons-regular/Edit";
 import { Cancel } from "@styled-icons/material/Cancel";
+// import { Cancel } from "@styled-icons/typicons/Cancel";
+
 import DatePicker from "react-datepicker";
 import Spinner from "../../Spinner";
 import toaster from "toasted-notes";
@@ -87,7 +89,6 @@ const PersonalCard = ({ employee }) => {
     updatePersonalEmployee();
   };
 
-
   return (
     <DCard dw="100%" dh="100%" flex fcol justifyBetween overf>
       <Content
@@ -104,20 +105,25 @@ const PersonalCard = ({ employee }) => {
           <>
             <IconWrap
               invisible={isEditPersonal ? true : null}
-              color={"green"}
+              bgcolor={({ theme }) => theme.blue}
               medium
               title={"Update Info"}
               topright
+              circle
+              shadow
+              pad="3px"
             >
               <Edit onClick={handleEditPersonal} />
             </IconWrap>
 
             <IconWrap
               invisible={!isEditPersonal ? true : null}
-              color={"red"}
               medium
               title={"Cancel Update"}
               topright
+              circle
+              shadow
+              color="red"
             >
               <Cancel onClick={handleEditPersonal} />
             </IconWrap>
@@ -126,7 +132,7 @@ const PersonalCard = ({ employee }) => {
       </Content>
 
       <Content
-        width={wid < 768 ? "90%" : "80%"}
+        width={wid <= 768 ? "90%" : "80%"}
         height="100%"
         margin="0 auto"
         flex
@@ -437,7 +443,7 @@ const PersonalCard = ({ employee }) => {
             flex
             justify="flex-start"
             align="flex-start"
-            pad="5px 10px"
+            pad="5px"
             direct="column"
           >
             {isEditPersonal ? (
@@ -473,8 +479,8 @@ const PersonalCard = ({ employee }) => {
                 justifyEnd
                 alignCenter
                 weight={500}
-                size="16px"
-                style={{ wordWrap: "break-word" }}
+                size="14px"
+                breakWord
               >
                 {employee.email}
               </DLabel>

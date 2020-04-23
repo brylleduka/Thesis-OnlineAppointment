@@ -15,6 +15,13 @@ const FETCH_ALL_CATEGORIES_QUERY = gql`
         description
         photo
       }
+      employees {
+        _id
+        empId
+        title
+        firstName
+        lastName
+      }
     }
   }
 `;
@@ -33,6 +40,15 @@ const FETCH_CATEGORY_QUERY = gql`
         duration
         description
         photo
+      }
+      employees {
+        _id
+        title
+        empId
+        firstName
+        lastName
+        email
+        contact
       }
     }
   }
@@ -55,13 +71,6 @@ const FETCH_ALL_SERVICES_QUERY = gql`
         _id
         name
       }
-      employees {
-        _id
-        empId
-        title
-        firstName
-        lastName
-      }
     }
   }
 `;
@@ -75,13 +84,7 @@ const FETCH_SERVICES_QUERY = gql`
       price
       description
       photo
-      employees {
-        _id
-        empId
-        title
-        firstName
-        lastName
-      }
+
       category {
         _id
         name
@@ -100,15 +103,7 @@ const FETCH_SINGLE_SERVICE_QUERY = gql`
       price
       description
       photo
-      employees {
-        _id
-        title
-        empId
-        firstName
-        lastName
-        email
-        contact
-      }
+
       category {
         _id
         name
@@ -124,5 +119,5 @@ export {
   FETCH_ALL_CATEGORIES_QUERY,
   FETCH_CATEGORY_QUERY,
   FETCH_SERVICES_QUERY,
-  FETCH_SINGLE_SERVICE_QUERY
+  FETCH_SINGLE_SERVICE_QUERY,
 };

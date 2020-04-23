@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { FETCH_EMPLOYEES_NOT_ADMIN_QUERY } from "../../util/graphql/employee";
 import Layout from "../../components/admin/layout/Layout";
 import { Link } from "react-router-dom";
-import { Eye } from "styled-icons/fa-regular/Eye";
+import { Eye } from "styled-icons/fa-regular";
 import { Grid } from "@styled-icons/boxicons-solid/Grid";
 import { DButton, DLabel } from "../../components/styled/utils";
 import { Content, DSection } from "../../components/styled/containers";

@@ -46,6 +46,15 @@ const Showcase = ({ nextSection }) => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 5000,
+    adaptiveHeight: true,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          arrows: false,
+        },
+      },
+    ],
   };
 
   return (

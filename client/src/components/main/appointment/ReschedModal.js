@@ -9,11 +9,8 @@ import ReschedConfirm from "./ReschedConfirm";
 const ReschedModal = ({ appointmentId, setOpen, isAdmin, status }) => {
   const [isResched, setIsResched] = useState(false);
 
-  const [service, setService] = useState([]);
-  const [serviceEmp, setServiceEmp] = useState([]);
-  const [values, setValues] = useState({
-    category: ""
-  });
+
+  const [categoryValue, setCategoryValue] = useState("");
   const [serviceValue, setServiceValue] = useState("");
   const [employeeVal, setEmployeeVal] = useState("");
   const [startDate, setStartDate] = useState(
@@ -33,11 +30,9 @@ const ReschedModal = ({ appointmentId, setOpen, isAdmin, status }) => {
         <Modal.Content>
           <DGrid two>
             <AppointmentInputs
-              values={values}
-              setValues={setValues}
+              categoryValue={categoryValue}
+              setCategoryValue={setCategoryValue}
               employeeVal={employeeVal}
-              setService={setService}
-              setServiceEmp={setServiceEmp}
               serviceValue={serviceValue}
               setServiceValue={setServiceValue}
               setEmployeeVal={setEmployeeVal}

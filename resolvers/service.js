@@ -30,7 +30,7 @@ module.exports = {
       } catch (err) {
         throw err;
       }
-    }
+    },
   },
   Mutation: {
     createService: async (
@@ -50,7 +50,7 @@ module.exports = {
         if (serviceExist) {
           errors.serviceExist = "Service exist already";
           throw new UserInputError("Service already exist", {
-            errors
+            errors,
           });
         }
 
@@ -59,7 +59,7 @@ module.exports = {
           price,
           duration, //MINUTES
           description,
-          category: categoryId
+          category: categoryId,
         });
 
         const savedService = await newService.save();
@@ -92,7 +92,7 @@ module.exports = {
         }
 
         const updated = await Service.findByIdAndUpdate(_id, updateService, {
-          new: true
+          new: true,
         });
 
         return updated;
@@ -114,7 +114,7 @@ module.exports = {
     addServicePhoto: async (_, { _id, file }) => {
       try {
         const { createReadStream, filename } = await file;
-        await new Promise(res =>
+        await new Promise((res) =>
           createReadStream().pipe(
             createWriteStream(
               path.join(__dirname, "../images/service", filename)
@@ -128,6 +128,6 @@ module.exports = {
       } catch (err) {
         throw err;
       }
-    }
-  }
+    },
+  },
 };

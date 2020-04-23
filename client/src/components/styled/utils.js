@@ -186,7 +186,7 @@ export const DButtonFree = styled(DButton)`
 export const DLabel = styled.label`
   position: relative;
   font-size: ${(props) => (props.size ? props.size : "12px")};
-  color: #000;
+  color: ${(props) => (props.txtColor ? props.txtColor : "#232323")};
   letter-spacing: ${(props) => (props.ls ? props.ls : "1px")};
   font-weight: ${(props) => (props.weight ? props.weight : 500)};
   padding: ${(props) => (props.pad ? props.pad : "5px 10px")};
@@ -195,7 +195,7 @@ export const DLabel = styled.label`
   border-radius: ${(props) => props.rounded && "5px"};
   text-transform: ${(props) => props.tt && props.tt};
   width: ${(props) => (props.w ? props.w : "auto")};
-  display: ${(props) => props.flex && "flex"};
+  display: ${(props) => (props.flex ? "flex" : "inline-block")};
   justify-content: ${(props) =>
     props.justifyCenter
       ? "center"
@@ -220,9 +220,22 @@ export const DLabel = styled.label`
   flex-direction: ${(props) => props.fcol && "column"};
 
   &:hover {
-    opacity: ${(props) => props.hover && "0.8"};
-    cursor: ${(props) => props.hover && "pointer"};
   }
+
+  ${(props) =>
+    props.hover &&
+    css`
+      opacity: 0.8;
+      cursor: pointer;
+    `};
+
+  ${(props) =>
+    props.breakWord &&
+    css`
+      overflow-wrap: break-word;
+      word-break: break-word;
+      hyphens: auto;
+    `};
 
   ${(props) =>
     props.primary &&
@@ -555,12 +568,6 @@ export const IconWrap = styled.div`
       `};
 
     ${(props) =>
-      props.circle &&
-      css`
-        border-radius: 50%;
-      `};
-
-    ${(props) =>
       props.shadow &&
       css`
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12), 0 2px 2px rgba(0, 0, 0, 0.12),
@@ -575,6 +582,7 @@ export const IconWrap = styled.div`
         opacity: 0;
         pointer-events: none;
       `};
+
     ${(props) =>
       props.size &&
       css`
@@ -583,7 +591,12 @@ export const IconWrap = styled.div`
       `};
 
     ${(props) =>
-      props.tiny
+      props.mini
+        ? css`
+            width: 9px;
+            height: 9px;
+          `
+        : props.tiny
         ? css`
             width: 18px;
             height: 18px;
@@ -595,20 +608,18 @@ export const IconWrap = styled.div`
           `
         : props.medium
         ? css`
-            width: 30px;
-            height: 30px;
+            width: 26px;
+            height: 26px;
           `
         : props.large
         ? css`
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
           `
         : css`
             width: 25px;
             height: 25px;
           `};
-
-    background: ${(props) => (props.bg ? props.bg : "transparent")};
 
     ${(props) =>
       props.circle &&
@@ -646,6 +657,17 @@ export const IconWrap = styled.div`
         position: absolute;
         top: 2%;
         right: 0;
+        margin: 0 auto;
+      `};
+
+    ${(props) =>
+      props.right &&
+      css`
+        z-index: 20;
+        position: absolute;
+        top: 2%;
+        right: 0;
+        bottom: 0;
         margin: 0 auto;
       `};
   }
@@ -715,4 +737,22 @@ export const DSelect = styled.select`
   &:focus {
     box-shadow: 0 0 2px 1px ${({ theme }) => theme.primary};
   }
+`;
+
+export const CheckLabel = styled.label`
+  font-weight: ${(props) =>
+    props.weight === "fw500" ? "500 !important" : "700 !important"};
+  color: ${(props) =>
+    props.color === "green"
+      ? ({ theme }) => theme.green
+      : props.color === "bluer"
+      ? ({ theme }) => theme.bluer
+      : props.color === "blue"
+      ? "rgba(33, 147, 176, 0.7)"
+      : props.color === "dark"
+      ? ({ theme }) => theme.dark
+      : props.color === "grey"
+      ? ({ theme }) => theme.grey
+      : ({ theme }) => theme.secondary};
+  text-transform: ${(props) => (props.textt ? props.textt : "none")};
 `;

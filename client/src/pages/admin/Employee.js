@@ -61,6 +61,7 @@ const Employee = (props) => {
         justify="space-around"
         align="center"
         direct="column"
+        minh="90vh"
       >
         {employeeLoading ? (
           <Spinner content="Please wait while we fetch our data..." />

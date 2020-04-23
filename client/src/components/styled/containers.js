@@ -25,12 +25,13 @@ export const DContainer = styled.div`
 
 export const DShowCase = styled.div`
   width: 100%;
+
   height: ${(props) => (props.height ? props.height : "100vh")};
   position: relative;
   background: ${(props) => props.bgcolor && props.bgcolor};
   background-image: url(${(props) => props.background && props.background});
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: calc(100% - 20%) calc(100% - 20%);
   background-size: cover;
   background-attachment: fixed;
 
@@ -53,6 +54,31 @@ export const DShowCase = styled.div`
     height: 100%;
     width: auto;
     object-fit: cover;
+  }
+
+  @media (max-width: 360px) {
+    width: 100%;
+    background-position: calc(100% - 30%) calc(100% - 30%);
+    align-items: center;
+    text-align: center;
+
+    h1,
+    h2,
+    p {
+      margin-left: 0px;
+    }
+    h1,
+    h2 {
+      font-size: 14px;
+    }
+    p {
+      font-size: 12px;
+    }
+    button {
+      margin-left: 0px;
+      font-size: 14px;
+      padding: 0.5em 0.8em;
+    }
   }
 `;
 
@@ -149,6 +175,17 @@ export const DSection = styled.section`
   flex-direction: ${(props) => props.direct && props.direct};
   position: relative;
 
+  ${(props) =>
+    props.minh &&
+    css`
+      min-height: ${props.minh};
+    `};
+  ${(props) =>
+    props.maxh &&
+    css`
+      min-height: ${props.maxh};
+    `};
+
   @media (max-width: 768px) {
     flex-direction: column;
   }
@@ -166,7 +203,6 @@ export const Content = styled.div`
   display: ${(props) => (props.flex ? "flex" : "block")};
   justify-content: ${(props) => props.justify && props.justify};
   align-items: ${(props) => props.align && props.align};
-  flex-flow: ${(props) => props.flow && props.flow};
   flex-direction: ${(props) => props.direct && props.direct};
   letter-spacing: 2px;
   position: relative;
@@ -194,6 +230,12 @@ export const Content = styled.div`
     "0 8px 16px rgba(0, 0, 0, 0.12)")};
   z-index: 2;
   font-weight: ${(props) => props.weight && props.weight};
+
+  ${(props) =>
+    props.flow &&
+    css`
+      flex-flow: ${props.flow};
+    `};
 
   h2 {
     text-transform: uppercase;
@@ -226,6 +268,20 @@ export const Content = styled.div`
     border-radius: ${(props) => props.circle && "50%"};
     object-fit: contain;
   }
+
+  visibility: visible;
+  pointer-events: all;
+  transition: visibility 200ms, opacity 0.3s ease-in-out;
+
+  ${(props) =>
+    props.invisible &&
+    css`
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+    `};
+
+
 `;
 
 export const Overlay = styled.div`

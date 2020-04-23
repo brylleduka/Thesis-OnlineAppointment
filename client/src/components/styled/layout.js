@@ -9,7 +9,7 @@ export const LayoutContainer = styled.div`
     "sidenav footer";
   position: relative;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     grid-template-columns: 1fr;
     grid-template-areas:
       "header"
@@ -53,7 +53,7 @@ export const SideNavLayout = styled.div`
     margin-top: 2rem;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     position: absolute;
     display: none;
   }

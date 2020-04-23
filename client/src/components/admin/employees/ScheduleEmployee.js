@@ -4,7 +4,13 @@ import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { FETCH_EMPLOYEE_QUERY } from "../../../util/graphql/employee";
 import { DGrid, DCard, Content } from "../../styled/containers";
-import { DLabel, IconWrap, DSelect, DButton } from "../../styled/utils";
+import {
+  DLabel,
+  IconWrap,
+  DSelect,
+  DButton,
+  CheckLabel,
+} from "../../styled/utils";
 import CheckboxGroup from "react-checkbox-group";
 import { Edit } from "@styled-icons/boxicons-regular/Edit";
 import { Cancel } from "@styled-icons/material/Cancel";
@@ -13,23 +19,6 @@ import useWindowSize from "../../../util/hooks/useWindowSize";
 import Spinner from "../../Spinner";
 import toaster from "toasted-notes";
 import Toasted from "../../Toasted";
-import styled from "styled-components";
-
-const CheckLabel = styled.label`
-  font-weight: ${(props) =>
-    props.weight === "fw500" ? "500 !important" : "700 !important"};
-  color: ${(props) =>
-    props.color === "bluer"
-      ? ({ theme }) => theme.bluer
-      : props.color === "blue"
-      ? "rgba(33, 147, 176, 0.7)"
-      : props.color === "dark"
-      ? ({ theme }) => theme.dark
-      : props.color === "grey"
-      ? ({ theme }) => theme.grey
-      : ({ theme }) => theme.secondary};
-  text-transform: ${(props) => (props.textt ? props.textt : "none")};
-`;
 
 const ScheduleEmployee = ({ employee }) => {
   const { width: wid } = useWindowSize();
@@ -109,20 +98,25 @@ const ScheduleEmployee = ({ employee }) => {
               <>
                 <IconWrap
                   invisible={isEditSched ? true : null}
-                  color={"green"}
+                  bgcolor={({ theme }) => theme.blue}
                   medium
                   title={"Update Info"}
                   topright
+                  circle
+                  shadow
+                  pad="3px"
                 >
                   <Edit onClick={handleEditSched} />
                 </IconWrap>
 
                 <IconWrap
                   invisible={!isEditSched ? true : null}
-                  color={"red"}
                   medium
                   title={"Cancel Update"}
                   topright
+                  circle
+                  shadow
+                  color="red"
                 >
                   <Cancel onClick={handleEditSched} />
                 </IconWrap>
@@ -530,26 +524,26 @@ const ScheduleEmployee = ({ employee }) => {
               </Content>
             </DGrid>
           </Content>
-          {isEditSched && (
-            <Content
-              flex
-              width="100%"
-              height="100%"
-              justify="flex-end"
-              align="center"
-            >
-              <DButton confirm flex onClick={handleUpdateSched}>
-                {loadSchedule ? (
-                  <Spinner tiny row inverted content="Loading..." />
-                ) : (
-                  <>
-                    <Save size="22px" title="Update Content" />
-                    Save
-                  </>
-                )}
-              </DButton>
-            </Content>
-          )}
+
+          <Content
+            flex
+            width="100%"
+            height="100%"
+            justify="flex-end"
+            align="center"
+            invisible={isEditSched ? false : true}
+          >
+            <DButton confirm flex onClick={handleUpdateSched}>
+              {loadSchedule ? (
+                <Spinner tiny row inverted content="Loading..." />
+              ) : (
+                <>
+                  <Save size="22px" title="Update Content" />
+                  Save
+                </>
+              )}
+            </DButton>
+          </Content>
         </DCard>
       </DGrid>
     </Content>

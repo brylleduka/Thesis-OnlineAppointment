@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { Content } from "../../styled/containers";
 import { DButton, DLabel } from "../../styled/utils";
-import { Eye } from "styled-icons/fa-regular/Eye";
+import { Eye } from "styled-icons/fa-regular";
 import { Grid } from "@styled-icons/boxicons-solid/Grid";
 import Spinner from "../../Spinner";
 import moment from "moment";

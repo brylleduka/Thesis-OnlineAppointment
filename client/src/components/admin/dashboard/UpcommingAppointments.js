@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import DataTable from "react-data-table-component";
-import { Eye } from "styled-icons/fa-regular/Eye";
+import { Eye } from "styled-icons/fa-regular";
 import { DButton } from "../../styled/utils";
 import { Grid } from "@styled-icons/boxicons-solid/Grid";
 import Spinner from "../../Spinner";

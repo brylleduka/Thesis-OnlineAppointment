@@ -4,6 +4,7 @@ import {
   FETCH_ALL_CATEGORIES_QUERY,
   FETCH_SERVICES_QUERY,
   FETCH_SINGLE_SERVICE_QUERY,
+  FETCH_CATEGORY_QUERY,
 } from "../../../util/graphql/service";
 import { Form } from "semantic-ui-react";
 import { Content } from "../../styled/containers";
@@ -11,13 +12,12 @@ import Spinner from "../../Spinner";
 import Page404 from "../../../pages/Page404";
 
 const AppointmentInputs = ({
-  values,
-  setValues,
+  categoryValue,
+  setCategoryValue,
   serviceValue,
   setServiceValue,
   employeeVal,
   setEmployeeVal,
-  c,
 }) => {
   const [categories, setCategories] = useState([]);
   const [services, setServices] = useState([]);
@@ -41,7 +41,7 @@ const AppointmentInputs = ({
     { called, loading: loading_services, data: data_services },
   ] = useLazyQuery(FETCH_SERVICES_QUERY, {
     variables: {
-      categoryId: values.category,
+      categoryId: categoryValue,
     },
   });
 
@@ -59,15 +59,15 @@ const AppointmentInputs = ({
       loading: loading_serviceEmp,
       data: data_serviceEmp,
     },
-  ] = useLazyQuery(FETCH_SINGLE_SERVICE_QUERY, {
+  ] = useLazyQuery(FETCH_CATEGORY_QUERY, {
     variables: {
-      serviceId: serviceValue,
+      categoryId: categoryValue,
     },
   });
 
   useEffect(() => {
     if (data_serviceEmp) {
-      setEmployees(data_serviceEmp.service.employees);
+      setEmployees(data_serviceEmp.category.employees);
     }
   }, [data_serviceEmp]);
 
@@ -75,7 +75,7 @@ const AppointmentInputs = ({
 
   const handleChange = (e) => {
     e.preventDefault();
-    setValues({ [e.target.name]: e.target.value });
+    setCategoryValue(e.target.value);
     loadService();
   };
 
@@ -116,7 +116,7 @@ const AppointmentInputs = ({
           ) : (
             <select
               name="category"
-              value={values.category}
+              value={categoryValue}
               onChange={handleChange}
               className="input-custom"
             >

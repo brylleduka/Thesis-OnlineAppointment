@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { FETCH_EMPLOYEES_NOT_ADMIN_QUERY } from "../../../util/graphql/employee";
 
 import { HashLink as Link } from "react-router-hash-link";
-import { DGrid, DSection } from "../../styled/containers";
+import { DGrid, DSection, Content } from "../../styled/containers";
 import { JCard4 } from "../../styled/card";
 import Skeleton from "react-loading-skeleton";
 import parser from "html-react-parser";
@@ -44,6 +44,7 @@ const TeamSection = ({ cards }) => {
       margin="48px auto"
     >
       <FancyText size="28px">Our Team</FancyText>
+
       <DGrid four gap="25px">
         {loading_employeesAR ? (
           <>
@@ -68,34 +69,37 @@ const TeamSection = ({ cards }) => {
         ) : (
           employeesAR &&
           employeesAR.map((employee) => (
-            <JCard4 data-emp={employee._id} key={employee._id}>
-              <div className="profile-image">
-                <img
-                  src={
-                    employee.photo
-                      ? `/images/employees/${employee.photo}`
-                      : "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample83.jpg"
-                  }
-                  alt={employee.photo}
-                />
-              </div>
-              <figcaption>
-                <h3>
-                  {employee.title} {employee.firstName} {employee.lastName}
-                </h3>
-                <h4>{employee.role}</h4>
-                <p>
-                  {employee.bio.length > 50
-                    ? parser(employee.bio.substr(0, 50) + "...")
-                    : parser(employee.bio.substr(0, 50))}
-                </p>
-                <ReadMore hover={0}>Read More</ReadMore>
-              </figcaption>
-              <Link to="/about" className="linkToPage" />
-            </JCard4>
+            <Content margin="0 auto" width="90%" height="100%">
+              <JCard4 data-emp={employee._id} key={employee._id}>
+                <div className="profile-image">
+                  <img
+                    src={
+                      employee.photo
+                        ? `/images/employees/${employee.photo}`
+                        : "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample83.jpg"
+                    }
+                    alt={employee.photo}
+                  />
+                </div>
+                <figcaption>
+                  <h3>
+                    {employee.title} {employee.firstName} {employee.lastName}
+                  </h3>
+                  <h4>{employee.role}</h4>
+                  <p>
+                    {employee.bio.length > 50
+                      ? parser(employee.bio.substr(0, 50) + "...")
+                      : parser(employee.bio.substr(0, 50))}
+                  </p>
+                  <ReadMore hover={0}>Read More</ReadMore>
+                </figcaption>
+                <Link to="/about" className="linkToPage" />
+              </JCard4>
+            </Content>
           ))
         )}
       </DGrid>
+
       <Link to="/about/#team" className="btn btn-blue">
         Learn More
       </Link>
@@ -106,11 +110,12 @@ const TeamSection = ({ cards }) => {
 const styles = {
   dloading: {
     display: "flex",
-    justifyContent: "centet",
+    justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
     width: "250px",
     lineHeight: 2,
+    margin: "0 auto",
   },
 };
 

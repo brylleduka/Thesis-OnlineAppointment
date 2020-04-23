@@ -3,7 +3,6 @@ import { HeaderLayout } from "../../styled/layout";
 import { Link } from "react-router-dom";
 import { Content, DImage, Overlay } from "../../styled/containers";
 import { DButton } from "../../styled/utils";
-import { Exit } from "styled-icons/boxicons-regular/Exit";
 import { AuthContext } from "../../../context/auth";
 import { Dropdown, Image, Icon } from "semantic-ui-react";
 

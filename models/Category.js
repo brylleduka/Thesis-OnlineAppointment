@@ -7,7 +7,7 @@ const categorySchema = new Schema(
   {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     description: String,
     photo: String,
@@ -15,12 +15,20 @@ const categorySchema = new Schema(
       {
         type: Schema.Types.ObjectId,
         ref: "Service",
-        autopopulate: true
-      }
-    ]
+        autopopulate: true,
+      },
+    ],
+    employees: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Employee",
+        autopopulate: true,
+      },
+    ],
+    active: Boolean,
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

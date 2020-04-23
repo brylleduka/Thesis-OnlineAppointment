@@ -8,7 +8,7 @@ import { DSection } from "../../components/styled/containers";
 import { Popup, Icon, Breadcrumb } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { Grid } from "@styled-icons/boxicons-solid/Grid";
-import { Eye } from "styled-icons/fa-regular/Eye";
+import { Eye } from "styled-icons/fa-regular";
 import Spinner from "../../components/Spinner";
 import ReplyModal from "../../components/admin/inquiry/ReplyModal";
 import moment from "moment";
