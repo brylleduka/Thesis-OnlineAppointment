@@ -407,6 +407,23 @@ module.exports = {
         throw err;
       }
     },
+    archiveEmployee: async (_, { _id }, { req }) => {
+      try {
+        const emp = Auth({ req });
+
+        console.log(emp);
+
+        // await Employee.findOneAndUpdate(
+        //   { _id },
+        //   { $set: { active: false } },
+        //   { new: true }
+        // );
+
+        // return true;
+      } catch (err) {
+        throw err;
+      }
+    },
     deleteEmployee: async (_, { _id }, context) => {
       try {
         const { role, level } = Auth(context);
@@ -449,13 +466,22 @@ module.exports = {
         throw err;
       }
     },
-    removeService: async (_, { employeeId, serviceId }, context) => {
+    removeService: async (_, { employeeId, categoryId }, context) => {
+      let errors = {};
       try {
-        const updatedService = await Employee.updateOne(
+        const { role, level } = Auth(context);
+
+        if (role !== "ADMIN" || level < 3) {
+          errors.unauth =
+            "You are not Authorized to do this action. Please inform the Admin";
+          throw new UserInputError("Auth Error", { errors });
+        }
+
+        await Employee.findOneAndUpdate(
           { _id: employeeId },
-          { $pull: { services: serviceId } }
+          { $pull: { services: categoryId } }
         );
-        await Service.updateOne(
+        await Service.findOneAndUpdate(
           { _id: serviceId },
           { $pull: { employees: employeeId } }
         );

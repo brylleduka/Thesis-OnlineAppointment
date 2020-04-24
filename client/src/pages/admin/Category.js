@@ -68,7 +68,7 @@ const Category = (props) => {
 
   const onDrop = useCallback(
     ([file]) => {
-      addCategoryPhoto({ variables: { categoryId, file } });
+      addCategoryPhoto({ variables: { categoryId: categoryId, file } });
     },
     [addCategoryPhoto]
   );

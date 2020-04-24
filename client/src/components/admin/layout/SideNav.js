@@ -1,17 +1,24 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Dashboard } from "styled-icons/material/Dashboard";
-import { BookContent } from "styled-icons/boxicons-solid/BookContent";
-// import { CalendarEvent } from "styled-icons/boxicons-regular/CalendarEvent";
-import { Service } from "styled-icons/remix-line/Service";
-import { MessageSquare } from "@styled-icons/boxicons-solid/MessageSquare";
-import { ShortText } from "@styled-icons/material/ShortText";
-import { AccountBox } from "@styled-icons/material/AccountBox";
-import { AccountCircle } from "@styled-icons/material/AccountCircle";
-import { MessageRoundedDetail } from "@styled-icons/boxicons-solid/MessageRoundedDetail";
-import { FileDirectory } from "@styled-icons/octicons/FileDirectory";
+import {
+  BookContent,
+  Report,
+  MessageSquare,
+  MessageRoundedDetail,
+  CalendarEvent
+} from "@styled-icons/boxicons-solid";
+
+import { Service } from "@styled-icons/remix-line/Service";
+
+import {
+  ShortText,
+  AccountBox,
+  AccountCircle,
+  Dashboard,
+} from "@styled-icons/material";
+import { FileDirectory } from "@styled-icons/octicons";
 import { Profile } from "@styled-icons/icomoon/Profile";
-import { Report } from "@styled-icons/boxicons-solid/Report";
+
 import { SideNavLayout } from "../../styled/layout";
 import { NavItem } from "../../styled/utils";
 
@@ -28,7 +35,7 @@ const SideNav = () => {
       </NavItem>
       <NavItem>
         <NavLink to="/zeadmin/appointments">
-          <BookContent size="16px" />
+          <CalendarEvent size="16px" />
           <span>Appointments</span>
         </NavLink>
       </NavItem>

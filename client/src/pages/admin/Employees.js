@@ -11,6 +11,7 @@ import DataTable from "react-data-table-component";
 import Spinner from "../../components/Spinner";
 import NewEmployee from "../../components/admin/employees/NewEmployee";
 import { AuthContext } from "../../context/auth";
+import Page404 from "../../pages/Page404";
 
 const Employees = () => {
   const [open, setOpen] = useState(false);
@@ -34,7 +35,7 @@ const Employees = () => {
   }, [data_employeesAR]);
 
   if (error) {
-    return <p>Oops!</p>;
+    return <Page404 />;
   }
 
   const columns = [
@@ -49,12 +50,14 @@ const Employees = () => {
     {
       name: "Employee ID",
       selector: "empId",
+
       sortable: true,
     },
     {
       name: "Thumbnail",
       selector: "photo",
-      grow: 0,
+      grow: 0.5,
+      hide: "md",
       cell: (row) => (
         <img
           height="80px"
@@ -87,6 +90,8 @@ const Employees = () => {
     },
     {
       name: "Actions",
+      grow: 0,
+      right: true,
       cell: (row) => (
         <DButton flex as={Link} to={`/zeadmin/employee/${row._id}`}>
           <Eye size="18px" />
@@ -109,9 +114,9 @@ const Employees = () => {
     },
     rows: {
       style: {
-        fontSize: "14px",
-        fontWeight: "700",
-        color: "#000",
+        fontSize: "12px",
+        fontWeight: "700 !important",
+        color: "#232323",
       },
       highlightOnHoverStyle: {
         backgroundColor: "rgb(230, 244, 244)",

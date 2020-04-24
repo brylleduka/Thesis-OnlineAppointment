@@ -9,7 +9,7 @@ import { ApolloProvider } from "@apollo/react-hooks";
 import { setContext } from "apollo-link-context";
 
 const uploadLink = createUploadLink({
-  uri: "/graphql"
+  uri: "/graphql",
 });
 
 const authLink = setContext(() => {
@@ -18,23 +18,23 @@ const authLink = setContext(() => {
   if (token) {
     return {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     };
   }
 
   if (employeeToken) {
     return {
       headers: {
-        Authorization: `Basic ${employeeToken}`
-      }
+        Authorization: `Basic ${employeeToken}`,
+      },
     };
   }
 });
 
 const client = new ApolloClient({
   link: authLink.concat(uploadLink),
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
 
 export default (

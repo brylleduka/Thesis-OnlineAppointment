@@ -49,6 +49,7 @@ const typeDefs = gql`
     dateOfBirth: String
     role: String
     level: Int
+    status: Boolean
     password: String
     employeeToken: String
     schedule: Schedule
@@ -432,9 +433,10 @@ const typeDefs = gql`
     ): Employee
 
     addEmployeePhoto(_id: ID!, file: Upload): Boolean
+    archiveEmployee(_id: ID!): Boolean
     deleteEmployee(_id: ID!): Boolean #admin only
     addService(employeeId: ID!, categoryId: [ID]): Employee
-    removeService(employeeId: ID!, serviceId: ID!): Boolean
+    removeService(employeeId: ID!, categoryId: ID!): Boolean
 
     #Category
     createCategory(categoryInput: CategoryInput): Category

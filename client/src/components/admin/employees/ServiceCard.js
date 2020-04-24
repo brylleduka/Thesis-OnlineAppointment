@@ -21,6 +21,7 @@ const ServiceCard = ({ employee }) => {
   const { employeeAuth } = useContext(AuthContext);
   const { width: wid } = useWindowSize();
   const [openAddService, setOpenAddService] = useState(false);
+  const [categValue, setCategValue] = useState("");
   const [isCategories, setIsCategories] = useState(
     employee.categoryServices.map((categServ) => categServ._id)
   );
@@ -54,9 +55,15 @@ const ServiceCard = ({ employee }) => {
     addService();
   };
 
+  const handleCategoryValue = (e) => {
+    setCategValue(e.currentTarget.dataset.categid);
+  };
+
+  console.log(categValue);
+
   return (
     <>
-      <DCard dw="100%" dh="100%" flex fcol justifyBetween overf>
+      <DCard dw="100%" dh="100%" maxh={wid < 768 ? "250px" : "350px"} flex fcol>
         <Content
           flex
           width="100%"
@@ -82,16 +89,23 @@ const ServiceCard = ({ employee }) => {
           )}
         </Content>
         <Content
-          width="90%"
+          width="100%"
           height="80%"
           flex
           justify="flex-start"
-          align="center"
-          flow={wid <= 768 ? "column nowrap" : "column wrap"}
+          align="flex-start"
+          hoverflow
+          margin="0 auto"
+          flow={wid <= 768 ? "column wrap" : "column wrap"}
         >
-          {categories.map((categ) => (
-            <Content width="auto" height="50px" margin="5px" key={categ._id}>
-              <DLabel rounded bluer>
+          {employee.categoryServices.map((categ) => (
+            <Content
+              width="auto"
+              height={wid < 768 ? "15px" : "25px"}
+              margin={wid < 1024 ? "8px 3px" : "5px"}
+              key={categ._id}
+            >
+              <DLabel rounded bluer pad="3px 8px">
                 <DGrid
                   custom="7fr 1fr"
                   med5={"7fr 1fr"}
@@ -99,9 +113,18 @@ const ServiceCard = ({ employee }) => {
                   med10={"7fr 1fr"}
                 >
                   {categ.name}
-                  <IconWrap tiny margin="0 2px">
-                    <Cross />
-                  </IconWrap>
+                  <div
+                    data-categid={categ._id}
+                    onMouseOver={handleCategoryValue}
+                  >
+                    <IconWrap
+                      tiny
+                      margin="0 2px"
+                      onClick={() => window.alert(categValue)}
+                    >
+                      <Cross />
+                    </IconWrap>
+                  </div>
                 </DGrid>
               </DLabel>
             </Content>
@@ -125,12 +148,19 @@ const ServiceCard = ({ employee }) => {
               onChange={setIsCategories}
             >
               {(Checkbox) => (
-                <Content width="100%" height="200px" flex flow="column wrap">
+                <Content
+                  width="100%"
+                  height="100%"
+                  maxh={wid < 768 ? "350px" : "200px"}
+                  flex
+                  flow="column wrap"
+                  hoverflow
+                >
                   {categories.map((category) => (
                     <Content
-                      width="50px"
-                      height="50px"
-                      margin="5px"
+                      width="auto"
+                      height="30px"
+                      margin={wid < 1024 ? "8px 3px" : "5px"}
                       key={category._id}
                     >
                       <div className="pretty p-default p-round p-smooth">

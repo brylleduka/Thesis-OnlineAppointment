@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_MY_CURRENT_APPOINTMENTS } from "../../../util/graphql/appointment";
 import { Content } from "../../styled/containers";
@@ -11,7 +11,7 @@ import CurrentAppointModal from "./CurrentAppointModal";
 const CurrentAppointment = () => {
   const [open, setOpen] = useState(false);
   const [isPop, setIsPop] = useState(false);
-  const [appoint, setAppoint] = useState(null);
+  const [currentAppoint, setCurrentAppoint] = useState([]);
 
   const handlePop = () => {
     setIsPop(!isPop);
@@ -21,39 +21,47 @@ const CurrentAppointment = () => {
     FETCH_MY_CURRENT_APPOINTMENTS
   );
 
+  useEffect(() => {
+    if (currentAppointData) {
+      setCurrentAppoint(currentAppointData.myCurrentAppointment);
+    }
+  }, [currentAppointData]);
+
+  console.log(currentAppoint);
+
   const columns = [
     {
       name: "ID",
       selector: "_id",
       flex: 0,
-      sortable: true
+      sortable: true,
     },
     {
       name: "Aesthetician",
       selector: "employee",
       wrap: true,
       sortable: true,
-      format: row => `${row.employee.firstName} ${row.employee.lastName}`
+      format: (row) => `${row.employee.firstName} ${row.employee.lastName}`,
     },
     {
       name: "Service",
       selector: "service.name",
       wrap: true,
-      sortable: true
+      sortable: true,
     },
     {
       name: "Date",
       selector: "date",
       wrap: true,
       sortable: true,
-      format: row => `${moment(parseInt(row.date)).format("LL")}`
+      format: (row) => `${moment(parseInt(row.date)).format("LL")}`,
     },
     {
       name: "Status",
       selector: "status",
 
       sortable: true,
-      cell: row => (
+      cell: (row) => (
         <span
           style={
             row.status === "PENDING"
@@ -65,12 +73,12 @@ const CurrentAppointment = () => {
         >
           {row.status}
         </span>
-      )
+      ),
     },
     {
       name: "Actions",
 
-      cell: row => (
+      cell: (row) => (
         <>
           <Popup
             trigger={
@@ -149,8 +157,8 @@ const CurrentAppointment = () => {
             setOpen={setOpen}
           />
         </>
-      )
-    }
+      ),
+    },
   ];
 
   return (
@@ -168,9 +176,7 @@ const CurrentAppointment = () => {
       ) : (
         <DataTable
           columns={columns}
-          data={currentAppointData.myCurrentAppointment.map(
-            currentAppoint => currentAppoint
-          )}
+          data={currentAppoint}
           responsive
           pagination={true}
           paginationPerPage={5}
@@ -187,35 +193,35 @@ const CurrentAppointment = () => {
 const customStyles = {
   headRow: {
     style: {
-      border: "none"
-    }
+      border: "none",
+    },
   },
   headCells: {
     style: {
       color: "#202124",
       fontSize: "12px",
-      fontWeight: "700"
-    }
+      fontWeight: "700",
+    },
   },
   rows: {
     style: {
       fontSize: "12px",
       fontWeight: "700",
-      color: "#000"
+      color: "#000",
     },
     highlightOnHoverStyle: {
       backgroundColor: "rgb(230, 244, 244)",
       borderBottomColor: "#FFFFFF",
       borderRadius: "25px",
-      outline: "1px solid #FFFFFF"
+      outline: "1px solid #FFFFFF",
     },
     pagination: {
       style: {
         marginTop: "10px",
-        border: "none"
-      }
-    }
-  }
+        border: "none",
+      },
+    },
+  },
 };
 
 const paginationRowsPerPageOptions = [5, 10, 15, 20];

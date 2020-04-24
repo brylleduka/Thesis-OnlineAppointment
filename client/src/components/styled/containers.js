@@ -232,6 +232,12 @@ export const Content = styled.div`
   font-weight: ${(props) => props.weight && props.weight};
 
   ${(props) =>
+    props.maxh &&
+    css`
+      max-height: ${props.maxh};
+    `};
+
+  ${(props) =>
     props.flow &&
     css`
       flex-flow: ${props.flow};
@@ -279,6 +285,14 @@ export const Content = styled.div`
       visibility: hidden;
       opacity: 0;
       pointer-events: none;
+    `};
+
+  ${(props) =>
+    props.hoverflow &&
+    css`
+      &:hover {
+        overflow: auto;
+      }
     `};
 
 
@@ -478,6 +492,12 @@ export const DCard = styled.div`
       : "flex-start"};
   flex-direction: ${(props) => (props.fcol ? "column" : "row")};
 
+  ${(props) =>
+    props.maxh &&
+    css`
+      max-height: ${props.maxh};
+    `};
+
   overflow: ${(props) => (props.overf ? "visible" : "hidden")};
   background: ${(props) => (props.bg ? props.bg : "#ffffff")};
   box-shadow: ${(props) =>
@@ -560,6 +580,14 @@ export const DCard = styled.div`
         }
       }
     `}
+
+    ${(props) =>
+      props.hoverflow &&
+      css`
+        &:hover {
+          overflow: auto;
+        }
+      `};
 `;
 
 export const DFooterLinks = styled.section`

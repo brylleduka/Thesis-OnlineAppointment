@@ -3,7 +3,7 @@ import jwtDecode from "jwt-decode";
 
 const initialState = {
   user: null,
-  employeeAuth: null
+  employeeAuth: null,
 };
 
 if (localStorage.getItem("jwtToken")) {
@@ -31,10 +31,10 @@ if (localStorage.getItem("jwtTokenEmployee")) {
 const AuthContext = createContext({
   user: null,
   employeeAuth: null,
-  login: userData => {},
-  employeeLogin: employeeData => {},
+  login: (userData) => {},
+  employeeLogin: (employeeData) => {},
   logout: () => {},
-  employeeLogout: () => {}
+  employeeLogout: () => {},
 });
 
 function authReducer(state, action) {
@@ -42,22 +42,22 @@ function authReducer(state, action) {
     case "LOGIN":
       return {
         ...state,
-        user: action.payload
+        user: action.payload,
       };
     case "LOGOUT":
       return {
         ...state,
-        user: null
+        user: null,
       };
     case "EMPLOYEE_LOGIN":
       return {
         ...state,
-        employeeAuth: action.payload
+        employeeAuth: action.payload,
       };
     case "EMPLOYEE_LOGOUT":
       return {
         ...state,
-        employeeAuth: null
+        employeeAuth: null,
       };
     default:
       return state;
@@ -71,14 +71,14 @@ function AuthProvider(props) {
     localStorage.setItem("jwtToken", userData.token);
     dispatch({
       type: "LOGIN",
-      payload: userData
+      payload: userData,
     });
   }
 
   function logout() {
     localStorage.removeItem("jwtToken");
     dispatch({
-      type: "LOGOUT"
+      type: "LOGOUT",
     });
   }
 
@@ -86,14 +86,14 @@ function AuthProvider(props) {
     localStorage.setItem("jwtTokenEmployee", employeeData.employeeToken);
     dispatch({
       type: "EMPLOYEE_LOGIN",
-      payload: employeeData
+      payload: employeeData,
     });
   }
 
   function employeeLogout() {
     localStorage.removeItem("jwtTokenEmployee");
     dispatch({
-      type: "EMPLOYEE_LOGOUT"
+      type: "EMPLOYEE_LOGOUT",
     });
   }
 
@@ -105,7 +105,7 @@ function AuthProvider(props) {
         login,
         logout,
         employeeLogin,
-        employeeLogout
+        employeeLogout,
       }}
       {...props}
     />
