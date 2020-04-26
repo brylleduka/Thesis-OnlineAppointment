@@ -38,6 +38,7 @@ const employeeSchema = new Schema(
     ],
     role: String,
     level: Number,
+    active: Boolean,
     password: {
       type: String,
       required: true,
@@ -54,7 +55,6 @@ const employeeSchema = new Schema(
       ref: "Schedule",
       autopopulate: true,
     },
-    active: Boolean,
   },
   {
     timestamps: true,

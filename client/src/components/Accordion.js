@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { ArrowRight } from "styled-icons/material";
 import { DAccordion } from "./styled/utils";
 
-const Accordion = props => {
+const Accordion = (props) => {
   const [active, setActive] = useState(false);
   const contentRef = useRef(null);
 

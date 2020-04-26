@@ -8,20 +8,21 @@ import { DCard, Content, DGrid } from "../../styled/containers";
 import { DLabel, IconWrap, DButton, CheckLabel } from "../../styled/utils";
 import { Plus } from "@styled-icons/boxicons-regular/Plus";
 import { Save } from "@styled-icons/boxicons-solid/Save";
-import { Cross } from "@styled-icons/entypo/Cross";
-import { Modal, Popup } from "semantic-ui-react";
+
+import { Modal } from "semantic-ui-react";
 import CheckboxGroup from "react-checkbox-group";
 
 import Spinner from "../../Spinner";
 import toaster from "toasted-notes";
 import Toasted from "../../Toasted";
 import useWindowSize from "../../../util/hooks/useWindowSize";
+import RemoveService from "./RemoveService";
 
 const ServiceCard = ({ employee }) => {
   const { employeeAuth } = useContext(AuthContext);
   const { width: wid } = useWindowSize();
   const [openAddService, setOpenAddService] = useState(false);
-  const [categValue, setCategValue] = useState("");
+
   const [isCategories, setIsCategories] = useState(
     employee.categoryServices.map((categServ) => categServ._id)
   );
@@ -46,7 +47,12 @@ const ServiceCard = ({ employee }) => {
       },
       refetchQueries: [{ query: FETCH_ALL_CATEGORIES_QUERY }],
       onCompleted() {
-        toaster.notify("Success");
+        setOpenAddService(false);
+        toaster.notify(({ onClose }) => (
+          <Toasted success onClick={onClose}>
+            Service Added
+          </Toasted>
+        ));
       },
     }
   );
@@ -55,15 +61,9 @@ const ServiceCard = ({ employee }) => {
     addService();
   };
 
-  const handleCategoryValue = (e) => {
-    setCategValue(e.currentTarget.dataset.categid);
-  };
-
-  console.log(categValue);
-
   return (
     <>
-      <DCard dw="100%" dh="100%" maxh={wid < 768 ? "250px" : "350px"} flex fcol>
+      <DCard dw="100%" dh="100%" maxh={wid < 768 ? "300px" : "400px"} flex fcol>
         <Content
           flex
           width="100%"
@@ -89,14 +89,15 @@ const ServiceCard = ({ employee }) => {
           )}
         </Content>
         <Content
-          width="100%"
-          height="80%"
+          width="90%"
+          height="100%"
           flex
           justify="flex-start"
           align="flex-start"
           hoverflow
           margin="0 auto"
           flow={wid <= 768 ? "column wrap" : "column wrap"}
+          pad="10px"
         >
           {employee.categoryServices.map((categ) => (
             <Content
@@ -105,7 +106,7 @@ const ServiceCard = ({ employee }) => {
               margin={wid < 1024 ? "8px 3px" : "5px"}
               key={categ._id}
             >
-              <DLabel rounded bluer pad="3px 8px">
+              <DLabel rounded color="bluer" pad="3px 8px">
                 <DGrid
                   custom="7fr 1fr"
                   med5={"7fr 1fr"}
@@ -113,18 +114,11 @@ const ServiceCard = ({ employee }) => {
                   med10={"7fr 1fr"}
                 >
                   {categ.name}
-                  <div
-                    data-categid={categ._id}
-                    onMouseOver={handleCategoryValue}
-                  >
-                    <IconWrap
-                      tiny
-                      margin="0 2px"
-                      onClick={() => window.alert(categValue)}
-                    >
-                      <Cross />
-                    </IconWrap>
-                  </div>
+                  <RemoveService
+                    categId={categ._id}
+                    employeeId={employee._id}
+                    refetchCategories={FETCH_ALL_CATEGORIES_QUERY}
+                  />
                 </DGrid>
               </DLabel>
             </Content>

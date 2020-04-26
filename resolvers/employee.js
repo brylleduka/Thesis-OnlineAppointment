@@ -15,18 +15,23 @@ const path = require("path");
 
 module.exports = {
   Query: {
-    employees: async () => {
+    employees: async ({ active }) => {
       try {
-        const getAllEmployee = await Employee.find().sort({ createdAt: -1 });
+        const getAllEmployee = await Employee.find({
+          active: active ? active : true,
+        }).sort({ updatedAt: -1 });
 
         return getAllEmployee;
       } catch (err) {
         throw err;
       }
     },
-    employeesByRole: async (_, { role }) => {
+    employeesByRole: async (_, { role, active }) => {
       try {
-        const employeesRole = await Employee.find({ role }).sort({
+        const employeesRole = await Employee.find({
+          role,
+          active: active ? active : true,
+        }).sort({
           createdAt: -1,
         });
 
@@ -35,10 +40,11 @@ module.exports = {
         throw err;
       }
     },
-    aestheticiansReceps: async (_, { limit }) => {
+    aestheticiansReceps: async (_, { limit, active }) => {
       try {
         const employeesAesthe = await Employee.find({
           role: { $ne: "ADMIN" },
+          active: active ? active : true,
         })
           .sort({
             createdAt: -1,
@@ -477,16 +483,18 @@ module.exports = {
           throw new UserInputError("Auth Error", { errors });
         }
 
-        await Employee.findOneAndUpdate(
+        const serviceEmpUpdate = await Employee.findOneAndUpdate(
           { _id: employeeId },
-          { $pull: { services: categoryId } }
+          { $pull: { categoryServices: categoryId } },
+          { new: true }
         );
-        await Service.findOneAndUpdate(
-          { _id: serviceId },
-          { $pull: { employees: employeeId } }
+        await Category.findOneAndUpdate(
+          { _id: categoryId },
+          { $pull: { employees: employeeId } },
+          { new: true }
         );
 
-        return true;
+        return serviceEmpUpdate;
       } catch (err) {
         throw err;
       }

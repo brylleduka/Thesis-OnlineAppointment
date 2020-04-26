@@ -26,7 +26,7 @@ module.exports = {
       } catch (err) {
         throw err;
       }
-    }
+    },
   },
   Mutation: {
     sendInquiry: async (_, { name, email, to, subject, message }) => {
@@ -37,7 +37,7 @@ module.exports = {
         subject,
         message,
         reply: "",
-        read: false
+        read: false,
       });
 
       transportMail({
@@ -45,7 +45,7 @@ module.exports = {
         to: to, // list of receivers
         subject: subject,
         text: "We will get in touch with you as soon as possible",
-        temp: "inquiry" // plain text body
+        temp: "inquiry", // plain text body
       });
 
       await newInquiry.save();
@@ -56,7 +56,7 @@ module.exports = {
       const inquiry = await Inquiry.findById(_id);
       const subject = inquiry.subject;
       const updateInquiry = await Inquiry.findByIdAndUpdate(_id, {
-        $set: { reply: message }
+        $set: { reply: message },
       });
 
       transportMail({
@@ -64,20 +64,21 @@ module.exports = {
         to: email, // list of receivers
         subject: subject,
         text: message, // plain text body
-        html: message
+        html: message,
       });
 
       return updateInquiry;
     },
     readInquiry: async (_, { _id }) => {
-      const readInquiry = await Inquiry.updateOne(
+      const readInquiry = await Inquiry.findOneAndUpdate(
         { _id },
         {
-          $set: { read: true }
-        }
+          $set: { read: true },
+        },
+        { new: true }
       );
 
       return true;
-    }
-  }
+    },
+  },
 };

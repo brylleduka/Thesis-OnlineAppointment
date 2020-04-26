@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
+import gql from "graphql-tag";
 import Layout from "../../components/admin/layout/Layout";
 import DataTable from "react-data-table-component";
 import { FETCH_INQUIRIES } from "../../util/graphql/inquiry";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import { DButton } from "../../components/styled/utils";
 import { DSection } from "../../components/styled/containers";
 import { Popup, Icon, Breadcrumb } from "semantic-ui-react";
@@ -16,8 +17,7 @@ import moment from "moment";
 const Inquiry = () => {
   const [open, setOpen] = useState(false);
   const [inquiries, setInquiries] = useState([]);
-
-  const [inq, setInq] = useState({});
+  const [inqVal, setInqVal] = useState("");
 
   const { data: data_inquiries, loading: loading_inquiries, error } = useQuery(
     FETCH_INQUIRIES
@@ -29,9 +29,18 @@ const Inquiry = () => {
     }
   }, [data_inquiries]);
 
+  const [readInq, { loading: loadReadInq }] = useMutation(READ_INQ, {
+    variables: { inqId: inqVal },
+    refetchQueries: [{ query: FETCH_INQUIRIES }],
+  });
+
   const handleRow = (e) => {
-    setInq(e.currentTarget.value);
+    readInq();
     setOpen(true);
+  };
+
+  const handleMouseOver = (e) => {
+    setInqVal(e.currentTarget.dataset.inqid);
   };
 
   const columns = [
@@ -70,11 +79,28 @@ const Inquiry = () => {
       cell: (row) => moment(parseInt(row.createdAt)).format("LLL"),
     },
     {
+      name: "Status",
+      selector: "read",
+      sortable: true,
+      format: (row) => {
+        return (
+          <span style={{ fontWeight: 700 }}>
+            {row.read ? "Read" : "Unread"}
+          </span>
+        );
+      },
+    },
+    {
       name: "Actions",
       cell: (row) => (
         <Popup
           trigger={
-            <DButton flex value={row._id} onClick={handleRow}>
+            <DButton
+              flex
+              data-inqid={row._id}
+              onClick={handleRow}
+              onMouseOver={handleMouseOver}
+            >
               <Eye size="18px" />
             </DButton>
           }
@@ -85,6 +111,7 @@ const Inquiry = () => {
           size="tiny"
         />
       ),
+      right: true,
     },
   ];
 
@@ -131,7 +158,7 @@ const Inquiry = () => {
           }
         />
 
-        {inq && <ReplyModal inqId={inq} open={open} setOpen={setOpen} />}
+        <ReplyModal inqId={inqVal} open={open} setOpen={setOpen} />
       </DSection>
     </Layout>
   );
@@ -179,5 +206,11 @@ const title = (
 );
 
 const paginationRowsPerPageOptions = [5, 10, 15, 20];
+
+const READ_INQ = gql`
+  mutation readInquiry($inqId: ID!) {
+    readInquiry(_id: $inqId)
+  }
+`;
 
 export default Inquiry;

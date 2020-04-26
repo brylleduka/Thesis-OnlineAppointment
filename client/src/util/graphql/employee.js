@@ -3,8 +3,8 @@ import gql from "graphql-tag";
 // EMPLOYEES
 
 const FETCH_ALL_EMPLOYEES_QUERY = gql`
-  query employees {
-    employees {
+  query employees($active: Boolean) {
+    employees(active: $active) {
       _id
       empId
       title
@@ -34,8 +34,8 @@ const FETCH_ALL_EMPLOYEES_QUERY = gql`
 `;
 
 const FETCH_EMPLOYEES_NOT_ADMIN_QUERY = gql`
-  query aestheticiansReceps($limit: Int) {
-    aestheticiansReceps(limit: $limit) {
+  query aestheticiansReceps($limit: Int, $active: Boolean) {
+    aestheticiansReceps(limit: $limit, active: $active) {
       _id
       empId
       title

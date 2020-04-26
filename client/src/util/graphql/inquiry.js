@@ -10,6 +10,7 @@ const FETCH_INQUIRIES = gql`
       message
       to
       reply
+      read
       createdAt
       updatedAt
     }
@@ -24,6 +25,7 @@ const FETCH_INQUIRIES_READ = gql`
       email
       subject
       message
+      read
       to
       reply
     }
@@ -40,6 +42,7 @@ const FETCH_INQUIRY = gql`
       message
       to
       reply
+      read
     }
   }
 `;

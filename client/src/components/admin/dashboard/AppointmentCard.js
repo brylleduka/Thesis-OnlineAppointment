@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import {
   FETCH_APPOINTMENT_STATUS,
-  FETCH_APPOINTMENTS_QUERY
+  FETCH_APPOINTMENTS_QUERY,
 } from "../../../util/graphql/appointment";
 import { DGrid, DCard, Content } from "../../styled/containers";
 import { DLabel } from "../../styled/utils";
@@ -28,8 +28,8 @@ const AppointmentCard = ({ history }) => {
     FETCH_APPOINTMENT_STATUS,
     {
       variables: {
-        status: "DONE"
-      }
+        status: "DONE",
+      },
     }
   );
   useEffect(() => {
@@ -42,8 +42,8 @@ const AppointmentCard = ({ history }) => {
     FETCH_APPOINTMENT_STATUS,
     {
       variables: {
-        status: "CANCELLED"
-      }
+        status: "CANCELLED",
+      },
     }
   );
   useEffect(() => {
@@ -105,8 +105,7 @@ const AppointmentCard = ({ history }) => {
                 alignCenter
                 weight={500}
                 w={"100%"}
-                bgcolor="green"
-                color="white"
+                color="green"
                 size="12px"
                 rounded
               >
@@ -127,8 +126,7 @@ const AppointmentCard = ({ history }) => {
                 alignCenter
                 weight={500}
                 w={"100%"}
-                bgcolor="firebrick"
-                color="white"
+                color="red"
                 size="12px"
                 rounded
               >

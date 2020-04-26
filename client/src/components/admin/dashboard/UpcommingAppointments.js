@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 import DataTable from "react-data-table-component";
 import { Eye } from "styled-icons/fa-regular";
-import { DButton } from "../../styled/utils";
+import { DButton, DLabel } from "../../styled/utils";
 import { Grid } from "@styled-icons/boxicons-solid/Grid";
 import Spinner from "../../Spinner";
 
@@ -70,7 +70,18 @@ const UpcommingAppointments = ({ appointments, loading }) => {
     },
   ];
 
-  const title = <h2>Upcomming Appointments</h2>;
+  const title = (
+    <DLabel
+      size="18px"
+      tt="uppercase"
+      weight="700"
+      pad="10px 20px"
+      color="bluer"
+      rounded
+    >
+      Upcoming Appointments
+    </DLabel>
+  );
 
   return (
     <DataTable

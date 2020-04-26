@@ -80,18 +80,12 @@ const HistoryAppointments = () => {
           <Eye size="18px" />
         </DButton>
       ),
+      right: true,
     },
   ];
 
   return (
-    <Content
-      height="100%"
-      width="100%"
-      flex
-      justify="center"
-      align="center"
-      margin="5vh 0"
-    >
+    <Content height="100%" width="100%" flex justify="center" align="center">
       <DataTable
         title={title}
         columns={columns}
@@ -146,16 +140,7 @@ const customStyles = {
 };
 
 const title = (
-  <DLabel
-    size="18px"
-    bgcolor="#6dd5ed"
-    tt="uppercase"
-    weight="700"
-    pad="10px 25px"
-    color="#fff"
-    style={{ marginTop: "10vh" }}
-    rounded
-  >
+  <DLabel size="18px" tt="uppercase" weight="700" pad="10px 20px" color="bluer" rounded>
     Appointment History
   </DLabel>
 );

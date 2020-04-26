@@ -24,11 +24,17 @@ const FileReport = () => {
             </Breadcrumb.Section>
           </Breadcrumb>
         </Content>
-        <DGrid>
+        <Content
+          width="100%"
+          height="100%"
+          flex
+          justify="space-around"
+          align="center"
+          direct="column"
+        >
           <HistoryAppointments />
-        </DGrid>
+        </Content>
       </DSection>
-      <NewModal open={open} setOpen={setOpen} />
     </Layout>
   );
 };

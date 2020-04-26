@@ -49,7 +49,7 @@ const typeDefs = gql`
     dateOfBirth: String
     role: String
     level: Int
-    status: Boolean
+    active: Boolean
     password: String
     employeeToken: String
     schedule: Schedule
@@ -95,6 +95,7 @@ const typeDefs = gql`
     subject: String
     message: String
     reply: String
+    read: Boolean
     createdAt: String
     updatedAt: String
   }
@@ -301,9 +302,9 @@ const typeDefs = gql`
     # EMPLOYEE
     employee(_id: ID!): Employee
     employeeService(serviceId: ID): Employee
-    employees: [Employee]
-    employeesByRole(role: String!): [Employee]
-    aestheticiansReceps(limit: Int): [Employee]
+    employees(active: Boolean): [Employee]
+    employeesByRole(role: String!, active: Boolean): [Employee]
+    aestheticiansReceps(limit: Int, active: Boolean): [Employee]
     # SERVICE
     category(_id: ID!): Category
     categories: [Category]
@@ -436,7 +437,7 @@ const typeDefs = gql`
     archiveEmployee(_id: ID!): Boolean
     deleteEmployee(_id: ID!): Boolean #admin only
     addService(employeeId: ID!, categoryId: [ID]): Employee
-    removeService(employeeId: ID!, categoryId: ID!): Boolean
+    removeService(employeeId: ID!, categoryId: ID!): Employee
 
     #Category
     createCategory(categoryInput: CategoryInput): Category

@@ -15,8 +15,8 @@ const ReplyModal = ({ open, setOpen, inqId }) => {
 
   const { data: dataInq, loading: loadingInq } = useQuery(FETCH_INQUIRY, {
     variables: {
-      inquiryId: inqId
-    }
+      inquiryId: inqId,
+    },
   });
 
   useEffect(() => {
@@ -35,21 +35,21 @@ const ReplyModal = ({ open, setOpen, inqId }) => {
     variables: {
       inquiryId: inq._id,
       email: inq.email,
-      message: isMessage
+      message: isMessage,
     },
     update() {
       isMessage = "";
     },
     onCompleted() {
       toaster.notify("Message sent");
-    }
+    },
   });
 
   const handleReply = () => {
     setDisplayMsg(true);
   };
 
-  const handleReplyMsg = e => {
+  const handleReplyMsg = (e) => {
     setIsMessage(e.target.value);
   };
 
@@ -162,10 +162,6 @@ const REPLY_MESSAGE = gql`
   }
 `;
 
-// const READ_INQ = gql`
-//   mutation readInquiry($inqId: ID) {
-//     readInquiry(_id: $inqId)
-//   }
-// `;
+
 
 export default ReplyModal;

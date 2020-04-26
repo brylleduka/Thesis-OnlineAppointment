@@ -191,7 +191,7 @@ export const DLabel = styled.label`
   font-weight: ${(props) => (props.weight ? props.weight : 500)};
   padding: ${(props) => (props.pad ? props.pad : "5px 10px")};
   margin: ${(props) => (props.m ? props.m : "2%")};
-  background: ${(props) => props.bgcolor && props.bgcolor};
+  background: ${(props) => (props.bgcolor ? props.bgcolor : "transparent")};
   border-radius: ${(props) => props.rounded && "5px"};
   text-transform: ${(props) => props.tt && props.tt};
   width: ${(props) => (props.w ? props.w : "auto")};
@@ -221,6 +221,30 @@ export const DLabel = styled.label`
 
   &:hover {
   }
+
+  ${(props) =>
+    props.color &&
+    css`
+      color: ${({ theme }) => theme.light};
+      font-weight: 700;
+      background-color: ${props.color === "primary"
+        ? ({ theme }) => theme.primary
+        : props.color === "secondary"
+        ? ({ theme }) => theme.secondary
+        : props.color === "green"
+        ? ({ theme }) => theme.green
+        : props.color === "red"
+        ? ({ theme }) => theme.red
+        : props.color === "blue"
+        ? ({ theme }) => theme.blue
+        : props.color === "bluer"
+        ? ({ theme }) => theme.bluer
+        : props.color === "yellow"
+        ? ({ theme }) => theme.yellow
+        : props.color === "dark"
+        ? ({ theme }) => theme.dark
+        : ({ theme }) => theme.grey};
+    `};
 
   ${(props) =>
     props.hover &&
@@ -255,12 +279,26 @@ export const DLabel = styled.label`
       background: ${({ theme }) => theme.bluer};
       color: #ffffff;
     `};
+
   ${(props) =>
     props.blue &&
     css`
       background: ${({ theme }) => theme.blue};
       color: #ffffff;
     `};
+  ${(props) =>
+    props.green &&
+    css`
+      background: ${({ theme }) => theme.green};
+      color: #ffffff;
+    `};
+  ${(props) =>
+    props.yellow &&
+    css`
+      background: ${({ theme }) => theme.yellow};
+      color: #ffffff;
+    `};
+
   ${(props) =>
     props.default &&
     css`
@@ -277,9 +315,7 @@ export const DLabel = styled.label`
   ${(props) =>
     props.pointer &&
     css`
-      color: #ffffff;
-      background: ${(props) =>
-        props.color ? props.color : ({ theme }) => theme.bluer};
+      
 
       &:before {
         position: absolute;
@@ -390,6 +426,8 @@ export const DAccordion = styled.section`
     }
   }
   .accordion-content {
+    width: 100%;
+
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -548,8 +586,12 @@ export const IconWrap = styled.div`
         ? ({ theme }) => theme.red
         : props.color === "green"
         ? ({ theme }) => theme.green
+        : props.color === "yellow"
+        ? ({ theme }) => theme.yellow
         : props.color === "grey"
         ? ({ theme }) => theme.grey
+        : props.color === "dark"
+        ? ({ theme }) => theme.dark
         : "#fff"};
     cursor: pointer;
     opacity: 0.8;
@@ -561,6 +603,7 @@ export const IconWrap = styled.div`
     visibility: visible;
     pointer-events: all;
     transition: visibility 200ms, opacity 0.3s ease-in-out;
+
     ${(props) =>
       props.bgcolor &&
       css`

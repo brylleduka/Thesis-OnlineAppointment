@@ -207,7 +207,7 @@ const PersonalCard = ({ employee }) => {
                 {personalValue.firstName.trim() !== "" ? (
                   ""
                 ) : errors.firstName ? (
-                  <DLabel rounded pointer color={({ theme }) => theme.red}>
+                  <DLabel rounded pointer color={"red"}>
                     {errors.firstName}
                   </DLabel>
                 ) : (
@@ -259,7 +259,7 @@ const PersonalCard = ({ employee }) => {
                 {personalValue.lastName.trim() !== "" ? (
                   ""
                 ) : errors.lastName ? (
-                  <DLabel rounded pointer color={({ theme }) => theme.red}>
+                  <DLabel rounded pointer color={"red"}>
                     {errors.lastName}
                   </DLabel>
                 ) : (
@@ -389,7 +389,7 @@ const PersonalCard = ({ employee }) => {
                 personalValue.contact.length === 11 ? (
                   ""
                 ) : errors.contactX || errors.contactNum ? (
-                  <DLabel rounded pointer color={({ theme }) => theme.red}>
+                  <DLabel rounded pointer color={"red"}>
                     Contact number must only contain number and must be 11
                     digits
                   </DLabel>
@@ -451,7 +451,7 @@ const PersonalCard = ({ employee }) => {
                 {personalValue.email.match(regex) ? (
                   ""
                 ) : errors.emailX || errors.email ? (
-                  <DLabel rounded pointer color={({ theme }) => theme.red}>
+                  <DLabel rounded pointer color={"red"}>
                     {errors.emailX || errors.email}
                   </DLabel>
                 ) : (

@@ -89,8 +89,8 @@ const ClientCard = ({ history }) => {
                 alignCenter
                 weight={500}
                 w={"100%"}
-                bgcolor="#6dd5ed"
-                color="#fff"
+              
+                color="blue"
                 size="12px"
                 rounded
               >

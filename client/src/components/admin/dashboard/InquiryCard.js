@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import {
   FETCH_INQUIRIES,
-  FETCH_INQUIRIES_READ
+  FETCH_INQUIRIES_READ,
 } from "../../../util/graphql/inquiry";
 import { Content, DCard, DGrid } from "../../styled/containers";
 import { DLabel } from "../../styled/utils";
@@ -25,8 +25,8 @@ const InquiryCard = ({ history }) => {
     FETCH_INQUIRIES_READ,
     {
       variables: {
-        read: true
-      }
+        read: true,
+      },
     }
   );
 
@@ -40,8 +40,8 @@ const InquiryCard = ({ history }) => {
     FETCH_INQUIRIES_READ,
     {
       variables: {
-        read: false
-      }
+        read: false,
+      },
     }
   );
 
@@ -104,8 +104,7 @@ const InquiryCard = ({ history }) => {
                 alignCenter
                 weight={500}
                 w={"100%"}
-                bgcolor={({ theme }) => theme.bluer}
-                color="white"
+                color="secondary"
                 size="12px"
                 rounded
               >
@@ -126,8 +125,7 @@ const InquiryCard = ({ history }) => {
                 alignCenter
                 weight={500}
                 w={"100%"}
-                bgcolor={({ theme }) => theme.secondary}
-                color="white"
+                color="blue"
                 size="12px"
                 rounded
               >

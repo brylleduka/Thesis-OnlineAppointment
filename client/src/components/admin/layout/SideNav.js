@@ -5,7 +5,7 @@ import {
   Report,
   MessageSquare,
   MessageRoundedDetail,
-  CalendarEvent
+  CalendarEvent,
 } from "@styled-icons/boxicons-solid";
 
 import { Service } from "@styled-icons/remix-line/Service";
@@ -18,6 +18,7 @@ import {
 } from "@styled-icons/material";
 import { FileDirectory } from "@styled-icons/octicons";
 import { Profile } from "@styled-icons/icomoon/Profile";
+import { Archive } from "@styled-icons/entypo";
 
 import { SideNavLayout } from "../../styled/layout";
 import { NavItem } from "../../styled/utils";
@@ -90,6 +91,20 @@ const SideNav = () => {
         icon={<FileDirectory size="16px" />}
         fs="14px"
       >
+        <NavLink to="/zeadmin/categories" activeClassName="navlink-active">
+          <span>
+            <Service size="16px" />
+            Services
+          </span>
+        </NavLink>
+        <NavLink to="/zeadmin/employees" activeClassName="navlink-active">
+          <span>
+            <Profile size="16px" />
+            Employees
+          </span>
+        </NavLink>
+      </Accordion>
+      <Accordion title={"Archive"} icon={<Archive size="16px" />} fs="14px">
         <NavLink to="/zeadmin/categories" activeClassName="navlink-active">
           <span>
             <Service size="16px" />

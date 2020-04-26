@@ -25,6 +25,7 @@ const Employees = () => {
   } = useQuery(FETCH_EMPLOYEES_NOT_ADMIN_QUERY, {
     variables: {
       limit: 0,
+      active: true,
     },
   });
 

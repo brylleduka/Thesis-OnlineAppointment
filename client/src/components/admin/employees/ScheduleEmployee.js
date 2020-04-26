@@ -355,7 +355,7 @@ const ScheduleEmployee = ({ employee }) => {
                     direct="column"
                     pad="5px 10px"
                   >
-                    <DLabel weight={500} size="13px" rounded bluer>
+                    <DLabel weight={500} size="13px" rounded color="bluer">
                       Start of Work
                     </DLabel>
                     {isEditSched ? (
@@ -397,7 +397,7 @@ const ScheduleEmployee = ({ employee }) => {
                     align="center"
                     direct="column"
                   >
-                    <DLabel weight={500} size="13px" rounded bluer>
+                    <DLabel weight={500} size="13px" rounded color="bluer">
                       Work Length
                     </DLabel>
                     {isEditSched ? (
@@ -448,7 +448,7 @@ const ScheduleEmployee = ({ employee }) => {
                     align="center"
                     direct="column"
                   >
-                    <DLabel weight={500} size="13px" rounded bluer>
+                    <DLabel weight={500} size="13px" rounded color="bluer">
                       Start of Break
                     </DLabel>
                     {isEditSched ? (
@@ -491,7 +491,7 @@ const ScheduleEmployee = ({ employee }) => {
                     align="center"
                     direct="column"
                   >
-                    <DLabel weight={500} size="13px" rounded bluer>
+                    <DLabel weight={500} size="13px" rounded color="bluer">
                       Break Length
                     </DLabel>
                     {isEditSched ? (

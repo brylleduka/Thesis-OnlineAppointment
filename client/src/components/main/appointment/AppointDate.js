@@ -7,19 +7,27 @@ import DatePicker from "react-datepicker";
 import { Content, DGrid } from "../../styled/containers";
 import Spinner from "../../Spinner";
 import moment from "moment";
+import timeLineLabels from "../../../util/hooks/timeLineLabels";
 
-const timelineLabels = (desiredStartTime, timeLength, interval) => {
-  const periodsInADay = moment.duration(timeLength, "MINUTES").as("MINUTES");
+// const timelineLabels = (
+//   desiredStartTime,
+//   timeLength,
+//   interval,
+//   breakTimeLength = 0
+// ) => {
+//   const periodsInADay = moment
+//     .duration(timeLength + breakTimeLength, "MINUTES")
+//     .as("MINUTES");
 
-  let timeSlot = [];
+//   let timeSlot = [];
 
-  const startTimeMoment = moment(desiredStartTime, "hh:mm A");
-  for (let i = 0; i <= periodsInADay; i += interval) {
-    startTimeMoment.add(i === 0 ? 0 : interval, "MINUTES");
-    timeSlot.push(startTimeMoment.format("hh:mm A"));
-  }
-  return timeSlot;
-};
+//   const startTimeMoment = moment(desiredStartTime, "hh:mm A");
+//   for (let i = 0; i <= periodsInADay; i += interval) {
+//     startTimeMoment.add(i === 0 ? 0 : interval, "MINUTES");
+//     timeSlot.push(startTimeMoment.format("hh:mm A"));
+//   }
+//   return timeSlot;
+// };
 
 const AppointDate = ({
   setStartDate,
@@ -85,7 +93,9 @@ const AppointDate = ({
 
   if (isEmp && isServ && data_appointments) {
     const workStart = isEmp.employee && isEmp.employee.schedule.workStart;
+    const workLength = isEmp.employee && isEmp.employee.schedule.workLength;
     const breakStart = isEmp.employee && isEmp.employee.schedule.breakStart;
+    const breakLength = isEmp.employee && isEmp.employee.schedule.breakLength;
 
     isEmp.employee && isEmp.employee.schedule.day.map((d) => days.push(d));
     data_appointments.checkedAppointments.map((occcupied) =>
@@ -98,8 +108,13 @@ const AppointDate = ({
 
     const intervalTime = isServ.service.duration;
 
-    const workingTime = timelineLabels(startTime, 9 * 60, intervalTime);
-    const breakTime = timelineLabels(breakStime, 1 * 60, 60);
+    const workingTime = timeLineLabels(
+      startTime,
+      workLength,
+      intervalTime,
+      breakLength
+    );
+    const breakTime = timeLineLabels(breakStime, breakLength, 30);
 
     let initialTime = workingTime.filter((item) => {
       return !breakTime.includes(item);
@@ -126,38 +141,47 @@ const AppointDate = ({
           inline
         />
       </Content>
-      <Content
-        width="100%"
-        margin="0 auto"
-        height="100%"
-        flex
-        justify="center"
-        align="center"
-        flow="row wrap"
-        pad="10px"
-      >
-        {isEmp && data_service ? (
-          loading_employee || loading_appointments || loading_service ? (
-            <Spinner content="Loading..." medium />
-          ) : (
-            times.map((time) => (
-              <div className="pretty p-default p-curve" key={time}>
-                <input
-                  type="radio"
-                  name="time"
-                  value={time}
-                  onChange={handleTimeChanged}
-                />
-                <div className="state p-info-o">
-                  <label style={styles.label}>{time}</label>
-                </div>
-              </div>
-            ))
-          )
+
+      {isEmp &&
+        data_service &&
+        (loading_employee || loading_appointments || loading_service ? (
+          <Content
+            flex
+            justify="center"
+            align="center"
+            width="100%"
+            height="100%"
+          >
+            <Spinner content="Fetching available time slot..." medium />
+          </Content>
         ) : (
-          "Select Available Time"
-        )}
-      </Content>
+          <Content
+            width="100%"
+            height="100%"
+            maxh={"200px"}
+            flex
+            align="center"
+            flow="column wrap"
+            hoverflow
+          >
+            <h4>Time Slots</h4>
+            {times.map((time) => (
+              <Content width="auto" height="30px" margin={"5px"} key={time}>
+                <div className="pretty p-default p-curve">
+                  <input
+                    type="radio"
+                    name="time"
+                    value={time}
+                    onChange={handleTimeChanged}
+                  />
+                  <div className="state p-info-o">
+                    <label style={styles.label}>{time}</label>
+                  </div>
+                </div>
+              </Content>
+            ))}
+          </Content>
+        ))}
     </DGrid>
   );
 };
