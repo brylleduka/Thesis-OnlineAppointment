@@ -18,6 +18,20 @@ const ripple = keyframes`
   }
 `;
 
+const colors = {
+  red: ({ theme }) => theme.red,
+  blue: ({ theme }) => theme.blue,
+  bluer: ({ theme }) => theme.bluer,
+  green: ({ theme }) => theme.green,
+  yellow: ({ theme }) => theme.yellow,
+  primary: ({ theme }) => theme.primary,
+  secondary: ({ theme }) => theme.secondary,
+  dark: ({ theme }) => theme.dark,
+  light: ({ theme }) => theme.light,
+  grey: ({ theme }) => theme.grey,
+};
+
+
 // BUTTONS
 export const DButton = styled.button`
   font-size: ${(props) => (props.fSize ? props.fSize : "16px")};
@@ -49,44 +63,44 @@ export const DButton = styled.button`
   border-style: ${(props) => props.basic && "solid"};
   border-color: ${(props) =>
     props.alert
-      ? ({ theme }) => theme.red
+      ? colors.red
       : props.warning
-      ? ({ theme }) => theme.yellow
+      ? colors.yellow
       : props.confirm
-      ? ({ theme }) => theme.green
+      ? colors.green
       : props.primary
-      ? ({ theme }) => theme.primary
+      ? colors.primary
       : props.default
-      ? ({ theme }) => theme.bluer
-      : ({ theme }) => theme.blue};
+      ? colors.bluer
+      : colors.blue};
       
   color: ${(props) =>
     props.red
-      ? ({ theme }) => theme.red
+      ? colors.red
       : props.yellow
-      ? ({ theme }) => theme.yellow
+      ? colors.yellow
       : props.green
-      ? ({ theme }) => theme.green
+      ? colors.green
       : props.primary
-      ? ({ theme }) => theme.primary
+      ? colors.primary
       : props.bluer
-      ? ({ theme }) => theme.bluer
-      : ({ theme }) => theme.light};
+      ? colors.bluer
+      : colors.light};
 
   background: ${(props) =>
     props.basic
       ? "transparent"
       : props.alert
-      ? ({ theme }) => theme.red
+      ? colors.red
       : props.warning
-      ? ({ theme }) => theme.yellow
+      ? colors.yellow
       : props.confirm
-      ? ({ theme }) => theme.green
+      ? colors.green
       : props.primary
-      ? ({ theme }) => theme.primary
+      ? colors.primary
       : props.default
-      ? ({ theme }) => theme.bluer
-      : ({ theme }) => theme.blue};
+      ? colors.bluer
+      : colors.blue};
 
   ${(props) =>
     props.disabled &&
@@ -107,20 +121,20 @@ export const DButton = styled.button`
      props.disabled
        ? "#e9e4f0"
        : props.alert
-       ? ({ theme }) => theme.red
+       ? colors.red
        : props.warning
-       ? ({ theme }) => theme.yellow
+       ? colors.yellow
        : props.confirm
-       ? ({ theme }) => theme.green
+       ? colors.green
        : props.primary
-       ? ({ theme }) => theme.primary
+       ? colors.primary
        : props.default
-       ? ({ theme }) => theme.bluer
-       : ({ theme }) => theme.blue};
+       ? colors.bluer
+       : colors.blue};
   }
 
   &:focus {
-    background: darken(${({ theme }) => theme.dark}, 12%);
+    background: darken(${colors.dark}, 12%);
     outline: 0;
   }
 
@@ -188,13 +202,13 @@ export const DButtonFree = styled(DButton)`
 export const DLabel = styled.label`
   position: relative;
   font-size: ${(props) => (props.size ? props.size : "12px")};
-  color: ${(props) => (props.txtColor ? props.txtColor : "#232323")};
   letter-spacing: ${(props) => (props.ls ? props.ls : "1px")};
   font-weight: ${(props) => (props.weight ? props.weight : 500)};
   padding: ${(props) => (props.pad ? props.pad : "5px 10px")};
   margin: ${(props) => (props.m ? props.m : "2%")};
   background: ${(props) => (props.bgcolor ? props.bgcolor : "transparent")};
   border-radius: ${(props) => props.rounded && "5px"};
+  text-align: ${(props) => (props.textalign ? props.textalign : "left")};
   text-transform: ${(props) => props.tt && props.tt};
   width: ${(props) => (props.w ? props.w : "auto")};
   display: ${(props) => (props.flex ? "flex" : "inline-block")};
@@ -223,29 +237,51 @@ export const DLabel = styled.label`
 
   &:hover {
   }
+  ${(props) =>
+    props.txtColor &&
+    css`
+      font-weight: 700;
+      color: ${props.txtColor === "primary"
+        ? colors.primary
+        : props.txtColor === "secondary"
+        ? colors.secondary
+        : props.txtColor === "green"
+        ? colors.green
+        : props.txtColor === "red"
+        ? colors.red
+        : props.txtColor === "blue"
+        ? colors.blue
+        : props.txtColor === "bluer"
+        ? colors.bluer
+        : props.txtColor === "yellow"
+        ? colors.yellow
+        : props.txtColor === "dark"
+        ? colors.dark
+        : colors.grey};
+    `};
 
   ${(props) =>
     props.color &&
     css`
-      color: ${({ theme }) => theme.light};
+      color: ${colors.light};
       font-weight: 700;
       background-color: ${props.color === "primary"
-        ? ({ theme }) => theme.primary
+        ? colors.primary
         : props.color === "secondary"
-        ? ({ theme }) => theme.secondary
+        ? colors.secondary
         : props.color === "green"
-        ? ({ theme }) => theme.green
+        ? colors.green
         : props.color === "red"
-        ? ({ theme }) => theme.red
+        ? colors.red
         : props.color === "blue"
-        ? ({ theme }) => theme.blue
+        ? colors.blue
         : props.color === "bluer"
-        ? ({ theme }) => theme.bluer
+        ? colors.bluer
         : props.color === "yellow"
-        ? ({ theme }) => theme.yellow
+        ? colors.yellow
         : props.color === "dark"
-        ? ({ theme }) => theme.dark
-        : ({ theme }) => theme.grey};
+        ? colors.dark
+        : colors.grey};
     `};
 
   ${(props) =>
@@ -264,67 +300,50 @@ export const DLabel = styled.label`
     `};
 
   ${(props) =>
-    props.primary &&
-    css`
-      background: ${({ theme }) => theme.primary};
-      color: #ffffff;
-    `};
-  ${(props) =>
-    props.secondary &&
-    css`
-      background: ${({ theme }) => theme.secondary};
-      color: #ffffff;
-    `};
-  ${(props) =>
-    props.bluer &&
-    css`
-      background: ${({ theme }) => theme.bluer};
-      color: #ffffff;
-    `};
-
-  ${(props) =>
-    props.blue &&
-    css`
-      background: ${({ theme }) => theme.blue};
-      color: #ffffff;
-    `};
-  ${(props) =>
-    props.green &&
-    css`
-      background: ${({ theme }) => theme.green};
-      color: #ffffff;
-    `};
-  ${(props) =>
-    props.yellow &&
-    css`
-      background: ${({ theme }) => theme.yellow};
-      color: #ffffff;
-    `};
-
-  ${(props) =>
-    props.default &&
-    css`
-      background: ${({ theme }) => theme.grey};
-      color: ${({ theme }) => theme.dark};
-    `};
-  ${(props) =>
-    props.dark &&
-    css`
-      background: ${({ theme }) => theme.dark};
-      color: ${({ theme }) => theme.light};
-    `};
-
-  ${(props) =>
     props.pointer &&
     css`
       &:before {
         position: absolute;
         width: 8px;
         height: 8px;
-        border-width: 1px;
-        border-color: red red red transparent;
-        background: ${(props) =>
-          props.color ? props.color : ({ theme }) => theme.bluer};
+        z-index: -1;
+        border: 1px solid
+          ${props.color === "primary"
+            ? colors.primary
+            : props.color === "secondary"
+            ? colors.secondary
+            : props.color === "green"
+            ? colors.green
+            : props.color === "red"
+            ? colors.red
+            : props.color === "blue"
+            ? colors.blue
+            : props.color === "bluer"
+            ? colors.bluer
+            : props.color === "yellow"
+            ? colors.yellow
+            : props.color === "dark"
+            ? colors.dark
+            : colors.grey};
+        border-left: 1px solid transparent;
+        background: ${props.color === "primary"
+          ? colors.primary
+          : props.color === "secondary"
+          ? colors.secondary
+          : props.color === "green"
+          ? colors.green
+          : props.color === "red"
+          ? colors.red
+          : props.color === "blue"
+          ? colors.blue
+          : props.color === "bluer"
+          ? colors.bluer
+          : props.color === "yellow"
+          ? colors.yellow
+          : props.color === "dark"
+          ? colors.dark
+          : colors.grey};
+        filter: brightness(90%);
 
         top: 100%;
         left: 50%;
@@ -356,12 +375,12 @@ export const NavItem = styled.div`
 
     &:hover {
       color: white;
-      background: ${({ theme }) => theme.blue};
+      background: ${colors.blue};
       opacity: 0.9;
     }
 
     &.active {
-      background: ${({ theme }) => theme.bluer};
+      background: ${colors.bluer};
     }
   }
   span {
@@ -376,7 +395,7 @@ export const DAccordion = styled.section`
   width: 90%;
 
   .accordion-title {
-    background: ${(props) => (props.bg ? props.bg : ({ theme }) => theme.dark)};
+    background: ${(props) => (props.bg ? props.bg : colors.dark)};
     color: ${(props) => (props.color ? props.color : "#fff")};
     cursor: pointer;
     display: flex;
@@ -391,7 +410,7 @@ export const DAccordion = styled.section`
     &:hover,
     &.active {
       background: ${(props) =>
-        props.activeBg ? props.activeBg : ({ theme }) => theme.blue};
+        props.activeBg ? props.activeBg : colors.blue};
       color: ${(props) =>
         props.hoverColorText ? props.hoverColorText : "#232323"};
     }
@@ -454,13 +473,13 @@ export const DAccordion = styled.section`
 
       &:hover {
         color: white;
-        background: ${({ theme }) => theme.blue};
+        background: ${colors.blue};
         opacity: 0.9;
       }
 
       &.active {
         color: white;
-        background: ${({ theme }) => theme.bluer};
+        background: ${colors.bluer};
       }
     }
   }
@@ -522,7 +541,7 @@ export const ReadMore = styled.p`
 
   span {
     color: ${(props) =>
-      props.color ? props.color : ({ theme }) => theme.secondary};
+      props.color ? props.color : colors.secondary};
     display: inline-block;
     position: relative;
     font-weight: 700;
@@ -544,7 +563,7 @@ export const ReadMore = styled.p`
       transition: margin 0.3s, opacity 0.3s;
     }
     a {
-      color: ${({ theme }) => theme.secondary};
+      color: ${colors.secondary};
     }
     &:hover {
       &:after {
@@ -579,19 +598,19 @@ export const IconWrap = styled.div`
   ${StyledIconBase} {
     color: ${(props) =>
       props.color === "primary"
-        ? ({ theme }) => theme.primary
+        ? colors.primary
         : props.color === "bluer"
-        ? ({ theme }) => theme.bluer
+        ? colors.bluer
         : props.color === "red"
-        ? ({ theme }) => theme.red
+        ? colors.red
         : props.color === "green"
-        ? ({ theme }) => theme.green
+        ? colors.green
         : props.color === "yellow"
-        ? ({ theme }) => theme.yellow
+        ? colors.yellow
         : props.color === "grey"
-        ? ({ theme }) => theme.grey
+        ? colors.grey
         : props.color === "dark"
-        ? ({ theme }) => theme.dark
+        ? colors.dark
         : "#fff"};
     cursor: pointer;
     opacity: 0.8;
@@ -731,9 +750,9 @@ export const DLink = styled(Link)`
   font-size: ${(props) => (props.size ? props.size : "12px")};
   padding-bottom: 5px;
   &:hover {
-    color: ${({ theme }) => theme.secondary} !important;
+    color: ${colors.secondary} !important;
     border-bottom: ${(props) => props.borderb && "1px solid #232323"};
-    border-bottom-color: ${({ theme }) => theme.secondary};
+    border-bottom-color: ${colors.secondary};
   }
 `;
 
@@ -760,7 +779,7 @@ export const DInput = styled.input`
       width: 100%;
     `};
   &:focus {
-    box-shadow: 0 0 2px 1px ${({ theme }) => theme.primary};
+    box-shadow: 0 0 2px 1px ${colors.primary};
   }
 `;
 
@@ -778,7 +797,7 @@ export const DSelect = styled.select`
       width: 100%;
     `};
   &:focus {
-    box-shadow: 0 0 2px 1px ${({ theme }) => theme.primary};
+    box-shadow: 0 0 2px 1px ${colors.primary};
   }
 `;
 
@@ -787,15 +806,15 @@ export const CheckLabel = styled.label`
     props.weight === "fw500" ? "500 !important" : "700 !important"};
   color: ${(props) =>
     props.color === "green"
-      ? ({ theme }) => theme.green
+      ? colors.green
       : props.color === "bluer"
-      ? ({ theme }) => theme.bluer
+      ? colors.bluer
       : props.color === "blue"
       ? "rgba(33, 147, 176, 0.7)"
       : props.color === "dark"
-      ? ({ theme }) => theme.dark
+      ? colors.dark
       : props.color === "grey"
-      ? ({ theme }) => theme.grey
-      : ({ theme }) => theme.secondary};
+      ? colors.grey
+      : colors.secondary};
   text-transform: ${(props) => (props.textt ? props.textt : "none")};
 `;

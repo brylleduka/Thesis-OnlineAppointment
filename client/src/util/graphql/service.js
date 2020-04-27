@@ -14,6 +14,7 @@ const FETCH_ALL_CATEGORIES_QUERY = gql`
         duration
         description
         photo
+        active
       }
       employees {
         _id
@@ -40,6 +41,7 @@ const FETCH_CATEGORY_QUERY = gql`
         duration
         description
         photo
+        active
       }
       employees {
         _id
@@ -59,14 +61,15 @@ const FETCH_CATEGORY_QUERY = gql`
 // SERVICES
 
 const FETCH_ALL_SERVICES_QUERY = gql`
-  query allServices {
-    allServices {
+  query allServices($active: Boolean) {
+    allServices(active: $active) {
       _id
       name
       duration
       price
       photo
       description
+      active
       category {
         _id
         name
@@ -76,15 +79,15 @@ const FETCH_ALL_SERVICES_QUERY = gql`
 `;
 
 const FETCH_SERVICES_QUERY = gql`
-  query services($categoryId: ID) {
-    services(categoryId: $categoryId) {
+  query services($categoryId: ID, $active: Boolean) {
+    services(categoryId: $categoryId, active: $active) {
       _id
       name
       duration
       price
       description
       photo
-
+      active
       category {
         _id
         name
@@ -103,7 +106,7 @@ const FETCH_SINGLE_SERVICE_QUERY = gql`
       price
       description
       photo
-
+      active
       category {
         _id
         name

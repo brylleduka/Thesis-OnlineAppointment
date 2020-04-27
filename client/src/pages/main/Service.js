@@ -6,7 +6,8 @@ import {
   DSection,
   DGrid,
   Content,
-  Overlay
+  Overlay,
+  DCard,
 } from "../../components/styled/containers";
 import { DButton } from "../../components/styled/utils";
 import { JCard2 } from "../../components/styled/card";
@@ -18,7 +19,7 @@ import { useHistory } from "react-router-dom";
 import ReadMore from "../../components/main/utils/ReadMore";
 import Spinner from "../../components/Spinner";
 
-const Service = props => {
+const Service = (props) => {
   const categoryId = props.match.params._id;
   const history = useHistory();
   const [isReadMore, setIsReadMore] = useState(false);
@@ -27,8 +28,8 @@ const Service = props => {
 
   const { data, loading } = useQuery(FETCH_CATEGORY_QUERY, {
     variables: {
-      categoryId
-    }
+      categoryId,
+    },
   });
 
   useEffect(() => {
@@ -78,11 +79,15 @@ const Service = props => {
         </DButton>
       </Content>
       {loading ? (
-        <DGrid three gap="15px">
-          <Skeleton width={300} height={475} />
-          <Skeleton width={300} height={475} />
-          <Skeleton width={300} height={475} />
-        </DGrid>
+        <Content
+          width="100%"
+          height="80vh"
+          flex
+          justify="center"
+          align="center"
+        >
+          <Spinner content="Please wait while we fetch our data..." />
+        </Content>
       ) : (
         <DSection
           width="80%"
@@ -95,52 +100,57 @@ const Service = props => {
           height="100%"
         >
           <Content width="100%" margin="0 auto" style={{ minHeight: "100vh" }}>
-            <DGrid three gap="15px">
+            <DGrid three gap="20px">
               {isServices &&
-                isServices.map(service => (
-                  <JCard2
-                    key={service._id}
-                    oflow={isReadMore ? true : false}
-                    onPointerLeave={() => setIsReadMore(false)}
-                  >
-                    <div className="thumbnail">
-                      <img
-                        src={
-                          service.photo !== null
-                            ? `/images/service/${service.photo}`
-                            : "https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/photo-1429043794791-eb8f26f44081.jpeg"
-                        }
-                      />
-                    </div>
-                    <div className="post-content">
-                      <div className="category">{service.name}</div>
-                      <h4 className="title">{service.duration} mins</h4>
-                      <h4 className="title">Php {service.price}</h4>
-                      <div className="description">
-                        {isReadMore ? (
-                          <p>{parser(service.description)}</p>
-                        ) : (
-                          <p>
-                            {service.description.length > 100
-                              ? parser(
-                                  service.description.substr(0, 100) + "..."
-                                )
-                              : parser(service.description.substr(0, 100))}
-                          </p>
-                        )}
-                        {service.description.length <= 100 ? (
-                          ""
-                        ) : (
-                          <ReadMore onClick={() => setIsReadMore(!isReadMore)}>
-                            {isReadMore ? "Read Less" : "Read More"}
-                          </ReadMore>
-                        )}
+                isServices.map(
+                  (service) =>
+                    service.active === true && (
+                      <JCard2
+                        key={service._id}
+                        oflow={isReadMore ? true : false}
+                        onPointerLeave={() => setIsReadMore(false)}
+                      >
+                        <div className="thumbnail">
+                          <img
+                            src={
+                              service.photo !== null
+                                ? `/images/service/${service.photo}`
+                                : "https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/photo-1429043794791-eb8f26f44081.jpeg"
+                            }
+                          />
+                        </div>
+                        <div className="post-content">
+                          <div className="category">{service.name}</div>
+                          <h4 className="title">{service.duration} mins</h4>
+                          <h4 className="title">Php {service.price}</h4>
+                          <div className="description">
+                            {isReadMore ? (
+                              <p>{parser(service.description)}</p>
+                            ) : (
+                              <p>
+                                {service.description.length > 100
+                                  ? parser(
+                                      service.description.substr(0, 100) + "..."
+                                    )
+                                  : parser(service.description.substr(0, 100))}
+                              </p>
+                            )}
+                            {service.description.length <= 100 ? (
+                              ""
+                            ) : (
+                              <ReadMore
+                                onClick={() => setIsReadMore(!isReadMore)}
+                              >
+                                {isReadMore ? "Read Less" : "Read More"}
+                              </ReadMore>
+                            )}
 
-                        {/* <ServiceDetails service={service} /> */}
-                      </div>
-                    </div>
-                  </JCard2>
-                ))}
+                            {/* <ServiceDetails service={service} /> */}
+                          </div>
+                        </div>
+                      </JCard2>
+                    )
+                )}
             </DGrid>
           </Content>
         </DSection>

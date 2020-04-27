@@ -6,23 +6,28 @@ import {
   DSection,
   Content,
   DGrid,
-  Overlay
+  Overlay,
+  DCard,
+  DImage,
 } from "../../components/styled/containers";
-import { JCard } from "../../components/styled/card";
-import Skeleton from "react-loading-skeleton";
 import parser from "html-react-parser";
 import { Link } from "react-router-dom";
 import ReadMore from "../../components/main/utils/ReadMore";
 import ScrollButton from "../../components/main/utils/ScrollButton";
 import useScroll from "../../util/hooks/useScroll";
 import MouseScroll from "../../components/MouseScroll";
+import Spinner from "../../components/Spinner";
 import { scrollView } from "../../util/useScrollDown";
+import useWindowSize from "../../util/hooks/useWindowSize";
 
 const Services = () => {
   const sectionDown = useRef();
   const scrolling = useScroll(500);
+  const { width: wid } = useWindowSize();
   const [isCategories, setIsCategories] = useState([]);
-  const { data, loading } = useQuery(FETCH_ALL_CATEGORIES_QUERY);
+  const { data, loading } = useQuery(FETCH_ALL_CATEGORIES_QUERY, {
+    variables: { active: true },
+  });
 
   useEffect(() => {
     if (data) {
@@ -75,40 +80,67 @@ const Services = () => {
         ref={sectionDown}
       >
         <Content width="100%" margin="0 auto" style={{ minHeight: "100vh" }}>
-          <DGrid three gap="24px" med7={"1fr"}>
-            {loading ? (
-              <>
-                <Skeleton width={400} height={300} />
-                <Skeleton width={400} height={300} />
-                <Skeleton width={400} height={300} />
-              </>
-            ) : (
-              isCategories.map(category => (
-                <JCard>
-                  <img
-                    src={
-                      category.photo !== null
-                        ? `/images/service/${category.photo}`
-                        : "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample108.jpg"
-                    }
-                    alt={category.name}
-                  />
-                  <figcaption>
-                    <h3>{parser(category.name)}</h3>
-                    <div className="description">
-                      <p>
+          {loading ? (
+            <Content
+              width="100%"
+              height="100%"
+              flex
+              justify="center"
+              align="center"
+            >
+              <Spinner content="Loading..." />
+            </Content>
+          ) : (
+            <DGrid three gap="24px" med7={"1fr"}>
+              {isCategories.map((category) => (
+                <DCard
+                  key={category._id}
+                  dw={wid < 524 ? "70%" : "90%"}
+                  dh="250px"
+                  mcenter
+                  p="0px"
+                  grayzoom
+                  overlaying
+                >
+                  <DImage height="100%" width="100%" grayscaling>
+                    <img
+                      src={
+                        category.photo
+                          ? `/images/service/${category.photo}`
+                          : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                      }
+                      alt={category.name}
+                    />
+                  </DImage>
+
+                  <Overlay
+                    bgc
+                    width="100%"
+                    height="100%"
+                    flex
+                    justify="center"
+                    align="center"
+                    initbox
+                  >
+                    <div className="overlay-box">
+                      <div className="overlay-box__content dark">
+                        <h3 className="title">{category.name}</h3>
+
                         {category.description.length > 100
                           ? parser(category.description.substr(0, 100) + "...")
                           : parser(category.description.substr(0, 100))}
-                      </p>
-                      <ReadMore hover={0}>View Services</ReadMore>
+
+                        <ReadMore center size="14px">
+                          Learn More
+                        </ReadMore>
+                      </div>
                     </div>
-                  </figcaption>
-                  <Link to={`/service/${category._id}`}></Link>
-                </JCard>
-              ))
-            )}
-          </DGrid>
+                  </Overlay>
+                  <Link to={`/service/${category._id}`} />
+                </DCard>
+              ))}
+            </DGrid>
+          )}
         </Content>
       </DSection>
     </DContainer>

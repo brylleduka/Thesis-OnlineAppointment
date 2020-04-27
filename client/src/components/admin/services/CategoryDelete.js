@@ -6,7 +6,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { Modal, Header, Popup, Grid } from "semantic-ui-react";
 import { DButton, IconWrap } from "../../styled/utils";
 import { Content } from "../../styled/containers";
-import { Delete, DeleteForever } from "@styled-icons/material";
+import { DeleteForever } from "@styled-icons/material";
 import { Check } from "@styled-icons/entypo";
 import { Cancel } from "@styled-icons/typicons";
 import { Warning } from "@styled-icons/material-rounded";

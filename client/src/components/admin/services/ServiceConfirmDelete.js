@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import gql from "graphql-tag";
 import { FETCH_SERVICES_QUERY } from "../../../util/graphql/service";
 import { useMutation } from "@apollo/react-hooks";
 
-import { Modal, Header } from "semantic-ui-react";
-import { DButton } from "../../styled/utils";
+import { Modal, Header, Grid, Popup } from "semantic-ui-react";
+import { DButton, IconWrap } from "../../styled/utils";
+import { Content } from "../../styled/containers";
+import { DeleteForever } from "@styled-icons/material";
+import { Check } from "@styled-icons/entypo";
+import { Cancel } from "@styled-icons/typicons";
+import { Warning } from "@styled-icons/material-rounded";
+import Spinner from "../../Spinner";
 
 const ServiceConfirmDelete = ({
   open,
@@ -12,12 +18,29 @@ const ServiceConfirmDelete = ({
   service,
   serviceHistoryCallback,
 }) => {
+  const [archiveService, { loading: loadArchiveService }] = useMutation(
+    ARCHIVE_SERVICE,
+    {
+      variables: { serviceId: service._id },
+      refetchQueries: [
+        {
+          query: FETCH_SERVICES_QUERY,
+          variables: { categoryId: service.category._id, active: true },
+        },
+      ],
+      onCompleted(data) {
+        serviceHistoryCallback();
+      },
+    }
+  );
+
   const [deleteService] = useMutation(DELETE_SERVICE_MUTATION, {
     update(cache) {
       const data = cache.readQuery({
         query: FETCH_SERVICES_QUERY,
         variables: {
           categoryId: service.category._id,
+          active: true,
         },
       });
 
@@ -27,6 +50,7 @@ const ServiceConfirmDelete = ({
         query: FETCH_SERVICES_QUERY,
         variables: {
           categoryId: service.category._id,
+          active: true,
         },
         data: { services: [...data.services] },
       });
@@ -44,11 +68,14 @@ const ServiceConfirmDelete = ({
   };
 
   return (
-    <Modal basic size="small" open={open}>
-      <Header
-        icon="archive"
-        content={`Delete this service: ${service.name}?`}
-      />
+    <Modal
+      basic
+      size="small"
+      open={open}
+      onClose={() => setOpen(false)}
+      closeIcon
+    >
+      <Header icon="archive" content={`Archive service: ${service.name}`} />
       <Modal.Content>
         <p>
           All containing details about this service will be remove. Are you sure
@@ -56,16 +83,99 @@ const ServiceConfirmDelete = ({
         </p>
       </Modal.Content>
       <Modal.Actions>
-        <DButton alert basic onClick={() => setOpen(false)}>
-          No
-        </DButton>
-        <DButton basic onClick={handleDeleteService}>
-          Yes
-        </DButton>
+        <Content
+          width="100%"
+          height="100%"
+          flex
+          justify="space-between"
+          align="center"
+        >
+          <Content
+            flex
+            width="100%"
+            height="100%"
+            justify="flex-start"
+            align="center"
+          >
+            <Popup
+              on="click"
+              trigger={
+                <DButton alert flex>
+                  <DeleteForever size="22px" />
+                  Delete Permanently
+                </DButton>
+              }
+              position="top center"
+              flowing
+            >
+              <Grid divided columns={2}>
+                <Grid.Column>
+                  <IconWrap size="22px" color="green" margin="0 auto">
+                    <Check
+                      title="Confirm deleting permanently"
+                      onClick={handleDeleteService}
+                    />
+                  </IconWrap>
+                </Grid.Column>
+                <Grid.Column>
+                  <IconWrap size="22px" color="red" margin="0 auto">
+                    <Cancel title="Cancel action" />
+                  </IconWrap>
+                </Grid.Column>
+              </Grid>
+            </Popup>
+
+            <Popup
+              trigger={
+                <IconWrap
+                  circle
+                  shadow
+                  color="yellow"
+                  small
+                  mcenter
+                  title="Warning"
+                >
+                  <Warning />
+                </IconWrap>
+              }
+              content={
+                <p style={{ fontWeight: 700 }}>
+                  Deleting Permantly cannot be restored
+                </p>
+              }
+              position="top right"
+              size="tiny"
+            />
+          </Content>
+          <Content
+            width="100%"
+            height="100%"
+            flex
+            justify="flex-end"
+            align="center"
+          >
+            <DButton basic confirm onClick={() => archiveService()}>
+              {loadArchiveService ? (
+                <Spinner inverted small row content="Loading..." />
+              ) : (
+                <>
+                  <Check size="22px" />
+                  Yes
+                </>
+              )}
+            </DButton>
+          </Content>
+        </Content>
       </Modal.Actions>
     </Modal>
   );
 };
+
+const ARCHIVE_SERVICE = gql`
+  mutation archivedService($serviceId: ID!) {
+    archivedService(_id: $serviceId)
+  }
+`;
 
 const DELETE_SERVICE_MUTATION = gql`
   mutation deleteService($serviceId: ID!) {

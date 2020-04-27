@@ -16,5 +16,6 @@ export const useForm = (callback, initialState = {}) => {
     handleChange,
     handleSubmit,
     values,
+    setValues,
   };
 };

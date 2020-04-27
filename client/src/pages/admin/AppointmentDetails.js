@@ -393,21 +393,22 @@ const AppointmentDetails = (props) => {
                     >
                       <DLabel
                         flex
-                        justifyEnd
+                        justifyCenter
                         alignCenter
                         weight={700}
-                        w={"50%"}
-                        size="15px"
+                        rounded
+                        w={"auto"}
+                        size="18px"
                         color={
                           myAppoint.status === "VERIFIED"
-                            ? "#8DC26F"
+                            ? "green"
                             : myAppoint.status === "DONE"
-                            ? "#56ab2f"
+                            ? "bluer"
                             : myAppoint.status === "CANCELLED"
-                            ? "#b92b27"
+                            ? "red"
                             : myAppoint.status === "RESCHEDULED"
-                            ? "#6dd5ed"
-                            : "#2193b0"
+                            ? "blue"
+                            : "grey"
                         }
                       >
                         {myAppoint.status}
@@ -450,135 +451,6 @@ const AppointmentDetails = (props) => {
           </>
         )}
 
-        {/* {!data ? (
-          <Spinner />
-        ) : (
-          <DGrid rowCustom="1fr 100px" style={{ width: "70%" }}>
-            <Content
-              bgcolor="rgba(223, 230, 233,0.8)"
-              width="100%"
-              height="100%"
-              margn="0 auto"
-              pad="1.5rem 2em"
-              flex
-              jusitfy="center"
-              align="center"
-              direct="column"
-              rounded
-            >
-              <Form style={{ width: "90%" }}>
-                <Form.Field style={styles.field}>
-                  <label style={styles.label}>Appointment Id</label>
-                  <input
-                    value={data.appointment._id}
-                    readOnly
-                    style={styles.input}
-                  />
-                </Form.Field>
-                <Form.Field style={styles.field}>
-                  <label style={styles.label}>Service</label>
-                  <input
-                    value={data.appointment.service.name}
-                    readOnly
-                    style={styles.input}
-                  />
-                </Form.Field>
-                <Form.Field style={styles.field}>
-                  <label style={styles.label}>Aesthetician</label>
-                  <input
-                    value={`${data.appointment.employee.title}. ${data.appointment.employee.firstName} ${data.appointment.employee.lastName}`}
-                    readOnly
-                    style={styles.input}
-                  />
-                </Form.Field>
-                <Form.Field style={styles.field}>
-                  <label style={styles.label}>Date of Appointment</label>
-                  <input
-                    value={moment(parseInt(data.appointment.date)).format("LL")}
-                    readOnly
-                    style={styles.input}
-                  />
-                </Form.Field>
-                <Form.Field style={styles.field}>
-                  <label style={styles.label}>Time of Appointment</label>
-                  <input
-                    value={data.appointment.slot_start}
-                    readOnly
-                    style={styles.input}
-                  />
-                </Form.Field>
-                <Form.Field style={styles.field}>
-                  <label style={styles.label}>Duration</label>
-                  <input
-                    value={`${data.appointment.service.duration} min`}
-                    readOnly
-                    style={styles.input}
-                  />
-                </Form.Field>
-                <Form.Field style={styles.field}>
-                  <label style={styles.label}>Status</label>
-                  <input
-                    value={data.appointment.status}
-                    readOnly
-                    style={
-                      data.appointment.status === "PENDING"
-                        ? {
-                            width: "60%",
-                            fontSize: 14,
-                            fontWeight: 700,
-                            color: "gold",
-                          }
-                        : data.appointment.status === "CANCELLED"
-                        ? {
-                            width: "60%",
-                            fontSize: 14,
-                            fontWeight: 700,
-                            color: "firebrick",
-                          }
-                        : data.appointment.status === "VERIFIED"
-                        ? {
-                            width: "60%",
-                            fontSize: 14,
-                            fontWeight: 700,
-                            color: "green",
-                          }
-                        : {
-                            width: "60%",
-                            fontSize: 14,
-                            fontWeight: 700,
-                            color: "blue",
-                          }
-                    }
-                  />
-                </Form.Field>
-              </Form>
-            </Content>
-            <Content width="100%" flex align="center" justify="space-between">
-              <DButton onClick={() => history.goBack()}>Back</DButton>
-
-              {data.appointment.status === "CANCELLED" ||
-              data.appointment.status === "DONE" ||
-              data.appointment.status === "RESCHEDULED" ? (
-                ""
-              ) : (
-                <>
-                  <DButton confirm onClick={() => setOpenDone(true)}>
-                    Done
-                  </DButton>
-                  <ReschedModal
-                    isAdmin={true}
-                    status={"VERIFIED"}
-                    setOpen={setOpen}
-                    appointmentId={appointmentId}
-                  />
-                  <DButton alert onClick={() => setOpenCancel(true)}>
-                    Cancel
-                  </DButton>
-                </>
-              )}
-            </Content>
-          </DGrid>
-        )} */}
         <AppointmentCancel
           openCancel={openCancel}
           setOpenCancel={setOpenCancel}

@@ -6,6 +6,7 @@ import { Content } from "../../styled/containers";
 import { DButton, DLabel, IconWrap } from "../../styled/utils";
 import DataTable from "react-data-table-component";
 import { Eye } from "styled-icons/fa-regular";
+import { Plus } from "@styled-icons/boxicons-regular/Plus";
 import { Grid } from "@styled-icons/boxicons-solid/Grid";
 import Spinner from "../../Spinner";
 import NewService from "./NewService";
@@ -20,6 +21,7 @@ const ServiceList = ({ categoryId }) => {
     {
       variables: {
         categoryId,
+        active: true,
       },
     }
   );
@@ -33,11 +35,11 @@ const ServiceList = ({ categoryId }) => {
   const columns = [
     {
       cell: () => (
-        <IconWrap color={({ theme }) => theme.bluer}>
+        <IconWrap color={"green"}>
           <Grid size="22px" />
         </IconWrap>
       ),
-      width: "56px",
+      width: "66px",
       style: {
         borderBottom: "1px solid #fff",
         marginBottom: "-1px",
@@ -46,10 +48,10 @@ const ServiceList = ({ categoryId }) => {
     {
       name: "Thumbnail",
       selector: "photo",
-      grow: 0,
+      grow: 0.7,
       cell: (row) => (
         <img
-          height="84px"
+          height="74px"
           width="56px"
           alt={row.name}
           src={
@@ -66,22 +68,6 @@ const ServiceList = ({ categoryId }) => {
       wrap: true,
       sortable: true,
     },
-    {
-      name: "Description",
-      selector: "description",
-      wrap: true,
-      format: (row) => {
-        const length = 50;
-        const descript = row.description;
-
-        const trimString =
-          descript.length > length
-            ? descript.substring(0, length) + "..."
-            : descript.substring(0, length);
-
-        return <p style={{ fontWeight: 500 }}>{parse(trimString)}</p>;
-      },
-    },
 
     {
       name: "Duration",
@@ -91,6 +77,7 @@ const ServiceList = ({ categoryId }) => {
       cell: (row) => (
         <span style={{ fontWeight: 500 }}>{row.duration} min</span>
       ),
+      right: true,
     },
     {
       name: "Actions",
@@ -101,6 +88,7 @@ const ServiceList = ({ categoryId }) => {
           </Link>
         </DButton>
       ),
+      right: true,
     },
   ];
 
@@ -118,8 +106,8 @@ const ServiceList = ({ categoryId }) => {
     },
     rows: {
       style: {
-        fontSize: "14px",
-        fontWeight: "700",
+        fontSize: "12px",
+        fontWeight: "500",
         color: "#000",
       },
       highlightOnHoverStyle: {
@@ -131,14 +119,30 @@ const ServiceList = ({ categoryId }) => {
     },
   };
 
+  const title = (
+    <DLabel color="bluer" size="18px" rounded>
+      Service List
+    </DLabel>
+  );
+
   const paginationRowsPerPageOptions = [5, 10, 15, 20];
   return (
     <>
-      <Content width="100%" flex justify="space-between" align="center">
-        <h3>Services</h3>
-        <DButton onClick={() => setOpen(true)}>New Service</DButton>
+      <Content width="100%" flex justify="flex-end" align="center">
+        <IconWrap
+          medium
+          title={"Add Service"}
+          topright
+          circle
+          shadow
+          bgcolor={({ theme }) => theme.bluer}
+          onClick={() => setOpen(true)}
+        >
+          <Plus />
+        </IconWrap>
       </Content>
       <DataTable
+        title={title}
         columns={columns}
         data={services.map((service) => service)}
         responsive={true}

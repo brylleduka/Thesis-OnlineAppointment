@@ -4,52 +4,37 @@ import { useMutation } from "@apollo/react-hooks";
 import { Modal, Form, Label } from "semantic-ui-react";
 import { FETCH_SERVICES_QUERY } from "../../../util/graphql/service";
 import { useForm } from "../../../util/hooks/useForm";
-import JoditEditor from "jodit-react";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import DecoupledEditor from "@ckeditor/ckeditor5-build-decoupled-document";
 import DTextArea from "../../DTextArea";
 import toaster from "toasted-notes";
 
-import { DButton, DLabels } from "../../styled/utils";
+import { DButton } from "../../styled/utils";
 import { Content } from "../../styled/containers";
 import Spinner from "../../Spinner";
 import Toasted from "../../Toasted";
 
-const config = {
-  readonly: false,
-};
-
 const NewService = ({ categoryId, open, setOpen }) => {
   const [errors, setErrors] = useState({});
-  const editor = useRef(null);
   const [content, setContent] = useState("");
 
-  const { handleChange, handleSubmit, values } = useForm(registerCallBack, {
-    name: "",
-    price: "",
-    duration: "",
-  });
+  const { handleChange, handleSubmit, values, setValues } = useForm(
+    registerCallBack,
+    {
+      name: "",
+      price: "",
+      duration: "",
+    }
+  );
 
   const [createService, { loading }] = useMutation(CREATE_NEW_SERVICE, {
-    // refetchQueries: [
-    //   { query: FETCH_SERVICES_QUERY, variables: { categoryId: categoryId } }
-    // ],
-    update(cache, result) {
-      const data = cache.readQuery({
+    refetchQueries: [
+      {
         query: FETCH_SERVICES_QUERY,
-        variables: { categoryId: categoryId },
-      });
-      const newService = result.data.createService;
-      cache.writeQuery({
-        query: FETCH_SERVICES_QUERY,
-        variables: { categoryId: categoryId },
-        data: { services: [newService, ...data.services] },
-      });
+        variables: { categoryId: categoryId, active: true },
+      },
+    ],
 
-      values.name = "";
-      values.price = "";
-      values.duration = "";
-    },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.errors);
 
@@ -63,7 +48,7 @@ const NewService = ({ categoryId, open, setOpen }) => {
     },
     onCompleted() {
       setOpen(false);
-
+      setValues({ name: "", price: "", duration: "" });
       toaster.notify(({ onClose }) => (
         <Toasted success onClick={onClose}>
           New Service Added Successfully
@@ -186,7 +171,11 @@ const NewService = ({ categoryId, open, setOpen }) => {
           No
         </DButton>
         <DButton confirm type="submit" onClick={handleSubmit}>
-          {loading ? <Spinner small inverted /> : "Yes"}
+          {loading ? (
+            <Spinner small inverted row content="Loading..." />
+          ) : (
+            "Yes"
+          )}
         </DButton>
       </Modal.Actions>
     </Modal>

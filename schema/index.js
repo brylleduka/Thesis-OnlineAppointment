@@ -313,8 +313,8 @@ const typeDefs = gql`
     category(_id: ID!): Category
     categories(active: Boolean): [Category]
     service(_id: ID!): Service
-    services(categoryId: ID): [Service]
-    allServices: [Service]
+    services(categoryId: ID, active: Boolean): [Service]
+    allServices(active: Boolean): [Service]
     # INQ
     inquiries: [Inquiry]
     inquiriesRead(read: Boolean): [Inquiry]
@@ -464,6 +464,7 @@ const typeDefs = gql`
       duration: Int
       description: String
     ): Service
+    archivedService(_id: ID!): Boolean
     deleteService(_id: ID!): Boolean
     addServicePhoto(_id: ID!, file: Upload): Boolean
 

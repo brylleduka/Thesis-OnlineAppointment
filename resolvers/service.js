@@ -8,14 +8,14 @@ const path = require("path");
 
 module.exports = {
   Query: {
-    services: async (_, { categoryId }) => {
-      const services = await Service.find({ category: categoryId });
+    services: async (_, { categoryId, active }) => {
+      const services = await Service.find({ category: categoryId, active });
 
       return services;
     },
-    allServices: async () => {
+    allServices: async (_, { active }) => {
       try {
-        const services = await Service.find();
+        const services = await Service.find({ active });
 
         return services;
       } catch (err) {
@@ -59,6 +59,7 @@ module.exports = {
           price,
           duration, //MINUTES
           description,
+          active: true,
           category: categoryId,
         });
 
@@ -96,6 +97,20 @@ module.exports = {
         });
 
         return updated;
+      } catch (err) {
+        throw err;
+      }
+    },
+
+    archivedService: async (_, { _id }) => {
+      try {
+        await Service.findOneAndUpdate(
+          { _id },
+          { $set: { active: false } },
+          { new: true }
+        );
+
+        return true;
       } catch (err) {
         throw err;
       }

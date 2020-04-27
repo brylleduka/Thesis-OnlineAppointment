@@ -109,7 +109,7 @@ const AppointmentInputs = ({
       <Form style={{ width: "80%", padding: "1rem 0" }} size="large">
         <Form.Field>
           <label style={{ textTransform: "uppercase", fontWeight: 700 }}>
-            Categories
+            Select Service Category
           </label>
           {loading_categories ? (
             <Spinner row content="Loading..." small />
@@ -121,7 +121,7 @@ const AppointmentInputs = ({
               className="input-custom"
             >
               <option value="" disabled>
-                Select Categories...
+                Select Service Category...
               </option>
               {categories &&
                 categories.map((category) => (
@@ -136,7 +136,7 @@ const AppointmentInputs = ({
         {called && (
           <Form.Field>
             <label style={{ textTransform: "uppercase", fontWeight: 700 }}>
-              Select a service
+              Select Sub-Service
             </label>
             {loading_services ? (
               <Spinner row content="Loading..." small />
@@ -160,7 +160,7 @@ const AppointmentInputs = ({
                 className="input-custom"
               >
                 <option value="" disabled>
-                  Select Services...
+                  Select Sub-Services...
                 </option>
                 {services &&
                   services.map((service) => (
