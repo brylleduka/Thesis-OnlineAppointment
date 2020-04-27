@@ -158,11 +158,11 @@ const Category = (props) => {
                     )}
                     <IconWrap
                       {...getRootProps()}
-                      bg={({ theme }) => theme.bluer}
                       circle
                       bottomcenter
                       small
                       pad="2px"
+                      bgcolor={({ theme }) => theme.bluer}
                     >
                       <Camera title="Upload" />
                       <input {...getInputProps()} />

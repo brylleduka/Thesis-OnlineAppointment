@@ -64,11 +64,7 @@ const MenuDots = (props) => {
         on="click"
         position="top right"
         trigger={
-          <IconWrap
-            menu
-            {...props}
-            color={props.color ? props.color : "#232323"}
-          >
+          <IconWrap menu {...props} color="dark">
             <DotsVerticalRounded title="Menu" />
           </IconWrap>
         }

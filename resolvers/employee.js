@@ -414,18 +414,22 @@ module.exports = {
       }
     },
     archiveEmployee: async (_, { _id }, { req }) => {
+      let errors = {};
       try {
-        const emp = Auth({ req });
+        const { role, level } = Auth({ req });
 
-        console.log(emp);
+        if (role !== "ADMIN" || level < 3) {
+          errors.unauth = "You are not authorize to do this action.";
+          throw new UserInputError("Unauthorize", { errors });
+        }
 
-        // await Employee.findOneAndUpdate(
-        //   { _id },
-        //   { $set: { active: false } },
-        //   { new: true }
-        // );
+        const archived = await Employee.findOneAndUpdate(
+          { _id },
+          { $set: { active: false } },
+          { new: true }
+        );
 
-        // return true;
+        return archived;
       } catch (err) {
         throw err;
       }

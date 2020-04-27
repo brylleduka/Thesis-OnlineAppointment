@@ -1,16 +1,22 @@
 import React, { useState, useRef } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import { Modal, Form } from "semantic-ui-react";
+import { Modal, Form, Label } from "semantic-ui-react";
 import { FETCH_SERVICES_QUERY } from "../../../util/graphql/service";
 import { useForm } from "../../../util/hooks/useForm";
 import JoditEditor from "jodit-react";
+import CKEditor from "@ckeditor/ckeditor5-react";
+import DecoupledEditor from "@ckeditor/ckeditor5-build-decoupled-document";
+import DTextArea from "../../DTextArea";
 import toaster from "toasted-notes";
-import { DButton, Toasted } from "../../styled/utils";
+
+import { DButton, DLabels } from "../../styled/utils";
+import { Content } from "../../styled/containers";
 import Spinner from "../../Spinner";
+import Toasted from "../../Toasted";
 
 const config = {
-  readonly: false
+  readonly: false,
 };
 
 const NewService = ({ categoryId, open, setOpen }) => {
@@ -21,7 +27,7 @@ const NewService = ({ categoryId, open, setOpen }) => {
   const { handleChange, handleSubmit, values } = useForm(registerCallBack, {
     name: "",
     price: "",
-    duration: ""
+    duration: "",
   });
 
   const [createService, { loading }] = useMutation(CREATE_NEW_SERVICE, {
@@ -31,13 +37,13 @@ const NewService = ({ categoryId, open, setOpen }) => {
     update(cache, result) {
       const data = cache.readQuery({
         query: FETCH_SERVICES_QUERY,
-        variables: { categoryId: categoryId }
+        variables: { categoryId: categoryId },
       });
       const newService = result.data.createService;
       cache.writeQuery({
         query: FETCH_SERVICES_QUERY,
         variables: { categoryId: categoryId },
-        data: { services: [newService, ...data.services] }
+        data: { services: [newService, ...data.services] },
       });
 
       values.name = "";
@@ -49,11 +55,8 @@ const NewService = ({ categoryId, open, setOpen }) => {
 
       if (err.graphQLErrors[0].extensions.errors.serviceExist) {
         toaster.notify(({ onClose }) => (
-          <Toasted status={"error"}>
-            <span className="description">Service already Exist</span>
-            <span className="close" onClick={onClose}>
-              &times;
-            </span>
+          <Toasted success onClick={onClose}>
+            Service already Exist
           </Toasted>
         ));
       }
@@ -62,11 +65,8 @@ const NewService = ({ categoryId, open, setOpen }) => {
       setOpen(false);
 
       toaster.notify(({ onClose }) => (
-        <Toasted status={"success"}>
-          <span className="description">New Service Added Successfully</span>
-          <span className="close" onClick={onClose}>
-            &times;
-          </span>
+        <Toasted success onClick={onClose}>
+          New Service Added Successfully
         </Toasted>
       ));
     },
@@ -75,8 +75,8 @@ const NewService = ({ categoryId, open, setOpen }) => {
       description: content,
       price: parseFloat(values.price),
       duration: parseInt(parseFloat(values.duration) * 60),
-      categoryId
-    }
+      categoryId,
+    },
   });
 
   function registerCallBack() {
@@ -138,26 +138,69 @@ const NewService = ({ categoryId, open, setOpen }) => {
             </select>
           </Form.Field>
           <Form.Field>
-            <label>Description</label>
-            <JoditEditor
-              ref={editor}
-              value={content}
-              config={config}
-              tabIndex={1} // tabIndex of textarea
-              onBlur={newContent => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
-              onChange={newContent => {}}
-            />
+            <Content
+              width="100%"
+              height="100%"
+              flex
+              justify="flex-start"
+              align="flex-start"
+              direct="column"
+              margin="12px auto"
+            >
+              <Label style={styles.label}>Description</Label>
+              <Content
+                width="100%"
+                height="auto"
+                flex
+                justify="flex-start"
+                align="center"
+                pad="3px 5px"
+                margin="0 auto"
+              >
+                <DTextArea active>
+                  <CKEditor
+                    onInit={(editor) => {
+                      // Insert the toolbar before the editable area.
+                      editor.ui
+                        .getEditableElement()
+                        .parentElement.insertBefore(
+                          editor.ui.view.toolbar.element,
+                          editor.ui.getEditableElement()
+                        );
+                    }}
+                    onChange={(event, editor) => {
+                      const data = editor.getData();
+                      setContent(data);
+                    }}
+                    editor={DecoupledEditor}
+                    data={content}
+                  />
+                </DTextArea>
+              </Content>
+            </Content>
           </Form.Field>
         </Form>
       </Modal.Content>
       <Modal.Actions>
-        <DButton alert onClick={() => setOpen(false)}>No</DButton>
+        <DButton alert onClick={() => setOpen(false)}>
+          No
+        </DButton>
         <DButton confirm type="submit" onClick={handleSubmit}>
           {loading ? <Spinner small inverted /> : "Yes"}
         </DButton>
       </Modal.Actions>
     </Modal>
   );
+};
+
+const styles = {
+  label: {
+    width: "auto",
+    textAlign: "center",
+    fontWeight: 700,
+    fontSize: "14px",
+    marginBottom: "1rem",
+  },
 };
 
 const CREATE_NEW_SERVICE = gql`
@@ -183,12 +226,7 @@ const CREATE_NEW_SERVICE = gql`
       price
       description
       photo
-      employees {
-        _id
-        empId
-        firstName
-        lastName
-      }
+
       category {
         _id
         name

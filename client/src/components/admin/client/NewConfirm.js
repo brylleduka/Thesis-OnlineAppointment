@@ -19,7 +19,7 @@ const NewConfirm = ({
   startDate,
   selectedTime,
   setOpen,
-  clientId
+  clientId,
 }) => {
   const [errors, setErrors] = useState({});
   const [newConfirm, setNewConfirm] = useState(false);
@@ -28,8 +28,8 @@ const NewConfirm = ({
     FETCH_SINGLE_SERVICE_QUERY,
     {
       variables: {
-        serviceId: serviceValue
-      }
+        serviceId: serviceValue,
+      },
     }
   );
 
@@ -37,8 +37,8 @@ const NewConfirm = ({
     FETCH_EMPLOYEE_QUERY,
     {
       variables: {
-        employeeId: employeeVal
-      }
+        employeeId: employeeVal,
+      },
     }
   );
 
@@ -47,7 +47,7 @@ const NewConfirm = ({
     {
       update(cache, result) {
         const data = cache.readQuery({
-          query: FETCH_CURRENT_APPOINTMENTS
+          query: FETCH_CURRENT_APPOINTMENTS,
         });
 
         const newAppointment = result.data.createUserExistAppointment;
@@ -55,8 +55,8 @@ const NewConfirm = ({
         cache.writeQuery({
           query: FETCH_CURRENT_APPOINTMENTS,
           data: {
-            currentAppointments: [newAppointment, ...data.currentAppointments]
-          }
+            currentAppointments: [newAppointment, ...data.currentAppointments],
+          },
         });
       },
       onCompleted(data) {
@@ -84,8 +84,8 @@ const NewConfirm = ({
         employeeId: employeeVal,
         date: new Date(startDate).toLocaleDateString(),
         start: selectedTime,
-        message: ""
-      }
+        message: "",
+      },
     }
   );
 
@@ -95,7 +95,15 @@ const NewConfirm = ({
 
   return (
     <>
-      <DButton confirm onClick={() => setNewConfirm(true)}>
+      <DButton
+        confirm
+        onClick={() => setNewConfirm(true)}
+        disabled={
+          serviceValue === "" || employeeVal === "" || selectedTime === ""
+            ? true
+            : false
+        }
+      >
         Confirm
       </DButton>
       <Modal open={newConfirm} size="tiny" onClose={() => setNewConfirm(false)}>

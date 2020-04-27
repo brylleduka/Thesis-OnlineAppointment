@@ -6,9 +6,11 @@ const path = require("path");
 
 module.exports = {
   Query: {
-    categories: async () => {
+    categories: async (_, { active }) => {
       try {
-        const getAllCategories = await Category.find().sort({ createdAt: -1 });
+        const getAllCategories = await Category.find({ active }).sort({
+          updatedAt: -1,
+        });
         return getAllCategories;
       } catch (err) {
         throw err;
@@ -79,6 +81,19 @@ module.exports = {
         const category = await Category.updateOne(
           { _id },
           { $set: { photo: filename } }
+        );
+
+        return true;
+      } catch (err) {
+        throw err;
+      }
+    },
+    archivedCategory: async (_, { _id }) => {
+      try {
+        const archivedService = await Category.findOneAndUpdate(
+          { _id },
+          { $set: { active: false } },
+          { new: true }
         );
 
         return true;

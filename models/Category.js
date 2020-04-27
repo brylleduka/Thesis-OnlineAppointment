@@ -11,6 +11,7 @@ const categorySchema = new Schema(
     },
     description: String,
     photo: String,
+    active: Boolean,
     services: [
       {
         type: Schema.Types.ObjectId,
@@ -25,7 +26,6 @@ const categorySchema = new Schema(
         autopopulate: true,
       },
     ],
-    active: Boolean,
   },
   {
     timestamps: true,

@@ -71,9 +71,11 @@ const typeDefs = gql`
     name: String!
     description: String
     photo: String
+    active: Boolean
     services: [Service] #list of services
     employees: [Employee]
     createdAt: String
+    updatedAt: String
   }
 
   type Service {
@@ -83,8 +85,10 @@ const typeDefs = gql`
     duration: Int!
     description: String
     photo: String
+    active: Boolean
     category: Category #parent: Category type
     createdAt: String
+    updatedAt: String
   }
 
   type Inquiry {
@@ -307,7 +311,7 @@ const typeDefs = gql`
     aestheticiansReceps(limit: Int, active: Boolean): [Employee]
     # SERVICE
     category(_id: ID!): Category
-    categories: [Category]
+    categories(active: Boolean): [Category]
     service(_id: ID!): Service
     services(categoryId: ID): [Service]
     allServices: [Service]
@@ -434,7 +438,7 @@ const typeDefs = gql`
     ): Employee
 
     addEmployeePhoto(_id: ID!, file: Upload): Boolean
-    archiveEmployee(_id: ID!): Boolean
+    archiveEmployee(_id: ID!): Employee
     deleteEmployee(_id: ID!): Boolean #admin only
     addService(employeeId: ID!, categoryId: [ID]): Employee
     removeService(employeeId: ID!, categoryId: ID!): Employee
@@ -448,6 +452,7 @@ const typeDefs = gql`
       photo: String
     ): Category
     addCategoryPhoto(_id: ID!, file: Upload): Boolean
+    archivedCategory(_id: ID!): Boolean
     deleteCategory(_id: ID!): String
 
     #Service

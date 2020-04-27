@@ -90,13 +90,6 @@ const Appointment = () => {
                   <DButton
                     size="50px"
                     onClick={() => setOpen(true)}
-                    basic={
-                      (categoryValue === "" ||
-                        serviceValue === "" ||
-                        employeeVal === "" ||
-                        selectedTime === "") &&
-                      true
-                    }
                     disabled={
                       categoryValue === "" ||
                       serviceValue === "" ||

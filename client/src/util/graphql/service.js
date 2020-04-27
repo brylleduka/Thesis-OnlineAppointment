@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 const FETCH_ALL_CATEGORIES_QUERY = gql`
-  query categories {
-    categories {
+  query categories($active: Boolean) {
+    categories(active: $active) {
       _id
       name
       description

@@ -104,7 +104,9 @@ export const DButton = styled.button`
    opacity: 0.8;
    color: #fff;
    background: ${(props) =>
-     props.alert
+     props.disabled
+       ? "#e9e4f0"
+       : props.alert
        ? ({ theme }) => theme.red
        : props.warning
        ? ({ theme }) => theme.yellow
@@ -315,8 +317,6 @@ export const DLabel = styled.label`
   ${(props) =>
     props.pointer &&
     css`
-      
-
       &:before {
         position: absolute;
         width: 8px;

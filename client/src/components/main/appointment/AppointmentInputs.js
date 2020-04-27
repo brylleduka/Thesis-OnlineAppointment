@@ -27,7 +27,7 @@ const AppointmentInputs = ({
     loading: loading_categories,
     data: data_categories,
     error,
-  } = useQuery(FETCH_ALL_CATEGORIES_QUERY);
+  } = useQuery(FETCH_ALL_CATEGORIES_QUERY, { variables: { active: true } });
 
   useEffect(() => {
     if (data_categories) {

@@ -1,6 +1,11 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
+import {
+  FETCH_EMPLOYEES_NOT_ADMIN_QUERY,
+  FETCH_ALL_EMPLOYEES_QUERY,
+} from "../../../util/graphql/employee";
 import { Content } from "../../styled/containers";
 import { DButton, IconWrap } from "../../styled/utils";
 import Spinner from "../../Spinner";
@@ -12,7 +17,27 @@ import { Question } from "@styled-icons/fa-solid";
 import { Popup, Modal, Grid } from "semantic-ui-react";
 
 const EmployeeDelete = ({ employee }) => {
+  const history = useHistory();
   const [isDlt, setIsDlt] = useState(false);
+
+  const [archiveEmployee, { loading: loadArchived }] = useMutation(
+    ARCHIVE_EMPLOYEE,
+    {
+      variables: {
+        employeeId: employee._id,
+      },
+
+      refetchQueries: [
+        {
+          query: FETCH_EMPLOYEES_NOT_ADMIN_QUERY,
+          variables: { active: true, limit: 0 },
+        },
+      ],
+      onCompleted() {
+        history.goBack();
+      },
+    }
+  );
 
   return (
     <>
@@ -133,8 +158,15 @@ const EmployeeDelete = ({ employee }) => {
               justify="flex-end"
               align="center"
             >
-              <DButton basic confirm>
-                Confirm
+              <DButton basic confirm onClick={() => archiveEmployee()}>
+                {loadArchived ? (
+                  <Spinner small inverted row content="Loading..." />
+                ) : (
+                  <>
+                    <Check size="22px" />
+                    Confirm
+                  </>
+                )}
               </DButton>
             </Content>
           </Content>
@@ -143,5 +175,23 @@ const EmployeeDelete = ({ employee }) => {
     </>
   );
 };
+
+const ARCHIVE_EMPLOYEE = gql`
+  mutation archiveEmployee($employeeId: ID!) {
+    archiveEmployee(_id: $employeeId) {
+      _id
+      empId
+      title
+      firstName
+      lastName
+      contact
+      email
+      photo
+      bio
+      role
+      level
+    }
+  }
+`;
 
 export default EmployeeDelete;

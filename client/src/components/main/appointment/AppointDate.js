@@ -5,6 +5,7 @@ import { FETCH_SINGLE_SERVICE_QUERY } from "../../../util/graphql/service";
 import { FETCH_CHECKED_APPOINTMENTS } from "../../../util/graphql/appointment";
 import DatePicker from "react-datepicker";
 import { Content, DGrid } from "../../styled/containers";
+import { DLabel } from "../../styled/utils";
 import Spinner from "../../Spinner";
 import moment from "moment";
 import timeLineLabels from "../../../util/hooks/timeLineLabels";
@@ -156,30 +157,42 @@ const AppointDate = ({
           </Content>
         ) : (
           <Content
+            flex
             width="100%"
             height="100%"
-            maxh={"200px"}
-            flex
+            justify="space-around"
             align="center"
-            flow="column wrap"
-            hoverflow
+            direct="column"
           >
-            <h4>Time Slots</h4>
-            {times.map((time) => (
-              <Content width="auto" height="30px" margin={"5px"} key={time}>
-                <div className="pretty p-default p-curve">
-                  <input
-                    type="radio"
-                    name="time"
-                    value={time}
-                    onChange={handleTimeChanged}
-                  />
-                  <div className="state p-info-o">
-                    <label style={styles.label}>{time}</label>
+            <DLabel size="16px" color="bluer" weight={700} rounded>
+              Time Slot
+            </DLabel>
+            <Content
+              width="100%"
+              height="100%"
+              maxh={"300px"}
+              flex
+              align="flex-start"
+              justify="flex-start"
+              flow="column wrap"
+              hoverflow
+            >
+              {times.map((time) => (
+                <Content width="auto" height="20px" margin={"3px"} key={time}>
+                  <div className="pretty p-default p-curve">
+                    <input
+                      type="radio"
+                      name="time"
+                      value={time}
+                      onChange={handleTimeChanged}
+                    />
+                    <div className="state p-info-o">
+                      <label style={styles.label}>{time}</label>
+                    </div>
                   </div>
-                </div>
-              </Content>
-            ))}
+                </Content>
+              ))}
+            </Content>
           </Content>
         ))}
     </DGrid>

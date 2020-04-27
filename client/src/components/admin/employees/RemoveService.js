@@ -7,6 +7,7 @@ import { Cross } from "@styled-icons/entypo/Cross";
 import toaster from "toasted-notes";
 import Toasted from "../../Toasted";
 import Page404 from "../../../pages/Page404";
+import Spinner from "../../Spinner";
 
 const RemoveService = ({ categId, employeeId, refetchCategories }) => {
   const [categValue, setCategValue] = useState("");
@@ -41,9 +42,13 @@ const RemoveService = ({ categId, employeeId, refetchCategories }) => {
   };
   return (
     <div data-categid={categId} onMouseOver={handleCategoryValue}>
-      <IconWrap tiny margin="0 2px" onClick={handleRemoveService}>
-        <Cross />
-      </IconWrap>
+      {loadRemoving ? (
+        <Spinner mini inverted />
+      ) : (
+        <IconWrap tiny margin="0 2px" onClick={handleRemoveService}>
+          <Cross />
+        </IconWrap>
+      )}
     </div>
   );
 };

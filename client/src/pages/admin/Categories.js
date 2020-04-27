@@ -12,7 +12,6 @@ import {
   Overlay,
   DImage,
 } from "../../components/styled/containers";
-import { JCard } from "../../components/styled/card";
 import NewCategory from "../../components/admin/services/NewCategory";
 import { DButton } from "../../components/styled/utils";
 import Spinner from "../../components/Spinner";
@@ -24,7 +23,9 @@ const Categories = () => {
   const { width: wid } = useWindowSize();
   const [open, setOpen] = useState(false);
   const [categories, setCategories] = useState([]);
-  const { loading, data, error } = useQuery(FETCH_ALL_CATEGORIES_QUERY);
+  const { loading, data, error } = useQuery(FETCH_ALL_CATEGORIES_QUERY, {
+    variables: { active: true },
+  });
 
   useEffect(() => {
     if (data) {
@@ -39,11 +40,6 @@ const Categories = () => {
   const handleOpenModal = () => {
     setOpen(true);
   };
-
-  function extractContent(html) {
-    return new DOMParser().parseFromString(html, "text/html").documentElement
-      .textContent;
-  }
 
   return (
     <Layout>

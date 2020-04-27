@@ -9,9 +9,7 @@ import NewConfirm from "./NewConfirm";
 const AppointmentModal = ({ clientId }) => {
   const [open, setOpen] = useState(false);
 
-  const [values, setValues] = useState({
-    category: "",
-  });
+  const [categoryValue, setCategoryValue] = useState("");
   const [serviceValue, setServiceValue] = useState("");
   const [employeeVal, setEmployeeVal] = useState("");
   const [startDate, setStartDate] = useState(
@@ -24,11 +22,11 @@ const AppointmentModal = ({ clientId }) => {
       <DButton onClick={() => setOpen(true)}>New Appointment</DButton>
       <Modal open={open} onClose={() => setOpen(false)}>
         <Modal.Header>New Appointment</Modal.Header>
-        <Modal.Content>
+        <Modal.Content style={{ overflow: "hidden" }}>
           <DGrid custom="1fr 2fr">
             <AppointmentInputs
-              values={values}
-              setValues={setValues}
+              categoryValue={categoryValue}
+              setCategoryValue={setCategoryValue}
               employeeVal={employeeVal}
               serviceValue={serviceValue}
               setServiceValue={setServiceValue}

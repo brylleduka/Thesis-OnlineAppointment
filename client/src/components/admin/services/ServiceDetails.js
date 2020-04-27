@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { useForm } from "../../../util/hooks/useForm";
-import { Form, Label, Popup, Grid } from "semantic-ui-react";
+import { Form, Label, Grid } from "semantic-ui-react";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import DecoupledEditor from "@ckeditor/ckeditor5-build-decoupled-document";
 import { DButton, DLabel, IconWrap } from "../../../components/styled/utils";

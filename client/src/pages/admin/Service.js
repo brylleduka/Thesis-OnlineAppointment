@@ -156,10 +156,10 @@ const Service = (props) => {
                     )}
                     <IconWrap
                       {...getRootProps()}
-                      bg={({ theme }) => theme.bluer}
                       circle
                       bottomcenter
                       small
+                      bgcolor={({ theme }) => theme.bluer}
                       pad="2px"
                     >
                       <Camera title="Upload" />

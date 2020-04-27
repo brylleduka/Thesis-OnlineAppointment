@@ -21,7 +21,9 @@ export const SpinnerRing = styled.div`
     display: inline-block;
     position: relative;
     width: ${(props) =>
-      props.tiny
+      props.mini
+        ? "12px"
+        : props.tiny
         ? "15px"
         : props.small
         ? "30px"
@@ -29,7 +31,9 @@ export const SpinnerRing = styled.div`
         ? "90px"
         : "10em"};
     height: ${(props) =>
-      props.tiny
+      props.mini
+        ? "12px"
+        : props.tiny
         ? "15px"
         : props.small
         ? "30px"
@@ -42,7 +46,9 @@ export const SpinnerRing = styled.div`
       display: block;
       position: absolute;
       width: ${(props) =>
-        props.tiny
+        props.mini
+          ? "9px"
+          : props.tiny
           ? "12px"
           : props.small
           ? "24px"
@@ -50,7 +56,9 @@ export const SpinnerRing = styled.div`
           ? "72px"
           : "10em"};
       height: ${(props) =>
-        props.tiny
+        props.mini
+          ? "9px"
+          : props.tiny
           ? "12px"
           : props.small
           ? "24px"
@@ -58,7 +66,9 @@ export const SpinnerRing = styled.div`
           ? "72px"
           : "10em"};
       margin: ${(props) =>
-        props.tiny
+        props.mini
+          ? "1px"
+          : props.tiny
           ? "2px"
           : props.small
           ? "3px"
@@ -66,7 +76,9 @@ export const SpinnerRing = styled.div`
           ? "6px"
           : "10px"};
       border: ${(props) =>
-        props.tiny
+        props.mini
+          ? "1px solid rgba(255,255,255,0.7)"
+          : props.tiny
           ? "1px solid #fff"
           : props.small
           ? "2px solid #fff"

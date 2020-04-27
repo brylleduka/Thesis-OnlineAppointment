@@ -11,18 +11,16 @@ import { Content } from "../../styled/containers";
 import DTextArea from "../../DTextArea";
 import DecoupledEditor from "@ckeditor/ckeditor5-build-decoupled-document";
 import toaster from "toasted-notes";
+import Toasted from "../../Toasted";
+import Spinner from "../../Spinner";
+import { Check } from "@styled-icons/entypo";
+import { Cancel } from "@styled-icons/typicons";
 
 const NewCategory = ({ open, setOpen }) => {
-  const editor = useRef(null);
   const [errors, setErrors] = useState({});
   const [content, setContent] = useState("");
 
-  const { values, handleChange, handleSubmit } = useForm(
-    createCategoryCallback,
-    {
-      title: "",
-    }
-  );
+  const [values, setValues] = useState({ title: "" });
 
   const [createCategory, { loading }] = useMutation(
     CREATE_NEW_CATEGORY_MUTATION,
@@ -32,34 +30,47 @@ const NewCategory = ({ open, setOpen }) => {
         description: content,
       },
 
-      update(cache, result) {
-        setOpen(false);
-        const data = cache.readQuery({
-          query: FETCH_ALL_CATEGORIES_QUERY,
-        });
+      // update(cache, result) {
+      //   setOpen(false);
+      //   const data = cache.readQuery({
+      //     query: FETCH_ALL_CATEGORIES_QUERY,
+      //     variables: { active: true },
+      //   });
 
-        const newCategory = result.data.createCategory;
-        cache.writeQuery({
-          query: FETCH_ALL_CATEGORIES_QUERY,
-          data: { categories: [newCategory, ...data.categories] },
-        });
-
-        values.name = "";
-        content = "";
-      },
+      //   const newCategory = result.data.createCategory;
+      //   cache.writeQuery({
+      //     query: FETCH_ALL_CATEGORIES_QUERY,
+      //     variables: { active: true },
+      //     data: { categories: [newCategory, ...data.categories] },
+      //   });
+      // },
+      refetchQueries: [
+        { query: FETCH_ALL_CATEGORIES_QUERY, variables: { active: true } },
+      ],
       onCompleted() {
-        toaster.notify("New Category Add Successfully");
+        setOpen(false);
+        setContent("");
+        setValues({ title: "" });
+        toaster.notify(({ onClose }) => (
+          <Toasted success onClick={onClose}>
+            New Category Add Successfully
+          </Toasted>
+        ));
       },
-      onError(err) {
-        setErrors(err.graphQLErrors[0].extensions.exception.errors);
-        toaster.notify("Something went Wrong");
-      },
+      // onError(err) {
+      //   setErrors(err.graphQLErrors[0].extensions.exception.errors);
+      //   toaster.notify("Something went Wrong");
+      // },
     }
   );
 
-  function createCategoryCallback() {
+  const handleTitleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
+  const handleSaveCategory = () => {
     createCategory();
-  }
+  };
 
   const config = {
     readonly: false,
@@ -69,75 +80,83 @@ const NewCategory = ({ open, setOpen }) => {
     <Modal size={"tiny"} open={open} onClose={() => setOpen(false)}>
       <Modal.Header>Create new Category</Modal.Header>
       <Modal.Content>
-        <Form noValidate onSubmit={handleSubmit}>
+        <Form noValidate>
           <Form.Field>
             <label>Title</label>
             <input
               placeholder="title"
               name="title"
               value={values.title}
-              onChange={handleChange}
+              onChange={handleTitleChange}
             />
+          </Form.Field>
 
+          <Content
+            width="100%"
+            height="100%"
+            flex
+            justify="flex-start"
+            align="flex-start"
+            direct="column"
+            margin="12px auto"
+          >
+            <Label style={styles.label}>Description</Label>
             <Content
               width="100%"
-              height="100%"
+              height="auto"
               flex
               justify="flex-start"
-              align="flex-start"
-              direct="column"
-              margin="12px auto"
-            >
-              <Label style={styles.label}>Description</Label>
-              <Content
-                width="100%"
-                height="auto"
-                flex
-                justify="flex-start"
-                align="center"
-                pad="3px 5px"
-                margin="0 auto"
-              >
-                <DTextArea active>
-                  <CKEditor
-                    onInit={(editor) => {
-                      // Insert the toolbar before the editable area.
-                      editor.ui
-                        .getEditableElement()
-                        .parentElement.insertBefore(
-                          editor.ui.view.toolbar.element,
-                          editor.ui.getEditableElement()
-                        );
-                    }}
-                    onChange={(event, editor) => {
-                      const data = editor.getData();
-                      setContent(data);
-                    }}
-                    editor={DecoupledEditor}
-                    data={content}
-                  />
-                </DTextArea>
-              </Content>
-            </Content>
-          </Form.Field>
-          <Modal.Actions>
-            <Content
-              width="100%"
-              height="100%"
-              flex
-              justify="flex-end"
               align="center"
+              pad="3px 5px"
+              margin="0 auto"
             >
-              <DButton alert onClick={() => setOpen(false)}>
-                No
-              </DButton>
-              <DButton confirm type="submit">
-                Yes
-              </DButton>
+              <DTextArea active>
+                <CKEditor
+                  onInit={(editor) => {
+                    // Insert the toolbar before the editable area.
+                    editor.ui
+                      .getEditableElement()
+                      .parentElement.insertBefore(
+                        editor.ui.view.toolbar.element,
+                        editor.ui.getEditableElement()
+                      );
+                  }}
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    setContent(data);
+                  }}
+                  editor={DecoupledEditor}
+                  data={content}
+                />
+              </DTextArea>
             </Content>
-          </Modal.Actions>
+          </Content>
         </Form>
       </Modal.Content>
+      <Modal.Actions>
+        <Content
+          width="100%"
+          height="100%"
+          flex
+          justify="flex-end"
+          align="center"
+        >
+          <DButton alert flex onClick={() => setOpen(false)}>
+            <Cancel size="22px" />
+            No
+          </DButton>
+          <DButton confirm flex onClick={handleSaveCategory}>
+            {loading ? (
+              <Spinner inverted small content="Loading..." />
+            ) : (
+              <>
+                <Check size="22px" />
+                Yes
+              </>
+            )}
+          </DButton>
+        </Content>
+      </Modal.Actions>
     </Modal>
   );
 };
