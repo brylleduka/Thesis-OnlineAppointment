@@ -5,6 +5,7 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
+import PrintProvider, { NoPrint } from "react-easy-print";
 import { AdminAuthRoute } from "../util/AuthRoute";
 import { PrivateRoute } from "../util/PrivateRoute";
 
@@ -30,64 +31,74 @@ import Page404 from "../pages/Page404";
 
 const Admin = () => {
   return (
-    <>
-      <Switch>
-        <AdminAuthRoute path="/zeadmin/signin" component={Signin} exact />
+    <PrintProvider>
+      <NoPrint>
+        <Switch>
+          <AdminAuthRoute path="/zeadmin/signin" component={Signin} exact />
 
-        <PrivateRoute exact path="/zeadmin/dashboard" component={Dashboard} />
-        <Redirect from="/zeadmin" to="/zeadmin/dashboard" exact />
-        <PrivateRoute
-          exact
-          path="/zeadmin/appointment/:_id"
-          component={AppointmentDetails}
-        />
-        <PrivateRoute
-          exact
-          path="/zeadmin/appointments"
-          component={Appointments}
-        />
-        <PrivateRoute
-          exact
-          path="/zeadmin/paccount"
-          component={PersonalAccount}
-        />
-        <PrivateRoute exact path="/zeadmin/user" component={User} />
-        <PrivateRoute
-          exact
-          path="/zeadmin/userInfo/:_id"
-          component={UserInfo}
-        />
-        <PrivateRoute exact path="/zeadmin/inquiry" component={Inquiry} />
-        <PrivateRoute
-          exact
-          path="/zeadmin/new_appointment"
-          component={NewAppointment}
-        />
+          <PrivateRoute exact path="/zeadmin/dashboard" component={Dashboard} />
+          <Redirect from="/zeadmin" to="/zeadmin/dashboard" exact />
+          <PrivateRoute
+            exact
+            path="/zeadmin/appointment/:_id"
+            component={AppointmentDetails}
+          />
+          <PrivateRoute
+            exact
+            path="/zeadmin/appointments"
+            component={Appointments}
+          />
+          <PrivateRoute
+            exact
+            path="/zeadmin/paccount"
+            component={PersonalAccount}
+          />
+          <PrivateRoute exact path="/zeadmin/user" component={User} />
+          <PrivateRoute
+            exact
+            path="/zeadmin/userInfo/:_id"
+            component={UserInfo}
+          />
+          <PrivateRoute exact path="/zeadmin/inquiry" component={Inquiry} />
+          <PrivateRoute
+            exact
+            path="/zeadmin/new_appointment"
+            component={NewAppointment}
+          />
 
-        <PrivateRoute exact path="/zeadmin/employees" component={Employees} />
-        <PrivateRoute
-          exact
-          path="/zeadmin/employee/:_id"
-          component={Employee}
-        />
-        <PrivateRoute exact path="/zeadmin/categories" component={Categories} />
-        <PrivateRoute
-          exact
-          path="/zeadmin/category/:_id"
-          component={Category}
-        />
-        <PrivateRoute exact path="/zeadmin/service/:_id" component={Service} />
-        <PrivateRoute exact path="/zeadmin/cms_home" component={Home} />
-        <PrivateRoute exact path="/zeadmin/cms_about" component={About} />
-        <PrivateRoute
-          exact
-          path="/zeadmin/cms_testimonial"
-          component={Testimonial}
-        />
-        <PrivateRoute exact path="/zeadmin/report" component={FileReport} />
-        <Route component={Page404} />
-      </Switch>
-    </>
+          <PrivateRoute exact path="/zeadmin/employees" component={Employees} />
+          <PrivateRoute
+            exact
+            path="/zeadmin/employee/:_id"
+            component={Employee}
+          />
+          <PrivateRoute
+            exact
+            path="/zeadmin/categories"
+            component={Categories}
+          />
+          <PrivateRoute
+            exact
+            path="/zeadmin/category/:_id"
+            component={Category}
+          />
+          <PrivateRoute
+            exact
+            path="/zeadmin/service/:_id"
+            component={Service}
+          />
+          <PrivateRoute exact path="/zeadmin/cms_home" component={Home} />
+          <PrivateRoute exact path="/zeadmin/cms_about" component={About} />
+          <PrivateRoute
+            exact
+            path="/zeadmin/cms_testimonial"
+            component={Testimonial}
+          />
+          <PrivateRoute exact path="/zeadmin/report" component={FileReport} />
+          <Route component={Page404} />
+        </Switch>
+      </NoPrint>
+    </PrintProvider>
   );
 };
 

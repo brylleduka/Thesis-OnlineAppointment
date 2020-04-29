@@ -450,7 +450,7 @@ export const DImage = styled.div`
     margin: 0 auto;
     height: 100%;
     width: 100%;
-    object-fit: cover;
+    object-fit: ${(props) => (props.objFit ? props.objFit : "cover")};
     transition: all 0.6s ease-in-out;
     ${(props) =>
       props.grayscaling &&

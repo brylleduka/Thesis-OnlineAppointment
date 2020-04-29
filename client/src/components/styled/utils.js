@@ -31,7 +31,6 @@ const colors = {
   grey: ({ theme }) => theme.grey,
 };
 
-
 // BUTTONS
 export const DButton = styled.button`
   font-size: ${(props) => (props.fSize ? props.fSize : "16px")};
@@ -41,7 +40,8 @@ export const DButton = styled.button`
   display: inline-block;
   padding: ${(props) => (props.pad ? props.pad : "4px 10px")};
   line-height: 1.42857143;
-  margin: ${(props) => (props.center ? "1.5% auto" : "1.5%")};
+  margin: ${(props) =>
+    props.margin ? props.margin : props.center ? "1.5% auto" : "1.5%"};
   text-align: center;
   text-transform: ${(props) => props.text || "capitalize"};
   letter-spacing: 1.5px;
@@ -409,8 +409,7 @@ export const DAccordion = styled.section`
 
     &:hover,
     &.active {
-      background: ${(props) =>
-        props.activeBg ? props.activeBg : colors.blue};
+      background: ${(props) => (props.activeBg ? props.activeBg : colors.blue)};
       color: ${(props) =>
         props.hoverColorText ? props.hoverColorText : "#232323"};
     }
@@ -540,8 +539,7 @@ export const ReadMore = styled.p`
   cursor: pointer !important;
 
   span {
-    color: ${(props) =>
-      props.color ? props.color : colors.secondary};
+    color: ${(props) => (props.color ? props.color : colors.secondary)};
     display: inline-block;
     position: relative;
     font-weight: 700;
@@ -758,10 +756,10 @@ export const DLink = styled(Link)`
 
 export const DInput = styled.input`
   padding: 10px;
-  width: auto;
+  width: ${(props) => (props.width ? props.width : "auto")};
   height: 100%;
   border: 1px solid rgba(0, 0, 0, 0.4);
-  border-radius: 5px;
+  border-radius: ${(props) => (props.radius ? props.radius : "5px")};
   outline: none;
 
   ${(props) =>
