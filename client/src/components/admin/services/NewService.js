@@ -142,7 +142,7 @@ const NewService = ({ categoryId, open, setOpen }) => {
                 pad="3px 5px"
                 margin="0 auto"
               >
-                <DTextArea active>
+                <DTextArea border active>
                   <CKEditor
                     onInit={(editor) => {
                       // Insert the toolbar before the editable area.

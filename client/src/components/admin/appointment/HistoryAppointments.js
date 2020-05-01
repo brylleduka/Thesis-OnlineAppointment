@@ -1,19 +1,18 @@
-import React, { useState, useMemo, useRef } from "react";
-import ReactToPrint from "react-to-print";
+import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { Content } from "../../styled/containers";
 import { DButton, DLabel } from "../../styled/utils";
-import { Eye } from "styled-icons/fa-regular";
+import { Icon } from "semantic-ui-react";
 import { Grid } from "@styled-icons/boxicons-solid/Grid";
 import Spinner from "../../Spinner";
 import moment from "moment";
 import FilterInput from "../../FilterInput";
 import FilePrint from "../report/FilePrint";
-import { Print, NoPrint } from "react-easy-print";
+import { NoPrint } from "react-easy-print";
 
 const HistoryAppointments = ({ historyAppointments, loading }) => {
-  const tableRef = useRef();
+  const [isPrintOpen, setIsPrintOpen] = useState(false);
   const [filterText, setFilterText] = useState("");
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
 
@@ -27,7 +26,14 @@ const HistoryAppointments = ({ historyAppointments, loading }) => {
         item.service.name.includes(filterText) ||
         item.employee.lastName.includes(filterText) ||
         item.user.lastName.includes(filterText) ||
-        moment(parseInt(item.date)).format("LL").includes(filterText))
+        moment(parseInt(item.date)).format("LL").includes(filterText) ||
+        (
+          item.status.toUpperCase() +
+          "/" +
+          moment(parseInt(item.date)).format("LL").toUpperCase() +
+          "/" +
+          item.status.toUpperCase()
+        ).includes(filterText.toUpperCase()))
   );
 
   const subHeaderComponentMemo = useMemo(() => {
@@ -39,18 +45,27 @@ const HistoryAppointments = ({ historyAppointments, loading }) => {
     };
 
     return (
-      <FilterInput
-        onFilter={(e) => setFilterText(e.target.value)}
-        onClear={handleClear}
-        filterText={filterText}
-        isPrint={true}
-      />
+      <>
+        <FilterInput
+          onFilter={(e) => setFilterText(e.target.value)}
+          onClear={handleClear}
+          filterText={filterText}
+          isPrint={true}
+        />
+        <DButton onClick={() => setIsPrintOpen(true)}>
+          <Icon name="print" fitted />
+        </DButton>
+      </>
     );
   }, [filterText, resetPaginationToggle]);
 
   return (
     <Content width="100%" height="100%">
-      <FilePrint filteredItems={filteredItems} />
+      <FilePrint
+        filteredItems={filteredItems}
+        isPrintOpen={isPrintOpen}
+        setIsPrintOpen={setIsPrintOpen}
+      />
 
       <NoPrint force>
         <Content
@@ -154,7 +169,7 @@ const columns = [
 
     cell: (row) => (
       <DButton flex as={Link} to={`/zeadmin/appointment/${row._id}`}>
-        <Eye size="18px" />
+        <Icon name="eye" fitted />
       </DButton>
     ),
     right: true,

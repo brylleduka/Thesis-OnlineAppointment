@@ -761,7 +761,16 @@ export const DInput = styled.input`
   border: 1px solid rgba(0, 0, 0, 0.4);
   border-radius: ${(props) => (props.radius ? props.radius : "5px")};
   outline: none;
-
+  ${(props) =>
+    props.margin &&
+    css`
+      margin: ${props.margin};
+    `};
+  ${(props) =>
+    props.textAlign &&
+    css`
+      text-align: ${props.textAlign};
+    `};
   ${(props) =>
     props.error &&
     css`

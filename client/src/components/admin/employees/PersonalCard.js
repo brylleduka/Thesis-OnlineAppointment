@@ -515,7 +515,7 @@ const PersonalCard = ({ employee }) => {
             align="center"
             pad="3px 15px"
           >
-            <DTextArea active={isEditPersonal ? true : null}>
+            <DTextArea border active={isEditPersonal ? true : null}>
               <CKEditor
                 onInit={(editor) => {
                   // Insert the toolbar before the editable area.
@@ -536,6 +536,7 @@ const PersonalCard = ({ employee }) => {
             </DTextArea>
 
             <DTextArea
+              border
               active={!isEditPersonal ? true : null}
               color={!content ? "#ccc" : null}
             >

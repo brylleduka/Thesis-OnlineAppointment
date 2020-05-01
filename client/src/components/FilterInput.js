@@ -1,6 +1,6 @@
 import React from "react";
 import { Input, Icon } from "semantic-ui-react";
-import { DInput, DButton } from "./styled/utils";
+import { DButton } from "./styled/utils";
 import { Content } from "./styled/containers";
 
 const FilterInput = ({ filterText, onFilter, onClear, isPrint }) => (
@@ -20,15 +20,10 @@ const FilterInput = ({ filterText, onFilter, onClear, isPrint }) => (
         }
         value={filterText}
         onChange={onFilter}
-        placeholder="Filter by date/service/status/last name..."
+        placeholder="Filter by status/date/service/last name..."
         fluid
       />
     </Content>
-    {isPrint && (
-      <DButton onClick={() => window.print()}>
-        <Icon name="print" fitted />
-      </DButton>
-    )}
   </Content>
 );
 

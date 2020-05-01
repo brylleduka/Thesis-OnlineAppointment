@@ -15,6 +15,9 @@ body {
   letter-spacing: 1px;
   width: 100%;
 }
+.modalBgPrint {
+  background-color: blue !important;
+}
 
 /* END SCROLL STYLE */
 
@@ -185,5 +188,25 @@ select {
 @media (max-width: 500px) {
   .home-cards {
     grid-template-columns: 1fr;
+  }
+}
+@media print and (orientation: landscape) {
+  /* landscape styles */
+  /* write specific styles for landscape e.g */
+  body {
+    font-weight: 500;
+  }
+  .ui.active.dimmer {
+    opacity: 0 !important;
+  }
+}
+
+@media print and (orientation: portrait) {
+  /* portrait styles */
+  body {
+    font-weight: 500;
+  }
+  .ui.active.dimmer {
+    opacity: 0 !important;
   }
 }

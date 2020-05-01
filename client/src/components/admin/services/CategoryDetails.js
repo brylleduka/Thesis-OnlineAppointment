@@ -154,7 +154,7 @@ const CategoryDetails = ({ category, historyCallback }) => {
               pad="3px 15px"
               margin="0 auto"
             >
-              <DTextArea active={isEdit ? true : null}>
+              <DTextArea border active={isEdit ? true : null}>
                 <CKEditor
                   onInit={(editor) => {
                     // Insert the toolbar before the editable area.
@@ -174,7 +174,7 @@ const CategoryDetails = ({ category, historyCallback }) => {
                 />
               </DTextArea>
 
-              <DTextArea active={!isEdit ? true : null}>
+              <DTextArea border active={!isEdit ? true : null}>
                 {parser(content)}
               </DTextArea>
             </Content>

@@ -10,8 +10,12 @@ const DTextAreaStyled = styled.div`
   margin: 0 auto;
   position: relative;
   overflow: visible;
-  border: 1px solid rgba(189, 195, 199, 0.8);
-  border-radius: 5px;
+  ${(props) =>
+    props.border &&
+    css`
+      border: 1px solid rgba(189, 195, 199, 0.8);
+      border-radius: 5px;
+    `};
   padding: 5px;
   color: ${(props) => (props.color ? props.color : ({ theme }) => theme.dark)};
 
