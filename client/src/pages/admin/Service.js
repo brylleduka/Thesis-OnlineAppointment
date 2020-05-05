@@ -15,6 +15,7 @@ import {
   DCard,
   DImage,
 } from "../../components/styled/containers";
+import { Link } from "react-router-dom";
 import { IconWrap } from "../../components/styled/utils";
 import { Camera } from "@styled-icons/boxicons-solid/Camera";
 import Spinner from "../../components/Spinner";
@@ -109,10 +110,25 @@ const Service = (props) => {
               align="center"
               width="100%"
               margin="24px auto"
+              bgcolor="#eee"
+              rounded
+              pad="3px 10px"
+              height="5em"
             >
-              <Breadcrumb size={"huge"}>
-                <Breadcrumb.Section link>Category</Breadcrumb.Section>
-                <Breadcrumb.Divider>/</Breadcrumb.Divider>
+              <Breadcrumb size="big">
+                <Breadcrumb.Section as={Link} to="/zeadmin/categories">
+                  Service Category
+                </Breadcrumb.Section>
+                <Breadcrumb.Divider icon="right chevron" />
+                <Breadcrumb.Section
+                  as={Link}
+                  to={`/zeadmin/category/${
+                    service.category && service.category._id
+                  }`}
+                >
+                  {service.category && service.category.name}
+                </Breadcrumb.Section>
+                <Breadcrumb.Divider icon="right arrow" />
                 <Breadcrumb.Section active>{service.name}</Breadcrumb.Section>
               </Breadcrumb>
             </Content>
@@ -190,81 +206,6 @@ const Service = (props) => {
           </>
         )}
       </DSection>
-      {/* {serviceLoading ? (
-        <Skeleton />
-      ) : (
-        <DGrid style={{ margin: "20px 0" }}>
-          <DSection
-            style={{ borderBottom: "1px solid #ccc" }}
-            height="100%"
-            pad="0 0 20px 0"
-          >
-            <DGrid three>
-              <Content
-                height="100%"
-                width="100%"
-                flex
-                justify="center"
-                align="center"
-                {...getRootProps()}
-              >
-                <input {...getInputProps()} />
-                {isDragActive ? (
-                  <>
-                    <Content height="300px"></Content>
-                    <Overlay
-                      flex
-                      justify="center"
-                      align="center"
-                      bg="rgba(0, 0, 0, 0.6)"
-                      className="dark"
-                    >
-                      <h3>Drop Image</h3>
-                    </Overlay>
-                  </>
-                ) : (
-                  <>
-                    {loading ? (
-                      <Spinner medium inverted />
-                    ) : (
-                      <img
-                        src={
-                          serviceData.service.photo !== null
-                            ? `/images/service/${serviceData.service.photo}`
-                            : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                        }
-                        alt="Category"
-                        width="100%"
-                        height="400px"
-                        style={{ objectFit: "contain" }}
-                      />
-                    )}
-
-                    <Overlay
-                      opac="0"
-                      hovOpac="1"
-                      pointer
-                      className="dark"
-                      flex
-                      justify="center"
-                      align="center"
-                      bg="rgba(0, 0, 0, 0.6)"
-                    >
-                      <h4>Click or Drop an Image to upload</h4>
-                    </Overlay>
-                  </>
-                )}
-              </Content>
-              <Content></Content>
-            </DGrid>
-          </DSection>
-
-          <ServiceDetails
-            service={serviceData.service}
-            serviceHistoryCallback={serviceHistoryCallback}
-          />
-        </DGrid>
-      )} */}
     </Layout>
   );
 };

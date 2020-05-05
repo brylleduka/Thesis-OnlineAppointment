@@ -462,7 +462,8 @@ export const DImage = styled.div`
 
 export const DCard = styled.div`
   position: relative;
-  border-radius: 10px;
+  border-radius: ${(props) =>
+    props.rad ? props.rad : props.circle ? "50%" : "10px"};
   padding: ${(props) => (props.p ? props.p : "10px")};
   height: ${(props) => (props.dh ? props.dh : "300px")};
   width: ${(props) => (props.dw ? props.dw : "250px")};
@@ -476,7 +477,7 @@ export const DCard = styled.div`
       ? "space-around"
       : props.justifyBetween
       ? "space-between"
-      : props.jusitfyFend
+      : props.jusitfyEnd
       ? "flex-end"
       : "flex-start"};
 

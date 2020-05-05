@@ -12,17 +12,23 @@ import useWindowSize from "../../../../../util/hooks/useWindowSize";
 import ReadMore from "../../../../ReadMore";
 import Skeleton from "react-loading-skeleton";
 import parser from "html-react-parser";
+import Page404 from "../../../../../pages/Page404";
 
 const CategoryCards = ({ gridCount }) => {
   const { width: wid } = useWindowSize();
   const [isCategories, setIsCategories] = useState([]);
-  const { data, loading } = useQuery(FETCH_ALL_CATEGORIES_QUERY);
+  const { data, loading, error } = useQuery(FETCH_ALL_CATEGORIES_QUERY, {
+    variables: { active: true },
+  });
 
   useEffect(() => {
     if (data) {
       setIsCategories(data.categories);
     }
   }, [data]);
+
+  if (error) return Page404;
+
   return (
     <Content height="100%" width="100%">
       {loading ? (

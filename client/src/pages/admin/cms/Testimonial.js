@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_TESTIMONIALS } from "../../../util/graphql/testimonial";
 import Layout from "../../../components/admin/layout/Layout";
 import DataTable from "react-data-table-component";
 import { DSection, Content } from "../../../components/styled/containers";
-
+import { IconWrap } from "../../../components/styled/utils";
+import { ChevronRight } from "@styled-icons/boxicons-solid/ChevronRight";
 import ToggleView from "../../../components/admin/testimonial/ToggleView";
 import MenuView from "../../../components/admin/testimonial/MenuView";
 import Spinner from "../../../components/Spinner";
@@ -66,6 +68,35 @@ const Testimonial = () => {
         align="flex-start"
         direct="column"
       >
+        <Content
+          width="90%"
+          flex
+          justify="flex-start"
+          margin="20px auto"
+          align="center"
+        >
+          <div>
+            <h3>Content Management</h3>
+          </div>
+          <div style={{ margin: "0 5px" }}>
+            <IconWrap size="22px" color="dark">
+              <ChevronRight />
+            </IconWrap>
+          </div>
+          <div>
+            <Link
+              to="/zeadmin/cms_testimonial"
+              style={{
+                fontSize: "18px",
+                fontWeight: 700,
+                borderBottom: "2px solid",
+                paddingBottom: "5px",
+              }}
+            >
+              Testimonials
+            </Link>
+          </div>
+        </Content>
         <Content width="100%" margin="20px 0">
           <DataTable
             columns={columns}

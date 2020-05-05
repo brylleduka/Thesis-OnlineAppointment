@@ -8,12 +8,12 @@ import Layout from "../../components/admin/layout/Layout";
 import HistoryAppointments from "../../components/admin/appointment/HistoryAppointments";
 import NewModal from "../../components/admin/appointment/NewModal";
 import { NoPrint } from "react-easy-print";
+import Page404 from "../Page404"
 
 const FileReport = () => {
-  const [open, setOpen] = useState(false);
   const [historyAppointments, setHistoryAppointments] = useState([]);
 
-  const { loading, data: historyAppointmentData } = useQuery(
+  const { loading, data: historyAppointmentData, error } = useQuery(
     FETCH_HISTORY_APPOINTMENTS
   );
 
@@ -22,6 +22,8 @@ const FileReport = () => {
       setHistoryAppointments(historyAppointmentData.appointmentHistory);
     }
   }, [historyAppointmentData]);
+
+  if(error) return Page404
 
   return (
     <Layout>

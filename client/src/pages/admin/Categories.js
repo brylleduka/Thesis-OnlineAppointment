@@ -14,10 +14,13 @@ import {
 } from "../../components/styled/containers";
 import NewCategory from "../../components/admin/services/NewCategory";
 import { DButton } from "../../components/styled/utils";
+import { Plus } from "@styled-icons/boxicons-regular/Plus";
+import { Breadcrumb } from "semantic-ui-react";
 import Spinner from "../../components/Spinner";
 import ReadMore from "../../components/main/utils/ReadMore";
 import parser from "html-react-parser";
 import useWindowSize from "../../util/hooks/useWindowSize";
+import Page404 from "../Page404";
 
 const Categories = () => {
   const { width: wid } = useWindowSize();
@@ -33,9 +36,7 @@ const Categories = () => {
     }
   }, [data]);
 
-  if (error) {
-    return <div>Something went wrong</div>;
-  }
+  if (error) return Page404;
 
   const handleOpenModal = () => {
     setOpen(true);
@@ -52,11 +53,32 @@ const Categories = () => {
         width="90%"
         height="100%"
       >
-        <Content flex justify="space-between" width="100%">
-          <h2>Services</h2>
-          <DButton onClick={handleOpenModal}>New Category</DButton>
+        <Content
+          flex
+          justify="space-between"
+          align="center"
+          width="100%"
+          margin="24px auto"
+          bgcolor="#eee"
+          rounded
+          pad="3px 10px"
+          height="5em"
+        >
+          <Breadcrumb size="big">
+            <Breadcrumb.Section content>File Maintenance</Breadcrumb.Section>
+            <Breadcrumb.Divider icon="right chevron" />
+            <Breadcrumb.Section active>Service Category</Breadcrumb.Section>
+          </Breadcrumb>
+          <DButton
+            onClick={handleOpenModal}
+            flex
+            circle={wid < 768 ? true : null}
+          >
+            <Plus size="22px" />
+            {wid > 768 && "New Category"}
+          </DButton>
         </Content>
-        <h3>Category List</h3>
+
         <Content width="100%" height="100%">
           {loading ? (
             <Spinner content="Please wait while we fetch your data" />

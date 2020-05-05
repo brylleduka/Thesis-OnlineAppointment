@@ -21,7 +21,6 @@ const CategoryDetails = ({ category, historyCallback }) => {
   // const [errors, setErrors] = useState({});
   const [isEdit, setIsEdit] = useState(false);
 
-  // const editor = useRef(null);
   const [content, setContent] = useState(category.description);
 
   const { values, handleChange, handleSubmit } = useForm(
@@ -96,7 +95,9 @@ const CategoryDetails = ({ category, historyCallback }) => {
             direct="column"
             margin="12px auto"
           >
-            <Label style={styles.label}>Title</Label>
+            <DLabel color={isEdit ? "grey" : "blue"} size="14px" rounded>
+              Title
+            </DLabel>
             {isEdit ? (
               <Content
                 width="90%"
@@ -144,7 +145,9 @@ const CategoryDetails = ({ category, historyCallback }) => {
             direct="column"
             margin="12px auto"
           >
-            <Label style={styles.label}>Description</Label>
+            <DLabel color={isEdit ? "grey" : "blue"} size="14px" rounded>
+              Description
+            </DLabel>
             <Content
               width="90%"
               height="auto"
@@ -203,16 +206,6 @@ const CategoryDetails = ({ category, historyCallback }) => {
       />
     </>
   );
-};
-
-const styles = {
-  label: {
-    width: "20%",
-    textAlign: "center",
-    fontWeight: 700,
-    fontSize: "14px",
-    marginBottom: "1rem",
-  },
 };
 
 const UPDATE_CATEGORY_DETAILS = gql`

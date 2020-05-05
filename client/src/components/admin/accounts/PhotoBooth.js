@@ -3,11 +3,18 @@ import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { useDropzone } from "react-dropzone";
 import { DGrid, Content, DCard, DImage } from "../../styled/containers";
+import { DButton, IconWrap } from "../../styled/utils";
 import { Camera } from "@styled-icons/boxicons-solid/Camera";
 import Carousel, { Modal, ModalGateway } from "react-images";
 import Spinner from "../../Spinner";
 
-const PhotoBooth = ({ id, photo, fetchEmployee }) => {
+const PhotoBooth = ({
+  id,
+  photo,
+  fetchEmployee,
+  handleDetails,
+  handleSchedule,
+}) => {
   // LIGHT BOX
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
   const openLightbox = () => {
@@ -54,47 +61,77 @@ const PhotoBooth = ({ id, photo, fetchEmployee }) => {
   ];
 
   return (
-    <Content width="100%" height="auto">
-      <DGrid gap="15px">
-        <DCard dh="200px" flex justifyBetween alignCenter fcol>
-          <DImage circle height="150px" width="150px">
-            {loading ? (
-              <Content flex justify="center" align="center" width="100%">
-                <Spinner small />
-              </Content>
-            ) : (
-              <img
-                src={
-                  photo !== null
-                    ? `/images/employees/${photo}`
-                    : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                }
-                alt="Avatar"
-                onClick={openLightbox}
-              />
-            )}
-          </DImage>
-          <span className="camera" {...getRootProps()}>
-            <Camera size="18px" color="white" />
-            <input {...getInputProps()} />
-          </span>
-          <ModalGateway>
-            {viewerIsOpen ? (
-              <Modal onClose={closeLightbox}>
-                <Carousel views={images} />
-              </Modal>
-            ) : null}
-          </ModalGateway>
-        </DCard>
-        {/* <DCard dh="100%" flex fcol justifyBetween>
-          <DButton onClick={handleDetails} fluid>
-            Account Details
-          </DButton>
-          <DButton onClick={handleSchedule} fluid>
-            Schedule
-          </DButton>
-        </DCard> */}
-      </DGrid>
+    <Content
+      flex
+      direct="column"
+      margin="0 auto"
+      align="center"
+      width="100%"
+      height="auto"
+    >
+      <DCard
+        circle
+        dh="200px"
+        dw="200px"
+        flex
+        justifyCenter
+        alignCenter
+        fcol
+        grayzoom
+      >
+        <DImage circle height="100%" align="100%">
+          {loading ? (
+            <Content flex justify="center" align="center" width="100%">
+              <Spinner small />
+            </Content>
+          ) : (
+            <img
+              src={
+                photo !== null
+                  ? `/images/employees/${photo}`
+                  : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+              }
+              alt="Avatar"
+              onClick={openLightbox}
+            />
+          )}
+        </DImage>
+        <IconWrap
+          {...getRootProps()}
+          bg={({ theme }) => theme.bluer}
+          circle
+          shadow
+          bottomcenter
+          small
+          pad="3px"
+          bgcolor={({ theme }) => theme.bluer}
+        >
+          <Camera title="Upload" />
+          <input {...getInputProps()} />
+        </IconWrap>
+        <ModalGateway>
+          {viewerIsOpen ? (
+            <Modal onClose={closeLightbox}>
+              <Carousel views={images} />
+            </Modal>
+          ) : null}
+        </ModalGateway>
+      </DCard>
+      <Content
+        width="80%"
+        margin="24px auto"
+        height="auto"
+        flex
+        align="center"
+        direct="column"
+      >
+        <DButton width="150px" onClick={handleDetails} fluid>
+          Account Details
+        </DButton>
+        <DButton width="150px" onClick={handleSchedule} fluid>
+          Schedule
+        </DButton>
+      </Content>
     </Content>
   );
 };

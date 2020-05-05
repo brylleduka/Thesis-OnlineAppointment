@@ -8,7 +8,7 @@ import {
   CalendarEvent,
 } from "@styled-icons/boxicons-solid";
 
-import { Service } from "@styled-icons/remix-line/Service";
+import { Gallery, Service } from "@styled-icons/remix-fill";
 
 import {
   ShortText,
@@ -71,6 +71,12 @@ const SideNav = () => {
           <span>
             <ShortText size="16px" />
             About
+          </span>
+        </NavLink>
+        <NavLink to="/zeadmin/cms_gallery" activeClassName="navlink-active">
+          <span>
+            <Gallery size="16px" />
+            Gallery
           </span>
         </NavLink>
         <NavLink to="/zeadmin/cms_testimonial" activeClassName="navlink-active">

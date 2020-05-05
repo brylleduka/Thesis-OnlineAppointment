@@ -237,6 +237,35 @@ export const DLabel = styled.label`
 
   &:hover {
   }
+
+  ${(props) =>
+    props.color &&
+    css`
+      color: ${props.color === "grey" || props.color === "primary"
+        ? colors.dark
+        : colors.light};
+      font-weight: 700;
+      background-color: ${props.color === "primary"
+        ? colors.primary
+        : props.color === "secondary"
+        ? colors.secondary
+        : props.color === "green"
+        ? colors.green
+        : props.color === "red"
+        ? colors.red
+        : props.color === "blue"
+        ? colors.blue
+        : props.color === "bluer"
+        ? colors.bluer
+        : props.color === "yellow"
+        ? colors.yellow
+        : props.color === "dark"
+        ? colors.dark
+        : props.color === "grey"
+        ? colors.grey
+        : "transparent"};
+    `};
+
   ${(props) =>
     props.txtColor &&
     css`
@@ -256,30 +285,6 @@ export const DLabel = styled.label`
         : props.txtColor === "yellow"
         ? colors.yellow
         : props.txtColor === "dark"
-        ? colors.dark
-        : colors.grey};
-    `};
-
-  ${(props) =>
-    props.color &&
-    css`
-      color: ${colors.light};
-      font-weight: 700;
-      background-color: ${props.color === "primary"
-        ? colors.primary
-        : props.color === "secondary"
-        ? colors.secondary
-        : props.color === "green"
-        ? colors.green
-        : props.color === "red"
-        ? colors.red
-        : props.color === "blue"
-        ? colors.blue
-        : props.color === "bluer"
-        ? colors.bluer
-        : props.color === "yellow"
-        ? colors.yellow
-        : props.color === "dark"
         ? colors.dark
         : colors.grey};
     `};

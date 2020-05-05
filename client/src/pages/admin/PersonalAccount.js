@@ -1,20 +1,22 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Layout from "../../components/admin/layout/Layout";
 import { AuthContext } from "../../context/auth";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_EMPLOYEE_QUERY } from "../../util/graphql/employee";
 import { DSection, DGrid } from "../../components/styled/containers";
 import Skeleton from "react-loading-skeleton";
+import Spinner from "../../components/Spinner";
 import PhotoBooth from "../../components/admin/accounts/PhotoBooth";
 import AccountInfo from "../../components/admin/accounts/AccountInfo";
 
 const PersonalAccount = () => {
   const { employeeAuth } = useContext(AuthContext);
+  const [empPersonal, setEmpPersonal] = useState({});
   const stored = localStorage.getItem("account");
   const [isAccount, setIsAccount] = useState(
     stored === "details"
       ? "details"
-      : stored === "appointments"
+      : stored === "schedule"
       ? "schedule"
       : "details"
   );
@@ -23,10 +25,14 @@ const PersonalAccount = () => {
     FETCH_EMPLOYEE_QUERY,
     {
       variables: {
-        employeeId: employeeAuth.id
-      }
+        employeeId: employeeAuth.id,
+      },
     }
   );
+
+  useEffect(() => {
+    if (empData) setEmpPersonal(empData.employee);
+  }, [empData]);
 
   const handleDetails = () => {
     setIsAccount("details");
@@ -40,36 +46,24 @@ const PersonalAccount = () => {
   return (
     <Layout>
       <DSection width="90%" mcenter pad="40px 0" height="100%">
-        <DGrid custom="300px 1fr" gap="10px">
-          {empData && empData.employee ? (
-            !empLoading ? (
-              <>
-                <PhotoBooth
-                  handleDetails={handleDetails}
-                  handleSchedule={handleSchedule}
-                  photo={empData.employee.photo}
-                  id={empData.employee._id}
-                  fetchEmployee={FETCH_EMPLOYEE_QUERY}
-                />
-                <AccountInfo
-                  employee={empData.employee}
-                  fetchEmployee={FETCH_EMPLOYEE_QUERY}
-                  isAccount={isAccount}
-                />
-              </>
-            ) : (
-              <>
-                <Skeleton height={200} width={200} circle />
-                <Skeleton height={200} count={2} />
-              </>
-            )
-          ) : (
-            <>
-              <Skeleton height={200} width={200} circle />
-              <Skeleton height={200} count={2} />
-            </>
-          )}
-        </DGrid>
+        {empLoading ? (
+          <Spinner />
+        ) : (
+          <DGrid custom="300px 1fr" gap="10px">
+            <PhotoBooth
+              handleDetails={handleDetails}
+              handleSchedule={handleSchedule}
+              photo={empData.employee.photo}
+              id={empData.employee._id}
+              fetchEmployee={FETCH_EMPLOYEE_QUERY}
+            />
+            <AccountInfo
+              employee={empData.employee}
+              fetchEmployee={FETCH_EMPLOYEE_QUERY}
+              isAccount={isAccount}
+            />
+          </DGrid>
+        )}
       </DSection>
     </Layout>
   );

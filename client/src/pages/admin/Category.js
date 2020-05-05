@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import gql from "graphql-tag";
 import { useDropzone } from "react-dropzone";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 import {
   FETCH_CATEGORY_QUERY,
   FETCH_ALL_CATEGORIES_QUERY,
@@ -112,12 +112,18 @@ const Category = (props) => {
               align="center"
               width="100%"
               margin="24px auto"
+              bgcolor="#eee"
+              rounded
+              pad="3px 10px"
+              height="5em"
             >
-              <Breadcrumb size={"huge"}>
-                <Breadcrumb.Section>
-                  <Link to="/zeadmin/categories"> Category</Link>
+              <Breadcrumb size="big">
+                <Breadcrumb.Section>File Maintenance</Breadcrumb.Section>
+                <Breadcrumb.Divider icon="right chevron" />
+                <Breadcrumb.Section as={Link} to="/zeadmin/categories">
+                  Service Category
                 </Breadcrumb.Section>
-                <Breadcrumb.Divider>/</Breadcrumb.Divider>
+                <Breadcrumb.Divider icon="right chevron" />
                 <Breadcrumb.Section active>{category.name}</Breadcrumb.Section>
               </Breadcrumb>
             </Content>

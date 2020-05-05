@@ -1,13 +1,28 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useQuery } from "@apollo/react-hooks";
+import { FETCH_EMPLOYEE_QUERY } from "../../../util/graphql/employee";
 import { HeaderLayout } from "../../styled/layout";
 import { Link } from "react-router-dom";
-import { Content, DImage, Overlay } from "../../styled/containers";
-import { DButton } from "../../styled/utils";
+import { DImage, Overlay, DCard } from "../../styled/containers";
+
 import { AuthContext } from "../../../context/auth";
-import { Dropdown, Image, Icon } from "semantic-ui-react";
+import { Dropdown, Icon } from "semantic-ui-react";
+import Spinner from "../../Spinner";
 
 const Header = () => {
-  const { employeeLogout } = useContext(AuthContext);
+  const { employeeLogout, employeeAuth } = useContext(AuthContext);
+  const [empLog, setEmpLog] = useState({});
+
+  const { data: dataEmpLog, loading: loadEmpLog, error: errEmpLog } = useQuery(
+    FETCH_EMPLOYEE_QUERY,
+    {
+      variables: { employeeId: employeeAuth.id },
+    }
+  );
+
+  useEffect(() => {
+    if (dataEmpLog) setEmpLog(dataEmpLog.employee);
+  }, [dataEmpLog]);
 
   const handleLogout = () => {
     employeeLogout();
@@ -15,39 +30,41 @@ const Header = () => {
 
   return (
     <HeaderLayout>
-      <Dropdown
-        trigger={
-          <DImage circle height="50px" width="50px">
-            <img
-              src="https://images.pexels.com/photos/413885/pexels-photo-413885.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-              alt="avatar"
-            />
-            <Overlay opac={0} hovOpac={1} />
-          </DImage>
-        }
-        pointing="top right"
-        icon={null}
-      >
-        <Dropdown.Menu>
-          <Dropdown.Item as={Link} to="/zeadmin/paccount">
-            <Icon name="user" />
-            Account
-          </Dropdown.Item>
-          <Dropdown.Item onClick={handleLogout}>
-            <Icon name="sign out" />
-            Sign out
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-      {/* <DImage circle height="50px" width="50px">
-          <img
-            src="https://images.pexels.com/photos/413885/pexels-photo-413885.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-            alt="avatar"
-          />
-        </DImage>
-        <DButton background="transparent" color="blue" onClick={handleLogout}>
-          <Exit size="24px" style={{ marginLeft: "2%" }} />
-        </DButton> */}
+      {loadEmpLog ? (
+        <Spinner small />
+      ) : (
+        <Dropdown
+          trigger={
+            <DCard dw="50px" dh="50px" mcenter circle p="0px" grayzoom>
+              <DImage circle height="100%" width="100%">
+                <img
+                  src={empLog.photo && `/images/employees/${empLog.photo}`}
+                  alt={empLog.lastName}
+                />
+              </DImage>
+            </DCard>
+          }
+          pointing="top right"
+          icon={null}
+        >
+          <Dropdown.Menu>
+            <Dropdown.Item disabled>
+              Signed is as{" "}
+              <strong>
+                {empLog.firstName} {empLog.lastName}
+              </strong>
+            </Dropdown.Item>
+            <Dropdown.Item as={Link} to="/zeadmin/paccount">
+              <Icon name="user" />
+              Account
+            </Dropdown.Item>
+            <Dropdown.Item onClick={handleLogout}>
+              <Icon name="sign out" />
+              Sign out
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+      )}
     </HeaderLayout>
   );
 };
