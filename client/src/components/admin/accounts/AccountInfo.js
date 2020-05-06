@@ -10,7 +10,7 @@ const AccountInfo = ({ isAccount, employee, fetchEmployee }) => {
         <AccountDetails employee={employee} fetchEmployee={fetchEmployee} />
       );
     case "schedule":
-      return <AccountSched />;
+      return <AccountSched employee={employee} />;
     default:
       return <Page404 />;
   }

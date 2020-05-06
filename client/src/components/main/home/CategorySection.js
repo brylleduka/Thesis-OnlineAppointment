@@ -22,9 +22,10 @@ const CategorySection = ({ setRef }) => {
   const [isCategories, setIsCategories] = useState([]);
   const [categorySection, setCategorySection] = useState({});
 
-  const { data: dataCategories, loading: loadingCategories } = useQuery(
-    FETCH_ALL_CATEGORIES_QUERY
-  );
+  const {
+    data: dataCategories,
+    loading: loadingCategories,
+  } = useQuery(FETCH_ALL_CATEGORIES_QUERY, { variables: { active: true } });
 
   useEffect(() => {
     if (dataCategories) {

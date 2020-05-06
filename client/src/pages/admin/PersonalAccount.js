@@ -47,7 +47,7 @@ const PersonalAccount = () => {
     <Layout>
       <DSection width="90%" mcenter pad="40px 0" height="100%">
         {empLoading ? (
-          <Spinner />
+          <Spinner content="Please wait while we fetch the data..." />
         ) : (
           <DGrid custom="300px 1fr" gap="10px">
             <PhotoBooth
