@@ -4,12 +4,14 @@ const Schema = mongoose.Schema;
 
 const gallerySchema = new Schema(
   {
-    name: String,
+    title: String,
     photos: [
       {
-        title: String,
+        name: String,
         content: String,
         image: String,
+        height: Number,
+        width: Number,
       },
     ],
     active: Boolean,

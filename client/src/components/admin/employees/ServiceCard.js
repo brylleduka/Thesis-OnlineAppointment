@@ -28,9 +28,10 @@ const ServiceCard = ({ employee }) => {
   );
   const [categories, setCategories] = useState([]);
 
-  const { data: categoryData, loading: loadCategory } = useQuery(
-    FETCH_ALL_CATEGORIES_QUERY
-  );
+  const {
+    data: categoryData,
+    loading: loadCategory,
+  } = useQuery(FETCH_ALL_CATEGORIES_QUERY, { variables: { active: true } });
 
   useEffect(() => {
     if (categoryData) {
@@ -182,7 +183,7 @@ const ServiceCard = ({ employee }) => {
           >
             <DButton confirm flex onClick={handleAddService}>
               {loadAdd ? (
-                <Spinner small inverted content="Loadin..." />
+                <Spinner small row inverted content="Loading..." />
               ) : (
                 <>
                   <Save size="22px" title="Update Content" />

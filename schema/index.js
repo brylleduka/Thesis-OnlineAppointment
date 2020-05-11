@@ -113,6 +113,24 @@ const typeDefs = gql`
     createdAt: String
     updatedAt: String
   }
+  type Gallery {
+    _id: ID!
+    title: String
+    active: Boolean
+    photos: [GalleryPhoto]
+    createdAt: String
+    updatedAt: String
+  }
+
+  type GalleryPhoto {
+    _id: ID
+    name: String
+    caption: String
+    image: String
+    height: Int
+    width: Int
+  }
+
   #CMS
 
   type HomeCMS {
@@ -324,6 +342,10 @@ const typeDefs = gql`
     testimonial(_id: ID!): Testimonial
     testimonialsView(limit: Int): [Testimonial]
     userTestimonial(userId: ID): Testimonial
+    # Gallery
+    galleries(active: Boolean): [Gallery]
+    gallery(_id: ID!, active: Boolean): Gallery
+
     # CMS
     showcaseCMS(sectionName: String): ShowcaseCMS
     homeCMS(sectionName: String): HomeCMS
@@ -485,6 +507,13 @@ const typeDefs = gql`
     updateTestimonial(_id: ID!, rating: Int, message: String): Testimonial
     archiveTestimonial(_id: ID!): Boolean
     deleteTestimonial(_id: ID!): Boolean
+
+    # Gallery
+    addGallery(title: String): Gallery
+    addGalleryPhoto(_id: ID!, caption: String, image: Upload): Gallery
+    archiveGalleryPhoto(active: Boolean): Gallery
+    deleteGalleryPhoto(_id: ID!): Gallery
+
     # CMSHOME
     # SHOWCASE
     addNewShowCase(inputShowcaseContent: ShowcaseContentInput): ShowcaseCMS

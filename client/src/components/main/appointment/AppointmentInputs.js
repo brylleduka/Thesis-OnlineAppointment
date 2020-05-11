@@ -42,6 +42,7 @@ const AppointmentInputs = ({
   ] = useLazyQuery(FETCH_SERVICES_QUERY, {
     variables: {
       categoryId: categoryValue,
+      active: true,
     },
   });
 
@@ -62,6 +63,7 @@ const AppointmentInputs = ({
   ] = useLazyQuery(FETCH_CATEGORY_QUERY, {
     variables: {
       categoryId: categoryValue,
+      active: true,
     },
   });
 

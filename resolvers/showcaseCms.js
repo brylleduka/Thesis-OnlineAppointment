@@ -12,7 +12,7 @@ module.exports = {
       } catch (err) {
         throw err;
       }
-    }
+    },
   },
   Mutation: {
     addNewShowCase: async (
@@ -25,8 +25,8 @@ module.exports = {
           bgImg,
           bgColor,
           position,
-          dark
-        }
+          dark,
+        },
       }
     ) => {
       try {
@@ -35,7 +35,7 @@ module.exports = {
         if (bgImg instanceof stream.Readable || bgImg) {
           const { createReadStream, filename } = await bgImg;
 
-          await new Promise(res =>
+          await new Promise((res) =>
             createReadStream().pipe(
               createWriteStream(
                 path.join(__dirname, "../images/cms/home", filename)
@@ -57,13 +57,13 @@ module.exports = {
                 bgImg: fileImg,
                 bgColor,
                 position,
-                dark
-              }
-            }
+                dark,
+              },
+            },
           },
           {
             upsert: true,
-            new: true
+            new: true,
           }
         );
 
@@ -83,20 +83,20 @@ module.exports = {
           bgImg,
           bgColor,
           position,
-          dark
-        }
+          dark,
+        },
       }
     ) => {
       try {
         let bgImgString = [];
         const showcaseCheck = await ShowcaseCMS.findOne(
           {
-            sectionName: "SHOWCASE"
+            sectionName: "SHOWCASE",
           },
           { content: { $elemMatch: { _id: showcaseId } } }
         );
 
-        showcaseCheck.content.map(x => {
+        showcaseCheck.content.map((x) => {
           bgImgString.push(x.bgImg);
         });
 
@@ -105,7 +105,7 @@ module.exports = {
         if (bgImg instanceof stream.Readable || bgImg) {
           const { createReadStream, filename } = await bgImg;
 
-          await new Promise(res =>
+          await new Promise((res) =>
             createReadStream().pipe(
               createWriteStream(
                 path.join(__dirname, "../images/cms/home", filename)
@@ -126,11 +126,11 @@ module.exports = {
               "content.$.bgImg": fileImgUpdate,
               "content.$.bgColor": bgColor,
               "content.$.position": position,
-              "content.$.dark": dark
-            }
+              "content.$.dark": dark,
+            },
           },
           {
-            new: true
+            new: true,
           }
         );
 
@@ -145,7 +145,7 @@ module.exports = {
           { sectionName: "SHOWCASE" },
           { $pull: { content: { _id: showcaseId } } },
           {
-            new: true
+            new: true,
           }
         );
 
@@ -153,6 +153,6 @@ module.exports = {
       } catch (err) {
         throw err;
       }
-    }
-  }
+    },
+  },
 };

@@ -31,6 +31,52 @@ const colors = {
   grey: ({ theme }) => theme.grey,
 };
 
+const getBgColor = (props) => {
+  if (props.color === "primary") return colors.primary;
+  if (props.color === "secondary") return colors.secondary;
+  if (props.color === "dark") return colors.dark;
+  if (props.color === "light") return colors.light;
+  if (props.color === "bluer") return colors.bluer;
+  if (props.color === "blue") return colors.blue;
+  if (props.color === "red") return colors.red;
+  if (props.color === "green") return colors.green;
+  if (props.color === "yellow") return colors.yellow;
+
+  return "transparent";
+};
+
+const getTxtColor = (props) => {
+  if (props.color === "primary") return colors.primary;
+  if (props.color === "secondary") return colors.secondary;
+  if (props.color === "dark") return colors.dark;
+  if (props.color === "grey") return colors.grey;
+  if (props.color === "light") return colors.light;
+  if (props.color === "bluer") return colors.bluer;
+  if (props.color === "blue") return colors.blue;
+  if (props.color === "red") return colors.red;
+  if (props.color === "green") return colors.green;
+  if (props.color === "yellow") return colors.yellow;
+
+  return colors.light;
+};
+
+const getNotifColor = (props) => {
+  if (props.primary) return colors.primary;
+  if (props.secondary) return colors.secondary;
+  if (props.dark) return colors.dark;
+  if (props.grey) return colors.grey;
+  if (props.light) return colors.light;
+  if (props.bluer || props.default) return colors.bluer;
+  if (props.blue) return colors.blue;
+  if (props.alert) return colors.red;
+  if (props.confirm) return colors.green;
+  if (props.warning) return colors.yellow;
+  if (props.basic) return "transparent";
+  if (props.disabled) return "#e9e4f0";
+
+  return colors.blue;
+};
+
 // BUTTONS
 export const DButton = styled.button`
   font-size: ${(props) => (props.fSize ? props.fSize : "16px")};
@@ -61,18 +107,7 @@ export const DButton = styled.button`
     props.radius ? props.radius : props.circle ? "50%" : "5px"};
   border-width: ${(props) => (props.basic ? "1px" : "0")};
   border-style: ${(props) => props.basic && "solid"};
-  border-color: ${(props) =>
-    props.alert
-      ? colors.red
-      : props.warning
-      ? colors.yellow
-      : props.confirm
-      ? colors.green
-      : props.primary
-      ? colors.primary
-      : props.default
-      ? colors.bluer
-      : colors.blue};
+  border-color: ${(props) => getNotifColor(props)};
       
   color: ${(props) =>
     props.red
@@ -87,20 +122,7 @@ export const DButton = styled.button`
       ? colors.bluer
       : colors.light};
 
-  background: ${(props) =>
-    props.basic
-      ? "transparent"
-      : props.alert
-      ? colors.red
-      : props.warning
-      ? colors.yellow
-      : props.confirm
-      ? colors.green
-      : props.primary
-      ? colors.primary
-      : props.default
-      ? colors.bluer
-      : colors.blue};
+  background: ${(props) => getNotifColor(props)};
 
   ${(props) =>
     props.disabled &&
@@ -113,25 +135,18 @@ export const DButton = styled.button`
 
   font-weight: 700;
   outline: 0;
+  
+  ${(props) =>
+    !props.disabled &&
+    css`
+      &:hover {
+        opacity: 0.8;
+        color: #fff;
+        background: ${(props) => getNotifColor(props)};
+      }
+    `};
 
-  &:hover {
-   opacity: 0.8;
-   color: #fff;
-   background: ${(props) =>
-     props.disabled
-       ? "#e9e4f0"
-       : props.alert
-       ? colors.red
-       : props.warning
-       ? colors.yellow
-       : props.confirm
-       ? colors.green
-       : props.primary
-       ? colors.primary
-       : props.default
-       ? colors.bluer
-       : colors.blue};
-  }
+ 
 
   &:focus {
     background: darken(${colors.dark}, 12%);
@@ -241,52 +256,20 @@ export const DLabel = styled.label`
   ${(props) =>
     props.color &&
     css`
-      color: ${props.color === "grey" || props.color === "primary"
-        ? colors.dark
-        : colors.light};
+      color: ${
+        props.color === "grey" || props.color === "primary"
+          ? colors.dark
+          : colors.light
+      };
       font-weight: 700;
-      background-color: ${props.color === "primary"
-        ? colors.primary
-        : props.color === "secondary"
-        ? colors.secondary
-        : props.color === "green"
-        ? colors.green
-        : props.color === "red"
-        ? colors.red
-        : props.color === "blue"
-        ? colors.blue
-        : props.color === "bluer"
-        ? colors.bluer
-        : props.color === "yellow"
-        ? colors.yellow
-        : props.color === "dark"
-        ? colors.dark
-        : props.color === "grey"
-        ? colors.grey
-        : "transparent"};
+      background-color: ${(props) => getBgColor(props)}};
     `};
 
   ${(props) =>
     props.txtColor &&
     css`
       font-weight: 700;
-      color: ${props.txtColor === "primary"
-        ? colors.primary
-        : props.txtColor === "secondary"
-        ? colors.secondary
-        : props.txtColor === "green"
-        ? colors.green
-        : props.txtColor === "red"
-        ? colors.red
-        : props.txtColor === "blue"
-        ? colors.blue
-        : props.txtColor === "bluer"
-        ? colors.bluer
-        : props.txtColor === "yellow"
-        ? colors.yellow
-        : props.txtColor === "dark"
-        ? colors.dark
-        : colors.grey};
+      color: ${(props) => getTxtColor(props)};
     `};
 
   ${(props) =>
@@ -312,42 +295,9 @@ export const DLabel = styled.label`
         width: 8px;
         height: 8px;
         z-index: -1;
-        border: 1px solid
-          ${props.color === "primary"
-            ? colors.primary
-            : props.color === "secondary"
-            ? colors.secondary
-            : props.color === "green"
-            ? colors.green
-            : props.color === "red"
-            ? colors.red
-            : props.color === "blue"
-            ? colors.blue
-            : props.color === "bluer"
-            ? colors.bluer
-            : props.color === "yellow"
-            ? colors.yellow
-            : props.color === "dark"
-            ? colors.dark
-            : colors.grey};
+        border: 1px solid ${(props) => getTxtColor(props)};
         border-left: 1px solid transparent;
-        background: ${props.color === "primary"
-          ? colors.primary
-          : props.color === "secondary"
-          ? colors.secondary
-          : props.color === "green"
-          ? colors.green
-          : props.color === "red"
-          ? colors.red
-          : props.color === "blue"
-          ? colors.blue
-          : props.color === "bluer"
-          ? colors.bluer
-          : props.color === "yellow"
-          ? colors.yellow
-          : props.color === "dark"
-          ? colors.dark
-          : colors.grey};
+        background: ${(props) => getTxtColor(props)};
         filter: brightness(90%);
 
         top: 100%;
