@@ -11,7 +11,7 @@ module.exports = {
           updatedaAt: -1,
         });
 
-        if (getAllGallery === undefined) throw new UserInputError("Not Found");
+        if (getAllGallery === undefined) return;
 
         return getAllGallery;
       } catch (err) {
@@ -21,7 +21,7 @@ module.exports = {
     gallery: async (_, { _id, active }) => {
       try {
         const getGallery = await Gallery.findOne({ _id, active });
-        if (getGallery === undefined) throw new UserInputError("Not Found");
+        if (getGallery === undefined) return;
 
         return getGallery;
       } catch (err) {

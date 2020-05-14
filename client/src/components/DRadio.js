@@ -1,12 +1,5 @@
 import React from "react";
-import { RadioStyle } from "./styled/inputs";
-import styled from "styled-components";
-
-const RadioGroupStyle = styled.div`
-  display: flex;
-  margin-bottom: 36px;
-  overflow: hidden;
-`;
+import { RadioStyle, RadioGroupStyle } from "./styled/inputs";
 
 const RadioGroup = (props) => {
   return <RadioGroupStyle>{props.children}</RadioGroupStyle>;

@@ -606,3 +606,177 @@ export const DTestimonialCard = styled.div`
     props.basic &&
     "figure{background: transparent; figcaption{blockquote{box-shadow: none; background: transparent}}}"}
 `;
+
+export const GalleryCard = styled.div`
+  position: relative;
+  flex: 0 1 15rem;
+  background-color: #fff;
+  padding-bottom: 5rem;
+  transition: background-color 0.2s cubic-bezier(0.5, 0.3, 0.8, 0.06);
+  color: #000;
+  margin: 3px;
+  .thumb {
+    position: relative;
+    width: 15rem;
+    height: 10rem;
+    perspective-origin: 50% 0%;
+    perspective: 600px;
+    z-index: 1;
+
+    &-image,
+    &-shadow {
+      position: absolute;
+      display: block;
+      width: 15rem;
+      height: 10rem;
+      transition: all 0.2s cubic-bezier(0.42, 0, 0.58, 1);
+    }
+
+    &-shadow {
+      opacity: 0.8;
+    }
+    &-shadow:nth-child(1) {
+      opacity: 0.6;
+      background-color: ${({ theme }) => theme.primary};
+      transition: all 0.2s cubic-bezier(0.42, 0, 0.58, 1) 0.07s;
+    }
+
+    &-shadow:nth-child(2) {
+      opacity: 0.7;
+      background-color: ${({ theme }) => theme.blue};
+      transition: all 0.2s cubic-bezier(0.42, 0, 0.58, 1) 0.05s;
+    }
+
+    &-shadow:nth-child(3) {
+      background-color: ${({ theme }) => theme.bluer};
+      transition: all 0.2s cubic-bezier(0.42, 0, 0.58, 1) 0.03s;
+    }
+
+    &-image {
+      position: relative;
+      background-image: url(${(props) => props.background && props.background});
+      background-size: auto 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: #607d8b;
+      &::before {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: #3f51b5;
+        content: "";
+        opacity: 0;
+        transition: opacity 0.1s;
+      }
+    }
+  }
+
+  .title,
+  .explore {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 5rem;
+    text-align: center;
+    font-weight: 500;
+    transition: all 0.2s cubic-bezier(0.5, 0.3, 0.8, 0.06);
+  }
+
+  .title span,
+  .explore span {
+    padding: 0.5rem;
+    flex: 1 1 auto;
+    text-align: center;
+  }
+
+  .explore {
+    opacity: 0;
+    transform: translate(0, -1rem);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #673ab7;
+  }
+
+  .btn {
+    position: absolute;
+    left: 50%;
+    top: 5rem;
+    padding: 0.5rem 1rem;
+    background-color: #fff;
+    border-radius: 2rem;
+    border: 2px solid #3f51b5;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    transform: translate(-50%, 2rem);
+    cursor: pointer;
+    transition: all 0.2s;
+    opacity: 0;
+    outline: none;
+    z-index: 4;
+  }
+
+  &:hover {
+    background-color: #f5f5f5;
+    cursor: pointer;
+  }
+
+  &:hover .thumb {
+    z-index: 3;
+  }
+
+  &:hover .title {
+    opacity: 0;
+  }
+
+  &:hover .explore {
+    opacity: 1;
+    transform: translate(0, 1rem);
+    transition: all 0.2s cubic-bezier(0.42, 0, 0.58, 1) 0.1s;
+  }
+
+  &:hover .thumb-image {
+    transform: scale(1.05) translate(0, -1rem) rotateX(25deg);
+  }
+
+  &:hover .thumb-image::before {
+    opacity: 0.4;
+  }
+
+  &:hover .thumb-shadow:nth-child(3) {
+    transform: scale(1.02) translate(0, -0.3rem) rotateX(15deg);
+  }
+
+  &:hover .thumb-shadow:nth-child(2) {
+    transform: scale(0.9) translate(0, 1rem) rotateX(15deg);
+  }
+
+  &:hover .thumb-shadow:nth-child(1) {
+    transform: scale(0.82) translate(0, 2.4rem) rotateX(5deg);
+  }
+
+  &:hover .btn {
+    opacity: 1;
+    color: #3f51b5;
+    transform: translate(-50%, 0);
+  }
+
+  &:hover .btn:hover {
+    color: #fff;
+    background-color: #3f51b5;
+  }
+
+  a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 5;
+  }
+`;

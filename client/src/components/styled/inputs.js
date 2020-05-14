@@ -1,11 +1,12 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const RadioStyle = styled.div`
-  height: 36px;
+  height: ${(props) => (props.size ? props.size : "auto")};
   width: 100%;
 
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+
 
   .radio {
     position: absolute;
@@ -44,11 +45,19 @@ export const RadioStyle = styled.div`
       cursor: pointer;
     }
   }
+`;
 
-  &:first-of-type {
-    border-radius: 4px 0 0 4px;
-  }
-  &:last-of-type {
-    border-radius: 0 4px 4px 0;
+export const RadioGroupStyle = styled.div`
+  display: flex;
+  margin-bottom: 36px;
+  overflow: hidden;
+
+  ${RadioStyle} {
+    &:first-of-type {
+      border-radius: 5px 0 0 5px;
+    }
+    &:last-of-type {
+      border-radius: 0 5px 5px 0;
+    }
   }
 `;

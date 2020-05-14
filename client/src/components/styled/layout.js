@@ -24,7 +24,7 @@ export const MainLayout = styled.div`
   width: 100%;
   max-width: 100%;
   min-width: 90%;
-  margin: auto;
+  margin: 0 auto;
   background: rgba(242, 242, 242, 0.2);
 `;
 export const SideNavLayout = styled.div`

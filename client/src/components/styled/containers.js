@@ -232,6 +232,12 @@ export const Content = styled.div`
   font-weight: ${(props) => props.weight && props.weight};
 
   ${(props) =>
+    props.minh &&
+    css`
+      min-height: ${props.minh};
+    `};
+
+  ${(props) =>
     props.maxh &&
     css`
       max-height: ${props.maxh};

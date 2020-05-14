@@ -1,15 +1,19 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import { useQuery } from "@apollo/react-hooks";
+import { FETCH_GALLERIES } from "../../util/graphql/gallery";
 import MyGallery from "react-photo-gallery";
 import Carousel, { Modal, ModalGateway } from "react-images";
 import {
   DContainer,
   DSection,
   Content,
-  Overlay
+  Overlay,
 } from "../../components/styled/containers";
 import ScrollButton from "../../components/main/utils/ScrollButton";
 import useScroll from "../../util/hooks/useScroll";
 import MouseScroll from "../../components/MouseScroll";
+import GalleryThumb from "../../components/GalleryThumb";
+import Spinner from "../../components/Spinner";
 import { scrollView } from "../../util/useScrollDown";
 
 const photos = [
@@ -17,56 +21,56 @@ const photos = [
     src: "https://source.unsplash.com/2ShvY8Lf6l0/800x599",
     width: 4,
     height: 3,
-    alt: "Facility"
+    alt: "Facility",
   },
   {
     src: "https://source.unsplash.com/Dm-qxdynoEc/800x799",
     width: 1,
     height: 1,
-    alt: "Facility"
+    alt: "Facility",
   },
   {
     src: "https://source.unsplash.com/qDkso9nvCg0/600x799",
     width: 3,
     height: 4,
-    alt: "Operation"
+    alt: "Operation",
   },
   {
     src: "https://source.unsplash.com/iecJiKe_RNg/600x799",
     width: 3,
     height: 4,
-    alt: "Operation"
+    alt: "Operation",
   },
   {
     src: "https://source.unsplash.com/epcsn8Ed8kY/600x799",
     width: 3,
     height: 4,
-    alt: "Satisfied"
+    alt: "Satisfied",
   },
   {
     src: "https://source.unsplash.com/NQSWvyVRIJk/800x599",
     width: 4,
     height: 3,
-    alt: "Satisfied"
+    alt: "Satisfied",
   },
   {
     src: "https://source.unsplash.com/zh7GEuORbUw/600x799",
     width: 3,
     height: 4,
-    alt: "Satisfied"
+    alt: "Satisfied",
   },
   {
     src: "https://source.unsplash.com/PpOHJezOalU/800x599",
     width: 4,
     height: 3,
-    alt: "Satisfied"
+    alt: "Satisfied",
   },
   {
     src: "https://source.unsplash.com/I1ASdgphUH4/800x599",
     width: 4,
     height: 3,
-    alt: "Satisfied"
-  }
+    alt: "Satisfied",
+  },
 ];
 
 const Gallery = () => {
@@ -74,6 +78,19 @@ const Gallery = () => {
   const scrolling = useScroll(500);
   const [currentImage, setCurrentImage] = useState(0);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
+  const [galleries, setGalleries] = useState([]);
+
+  const {
+    data: dataGalleries,
+    loading: loadGalleries,
+    error,
+  } = useQuery(FETCH_GALLERIES, { active: true });
+
+  useEffect(() => {
+    if (dataGalleries) {
+      setGalleries(dataGalleries);
+    }
+  }, [dataGalleries]);
 
   const openLightbox = useCallback((event, { photo, index }) => {
     setCurrentImage(index);
@@ -117,6 +134,49 @@ const Gallery = () => {
         </Content>
         <Overlay />
       </DSection>
+      {loadGalleries ? (
+        <Content
+          flex
+          justify="center"
+          align="center"
+          minh="50vh"
+          width="100%"
+          margin="0 auto"
+        >
+          <Spinner content="Please wait while we fetch data..." medium />
+        </Content>
+      ) : (
+        <Content
+          height="auto"
+          width="80%"
+          flex
+          justify="space-between"
+          align="center"
+          margin="24px auto"
+          flow="row wrap"
+        >
+          <GalleryThumb
+            background={
+              "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            }
+            title="Event Photos"
+            subtitle="50 Event Photos"
+            link="/zeadmin/dashboard"
+          />
+
+          {galleries.length > 0 &&
+            galleries.map((gallery) => (
+              <GalleryThumb
+                background={
+                  "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                }
+                title="Event Photos"
+                subtitle="50 Event Photos"
+                link="/zeadmin/dashboard"
+              />
+            ))}
+        </Content>
+      )}
       <DSection
         height="100%"
         style={{ minHeight: "100vh" }}
@@ -125,16 +185,17 @@ const Gallery = () => {
         pad="20px 0"
         ref={content}
       >
+        <h3>All Photos</h3>
         <MyGallery photos={photos} onClick={openLightbox} />
         <ModalGateway>
           {viewerIsOpen ? (
             <Modal onClose={closeLightbox}>
               <Carousel
                 currentIndex={currentImage}
-                views={photos.map(x => ({
+                views={photos.map((x) => ({
                   ...x,
                   srcset: x.srcSet,
-                  caption: x.title
+                  caption: x.title,
                 }))}
               />
             </Modal>
