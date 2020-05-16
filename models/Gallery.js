@@ -8,8 +8,8 @@ const gallerySchema = new Schema(
     photos: [
       {
         name: String,
-        content: String,
-        image: String,
+        caption: String,
+        src: String,
         height: Number,
         width: Number,
       },

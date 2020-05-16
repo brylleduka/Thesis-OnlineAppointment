@@ -17,11 +17,8 @@ const AccountModal = ({ employeeModal, setEmployeeModal, employee }) => {
     onCompleted(result) {
       setEmployeeModal(false);
       toaster.notify(({ onClose }) => (
-        <Toasted status={"success"}>
-          <span className="description">Updated Successfully</span>
-          <span className="close" onClick={onClose}>
-            &times;
-          </span>
+        <Toasted success onClick={onClose}>
+          Successfully Updated
         </Toasted>
       ));
     },

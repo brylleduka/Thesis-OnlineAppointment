@@ -3,7 +3,7 @@ const Service = require("../models/Service");
 const Category = require("../models/Category");
 const Employee = require("../models/Employee");
 const { validateServiceInput } = "../utils/validators";
-const { createWriteStream } = require("fs");
+const { createWriteStream, unlinkSync } = require("fs");
 const path = require("path");
 
 module.exports = {
@@ -129,6 +129,7 @@ module.exports = {
     addServicePhoto: async (_, { _id, file }) => {
       try {
         const { createReadStream, filename } = await file;
+        
         await new Promise((res) =>
           createReadStream().pipe(
             createWriteStream(

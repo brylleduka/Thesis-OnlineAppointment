@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const JCard = styled.figure`
   background-color: #fff;
@@ -614,21 +614,46 @@ export const GalleryCard = styled.div`
   padding-bottom: 5rem;
   transition: background-color 0.2s cubic-bezier(0.5, 0.3, 0.8, 0.06);
   color: #000;
-  margin: 3px;
+  margin: ${(props) => (props.margin ? props.margin : "3px")};
+
   .thumb {
     position: relative;
-    width: 15rem;
-    height: 10rem;
+    ${(props) =>
+      props.size === "large"
+        ? css`
+            width: 20rem;
+            height: 15rem;
+          `
+        : css`
+            width: 15rem;
+            height: 10rem;
+          `};
+
     perspective-origin: 50% 0%;
-    perspective: 600px;
+    ${(props) =>
+      props.size === "large"
+        ? css`
+            perspective: 900px;
+          `
+        : css`
+            perspective: 600px;
+          `};
     z-index: 1;
 
     &-image,
     &-shadow {
       position: absolute;
       display: block;
-      width: 15rem;
-      height: 10rem;
+      ${(props) =>
+        props.size === "large"
+          ? css`
+              width: 20rem;
+              height: 15rem;
+            `
+          : css`
+              width: 15rem;
+              height: 10rem;
+            `};
       transition: all 0.2s cubic-bezier(0.42, 0, 0.58, 1);
     }
 
@@ -696,7 +721,8 @@ export const GalleryCard = styled.div`
   .explore {
     opacity: 0;
     transform: translate(0, -1rem);
-    font-size: 0.75rem;
+    font-size: 12px;
+    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: #673ab7;
@@ -753,11 +779,15 @@ export const GalleryCard = styled.div`
   }
 
   &:hover .thumb-shadow:nth-child(2) {
-    transform: scale(0.9) translate(0, 1rem) rotateX(15deg);
+    transform: ${(props) =>
+        props.size === "large" ? "scale(0.94)" : "scale(0.9)"}
+      translate(0, 1rem) rotateX(15deg);
   }
 
   &:hover .thumb-shadow:nth-child(1) {
-    transform: scale(0.82) translate(0, 2.4rem) rotateX(5deg);
+    transform: ${(props) =>
+        props.size === "large" ? "scale(0.88)" : "scale(0.82)"}
+      translate(0, 2.4rem) rotateX(5deg);
   }
 
   &:hover .btn {

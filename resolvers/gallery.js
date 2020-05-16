@@ -1,5 +1,6 @@
 const { createWriteStream } = require("fs");
 const path = require("path");
+
 const Gallery = require("../models/Gallery");
 const { UserInputError } = require("apollo-server-express");
 
@@ -63,9 +64,9 @@ module.exports = {
           {
             $addToSet: {
               photos: {
-                name: filename,
+                name: filename.replace(/\.[^/.]+$/, ""),
                 caption,
-                image: filename,
+                src: filename,
                 height: randNum,
                 width: randNum,
               },

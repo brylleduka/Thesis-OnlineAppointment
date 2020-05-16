@@ -15,6 +15,7 @@ import MouseScroll from "../../components/MouseScroll";
 import GalleryThumb from "../../components/GalleryThumb";
 import Spinner from "../../components/Spinner";
 import { scrollView } from "../../util/useScrollDown";
+import useWindowSize from "../../util/hooks/useWindowSize";
 
 const photos = [
   {
@@ -76,6 +77,7 @@ const photos = [
 const Gallery = () => {
   const content = useRef();
   const scrolling = useScroll(500);
+  const { width: wid } = useWindowSize();
   const [currentImage, setCurrentImage] = useState(0);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
   const [galleries, setGalleries] = useState([]);
@@ -84,7 +86,7 @@ const Gallery = () => {
     data: dataGalleries,
     loading: loadGalleries,
     error,
-  } = useQuery(FETCH_GALLERIES, { active: true });
+  } = useQuery(FETCH_GALLERIES, { variables: { active: true } });
 
   useEffect(() => {
     if (dataGalleries) {
@@ -148,9 +150,9 @@ const Gallery = () => {
       ) : (
         <Content
           height="auto"
-          width="80%"
+          width="90%"
           flex
-          justify="space-between"
+          justify={wid < 768 && "center"}
           align="center"
           margin="24px auto"
           flow="row wrap"
@@ -162,6 +164,18 @@ const Gallery = () => {
             title="Event Photos"
             subtitle="50 Event Photos"
             link="/zeadmin/dashboard"
+            margin={wid > 768 && "1rem"}
+            size="large"
+          />
+          <GalleryThumb
+            background={
+              "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            }
+            title="Event Photos"
+            subtitle="50 Event Photos"
+            link="/zeadmin/dashboard"
+            margin={wid > 768 && "1rem"}
+            size="large"
           />
 
           {galleries.length > 0 &&
@@ -180,7 +194,7 @@ const Gallery = () => {
       <DSection
         height="100%"
         style={{ minHeight: "100vh" }}
-        width="80%"
+        width="90%"
         mcenter
         pad="20px 0"
         ref={content}

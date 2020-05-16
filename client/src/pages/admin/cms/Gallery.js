@@ -3,14 +3,13 @@ import { useQuery } from "@apollo/react-hooks";
 import { FETCH_GALLERIES } from "../../../util/graphql/gallery";
 import Layout from "../../../components/admin/layout/Layout";
 import { DSection, Content } from "../../../components/styled/containers";
-import { DButton } from "../../../components/styled/utils";
 import { Breadcrumb } from "semantic-ui-react";
 // import DRadio from "../../../components/DRadio";
-import GalleryThumb from "../../../components/GalleryThumb";
-import Spinner from "../../../components/Spinner";
-import { Plus } from "@styled-icons/boxicons-regular/Plus";
 import MyGallery from "react-photo-gallery";
 import Carousel, { Modal, ModalGateway } from "react-images";
+import GalleryThumb from "../../../components/GalleryThumb";
+import Spinner from "../../../components/Spinner";
+import NewAlbum from "../../../components/admin/cms/gallery/NewAlbum";
 
 const photos = [
   {
@@ -18,54 +17,6 @@ const photos = [
     width: 3,
     height: 2,
     alt: "Facility",
-  },
-  {
-    src: "https://source.unsplash.com/Dm-qxdynoEc/800x799",
-    width: 1,
-    height: 1,
-    alt: "Facility",
-  },
-  {
-    src: "https://source.unsplash.com/qDkso9nvCg0/600x799",
-    width: 2,
-    height: 3,
-    alt: "Operation",
-  },
-  {
-    src: "https://source.unsplash.com/iecJiKe_RNg/600x799",
-    width: 2,
-    height: 3,
-    alt: "Operation",
-  },
-  {
-    src: "https://source.unsplash.com/epcsn8Ed8kY/600x799",
-    width: 2,
-    height: 3,
-    alt: "Satisfied",
-  },
-  {
-    src: "https://source.unsplash.com/NQSWvyVRIJk/800x599",
-    width: 3,
-    height: 2,
-    alt: "Satisfied",
-  },
-  {
-    src: "https://source.unsplash.com/zh7GEuORbUw/600x799",
-    width: 2,
-    height: 3,
-    alt: "Satisfied",
-  },
-  {
-    src: "https://source.unsplash.com/PpOHJezOalU/800x599",
-    width: 3,
-    height: 2,
-    alt: "Satisfied",
-  },
-  {
-    src: "https://source.unsplash.com/I1ASdgphUH4/800x599",
-    width: 3,
-    height: 2,
-    alt: "Satisfied",
   },
 ];
 
@@ -78,11 +29,11 @@ const Gallery = () => {
     data: dataGalleries,
     loading: loadGalleries,
     error,
-  } = useQuery(FETCH_GALLERIES, { active: true });
+  } = useQuery(FETCH_GALLERIES, { variables: { active: true } });
 
   useEffect(() => {
     if (dataGalleries) {
-      setGalleries(dataGalleries);
+      setGalleries(dataGalleries.galleries);
     }
   }, [dataGalleries]);
 
@@ -123,10 +74,7 @@ const Gallery = () => {
             <Breadcrumb.Divider icon="right chevron" />
             <Breadcrumb.Section active>Gallery</Breadcrumb.Section>
           </Breadcrumb>
-          <DButton flex>
-            <Plus size="22px" />
-            New album
-          </DButton>
+          <NewAlbum />
         </Content>
 
         {loadGalleries ? (
@@ -150,24 +98,18 @@ const Gallery = () => {
             margin="0 auto"
             flow="row wrap"
           >
-            {/* <GalleryThumb
-              background={
-                "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-              }
-              title="Event Photos"
-              subtitle="50 Event Photos"
-              link="/zeadmin/dashboard"
-            /> */}
-
             {galleries.length > 0 ? (
               galleries.map((gallery) => (
                 <GalleryThumb
-                  background={
-                    "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                  }
-                  title="Event Photos"
-                  subtitle="50 Event Photos"
-                  link="/zeadmin/dashboard"
+                  key={gallery._id}
+                  background={`/images/gallery/${gallery.photos[0].src}`}
+                  title={`${gallery.title} Photos`}
+                  subtitle={`${gallery.photos.length}${
+                    gallery.photos.length > 20 ? "+" : ""
+                  } ${gallery.title} Photo${
+                    gallery.photos.length > 1 ? "s" : ""
+                  }`}
+                  link={`/zeadmin/album/${gallery._id}`}
                 />
               ))
             ) : (

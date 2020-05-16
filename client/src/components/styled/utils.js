@@ -549,22 +549,7 @@ export const IconCustom = styled(Icon)`
 
 export const IconWrap = styled.div`
   ${StyledIconBase} {
-    color: ${(props) =>
-      props.color === "primary"
-        ? colors.primary
-        : props.color === "bluer"
-        ? colors.bluer
-        : props.color === "red"
-        ? colors.red
-        : props.color === "green"
-        ? colors.green
-        : props.color === "yellow"
-        ? colors.yellow
-        : props.color === "grey"
-        ? colors.grey
-        : props.color === "dark"
-        ? colors.dark
-        : "#fff"};
+    color: ${(props) => getTxtColor(props)};
     cursor: pointer;
     opacity: 0.8;
     transition: all 0.5s ease;

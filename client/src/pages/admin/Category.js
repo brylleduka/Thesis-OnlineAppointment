@@ -57,7 +57,9 @@ const Category = (props) => {
 
   // DROPZONE
   const [addCategoryPhoto, { loading }] = useMutation(UPLOAD_CATEGORY_PHOTO, {
-    refetchQueries: [{ query: FETCH_ALL_CATEGORIES_QUERY }],
+    refetchQueries: [
+      { query: FETCH_ALL_CATEGORIES_QUERY, variables: { active: true } },
+    ],
     onCompleted() {
       toaster.notify(({ onClose }) => (
         <Toasted success onClick={onClose}>

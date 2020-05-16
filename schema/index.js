@@ -126,7 +126,7 @@ const typeDefs = gql`
     _id: ID
     name: String
     caption: String
-    image: String
+    src: String
     height: Int
     width: Int
   }
