@@ -4,23 +4,15 @@ import { FETCH_GALLERIES } from "../../../util/graphql/gallery";
 import Layout from "../../../components/admin/layout/Layout";
 import { DSection, Content } from "../../../components/styled/containers";
 import { Breadcrumb } from "semantic-ui-react";
-// import DRadio from "../../../components/DRadio";
 import MyGallery from "react-photo-gallery";
 import Carousel, { Modal, ModalGateway } from "react-images";
 import GalleryThumb from "../../../components/GalleryThumb";
 import Spinner from "../../../components/Spinner";
 import NewAlbum from "../../../components/admin/cms/gallery/NewAlbum";
-
-const photos = [
-  {
-    src: "https://source.unsplash.com/2ShvY8Lf6l0/800x599",
-    width: 3,
-    height: 2,
-    alt: "Facility",
-  },
-];
+import ImageSelected from "../../../components/ImageSelected";
 
 const Gallery = () => {
+  let allPhotos = [];
   const [currentImage, setCurrentImage] = useState(0);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
   const [galleries, setGalleries] = useState([]);
@@ -37,15 +29,37 @@ const Gallery = () => {
     }
   }, [dataGalleries]);
 
-  const openLightbox = useCallback((event, { photo, index }) => {
-    setCurrentImage(index);
-    setViewerIsOpen(true);
-  }, []);
+  const imageRenderer = useCallback(
+    ({ index, left, top, key, photo }) => (
+      <ImageSelected
+        key={key}
+        index={index}
+        photo={photo}
+        left={left}
+        top={top}
+        setCurrentImage={setCurrentImage}
+        setViewerIsOpen={setViewerIsOpen}
+      />
+    ),
+    []
+  );
 
   const closeLightbox = () => {
     setCurrentImage(0);
     setViewerIsOpen(false);
   };
+
+  const columns = (containerWidth) => {
+    let columns = 2;
+    if (containerWidth >= 500) columns = 2;
+    if (containerWidth >= 900) columns = 3;
+    if (containerWidth >= 1500) columns = 4;
+    return columns;
+  };
+
+  if (galleries) {
+    galleries.map((g) => allPhotos.push(...g.photos));
+  }
 
   return (
     <Layout>
@@ -93,7 +107,6 @@ const Gallery = () => {
             height="auto"
             width="100%"
             flex
-            justify="space-between"
             align="center"
             margin="0 auto"
             flow="row wrap"
@@ -102,7 +115,11 @@ const Gallery = () => {
               galleries.map((gallery) => (
                 <GalleryThumb
                   key={gallery._id}
-                  background={`/images/gallery/${gallery.photos[0].src}`}
+                  background={
+                    gallery.photos.length > 0
+                      ? `/images/gallery/${gallery.photos[0].src}`
+                      : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                  }
                   title={`${gallery.title} Photos`}
                   subtitle={`${gallery.photos.length}${
                     gallery.photos.length > 20 ? "+" : ""
@@ -129,45 +146,36 @@ const Gallery = () => {
           </Content>
         )}
 
-        {/* <DRadio.RadioGroup>
-            <DRadio.RadioInput
-              value="all"
-              label="All"
-              id="radion-one"
-              name="switch-one"
-              checked={isRadioCheck === "all" ? true : false}
-              onChange={handleRadioGallery}
-            />
-            <DRadio.RadioInput
-              value="facility"
-              label="Facility"
-              id="radion-two"
-              name="switch-one"
-              checked={isRadioCheck === "facility" ? true : false}
-              onChange={handleRadioGallery}
-            />
-            <DRadio.RadioInput
-              value="event"
-              label="Event"
-              id="radion-three"
-              name="switch-one"
-              checked={isRadioCheck === "event" ? true : false}
-              onChange={handleRadioGallery}
-            />
-          </DRadio.RadioGroup> */}
-
         <div style={{ width: "100%", marginBottom: "36px" }}>
           <h3>All Photos</h3>
-          <MyGallery photos={photos} onClick={openLightbox} />
+
+          <MyGallery
+            photos={allPhotos.map((photo) => ({
+              height: photo.height,
+              width: photo.width,
+              src: `/images/gallery/${photo.src}`,
+              alt: photo.src,
+              id: photo._id,
+              key: photo._id,
+            }))}
+            renderImage={imageRenderer}
+            columns={columns}
+            directions="column"
+          />
+
           <ModalGateway>
             {viewerIsOpen ? (
               <Modal onClose={closeLightbox}>
                 <Carousel
                   currentIndex={currentImage}
-                  views={photos.map((x) => ({
-                    ...x,
-                    srcset: x.srcSet,
-                    caption: x.title,
+                  views={allPhotos.map((photo) => ({
+                    ...photo,
+                    src: `/images/gallery/${photo.src}`,
+                    caption:
+                      photo.caption !== null
+                        ? `${photo.name} - ${photo.caption}`
+                        : photo.name,
+                    alt: photo.src,
                   }))}
                 />
               </Modal>

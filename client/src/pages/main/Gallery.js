@@ -16,65 +16,10 @@ import GalleryThumb from "../../components/GalleryThumb";
 import Spinner from "../../components/Spinner";
 import { scrollView } from "../../util/useScrollDown";
 import useWindowSize from "../../util/hooks/useWindowSize";
-
-const photos = [
-  {
-    src: "https://source.unsplash.com/2ShvY8Lf6l0/800x599",
-    width: 4,
-    height: 3,
-    alt: "Facility",
-  },
-  {
-    src: "https://source.unsplash.com/Dm-qxdynoEc/800x799",
-    width: 1,
-    height: 1,
-    alt: "Facility",
-  },
-  {
-    src: "https://source.unsplash.com/qDkso9nvCg0/600x799",
-    width: 3,
-    height: 4,
-    alt: "Operation",
-  },
-  {
-    src: "https://source.unsplash.com/iecJiKe_RNg/600x799",
-    width: 3,
-    height: 4,
-    alt: "Operation",
-  },
-  {
-    src: "https://source.unsplash.com/epcsn8Ed8kY/600x799",
-    width: 3,
-    height: 4,
-    alt: "Satisfied",
-  },
-  {
-    src: "https://source.unsplash.com/NQSWvyVRIJk/800x599",
-    width: 4,
-    height: 3,
-    alt: "Satisfied",
-  },
-  {
-    src: "https://source.unsplash.com/zh7GEuORbUw/600x799",
-    width: 3,
-    height: 4,
-    alt: "Satisfied",
-  },
-  {
-    src: "https://source.unsplash.com/PpOHJezOalU/800x599",
-    width: 4,
-    height: 3,
-    alt: "Satisfied",
-  },
-  {
-    src: "https://source.unsplash.com/I1ASdgphUH4/800x599",
-    width: 4,
-    height: 3,
-    alt: "Satisfied",
-  },
-];
+import ImageSelected from "../../components/ImageSelected";
 
 const Gallery = () => {
+  let allPhotos = [];
   const content = useRef();
   const scrolling = useScroll(500);
   const { width: wid } = useWindowSize();
@@ -90,14 +35,23 @@ const Gallery = () => {
 
   useEffect(() => {
     if (dataGalleries) {
-      setGalleries(dataGalleries);
+      setGalleries(dataGalleries.galleries);
     }
   }, [dataGalleries]);
 
-  const openLightbox = useCallback((event, { photo, index }) => {
-    setCurrentImage(index);
-    setViewerIsOpen(true);
-  }, []);
+  const imageRenderer = useCallback(
+    ({ index, left, top, photo }) => (
+      <ImageSelected
+        index={index}
+        photo={photo}
+        left={left}
+        top={top}
+        setCurrentImage={setCurrentImage}
+        setViewerIsOpen={setViewerIsOpen}
+      />
+    ),
+    []
+  );
 
   const closeLightbox = () => {
     setCurrentImage(0);
@@ -107,6 +61,10 @@ const Gallery = () => {
   const scrollDown = () => {
     scrollView(content);
   };
+
+  if (galleries) {
+    galleries.map((g) => allPhotos.push(...g.photos));
+  }
 
   return (
     <DContainer>
@@ -157,32 +115,13 @@ const Gallery = () => {
           margin="24px auto"
           flow="row wrap"
         >
-          <GalleryThumb
-            background={
-              "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-            }
-            title="Event Photos"
-            subtitle="50 Event Photos"
-            link="/zeadmin/dashboard"
-            margin={wid > 768 && "1rem"}
-            size="large"
-          />
-          <GalleryThumb
-            background={
-              "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-            }
-            title="Event Photos"
-            subtitle="50 Event Photos"
-            link="/zeadmin/dashboard"
-            margin={wid > 768 && "1rem"}
-            size="large"
-          />
-
           {galleries.length > 0 &&
             galleries.map((gallery) => (
               <GalleryThumb
                 background={
-                  "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                  gallery.photos.length > 0
+                    ? `/images/gallery/${gallery.photos[0].src}`
+                    : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
                 }
                 title="Event Photos"
                 subtitle="50 Event Photos"
@@ -200,16 +139,32 @@ const Gallery = () => {
         ref={content}
       >
         <h3>All Photos</h3>
-        <MyGallery photos={photos} onClick={openLightbox} />
+
+        <MyGallery
+          photos={allPhotos.map((photo) => ({
+            height: photo.height,
+            width: photo.width,
+            src: `/images/gallery/${photo.src}`,
+            alt: photo.alt,
+            id: photo._id,
+          }))}
+          renderImage={imageRenderer}
+          directions="column"
+        />
         <ModalGateway>
           {viewerIsOpen ? (
             <Modal onClose={closeLightbox}>
               <Carousel
                 currentIndex={currentImage}
-                views={photos.map((x) => ({
-                  ...x,
-                  srcset: x.srcSet,
-                  caption: x.title,
+                views={allPhotos.map((photo) => ({
+                  ...photo,
+                  src: `/images/gallery/${photo.src}`,
+                  srcset: photo.srcSet,
+                  caption:
+                    photo.caption !== null
+                      ? `${photo.name} - ${photo.caption}`
+                      : photo.name,
+                  alt: photo.src,
                 }))}
               />
             </Modal>

@@ -46,36 +46,43 @@ module.exports = {
         throw err;
       }
     },
-    addGalleryPhoto: async (_, { _id, caption, image }) => {
+    addGalleryPhoto: async (_, { _id, image }) => {
       try {
-        const randNum = Math.floor(Math.random() * 2) + 3;
-        const { createReadStream, filename } = await image;
+        const randNum1 = Math.random() * 2 + 3;
+        const randNum2 = Math.random() * 2 + 3;
 
-        await new Promise((res) =>
-          createReadStream().pipe(
-            createWriteStream(
-              path.join(__dirname, "../images/gallery", filename)
-            ).on("close", res)
-          )
-        );
+        let process_upload = async (upload) => {
+          let { filename, createReadStream } = await upload;
 
-        const newPhoto = await Gallery.findByIdAndUpdate(
-          _id,
-          {
-            $addToSet: {
-              photos: {
-                name: filename.replace(/\.[^/.]+$/, ""),
-                caption,
-                src: filename,
-                height: randNum,
-                width: randNum,
+          const newfile = Math.random().toString(36).substring(7) + filename;
+
+          await new Promise((res) =>
+            createReadStream().pipe(
+              createWriteStream(
+                path.join(__dirname, "../images/gallery", newfile)
+              ).on("close", res)
+            )
+          );
+
+          const newPhoto = await Gallery.updateMany(
+            { _id },
+            {
+              $addToSet: {
+                photos: {
+                  name: newfile.replace(/\.[^/.]+$/, ""),
+                  src: newfile,
+                  height: randNum1,
+                  width: randNum2,
+                },
               },
             },
-          },
-          { new: true, upsert: true }
-        );
+            { new: true, upsert: true }
+          );
 
-        return newPhoto;
+          return newPhoto;
+        };
+
+        await Promise.all(image.map(process_upload));
       } catch (err) {
         throw err;
       }

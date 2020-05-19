@@ -127,8 +127,8 @@ const typeDefs = gql`
     name: String
     caption: String
     src: String
-    height: Int
-    width: Int
+    height: Float
+    width: Float
   }
 
   #CMS
@@ -510,7 +510,7 @@ const typeDefs = gql`
 
     # Gallery
     addGallery(title: String): Gallery
-    addGalleryPhoto(_id: ID!, caption: String, image: Upload): Gallery
+    addGalleryPhoto(_id: ID!, image: [Upload]): Gallery
     archiveGalleryPhoto(active: Boolean): Gallery
     deleteGalleryPhoto(_id: ID!): Gallery
 

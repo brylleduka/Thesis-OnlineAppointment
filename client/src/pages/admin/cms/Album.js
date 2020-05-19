@@ -9,8 +9,8 @@ import { Breadcrumb, Modal } from "semantic-ui-react";
 import MyGallery from "react-photo-gallery";
 import Carousel, { Modal as ModalImage, ModalGateway } from "react-images";
 import useWindowSize from "../../../util/hooks/useWindowSize";
-import ImageSelected from "../../../components/admin/cms/gallery/ImageSelected";
-import NewPhoto from "../../../components/admin/cms/gallery/NewPhoto";
+import ImageSelected from "../../../components/ImageSelected";
+import NewPhotoDrop from "../../../components/admin/cms/gallery/NewPhotoDrop";
 
 const Album = (props) => {
   const albumId = props.match.params._id;
@@ -29,31 +29,29 @@ const Album = (props) => {
     }
   }, [dataGallery]);
 
-  const openLightbox = useCallback((event, index) => {
-    setCurrentImage(index);
-    setViewerIsOpen(true);
-  }, []);
-
-  const closeLightbox = () => {
-    setCurrentImage(0);
-    setViewerIsOpen(false);
-  };
-
   const imageRenderer = useCallback(
     ({ index, left, top, key, photo }) => (
       <ImageSelected
-        albumPhotos={albumPhotos}
-        openLightbox={openLightbox}
         key={key}
         index={index}
         photo={photo}
         left={left}
         top={top}
         menu={true}
+        grayscale={true}
+        setCurrentImage={setCurrentImage}
+        setViewerIsOpen={setViewerIsOpen}
       />
     ),
     []
   );
+
+  // Close Lightbox
+
+  const closeLightbox = () => {
+    setCurrentImage(0);
+    setViewerIsOpen(false);
+  };
 
   const columns = (containerWidth) => {
     let columns = 2;
@@ -90,11 +88,13 @@ const Album = (props) => {
             <Breadcrumb.Divider icon="right chevron" />
             <Breadcrumb.Section>Gallery</Breadcrumb.Section>
             <Breadcrumb.Divider icon="right chevron" />
-            <Breadcrumb.Section active>Event Photos</Breadcrumb.Section>
+            <Breadcrumb.Section active>
+              {dataGallery && dataGallery.gallery.title} Photos
+            </Breadcrumb.Section>
           </Breadcrumb>
         </Content>
         <Content flex justify="flex-end" align="center" width="100%">
-          <NewPhoto albumId={albumId} />
+          <NewPhotoDrop albumId={albumId} />
         </Content>
         <div
           style={{
@@ -108,9 +108,12 @@ const Album = (props) => {
               height: photo.height,
               width: photo.width,
               src: `/images/gallery/${photo.src}`,
+              alt: photo.src,
+              id: photo._id,
+              key: photo._id,
             }))}
             renderImage={imageRenderer}
-            columns={columns}
+            columns={wid >= 500 ? 2 : wid >= 900 ? 3 : wid >= 1500 ? 4 : 2}
             directions="column"
           />
           <ModalGateway>
@@ -134,12 +137,11 @@ const Album = (props) => {
                   views={albumPhotos.map((photo) => ({
                     ...photo,
                     src: `/images/gallery/${photo.src}`,
-                    srcset: photo.srcSet,
                     caption:
                       photo.caption !== null
                         ? `${photo.name} - ${photo.caption}`
                         : photo.name,
-                    alt: photo.name,
+                    alt: photo.src,
                   }))}
                 />
               </ModalImage>
