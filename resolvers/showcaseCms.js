@@ -108,11 +108,7 @@ module.exports = {
           await new Promise((res) =>
             createReadStream().pipe(
               createWriteStream(
-                path.join(
-                  __dirname,
-                  "https://www.zessencefacialandspa.com/images/cms/home",
-                  filename
-                )
+                path.join(__dirname, "/images/cms/home", filename)
               ).on("close", res)
             )
           );
