@@ -9,8 +9,9 @@ import Spinner from "../../components/Spinner";
 import PhotoBooth from "../../components/admin/accounts/PhotoBooth";
 import AccountInfo from "../../components/admin/accounts/AccountInfo";
 
-const PersonalAccount = () => {
+const PersonalAccount = (props) => {
   const { employeeAuth } = useContext(AuthContext);
+  const empId = props.match.params._id;
   const [empPersonal, setEmpPersonal] = useState({});
   const stored = localStorage.getItem("account");
   const [isAccount, setIsAccount] = useState(
@@ -25,7 +26,7 @@ const PersonalAccount = () => {
     FETCH_EMPLOYEE_QUERY,
     {
       variables: {
-        employeeId: employeeAuth.id,
+        employeeId: empId || employeeAuth.id || employeeAuth._id,
       },
     }
   );

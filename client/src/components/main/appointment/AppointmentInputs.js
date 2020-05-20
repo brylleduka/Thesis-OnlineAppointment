@@ -10,6 +10,7 @@ import { Form } from "semantic-ui-react";
 import { Content } from "../../styled/containers";
 import Spinner from "../../Spinner";
 import Page404 from "../../../pages/Page404";
+import useWindowSize from "../../../util/hooks/useWindowSize";
 
 const AppointmentInputs = ({
   categoryValue,
@@ -19,6 +20,7 @@ const AppointmentInputs = ({
   employeeVal,
   setEmployeeVal,
 }) => {
+  const { width: wid } = useWindowSize();
   const [categories, setCategories] = useState([]);
   const [services, setServices] = useState([]);
   const [employees, setEmployees] = useState([]);
@@ -102,8 +104,8 @@ const AppointmentInputs = ({
       width="100%"
       margin="20px 0"
       flex
-      justify="flex-start"
-      align="center"
+      justify={wid <= 1024 ? "center" : "flex-start"}
+      align={wid <= 1024 ? "center" : "flex-start"}
       pad="0"
       flow="nowrap column"
     >

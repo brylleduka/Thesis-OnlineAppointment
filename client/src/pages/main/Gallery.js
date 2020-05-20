@@ -103,74 +103,76 @@ const Gallery = () => {
           width="100%"
           margin="0 auto"
         >
-          <Spinner content="Please wait while we fetch data..." medium />
+          <Spinner content="Please wait while we fetch data..." />
         </Content>
       ) : (
-        <Content
-          height="auto"
-          width="90%"
-          flex
-          justify={wid < 768 && "center"}
-          align="center"
-          margin="24px auto"
-          flow="row wrap"
-        >
-          {galleries.length > 0 &&
-            galleries.map((gallery) => (
-              <GalleryThumb
-                background={
-                  gallery.photos.length > 0
-                    ? `/images/gallery/${gallery.photos[0].src}`
-                    : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                }
-                title="Event Photos"
-                subtitle="50 Event Photos"
-                link="/zeadmin/dashboard"
-              />
-            ))}
-        </Content>
-      )}
-      <DSection
-        height="100%"
-        style={{ minHeight: "100vh" }}
-        width="90%"
-        mcenter
-        pad="20px 0"
-        ref={content}
-      >
-        <h3>All Photos</h3>
+        <>
+          <Content
+            height="auto"
+            width="90%"
+            flex
+            justify={wid < 768 && "center"}
+            align="center"
+            margin="24px auto"
+            flow="row wrap"
+          >
+            {galleries.length > 0 &&
+              galleries.map((gallery) => (
+                <GalleryThumb
+                  background={
+                    gallery.photos.length > 0
+                      ? `/images/gallery/${gallery.photos[0].src}`
+                      : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                  }
+                  title="Event Photos"
+                  subtitle="50 Event Photos"
+                  link={`/album/${gallery._id}`}
+                />
+              ))}
+          </Content>
+          <DSection
+            height="100%"
+            style={{ minHeight: "100vh" }}
+            width="90%"
+            mcenter
+            pad="20px 0"
+            ref={content}
+          >
+            <h3>All Photos</h3>
 
-        <MyGallery
-          photos={allPhotos.map((photo) => ({
-            height: photo.height,
-            width: photo.width,
-            src: `/images/gallery/${photo.src}`,
-            alt: photo.alt,
-            id: photo._id,
-          }))}
-          renderImage={imageRenderer}
-          directions="column"
-        />
-        <ModalGateway>
-          {viewerIsOpen ? (
-            <Modal onClose={closeLightbox}>
-              <Carousel
-                currentIndex={currentImage}
-                views={allPhotos.map((photo) => ({
-                  ...photo,
-                  src: `/images/gallery/${photo.src}`,
-                  srcset: photo.srcSet,
-                  caption:
-                    photo.caption !== null
-                      ? `${photo.name} - ${photo.caption}`
-                      : photo.name,
-                  alt: photo.src,
-                }))}
-              />
-            </Modal>
-          ) : null}
-        </ModalGateway>
-      </DSection>
+            <MyGallery
+              photos={allPhotos.map((photo) => ({
+                height: photo.height,
+                width: photo.width,
+                src: `/images/gallery/${photo.src}`,
+                alt: photo.alt,
+                id: photo._id,
+              }))}
+              renderImage={imageRenderer}
+              directions="column"
+            />
+            <ModalGateway>
+              {viewerIsOpen ? (
+                <Modal onClose={closeLightbox}>
+                  <Carousel
+                    currentIndex={currentImage}
+                    views={allPhotos.map((photo) => ({
+                      ...photo,
+                      src: `/images/gallery/${photo.src}`,
+                      srcset: photo.srcSet,
+                      caption:
+                        photo.caption !== null
+                          ? `${photo.name} - ${photo.caption}`
+                          : photo.name,
+                      alt: photo.src,
+                    }))}
+                  />
+                </Modal>
+              ) : null}
+            </ModalGateway>
+          </DSection>
+        </>
+      )}
     </DContainer>
   );
 };

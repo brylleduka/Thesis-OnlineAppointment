@@ -80,7 +80,8 @@ module.exports = {
 
         const category = await Category.updateOne(
           { _id },
-          { $set: { photo: filename } }
+          { $set: { photo: filename } },
+          { new: true, upsert: true }
         );
 
         return true;

@@ -56,7 +56,9 @@ const Service = (props) => {
 
   // DROPZONE
   const [addServicePhoto, { loading }] = useMutation(UPLOAD_SERVICE_PHOTO, {
-    refetchQueries: [{ query: FETCH_ALL_SERVICES_QUERY }],
+    refetchQueries: [
+      { query: FETCH_SINGLE_SERVICE_QUERY, variables: { serviceId } },
+    ],
     onCompleted() {
       toaster.notify(({ onClose }) => (
         <Toasted success onClick={onClose}>

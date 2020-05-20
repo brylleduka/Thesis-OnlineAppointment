@@ -2,7 +2,10 @@ import React, { useState, useCallback } from "react";
 import gql from "graphql-tag";
 import { useDropzone } from "react-dropzone";
 import { useMutation } from "@apollo/react-hooks";
-import { FETCH_ALL_EMPLOYEES_QUERY } from "../../../util/graphql/employee";
+import {
+  FETCH_ALL_EMPLOYEES_QUERY,
+  FETCH_EMPLOYEE_QUERY,
+} from "../../../util/graphql/employee";
 import Carousel, { Modal, ModalGateway } from "react-images";
 import { Content, DCard, DImage } from "../../styled/containers";
 import { IconWrap, DButton } from "../../styled/utils";
@@ -34,7 +37,9 @@ const PhotoBooth = ({
 
   // DROPZONE
   const [addEmployeePhoto, { loading }] = useMutation(UPLOAD_EMPLOYEE_PHOTO, {
-    refetchQueries: [{ query: FETCH_ALL_EMPLOYEES_QUERY }],
+    refetchQueries: [
+      { query: FETCH_EMPLOYEE_QUERY, variables: { employeeId } },
+    ],
     onCompleted() {
       toaster.notify(({ onClose }) => (
         <Toasted success onClick={onClose}>
@@ -84,7 +89,7 @@ const PhotoBooth = ({
           <DImage height="100%" width="100%">
             <img
               src={
-                employee.photo
+                employee.photo !== undefined
                   ? `/images/employees/${employee.photo}`
                   : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
               }

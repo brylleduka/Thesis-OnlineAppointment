@@ -7,6 +7,7 @@ import Signup from "./main/Signup";
 import Signin from "./main/Signin";
 import Appointment from "./main/Appointment";
 import Gallery from "./main/Gallery";
+import Album from "./main/Album";
 import Contact from "./main/Contact";
 import Testimonials from "./main/Testimonials";
 import Services from "./main/Services";
@@ -32,6 +33,7 @@ function Main({ match }) {
         <Route path={`/about`} component={About} exact />
         <Route path={`/contact`} component={Contact} exact />
         <Route path={`/gallery`} component={Gallery} exact />
+        <Route path={`/album/:_id`} component={Album} exact />
         <Route path={`/testimonials`} component={Testimonials} exact />
         <Route path={`/services&rates`} component={Services} exact />
         <Route path={`/service/:_id`} component={Service} exact />

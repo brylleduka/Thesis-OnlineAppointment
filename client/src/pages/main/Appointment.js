@@ -8,11 +8,14 @@ import {
   Content,
   DGrid,
   Overlay,
+  DContainer,
 } from "../../components/styled/containers";
 import { DButton } from "../../components/styled/utils";
 import Confirmation from "../../components/main/appointment/Confirmation";
+import useWindowSize from "../../util/hooks/useWindowSize";
 
 const Appointment = () => {
+  const { width: wid } = useWindowSize();
   const [open, setOpen] = useState(false);
 
   const [categoryValue, setCategoryValue] = useState("");
@@ -24,7 +27,7 @@ const Appointment = () => {
   const [selectedTime, setSelectedTime] = useState("");
 
   return (
-    <DGrid>
+    <DContainer>
       <DSection
         height="40vh"
         background={
@@ -38,9 +41,16 @@ const Appointment = () => {
       >
         <h1 style={{ margin: "24px" }}>Appointment</h1>
       </DSection>
-      <DSection width="100%" height="100%">
-        <DGrid two>
-          <DSection
+      <DSection
+        flex
+        justify="space-between"
+        align={wid <= 1024 ? "center" : "flex-start"}
+        width="90%"
+        height="100%"
+        margin="24px auto"
+      >
+        {/* <DGrid two> */}
+        {/* <DSection
             width="100%"
             flex
             justify="center"
@@ -64,58 +74,67 @@ const Appointment = () => {
                 </div>
               </div>
             </Overlay>
-          </DSection>
+          </DSection> */}
 
+        {/* <DGrid custom="1fr 2fr" gap="10px"> */}
+        <Content
+          flex
+          justify={wid <= 1024 ? "center" : "flex-start"}
+          align="flex-start"
+          width="80%"
+          height="100%"
+        >
+          <AppointmentInputs
+            categoryValue={categoryValue}
+            setCategoryValue={setCategoryValue}
+            employeeVal={employeeVal}
+            serviceValue={serviceValue}
+            setServiceValue={setServiceValue}
+            setEmployeeVal={setEmployeeVal}
+          />
+        </Content>
+
+        <Content width="100%" margin="20px 0">
           <DGrid>
-            <AppointmentInputs
-              categoryValue={categoryValue}
-              setCategoryValue={setCategoryValue}
+            <AppointDate
+              setStartDate={setStartDate}
+              setSelectedTime={setSelectedTime}
+              selectedTime={selectedTime}
+              startDate={startDate}
               employeeVal={employeeVal}
               serviceValue={serviceValue}
-              setServiceValue={setServiceValue}
-              setEmployeeVal={setEmployeeVal}
+              calendarSize={"calendar_large"}
             />
-            <Content width="100%" margin="20px 0">
-              <DGrid>
-                <AppointDate
-                  setStartDate={setStartDate}
-                  setSelectedTime={setSelectedTime}
-                  selectedTime={selectedTime}
-                  startDate={startDate}
-                  employeeVal={employeeVal}
-                  serviceValue={serviceValue}
-                  calendarSize={"calendar_large"}
-                />
-                <Content width="100%" flex justify="center" align="center">
-                  <DButton
-                    size="50px"
-                    onClick={() => setOpen(true)}
-                    disabled={
-                      categoryValue === "" ||
-                      serviceValue === "" ||
-                      employeeVal === "" ||
-                      selectedTime === ""
-                        ? true
-                        : false
-                    }
-                  >
-                    Book an Appointment
-                  </DButton>
-                  <Confirmation
-                    open={open}
-                    setOpen={setOpen}
-                    serviceValue={serviceValue}
-                    employeeVal={employeeVal}
-                    startDate={startDate}
-                    selectedTime={selectedTime}
-                  />
-                </Content>
-              </DGrid>
+            <Content width="100%" flex justify="center" align="center">
+              <DButton
+                size="50px"
+                onClick={() => setOpen(true)}
+                disabled={
+                  categoryValue === "" ||
+                  serviceValue === "" ||
+                  employeeVal === "" ||
+                  selectedTime === ""
+                    ? true
+                    : false
+                }
+              >
+                Book an Appointment
+              </DButton>
+              <Confirmation
+                open={open}
+                setOpen={setOpen}
+                serviceValue={serviceValue}
+                employeeVal={employeeVal}
+                startDate={startDate}
+                selectedTime={selectedTime}
+              />
             </Content>
           </DGrid>
-        </DGrid>
+        </Content>
+        {/* </DGrid> */}
+        {/* </DGrid> */}
       </DSection>
-    </DGrid>
+    </DContainer>
   );
 };
 

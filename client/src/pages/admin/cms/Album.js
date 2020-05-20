@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from "react";
-import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_GALLERY } from "../../../util/graphql/gallery";
 import Layout from "../../../components/admin/layout/Layout";

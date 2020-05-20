@@ -25,7 +25,7 @@ const Appointments = () => {
               Appointment List
             </Breadcrumb.Section>
           </Breadcrumb>
-          <DButton onClick={() => setOpen(true)}>New Appointment</DButton>
+          {/* <DButton onClick={() => setOpen(true)}>New Appointment</DButton> */}
         </Content>
         <DGrid>
           <CurrentAppointments />

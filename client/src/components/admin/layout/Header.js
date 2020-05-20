@@ -11,12 +11,13 @@ import Spinner from "../../Spinner";
 
 const Header = () => {
   const { employeeLogout, employeeAuth } = useContext(AuthContext);
+  const empId = employeeAuth._id || employeeAuth.id;
   const [empLog, setEmpLog] = useState({});
 
   const { data: dataEmpLog, loading: loadEmpLog, error: errEmpLog } = useQuery(
     FETCH_EMPLOYEE_QUERY,
     {
-      variables: { employeeId: employeeAuth.id },
+      variables: { employeeId: empId },
     }
   );
 
@@ -28,6 +29,8 @@ const Header = () => {
     employeeLogout();
   };
 
+  console.log(employeeAuth);
+
   return (
     <HeaderLayout>
       {loadEmpLog ? (
@@ -38,7 +41,11 @@ const Header = () => {
             <DCard dw="50px" dh="50px" mcenter circle p="0px" grayzoom>
               <DImage circle height="100%" width="100%">
                 <img
-                  src={empLog.photo && `/images/employees/${empLog.photo}`}
+                  src={
+                    dataEmpLog &&
+                    dataEmpLog.employee &&
+                    `/images/employees/${dataEmpLog.employee.photo}`
+                  }
                   alt={empLog.lastName}
                 />
               </DImage>
@@ -54,7 +61,7 @@ const Header = () => {
                 {empLog.firstName} {empLog.lastName}
               </strong>
             </Dropdown.Item>
-            <Dropdown.Item as={Link} to="/zeadmin/paccount">
+            <Dropdown.Item as={Link} to={`/zeadmin/paccount/${empId}`}>
               <Icon name="user" />
               Account
             </Dropdown.Item>

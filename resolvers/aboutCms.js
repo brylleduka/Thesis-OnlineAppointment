@@ -1,4 +1,4 @@
-const { createWriteStream } = require("fs");
+const { createWriteStream, unlink, stat } = require("fs");
 const stream = require("stream");
 const path = require("path");
 const AboutCMS = require("../models/AboutCMS");
@@ -27,72 +27,50 @@ module.exports = {
           bgColor,
           dark,
           overlay,
-          //   mtitle,
-          //   msubtitle,
-          //   mparagraph,
-          //   mphoto,
-          //   malt,
         },
       }
     ) => {
       try {
         const about = await AboutCMS.findOne({ contentName: "ABOUTUS" });
 
-        let bgImgFile;
+        const getAboutImg = about.bgImg;
 
-        // let mPhotoFile;
+        stat("./images/cms/about/" + getAboutImg, function (err, stats) {
+          console.log(stats); //here we got all information of file in stats variable
+
+          if (err) {
+            return console.error(err);
+          }
+
+          unlink("./images/cms/about/" + getAboutImg, function (err) {
+            if (err) return console.log(err);
+            console.log("file deleted successfully");
+          });
+        });
+
+        let bgImgFile;
 
         if (about) {
           bgImgFile = about.bgImg || "";
-          //   sPhotoFile = about.story.photo || "";
-          //   mPhotoFile = about.mission.photo || "";
         } else {
           bgImgFile = "";
-          //   sPhotoFile = "";
-          //   mPhotoFile = "";
         }
 
         if (bgImg instanceof stream.Readable || bgImg) {
           const { createReadStream, filename } = await bgImg;
 
+          const newfile = Math.random().toString(36).substring(7) + filename;
+
           await new Promise((res) =>
             createReadStream().pipe(
               createWriteStream(
-                path.join(__dirname, "../images/cms/about", filename)
+                path.join(__dirname, "../images/cms/about", newfile)
               ).on("close", res)
             )
           );
 
-          bgImgFile = filename;
+          bgImgFile = newfile;
         }
-
-        // if (mphoto instanceof stream.Readable || mphoto) {
-        //   const { createReadStream, filename: missionFileName } = await mphoto;
-
-        //   await new Promise(res =>
-        //     createReadStream().pipe(
-        //       createWriteStream(
-        //         path.join(__dirname, "../images/cms/about", missionFileName)
-        //       ).on("close", res)
-        //     )
-        //   );
-
-        //   mPhotoFile = missionFileName;
-        // }
-
-        // if (sphoto instanceof stream.Readable || sphoto) {
-        //   const { createReadStream, filename: storyFileName } = await sphoto;
-
-        //   await new Promise(res =>
-        //     createReadStream().pipe(
-        //       createWriteStream(
-        //         path.join(__dirname, "../images/cms/about", storyFileName)
-        //       ).on("close", res)
-        //     )
-        //   );
-
-        //   sPhotoFile = storyFileName;
-        // }
 
         const aboutUpdate = await AboutCMS.findOneAndUpdate(
           { contentName: "ABOUTUS" },
@@ -105,20 +83,6 @@ module.exports = {
               bgColor,
               dark,
               overlay,
-              //   story: {
-              //     title: stitle,
-              //     subtitle: ssubtitle,
-              //     paragraph: sparagraph,
-              //     photo: storyFileName ? storyFileName : "",
-              //     alt: salt
-              //   },
-              //   mission: {
-              //     title: mtitle,
-              //     subtitle: msubtitle,
-              //     paragraph: mparagraph,
-              //     photo: missionFileName ? missionFileName : "",
-              //     alt: malt
-              //   }
             },
           },
           {

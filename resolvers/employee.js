@@ -8,7 +8,7 @@ const {
   validateEmployeeLoginInput,
   validateEmployeePersonal,
 } = require("../utils/validators");
-const { createWriteStream } = require("fs");
+const { createWriteStream, unlink, stat } = require("fs");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const path = require("path");
@@ -165,18 +165,40 @@ module.exports = {
     },
     addEmployeePhoto: async (_, { _id, file }) => {
       try {
+        const employee = await Employee.findById(_id);
+        const getEmployeeImg = employee.photo;
+
+        stat("./images/employees/" + getEmployeeImg, function (err, stats) {
+          console.log(stats); //here we got all information of file in stats variable
+
+          if (err) {
+            return console.error(err);
+          }
+
+          unlink("./images/employees/" + getEmployeeImg, function (err) {
+            if (err) return console.log(err);
+            console.log("file deleted successfully");
+          });
+        });
+
         const { createReadStream, filename } = await file;
+        const newfile = Math.random().toString(36).substring(7) + filename;
+
         await new Promise((res) =>
           createReadStream().pipe(
             createWriteStream(
-              path.join(__dirname, "../images/employees", filename)
+              path.join(__dirname, "../images/employees", newfile)
             ).on("close", res)
           )
         );
 
-        const employee = await Employee.updateOne(
+        await Employee.updateOne(
           { _id },
-          { $set: { photo: filename } }
+          { $set: { photo: newfile } },
+          {
+            new: true,
+            upsert: true,
+          }
         );
 
         return true;
@@ -440,6 +462,20 @@ module.exports = {
 
         const employee = await Employee.findById(_id);
         const scheduleId = employee.schedule;
+        const getEmployeeImg = employee.photo;
+
+        stat("./images/employees/" + getEmployeeImg, function (err, stats) {
+          console.log(stats); //here we got all information of file in stats variable
+
+          if (err) {
+            return console.error(err);
+          }
+
+          unlink("./images/employees/" + getEmployeeImg, function (err) {
+            if (err) return console.log(err);
+            console.log("file deleted successfully");
+          });
+        });
 
         if (role !== "ADMIN" || level < 3) {
           throw new ForbiddenError("not authorized to do this action");

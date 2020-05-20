@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_EMPLOYEES_NOT_ADMIN_QUERY } from "../../../util/graphql/employee";
 import { DGrid, DSection, Content } from "../../styled/containers";
-import Skeleton from "react-loading-skeleton";
+import Spinner from "../../Spinner";
+import FancyText from "../../FancyText";
 import TeamDetails from "./TeamDetails";
 
 const Team = () => {
@@ -36,7 +37,7 @@ const Team = () => {
           width="100%"
           height="50vh"
         >
-          <h3>Our TEAM</h3>
+          <FancyText size="48px">Our TEAM</FancyText>
         </Content>
       </DSection>
       <DSection
@@ -57,18 +58,24 @@ const Team = () => {
           align="center"
           margin="0 auto"
         >
-          <DGrid three gap="20px">
-            {loadingEmployees ? (
-              <>
-                <Skeleton width={300} height={400} />
-                <Skeleton width={300} height={400} />
-                <Skeleton width={300} height={400} />
-              </>
-            ) : (
-              employees &&
-              employees.map(emp => <TeamDetails key={emp._id} employee={emp} />)
-            )}
-          </DGrid>
+          {loadingEmployees ? (
+            <Content
+              flex
+              justify="center"
+              align="center"
+              width="90%"
+              height="100%"
+            >
+              <Spinner content="Fetching data..." />
+            </Content>
+          ) : (
+            <DGrid three gap="20px">
+              {employees &&
+                employees.map((emp) => (
+                  <TeamDetails key={emp._id} employee={emp} />
+                ))}
+            </DGrid>
+          )}
         </Content>
       </DSection>
     </>

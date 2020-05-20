@@ -52,7 +52,7 @@ const Admin = () => {
           />
           <PrivateRoute
             exact
-            path="/zeadmin/paccount"
+            path="/zeadmin/paccount/:_id"
             component={PersonalAccount}
           />
           <PrivateRoute exact path="/zeadmin/user" component={User} />

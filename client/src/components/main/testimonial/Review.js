@@ -50,7 +50,12 @@ const Review = () => {
         <Spinner medium />
       ) : (
         <>
-          <DButton basic radius="25px" center bluer onClick={handleOpenReview}>
+          <DButton
+            radius="25px"
+            center
+            color="bluer"
+            onClick={handleOpenReview}
+          >
             <Icon name="pencil" />
             Write a review
           </DButton>

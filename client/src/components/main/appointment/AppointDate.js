@@ -7,29 +7,9 @@ import DatePicker from "react-datepicker";
 import { Content, DGrid } from "../../styled/containers";
 import { DLabel } from "../../styled/utils";
 import Spinner from "../../Spinner";
-import DRadio from "../../DRadio"
+import DRadio from "../../DRadio";
 import moment from "moment";
 import timeLineLabels from "../../../util/hooks/timeLineLabels";
-
-// const timelineLabels = (
-//   desiredStartTime,
-//   timeLength,
-//   interval,
-//   breakTimeLength = 0
-// ) => {
-//   const periodsInADay = moment
-//     .duration(timeLength + breakTimeLength, "MINUTES")
-//     .as("MINUTES");
-
-//   let timeSlot = [];
-
-//   const startTimeMoment = moment(desiredStartTime, "hh:mm A");
-//   for (let i = 0; i <= periodsInADay; i += interval) {
-//     startTimeMoment.add(i === 0 ? 0 : interval, "MINUTES");
-//     timeSlot.push(startTimeMoment.format("hh:mm A"));
-//   }
-//   return timeSlot;
-// };
 
 const AppointDate = ({
   setStartDate,
@@ -179,7 +159,7 @@ const AppointDate = ({
               hoverflow
             >
               {times.map((time) => (
-                <Content width="auto" height="20px" margin={"3px"} key={time}>
+                <Content width="auto" height="30px" margin={"5px"} key={time}>
                   <div className="pretty p-default p-curve">
                     <input
                       type="radio"

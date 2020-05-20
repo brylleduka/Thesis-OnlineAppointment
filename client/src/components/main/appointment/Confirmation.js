@@ -190,7 +190,7 @@ const Confirmation = ({
               />
             )}
           </Form.Field>
-          <Form.Field inline>
+          {/* <Form.Field inline>
             <DLabel bgcolor="#2193b0" style={styles.label} rounded m="10px 0">
               Additional Info(optional)
             </DLabel>
@@ -199,7 +199,7 @@ const Confirmation = ({
               value={addInfo}
               onChange={handleMessage}
             ></textarea>
-          </Form.Field>
+          </Form.Field> */}
         </Form>
       </Modal.Content>
       <Modal.Actions>
