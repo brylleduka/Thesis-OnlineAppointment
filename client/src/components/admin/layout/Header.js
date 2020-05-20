@@ -29,8 +29,6 @@ const Header = () => {
     employeeLogout();
   };
 
-  console.log(employeeAuth);
-
   return (
     <HeaderLayout>
       {loadEmpLog ? (
