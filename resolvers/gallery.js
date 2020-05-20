@@ -59,7 +59,7 @@ module.exports = {
           await new Promise((res) =>
             createReadStream().pipe(
               createWriteStream(
-                path.join(__dirname, "./images/gallery", newfile)
+                path.join(__dirname, "../images/gallery", newfile)
               ).on("close", res)
             )
           );
