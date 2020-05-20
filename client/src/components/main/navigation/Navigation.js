@@ -44,7 +44,9 @@ const Navigation = ({ open, setOpen }) => {
   return (
     <DNavigation ref={node} scrolled={scrolling ? true : false}>
       <div className="content">
-        <img src={"/images/logo.png"} alt="Z Essence" className="logo" />
+        <Link to="/">
+          <img src={"/images/logo.png"} alt="Z Essence" className="logo" />
+        </Link>
         <Burger open={open} setOpen={setOpen} />
 
         <DMainMenu open={open} scrolled={scrolling ? true : false}>
