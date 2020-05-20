@@ -108,7 +108,7 @@ module.exports = {
           await new Promise((res) =>
             createReadStream().pipe(
               createWriteStream(
-                path.join(__dirname, "/images/cms/home", filename)
+                path.join(__dirname, "../images/cms/home", filename)
               ).on("close", res)
             )
           );
@@ -131,6 +131,7 @@ module.exports = {
           },
           {
             new: true,
+            upsert: true,
           }
         );
 
@@ -141,7 +142,7 @@ module.exports = {
     },
     removeShowcase: async (_, { showcaseId }) => {
       try {
-        await ShowcaseCMS.updateOne(
+        await ShowcaseCMS.findOneAndUpdate(
           { sectionName: "SHOWCASE" },
           { $pull: { content: { _id: showcaseId } } },
           {
