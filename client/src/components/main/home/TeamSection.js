@@ -20,6 +20,7 @@ const TeamSection = ({ cards }) => {
   } = useQuery(FETCH_EMPLOYEES_NOT_ADMIN_QUERY, {
     variables: {
       limit: 4,
+      active: true,
     },
   });
 
@@ -87,9 +88,9 @@ const TeamSection = ({ cards }) => {
                   </h3>
                   <h4>{employee.role}</h4>
                   <p>
-                    {employee.bio.length > 50
-                      ? parser(employee.bio.substr(0, 50) + "...")
-                      : parser(employee.bio.substr(0, 50))}
+                    {employee.bio.length > 100
+                      ? parser(employee.bio.substr(0, 100) + "...")
+                      : parser(employee.bio.substr(0, 100))}
                   </p>
                   <ReadMore hover={0}>Read More</ReadMore>
                 </figcaption>

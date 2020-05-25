@@ -22,7 +22,7 @@ const Accordion = (props) => {
       uc={props.uc}
       bg={props.bg}
       color={props.color}
-      hoverColorText={props.hoverColorText}
+      hoverColorText={props.hcolor}
       rounded={props.rounded}
       oblong={props.oblong}
     >

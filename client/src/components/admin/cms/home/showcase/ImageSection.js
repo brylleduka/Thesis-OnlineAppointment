@@ -79,6 +79,8 @@ const ImageSection = ({
           onChange={onSelectedFile}
           style={{ display: "none" }}
           ref={fileInput}
+
+          
         />
         <Popup
           content="Select image for background slide"

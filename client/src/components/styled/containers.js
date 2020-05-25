@@ -470,6 +470,9 @@ export const DCard = styled.div`
   position: relative;
   border-radius: ${(props) =>
     props.rad ? props.rad : props.circle ? "50%" : "10px"};
+  border-top: ${(props) => (props.bordtop ? props.bordtop : "none")};
+  border-color: ${(props) =>
+    props.bordcolor ? props.bordcolor : "transparent"};
   padding: ${(props) => (props.p ? props.p : "10px")};
   height: ${(props) => (props.dh ? props.dh : "300px")};
   width: ${(props) => (props.dw ? props.dw : "250px")};
@@ -512,9 +515,7 @@ export const DCard = styled.div`
       ? props.bs
       : ("0 1px 1px rgba(0, 0, 0, 0.12)",
         "0 2px 2px rgba(0, 0, 0, 0.12)",
-        "0 4px 4px rgba(0, 0, 0, 0.12)",
-        "0 6px 8px rgba(0, 0, 0, 0.12)",
-        "0 8px 16px rgba(0, 0, 0, 0.12)")};
+        "0 4px 4px rgba(0, 0, 0, 0.12)")};
 
   .card-details {
     padding: 0 10px;

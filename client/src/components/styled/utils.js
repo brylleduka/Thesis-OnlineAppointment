@@ -77,6 +77,23 @@ const getNotifColor = (props) => {
   return colors.blue;
 };
 
+const getBGColor = (props) => {
+  if (props.bgprimary) return colors.primary;
+  if (props.bgsecondary) return colors.secondary;
+  if (props.bgdark) return colors.dark;
+  if (props.bggrey) return colors.grey;
+  if (props.bglight) return colors.light;
+  if (props.bgbluer || props.default) return colors.bluer;
+  if (props.bgblue) return colors.blue;
+  if (props.bgalert) return colors.red;
+  if (props.bgconfirm) return colors.green;
+  if (props.bgwarning) return colors.yellow;
+  if (props.basic) return "transparent";
+  if (props.disabled) return "#e9e4f0";
+
+  return colors.blue;
+};
+
 // BUTTONS
 export const DButton = styled.button`
   font-size: ${(props) => (props.fSize ? props.fSize : "16px")};
@@ -122,7 +139,7 @@ export const DButton = styled.button`
       ? colors.bluer
       : colors.light};
 
-  background: ${(props) => getNotifColor(props)};
+  background: ${(props) => getBGColor(props)};
 
   ${(props) =>
     props.disabled &&
@@ -136,15 +153,11 @@ export const DButton = styled.button`
   font-weight: 700;
   outline: 0;
   
-  ${(props) =>
-    !props.disabled &&
-    css`
-      &:hover {
-        opacity: 0.8;
-        color: #fff;
-        background: ${(props) => getNotifColor(props)};
-      }
-    `};
+ 
+  &:hover {
+        opacity: 0.9;
+  };
+   
 
  
 
@@ -548,6 +561,12 @@ export const IconCustom = styled(Icon)`
 `;
 
 export const IconWrap = styled.div`
+  display: flex;
+  align-items: center;
+  color: ${(props) => getTxtColor(props)};
+  font-weight: 500;
+  cursor: pointer;
+
   ${StyledIconBase} {
     color: ${(props) => getTxtColor(props)};
     cursor: pointer;
@@ -670,6 +689,20 @@ export const IconWrap = styled.div`
         bottom: 0;
         margin: 0 auto;
       `};
+  }
+
+  &:hover {
+    ${StyledIconBase} {
+      opacity: 1;
+      transform: scale(1.1);
+
+      ${(props) =>
+        props.menu &&
+        css`
+          border-radius: 100%;
+          background: #ccc;
+        `}
+    }
   }
 `;
 

@@ -18,7 +18,7 @@ module.exports = {
     employees: async ({ active }) => {
       try {
         const getAllEmployee = await Employee.find({
-          active: active ? active : true,
+          active,
         }).sort({ updatedAt: -1 });
 
         return getAllEmployee;
@@ -30,7 +30,7 @@ module.exports = {
       try {
         const employeesRole = await Employee.find({
           role,
-          active: active ? active : true,
+          active,
         }).sort({
           createdAt: -1,
         });
@@ -44,7 +44,7 @@ module.exports = {
       try {
         const employeesAesthe = await Employee.find({
           role: { $ne: "ADMIN" },
-          active: active ? active : true,
+          active,
         })
           .sort({
             createdAt: -1,

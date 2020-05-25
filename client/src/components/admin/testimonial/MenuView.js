@@ -20,8 +20,6 @@ const MenuView = ({ menuId, review }) => {
     setIsDltModal(true);
   };
 
-  console.log(employeeAuth);
-
   return (
     <>
       <Popup

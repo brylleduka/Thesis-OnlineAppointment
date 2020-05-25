@@ -148,7 +148,7 @@ const Inquiry = () => {
           responsive
           customStyles={customStyles}
           pagination={true}
-          paginationPerPage={5}
+          paginationPerPage={10}
           paginationRowsPerPageOptions={paginationRowsPerPageOptions}
           highlightOnHover
           pointerOnHover

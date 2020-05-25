@@ -5,7 +5,7 @@ import Layout from "../../components/admin/layout/Layout";
 import { Link } from "react-router-dom";
 import { Eye } from "styled-icons/fa-regular";
 import { Grid } from "@styled-icons/boxicons-solid/Grid";
-import { DButton, DLabel } from "../../components/styled/utils";
+import { DButton } from "../../components/styled/utils";
 import { Content, DSection } from "../../components/styled/containers";
 import DataTable from "react-data-table-component";
 import Spinner from "../../components/Spinner";
@@ -154,7 +154,7 @@ const Employees = () => {
             responsive
             customStyles={customStyles}
             pagination={true}
-            paginationPerPage={5}
+            paginationPerPage={10}
             paginationRowsPerPageOptions={paginationRowsPerPageOptions}
             highlightOnHover
             pointerOnHover

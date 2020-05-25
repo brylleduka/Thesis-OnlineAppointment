@@ -57,6 +57,9 @@ const InquiryCard = ({ history }) => {
       dw="300px"
       onClick={() => history.push("/zeadmin/inquiry")}
       pointer
+      rad="0 0 10px 10px"
+      bordtop={"6px solid"}
+      bordcolor={({ theme }) => theme.primary}
     >
       <Content
         width="100%"

@@ -15,7 +15,7 @@ const ClientCard = ({ history }) => {
   );
 
   if (dataUsers) {
-    dataUsers.getUsers.map(user => {
+    dataUsers.getUsers.map((user) => {
       const newUser = new Date(parseInt(user.createdAt)).setDate(
         new Date(parseInt(user.createdAt)).getDate() + 15
       );
@@ -42,6 +42,9 @@ const ClientCard = ({ history }) => {
       dw="300px"
       onClick={() => history.push("/zeadmin/user")}
       pointer
+      rad="0 0 10px 10px"
+      bordtop={"6px solid"}
+      bordcolor={({ theme }) => theme.secondary}
     >
       <Content
         width="100%"
@@ -89,7 +92,6 @@ const ClientCard = ({ history }) => {
                 alignCenter
                 weight={500}
                 w={"100%"}
-              
                 color="blue"
                 size="12px"
                 rounded
@@ -100,7 +102,7 @@ const ClientCard = ({ history }) => {
                 {newClients.length > 0 ? (
                   <h4>{newClients.length}</h4>
                 ) : (
-                  <Spinner small />
+                  <h4>0</h4>
                 )}
               </Content>
             </Content>

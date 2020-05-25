@@ -42,10 +42,8 @@ const EmployeeDelete = ({ employee }) => {
   return (
     <>
       <Content flex width="100%" justify="flex-end" align="center">
-        <DButton flex alert onClick={() => setIsDlt(true)}>
-          <IconWrap small mcenter title="Delete Employee Info">
-            <Delete />
-          </IconWrap>
+        <DButton flex bgalert onClick={() => setIsDlt(true)}>
+          <Delete size="22px" title="Delete Employee Info" />
           Delete
         </DButton>
         <Popup

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal } from "semantic-ui-react";
-import { DGrid, Content } from "../../styled/containers";
+import { DGrid } from "../../styled/containers";
 import { JCard4, JCard3 } from "../../styled/card";
 import parser from "html-react-parser";
 import ReadMore from "../../main/utils/ReadMore";
@@ -8,7 +8,7 @@ import ReadMore from "../../main/utils/ReadMore";
 const TeamDetails = ({ employee }) => {
   const [open, setOpen] = useState(false);
 
-  const handleModal = event => {
+  const handleModal = (event) => {
     setOpen(true);
   };
 
@@ -31,9 +31,9 @@ const TeamDetails = ({ employee }) => {
           </h3>
           <h4>{employee.role}</h4>
           <p>
-            {employee.bio.length > 50
-              ? parser(employee.bio.substr(0, 50) + "...")
-              : parser(employee.bio.substr(0, 50))}
+            {employee.bio.length > 100
+              ? parser(employee.bio.substr(0, 100) + "...")
+              : parser(employee.bio.substr(0, 100))}
           </p>
           <ReadMore hover={0}>Read More</ReadMore>
           <div className="icons">

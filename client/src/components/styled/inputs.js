@@ -2,12 +2,11 @@ import styled, { css } from "styled-components";
 
 export const RadioStyle = styled.div`
   height: ${(props) => (props.size ? props.size : "auto")};
-  width: 100%;
+  width: auto;
 
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
-
-
+  margin: 5px 0;
   .radio {
     position: absolute;
     clip: rect(0, 0, 0, 0);
@@ -49,7 +48,8 @@ export const RadioStyle = styled.div`
 
 export const RadioGroupStyle = styled.div`
   display: flex;
-  margin-bottom: 36px;
+  width: 100%;
+  flex-flow: row wrap;
   overflow: hidden;
 
   ${RadioStyle} {

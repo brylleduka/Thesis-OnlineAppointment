@@ -68,6 +68,7 @@ const MenuDots = (props) => {
             <DotsVerticalRounded title="Menu" />
           </IconWrap>
         }
+        flowing
       >
         {props.children}
       </Popup>

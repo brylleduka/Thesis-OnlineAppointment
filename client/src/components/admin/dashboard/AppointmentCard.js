@@ -58,6 +58,9 @@ const AppointmentCard = ({ history }) => {
       dw="300px"
       onClick={() => history.push("/zeadmin/appointments")}
       pointer
+      rad="0 0 10px 10px"
+      bordtop={"6px solid"}
+      bordcolor={({ theme }) => theme.bluer}
     >
       <Content
         width="100%"

@@ -359,8 +359,8 @@ export const JCard3 = styled.div`
 
 export const JCard4 = styled.figure`
   position: relative;
-  margin: 10px;
-  min-width: 230px;
+  margin: 10px auto;
+  min-width: 90%;
   max-width: 315px;
   width: 100%;
   height: ${(props) => props.height && props.height};
@@ -376,8 +376,8 @@ export const JCard4 = styled.figure`
 
   .profile-image {
     display: inline-block;
-    width: 250px;
-    height: 300px;
+    width: ${(props) => (props.imgw ? props.imgw : "80%")};
+    height: ${(props) => (props.imgh ? props.imgh : "280px")};
     z-index: 1;
     position: relative;
     margin: ${(props) => props.margin && props.margin};

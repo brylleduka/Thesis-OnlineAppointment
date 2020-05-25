@@ -14,6 +14,7 @@ import Appointments from "./admin/Appointments";
 import AppointmentDetails from "./admin/AppointmentDetails";
 import NewAppointment from "./admin/NewAppointment";
 import Employees from "./admin/Employees";
+
 import Employee from "./admin/Employee";
 import Categories from "./admin/Categories";
 import Category from "./admin/Category";
@@ -29,6 +30,7 @@ import About from "./admin/cms/About";
 import Testimonial from "./admin/cms/Testimonial";
 import Gallery from "./admin/cms/Gallery";
 import Album from "./admin/cms/Album";
+import Archive from "./admin/Archive";
 import Page404 from "../pages/Page404";
 
 const Admin = () => {
@@ -69,6 +71,7 @@ const Admin = () => {
           />
 
           <PrivateRoute exact path="/zeadmin/employees" component={Employees} />
+
           <PrivateRoute
             exact
             path="/zeadmin/employee/:_id"
@@ -93,6 +96,7 @@ const Admin = () => {
           <PrivateRoute exact path="/zeadmin/cms_about" component={About} />
           <PrivateRoute exact path="/zeadmin/cms_gallery" component={Gallery} />
           <PrivateRoute exact path="/zeadmin/album/:_id" component={Album} />
+          <PrivateRoute exact path="/zeadmin/archives" component={Archive} />
           <PrivateRoute
             exact
             path="/zeadmin/cms_testimonial"

@@ -10,7 +10,10 @@ const Team = () => {
   const [employees, setEmployees] = useState([]);
 
   const { data: dataEmployees, loading: loadingEmployees } = useQuery(
-    FETCH_EMPLOYEES_NOT_ADMIN_QUERY
+    FETCH_EMPLOYEES_NOT_ADMIN_QUERY,
+    {
+      variables: { limit: 0, active: true },
+    }
   );
 
   useEffect(() => {

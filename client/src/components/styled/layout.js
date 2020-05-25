@@ -40,6 +40,7 @@ export const SideNavLayout = styled.div`
   padding-top: 5rem;
   background: ${({ theme }) => theme.dark};
   position: fixed;
+  overflow-y: auto;
 
   .avatar {
     height: 30%;
