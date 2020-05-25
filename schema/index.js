@@ -460,7 +460,7 @@ const typeDefs = gql`
     ): Employee
 
     addEmployeePhoto(_id: ID!, file: Upload): Boolean
-    archiveEmployee(_id: ID!): Employee
+    archiveEmployee(_id: ID!, active: Boolean): Employee
     deleteEmployee(_id: ID!): Boolean #admin only
     addService(employeeId: ID!, categoryId: [ID]): Employee
     removeService(employeeId: ID!, categoryId: ID!): Employee

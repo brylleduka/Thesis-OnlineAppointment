@@ -150,7 +150,7 @@ const Employees = () => {
         <Content width="100%" margin="20px 0">
           <DataTable
             columns={columns}
-            data={employeesAR.map((aesrep) => aesrep)}
+            data={employeesAR}
             responsive
             customStyles={customStyles}
             pagination={true}

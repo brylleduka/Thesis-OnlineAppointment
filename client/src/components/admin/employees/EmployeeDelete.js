@@ -25,6 +25,7 @@ const EmployeeDelete = ({ employee }) => {
     {
       variables: {
         employeeId: employee._id,
+        active: false,
       },
 
       refetchQueries: [
@@ -175,8 +176,8 @@ const EmployeeDelete = ({ employee }) => {
 };
 
 const ARCHIVE_EMPLOYEE = gql`
-  mutation archiveEmployee($employeeId: ID!) {
-    archiveEmployee(_id: $employeeId) {
+  mutation archiveEmployee($employeeId: ID!, $active: Boolean) {
+    archiveEmployee(_id: $employeeId, active: $active) {
       _id
       empId
       title
@@ -188,6 +189,7 @@ const ARCHIVE_EMPLOYEE = gql`
       bio
       role
       level
+      active
     }
   }
 `;

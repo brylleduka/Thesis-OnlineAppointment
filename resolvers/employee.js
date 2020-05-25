@@ -435,7 +435,7 @@ module.exports = {
         throw err;
       }
     },
-    archiveEmployee: async (_, { _id }, { req }) => {
+    archiveEmployee: async (_, { _id, active }, { req }) => {
       let errors = {};
       try {
         const { role, level } = Auth({ req });
@@ -447,7 +447,7 @@ module.exports = {
 
         const archived = await Employee.findOneAndUpdate(
           { _id },
-          { $set: { active: false } },
+          { $set: { active } },
           { new: true }
         );
 

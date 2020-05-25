@@ -13,6 +13,8 @@ import { Restore } from "@styled-icons/material/Restore";
 import { Grid } from "@styled-icons/boxicons-solid/Grid";
 import useWindowSize from "../../../../util/hooks/useWindowSize";
 import ArchEmpView from "./ArchEmpView";
+import ArchEmpDelete from "./ArchEmpDelete";
+import ArchEmpRestore from "./ArchEmpRestore";
 import Page404 from "../../../../pages/Page404";
 
 const ArchEmp = () => {
@@ -117,115 +119,92 @@ const ArchEmp = () => {
     },
     {
       name: "Actions",
-      right: wid <= 1024 ? true : false,
-      grow: wid <= 1024 ? 0 : 1,
-      cell: (row) =>
-        wid <= 1024 ? (
-          <MenuDots data-eid={row._id} onMouseOver={handleMenu}>
-            <Content
-              flex
-              margin="0 auto"
-              align="center"
-              justify="center"
-              width="100%"
-              height="100%"
-              pad="3px 0"
-              data-eid={row._id}
-              onMouseOver={handleMenu}
-            >
-              <DButton flex onClick={() => setEmpView(true)}>
-                <Eye size={"18px"} title="View Details" />
-              </DButton>
+      grow: 1,
+      cell: (row) => (
+        // wid <= 1024 ? (
+        //   <MenuDots data-eid={row._id} onMouseOver={handleMenu}>
+        //     <Content
+        //       flex
+        //       margin="0 auto"
+        //       align="center"
+        //       justify="center"
+        //       width="100%"
+        //       height="100%"
+        //       pad="3px 0"
+        //       data-eid={row._id}
+        //       onMouseOver={handleMenu}
+        //     >
+        //       <DButton flex onClick={() => setEmpView(true)}>
+        //         <Eye size={"18px"} title="View Details" />
+        //       </DButton>
 
-              <DButton
-                flex
-                bgconfirm
-                onClick={() => alert("Restore: " + row._id)}
-              >
-                <Restore size={"18px"} title="Restore File" />
-              </DButton>
-              <DButton flex bgalert>
-                <DeleteForever size={"18px"} title="Delete Permanently" />
-              </DButton>
-            </Content>
-          </MenuDots>
-        ) : (
-          <Content
-            flex
-            margin="0 auto"
-            align="center"
-            justify="center"
-            width="100%"
-            height="100%"
-            pad="3px 0"
-            direct={wid <= 1024 ? "column" : "row"}
-            data-eid={row._id}
-            onMouseOver={handleMenu}
-          >
-            <DButton
-              flex
-              onClick={() => setEmpView(true)}
-              pad={wid <= 1024 && "2px 10px"}
-            >
-              <Eye size={"18px"} title="View Details" />
-            </DButton>
+        //       <DButton
+        //         flex
+        //         bgconfirm
+        //         onClick={() => alert("Restore: " + row._id)}
+        //       >
+        //         <Restore size={"18px"} title="Restore File" />
+        //       </DButton>
+        //       <DButton flex bgalert>
+        //         <DeleteForever size={"18px"} title="Delete Permanently" />
+        //       </DButton>
+        //     </Content>
+        //   </MenuDots>
+        // ) : (
+        //   <Content
+        //     flex
+        //     margin="0 auto"
+        //     align="center"
+        //     justify="center"
+        //     width="100%"
+        //     height="100%"
+        //     pad="3px 0"
+        //     direct={wid <= 1024 ? "column" : "row"}
+        //     data-eid={row._id}
+        //     onMouseOver={handleMenu}
+        //   >
+        //     <DButton
+        //       flex
+        //       onClick={() => setEmpView(true)}
+        //       pad={wid <= 1024 && "2px 10px"}
+        //     >
+        //       <Eye size={"18px"} title="View Details" />
+        //     </DButton>
 
-            <DButton
-              flex
-              bgconfirm
-              onClick={() => alert("Restore: " + row._id)}
-              pad={wid <= 1024 && "2px 10px"}
-            >
-              <Restore size={"18px"} title="Restore File" />
-            </DButton>
-            <DButton flex bgalert pad={wid <= 1024 && "2px 10px"}>
-              <DeleteForever size={"18px"} title="Delete Permanently" />
-            </DButton>
-          </Content>
-        ),
+        //     <DButton
+        //       flex
+        //       bgconfirm
+        //       onClick={() => alert("Restore: " + row._id)}
+        //       pad={wid <= 1024 && "2px 10px"}
+        //     >
+        //       <Restore size={"18px"} title="Restore File" />
+        //     </DButton>
+        //     <DButton flex bgalert pad={wid <= 1024 && "2px 10px"}>
+        //       <DeleteForever size={"18px"} title="Delete Permanently" />
+        //     </DButton>
+        //   </Content>
+        // ),
 
-      // <Content
-      //   flex
-      //   margin="0 auto"
-      //   align="center"
-      //   justify="center"
-      //   width="100%"
-      //   height="100%"
-      //   pad="3px 0"
-      //   direct={wid <= 1024 ? "column" : "row"}
-      //   data-eid={row._id}
-      //   onMouseOver={handleMenu}
-      // >
-      //   <DButton
-      //     flex
-      //     onClick={() => setEmpView(true)}
-      //     pad={wid <= 1024 && "2px 10px"}
-      //     fluid={wid <= 1024 ? true : null}
-      //   >
-      //     <Eye size={"18px"} title="View Details" />
-      //   </DButton>
+        <Content
+          flex
+          margin="0 auto"
+          align="center"
+          justify="center"
+          width="300px"
+          height="100%"
+          pad="3px 0"
+          flow="row nowrap"
+          data-eid={row._id}
+          onMouseOver={handleMenu}
+        >
+          <DButton flex onClick={() => setEmpView(true)}>
+            <Eye size={"18px"} title="View Details" />
+          </DButton>
 
-      //   <DButton
-      //     flex
-      //     bgconfirm
-      //     onClick={() => alert("Restore: " + row._id)}
-      //     pad={wid <= 1024 && "2px 10px"}
-      //     fluid={wid <= 1024 ? true : null}
-      //   >
-      //     <Restore size={"18px"} title="Restore File" />
-      //   </DButton>
-      //   <DButton
-      //     flex
-      //     bgalert
-      //     pad={wid <= 1024 && "2px 10px"}
-      //     fluid={wid <= 1024 ? true : null}
-      //   >
-      //     <DeleteForever
-      //       size={ "18px"}
-      //       title="Delete Permanently"
-      //     />
-      //   </DButton>
-      // </Content>
+          <ArchEmpRestore empId={empValue} />
+          <ArchEmpDelete empId={empValue} />
+        </Content>
+      ),
     },
   ];
 
@@ -234,7 +213,7 @@ const ArchEmp = () => {
       {archEmpErr ? <Page404 /> : null}
       <DataTable
         columns={columns}
-        data={archEmp.map((emp) => emp)}
+        data={archEmp}
         responsive
         customStyles={customStyles}
         pagination={true}
