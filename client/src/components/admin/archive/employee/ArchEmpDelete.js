@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import gql from "graphql-tag";
+import { useMutation } from "@apollo/react-hooks";
+import { FETCH_EMPLOYEES_NOT_ADMIN_QUERY } from "../../../../util/graphql/employee";
+
 import { Popup } from "semantic-ui-react";
 import { DButton, IconWrap, DLabel } from "../../../styled/utils";
 import { DGrid, Content } from "../../../styled/containers";
@@ -6,18 +10,53 @@ import { DeleteForever } from "@styled-icons/material";
 
 import { Check } from "@styled-icons/entypo";
 import { Cancel } from "@styled-icons/typicons";
+import toaster from "toasted-notes";
+import Toasted from "../../../Toasted";
+import Spinner from "../../../Spinner";
 
 const ArchEmpDelete = ({ empId }) => {
   const [popDelete, setPopDelete] = useState(false);
 
-  const handleDeleteConfirm = () => {
+  const [deleteEmployee, { loading: loadResult }] = useMutation(
+    DELETE_EMP_PERM,
+    {
+      variables: {
+        empId,
+      },
+      refetchQueries: [
+        {
+          query: FETCH_EMPLOYEES_NOT_ADMIN_QUERY,
+          variables: { limit: 0, active: false },
+        },
+      ],
+      onCompleted(res) {
+        setPopDelete(false);
+        toaster.notify(
+          ({ onClose }) => (
+            <Toasted success onClick={onClose}>
+              Successfully Deleted
+            </Toasted>
+          ),
+          { position: "bottom-right" }
+        );
+      },
+    }
+  );
+
+  const handleDeleteNotif = () => {
     setPopDelete(true);
   };
+
+  const handleDeleteConfirm = (e) => {
+    e.preventDefault();
+    deleteEmployee();
+  };
+
   return (
     <Popup
       open={popDelete}
       trigger={
-        <DButton bgalert flex onClick={handleDeleteConfirm}>
+        <DButton bgalert flex onClick={handleDeleteNotif}>
           <DeleteForever size="22px" />
         </DButton>
       }
@@ -41,10 +80,16 @@ const ArchEmpDelete = ({ empId }) => {
               size="22px"
               color="green"
               margin="0 auto"
-              onClick={() => alert(empId)}
+              onClick={handleDeleteConfirm}
             >
-              <Check title="Confirm deleting permanently" />
-              Confirm
+              {loadResult ? (
+                <Spinner small row content="Deleting..." />
+              ) : (
+                <>
+                  <Check title="Confirm deleting permanently" />
+                  Confirm
+                </>
+              )}
             </IconWrap>
 
             <IconWrap
@@ -62,5 +107,11 @@ const ArchEmpDelete = ({ empId }) => {
     </Popup>
   );
 };
+
+const DELETE_EMP_PERM = gql`
+  mutation deleteEmployee($empId: ID!) {
+    deleteEmployee(_id: $empId)
+  }
+`;
 
 export default ArchEmpDelete;

@@ -1,5 +1,6 @@
 import React from "react";
 import ArchEmp from "./employee/ArchEmp";
+import ArchServ from "./service/ArchServ";
 
 const Archiving = ({ isArchive }) => {
   switch (isArchive) {
@@ -7,7 +8,7 @@ const Archiving = ({ isArchive }) => {
       return <ArchEmp />;
 
     case "arch-serv":
-      return <h1>Serv</h1>;
+      return <ArchServ />;
 
     case "arch-review":
       return <h1>Review</h1>;

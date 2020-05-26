@@ -59,7 +59,7 @@ const PersonalAccount = (props) => {
               fetchEmployee={FETCH_EMPLOYEE_QUERY}
             />
             <AccountInfo
-              employee={empPersonal || empData.employee}
+              employee={empData.employee || empPersonal}
               fetchEmployee={FETCH_EMPLOYEE_QUERY}
               isAccount={isAccount}
             />

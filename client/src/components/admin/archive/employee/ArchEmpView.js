@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useQuery } from "@apollo/react-hooks";
-import { FETCH_EMPLOYEE_QUERY } from "../../../../util/graphql/employee";
+import gql from "graphql-tag";
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import {
+  FETCH_EMPLOYEE_QUERY,
+  FETCH_EMPLOYEES_NOT_ADMIN_QUERY,
+} from "../../../../util/graphql/employee";
 import { DButton, IconWrap } from "../../../styled/utils";
 import { DGrid, Content } from "../../../styled/containers";
 import { JCard4, JCard3 } from "../../../styled/card";
@@ -11,6 +15,10 @@ import { Check } from "@styled-icons/entypo";
 import { Cancel } from "@styled-icons/typicons";
 import parser from "html-react-parser";
 import useWindowSize from "../../../../util/hooks/useWindowSize";
+
+import toaster from "toasted-notes";
+import Toasted from "../../../Toasted";
+import Spinner from "../../../Spinner";
 
 const ArchEmpView = ({ empId, empView, setEmpView }) => {
   const { width: wid } = useWindowSize();
@@ -25,8 +33,76 @@ const ArchEmpView = ({ empId, empView, setEmpView }) => {
     if (empData) setEmp(empData.employee);
   }, [empData]);
 
+  // DELETE
+  const [deleteEmployee, { loading: loadResult }] = useMutation(
+    DELETE_EMP_PERM,
+    {
+      variables: {
+        empId,
+      },
+      refetchQueries: [
+        {
+          query: FETCH_EMPLOYEES_NOT_ADMIN_QUERY,
+          variables: { limit: 0, active: false },
+        },
+      ],
+      onCompleted(res) {
+        setEmpView(false);
+        toaster.notify(
+          ({ onClose }) => (
+            <Toasted success onClick={onClose}>
+              Successfully Deleted
+            </Toasted>
+          ),
+          { position: "bottom-right" }
+        );
+      },
+    }
+  );
+  // END DELETE
+
+  // RESTORE
+  const [archiveEmployee, { loading: loadArchived }] = useMutation(
+    RESTORE_EMPLOYEE,
+    {
+      variables: {
+        employeeId: empId,
+        active: true,
+      },
+
+      refetchQueries: [
+        {
+          query: FETCH_EMPLOYEES_NOT_ADMIN_QUERY,
+          variables: { active: false, limit: 0 },
+        },
+      ],
+      onCompleted() {
+        setEmpView(false);
+        toaster.notify(
+          ({ onClose }) => (
+            <Toasted success onClick={onClose}>
+              Successfully Restored
+            </Toasted>
+          ),
+          { position: "bottom-right" }
+        );
+      },
+    }
+  );
+  // END RESTORE
+
   const handleWarning = () => {
     setPopWarning(!popWarning);
+  };
+
+  const handleDeleteConfirm = (e) => {
+    e.preventDefault();
+    deleteEmployee();
+  };
+
+  const confirmRestore = (e) => {
+    e.preventDefault();
+    archiveEmployee();
   };
 
   return (
@@ -95,9 +171,20 @@ const ArchEmpView = ({ empId, empView, setEmpView }) => {
                 flowing
               >
                 <DGrid two gap="5px">
-                  <IconWrap size="22px" color="green" margin="0 auto">
-                    <Check title="Confirm deleting permanently" />
-                    Confirm
+                  <IconWrap
+                    size="22px"
+                    color="green"
+                    margin="0 auto"
+                    onClick={handleDeleteConfirm}
+                  >
+                    {loadResult ? (
+                      <Spinner small row content="Deleting..." />
+                    ) : (
+                      <>
+                        <Check title="Confirm deleting permanently" />
+                        Confirm
+                      </>
+                    )}
                   </IconWrap>
 
                   <IconWrap
@@ -142,9 +229,15 @@ const ArchEmpView = ({ empId, empView, setEmpView }) => {
               justify="flex-end"
               align="center"
             >
-              <DButton bgconfirm>
-                <Restore size="22px" />
-                Restore
+              <DButton bgconfirm onClick={confirmRestore}>
+                {loadArchived ? (
+                  <Spinner row small content="Restoring..." />
+                ) : (
+                  <>
+                    <Restore size="22px" />
+                    Restore
+                  </>
+                )}
               </DButton>
             </Content>
           </Content>
@@ -153,5 +246,30 @@ const ArchEmpView = ({ empId, empView, setEmpView }) => {
     </>
   );
 };
+
+const DELETE_EMP_PERM = gql`
+  mutation deleteEmployee($empId: ID!) {
+    deleteEmployee(_id: $empId)
+  }
+`;
+
+const RESTORE_EMPLOYEE = gql`
+  mutation archiveEmployee($employeeId: ID!, $active: Boolean) {
+    archiveEmployee(_id: $employeeId, active: $active) {
+      _id
+      empId
+      title
+      firstName
+      lastName
+      contact
+      email
+      photo
+      bio
+      role
+      level
+      active
+    }
+  }
+`;
 
 export default ArchEmpView;

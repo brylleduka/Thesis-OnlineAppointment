@@ -152,6 +152,7 @@ module.exports = {
           bio: "",
           role,
           level,
+          active: true,
           password: hashedPassword,
           schedule: newSchedule,
         });

@@ -7,12 +7,15 @@ import { Modal, Form } from "semantic-ui-react";
 import { DButton } from "../../styled/utils";
 import { DGrid, Content } from "../../styled/containers";
 import CheckboxGroup from "react-checkbox-group";
+import Spinner from "../../Spinner";
+import Toasted from "../../Toasted";
+import toaster from "toasted-notes";
 
 const NewEmployee = ({ setOpen, open }) => {
   const [errors, setErrors] = useState({});
   const [days, setDays] = useState([]);
 
-  const { values, handleChange, handleSubmit } = useForm(
+  const { values, setValues, handleChange, handleSubmit } = useForm(
     createEmployeeCallback,
     {
       title: "",
@@ -73,6 +76,30 @@ const NewEmployee = ({ setOpen, open }) => {
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
+    onCompleted(res) {
+      setOpen(false);
+      setValues({
+        title: "",
+        firstName: "",
+        lastName: "",
+        contact: "",
+        email: "",
+        role: "",
+        workStart: "",
+        workLength: "",
+        breakStart: "",
+        breakLength: "",
+      });
+      setDays([]);
+      toaster.notify(
+        ({ onClose }) => (
+          <Toasted success onClick={onClose}>
+            New Employee Added
+          </Toasted>
+        ),
+        { position: "bottom-right" }
+      );
+    },
   });
 
   // const handleDayChange = (val) => {
@@ -87,7 +114,7 @@ const NewEmployee = ({ setOpen, open }) => {
 
   return (
     <Modal size={"large"} open={open} onClose={() => setOpen(false)}>
-      <Modal.Header>Create new Category</Modal.Header>
+      <Modal.Header>Add New Employee</Modal.Header>
       <Modal.Content>
         <Form noValidate>
           <DGrid two gap="10px">
@@ -312,10 +339,10 @@ const NewEmployee = ({ setOpen, open }) => {
       </Modal.Content>
       <Modal.Actions>
         <DButton alert onClick={() => setOpen(false)}>
-          No
+          Cancel
         </DButton>
         <DButton confirm type="submit" onClick={handleSubmit}>
-          Yes
+          {loading ? <Spinner small row content="Loading..." /> : "Add"}
         </DButton>
       </Modal.Actions>
     </Modal>

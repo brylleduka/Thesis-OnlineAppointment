@@ -26,10 +26,10 @@ const AccountSched = ({ employee }) => {
   const [days, setDays] = useState(employee.schedule.day);
   const [isEditSched, setIsEditSched] = useState(false);
   const [schedValues, setSchedValues] = useState({
-    workStart:  employee.schedule.workStart,
-    workLength:  employee.schedule.workLength / 60,
-    breakStart:  employee.schedule.breakStart,
-    breakLength:  employee.schedule.breakLength / 60,
+    workStart: employee.schedule.workStart,
+    workLength: employee.schedule.workLength / 60,
+    breakStart: employee.schedule.breakStart,
+    breakLength: employee.schedule.breakLength / 60,
   });
 
   const [updateSchedule, { loading: loadSchedule }] = useMutation(
