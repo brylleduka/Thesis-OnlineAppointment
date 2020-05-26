@@ -141,12 +141,7 @@ const columns = [
     selector: "service",
     wrap: true,
     sortable: true,
-    cell: (row) =>
-      row.service !== null || row.service !== undefined ? (
-        <span>{row.service.name}</span>
-      ) : (
-        "NF"
-      ),
+    cell: (row) => (row.service ? row.service.name : "NF"),
   },
   {
     name: "Date",
@@ -178,7 +173,7 @@ const columns = [
     name: "Actions",
 
     cell: (row) => (
-      <DButton flex as={Link} to={`/zeadmin/appointment/${row._id}`}>
+      <DButton as={Link} to={`/zeadmin/appointment/${row._id}`}>
         <Icon name="eye" fitted />
       </DButton>
     ),
