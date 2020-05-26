@@ -19,13 +19,10 @@ const HistoryAppointments = ({ historyAppointments, loading }) => {
   const filteredItems = historyAppointments.filter(
     (item) =>
       item &&
-      item.service &&
-      item.employee &&
-      item.user &&
       (item.status.includes(filterText.toUpperCase()) ||
-        item.service.name.includes(filterText) ||
-        item.employee.lastName.includes(filterText) ||
-        item.user.lastName.includes(filterText) ||
+        (item.service && item.service.name.includes(filterText)) ||
+        (item.employee && item.employee.lastName.includes(filterText)) ||
+        (item.user && item.user.lastName.includes(filterText)) ||
         moment(parseInt(item.date)).format("LL").includes(filterText) ||
         (
           item.status.toUpperCase() +
@@ -121,7 +118,8 @@ const columns = [
     selector: "user",
     wrap: true,
     sortable: true,
-    format: (row) => `${row.user.firstName} ${row.user.lastName}`,
+    format: (row) =>
+      `${row.user && row.user.firstName} ${row.user && row.user.lastName}`,
     omit: true,
   },
   {
@@ -129,14 +127,26 @@ const columns = [
     selector: "employee",
     wrap: true,
     sortable: true,
-    format: (row) => `${row.employee.firstName} ${row.employee.lastName}`,
+    cell: (row) =>
+      row.employee !== null ? (
+        <span>
+          {row.employee.firstName} {row.employee.lastName}
+        </span>
+      ) : (
+        "NF"
+      ),
   },
   {
     name: "Service",
     selector: "service",
     wrap: true,
     sortable: true,
-    format: (row) => `${row.service.name}`,
+    cell: (row) =>
+      row.service !== null || row.service !== undefined ? (
+        <span>{row.service.name}</span>
+      ) : (
+        "NF"
+      ),
   },
   {
     name: "Date",

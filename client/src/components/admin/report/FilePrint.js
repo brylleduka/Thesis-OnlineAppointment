@@ -322,38 +322,50 @@ const FilePrint = ({ filteredItems, isPrintOpen, setIsPrintOpen }) => {
 
 const columnsPrint = [
   {
-    cell: () => <Grid size="16px" color="green" />,
-    width: "36px",
+    cell: () => <Grid size="22px" color="green" />,
+    width: "56px",
+    style: {
+      borderBottom: "1px solid #fff",
+      marginBottom: "-1px",
+    },
+  },
+  {
+    name: "ID",
+    selector: "_id",
+    wrap: true,
+    omit: true,
   },
   {
     name: "Client",
     selector: "user",
-    sortable: true,
     wrap: true,
-    flow: 1,
-    format: (row) => `${row.user.firstName} ${row.user.lastName}`,
+    sortable: true,
+    format: (row) =>
+      `${row.user && row.user.firstName} ${row.user && row.user.lastName}`,
+    omit: true,
   },
   {
     name: "Aesthetician",
     selector: "employee",
     wrap: true,
-    flow: 1,
     sortable: true,
-    format: (row) => `${row.employee.firstName} ${row.employee.lastName}`,
+    format: (row) =>
+      `${row.employee && row.employee.firstName} ${
+        row.employee && row.employee.lastName
+      }`,
   },
   {
     name: "Service",
     selector: "service",
     wrap: true,
     sortable: true,
-    format: (row) => `${row.service.name}`,
+    format: (row) => `${row.service && row.service.name}`,
   },
   {
     name: "Date",
     selector: "date",
     wrap: true,
     sortable: true,
-    width: "120px",
     format: (row) => `${moment(parseInt(row.date)).format("LL")}`,
   },
   {
@@ -361,36 +373,21 @@ const columnsPrint = [
     selector: "status",
     wrap: true,
     sortable: true,
-    right: true,
-    conditionalCellStyles: [
-      {
-        when: (row) => row.status === "CANCELLED",
-        style: {
-          backgroundColor: "rgba(241, 39, 17, 0.7)",
-          fontWeight: "700",
-          fontSize: "9px",
-        },
-      },
-      {
-        when: (row) => row.status === "DONE",
-        style: {
-          backgroundColor: "rgba(33, 147, 176, 0.7)",
-          fontWeight: "700",
-          fontSize: "9px",
-        },
-      },
-      {
-        when: (row) => row.status === "RESCHEDULED",
-        style: {
-          backgroundColor: "#6dd5ed",
-          fontWeight: "700",
-          fontSize: "9px",
-        },
-      },
-    ],
+    cell: (row) => (
+      <span
+        style={
+          row.status === "CANCELLED"
+            ? { fontSize: 14, fontWeight: 500, color: "firebrick" }
+            : row.status === "DONE"
+            ? { fontSize: 14, fontWeight: 500, color: "blue" }
+            : { fontSize: 14, fontWeight: 500, color: "blue" }
+        }
+      >
+        {row.status}
+      </span>
+    ),
   },
 ];
-
 const customStyles = {
   rows: {
     style: {

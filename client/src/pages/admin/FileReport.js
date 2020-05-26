@@ -8,7 +8,7 @@ import Layout from "../../components/admin/layout/Layout";
 import HistoryAppointments from "../../components/admin/appointment/HistoryAppointments";
 import NewModal from "../../components/admin/appointment/NewModal";
 import { NoPrint } from "react-easy-print";
-import Page404 from "../Page404"
+import Page404 from "../Page404";
 
 const FileReport = () => {
   const [historyAppointments, setHistoryAppointments] = useState([]);
@@ -23,7 +23,7 @@ const FileReport = () => {
     }
   }, [historyAppointmentData]);
 
-  if(error) return Page404
+  if (error) return Page404;
 
   return (
     <Layout>
