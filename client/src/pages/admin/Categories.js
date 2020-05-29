@@ -65,7 +65,7 @@ const Categories = () => {
           height="5em"
         >
           <Breadcrumb size="big">
-            <Breadcrumb.Section content>File Maintenance</Breadcrumb.Section>
+            <Breadcrumb.Section>File Maintenance</Breadcrumb.Section>
             <Breadcrumb.Divider icon="right chevron" />
             <Breadcrumb.Section active>Service Category</Breadcrumb.Section>
           </Breadcrumb>

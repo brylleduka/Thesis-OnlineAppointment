@@ -1,7 +1,24 @@
 import React from "react";
+import { DSection } from "../../../styled/containers";
 
-const ArchServCateg = () => {
-  return <div>Table for Services</div>;
+import ArchServCateg from "./ArchServCateg";
+import ArchServSub from "./ArchServSub";
+
+const ArchServ = () => {
+  return (
+    <DSection
+      width="100%"
+      height="100%"
+      mcenter
+      flex
+      justify="center"
+      align="center"
+      direct="column"
+    >
+      <ArchServCateg />
+      <ArchServSub />
+    </DSection>
+  );
 };
 
-export default ArchServCateg;
+export default ArchServ;

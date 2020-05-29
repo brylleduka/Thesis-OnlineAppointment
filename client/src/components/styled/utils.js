@@ -61,13 +61,13 @@ const getTxtColor = (props) => {
 };
 
 const getNotifColor = (props) => {
-  if (props.primary) return colors.primary;
+  if (props.info) return colors.primary;
   if (props.secondary) return colors.secondary;
   if (props.dark) return colors.dark;
   if (props.grey) return colors.grey;
   if (props.light) return colors.light;
   if (props.bluer || props.default) return colors.bluer;
-  if (props.blue) return colors.blue;
+  if (props.primary) return colors.blue;
   if (props.alert) return colors.red;
   if (props.confirm) return colors.green;
   if (props.warning) return colors.yellow;
@@ -88,6 +88,23 @@ const getBGColor = (props) => {
   if (props.bgalert) return colors.red;
   if (props.bgconfirm) return colors.green;
   if (props.bgwarning) return colors.yellow;
+  if (props.basic) return "transparent";
+  if (props.disabled) return "#e9e4f0";
+
+  return "transparent";
+};
+
+const getBtnColor = (props) => {
+  if (props.info) return colors.primary;
+  if (props.secondary) return colors.secondary;
+  if (props.dark) return colors.dark;
+  if (props.grey) return colors.grey;
+  if (props.light) return colors.light;
+  if (props.bluer || props.default) return colors.bluer;
+  if (props.primary) return colors.blue;
+  if (props.alert) return colors.red;
+  if (props.confirm) return colors.green;
+  if (props.warning) return colors.yellow;
   if (props.basic) return "transparent";
   if (props.disabled) return "#e9e4f0";
 
@@ -124,22 +141,11 @@ export const DButton = styled.button`
     props.radius ? props.radius : props.circle ? "50%" : "5px"};
   border-width: ${(props) => (props.basic ? "1px" : "0")};
   border-style: ${(props) => props.basic && "solid"};
-  border-color: ${(props) => getNotifColor(props)};
+  border-color: ${(props) => getBtnColor(props)};
       
-  color: ${(props) =>
-    props.red
-      ? colors.red
-      : props.yellow
-      ? colors.yellow
-      : props.green
-      ? colors.green
-      : props.primary
-      ? colors.primary
-      : props.bluer
-      ? colors.bluer
-      : colors.light};
+  color:  ${(props) => getTxtColor(props)};
 
-  background: ${(props) => getBGColor(props)};
+  background: ${(props) => getBtnColor(props)};
 
   ${(props) =>
     props.disabled &&
@@ -234,7 +240,8 @@ export const DLabel = styled.label`
   font-weight: ${(props) => (props.weight ? props.weight : 500)};
   padding: ${(props) => (props.pad ? props.pad : "5px 10px")};
   margin: ${(props) => (props.m ? props.m : "2%")};
-  background: ${(props) => (props.bgcolor ? props.bgcolor : "transparent")};
+  background: ${(props) => getBGColor(props)};
+  color: ${(props) => getTxtColor(props)};
   border-radius: ${(props) => props.rounded && "5px"};
   text-align: ${(props) => (props.textalign ? props.textalign : "left")};
   text-transform: ${(props) => props.tt && props.tt};
@@ -265,25 +272,6 @@ export const DLabel = styled.label`
 
   &:hover {
   }
-
-  ${(props) =>
-    props.color &&
-    css`
-      color: ${
-        props.color === "grey" || props.color === "primary"
-          ? colors.dark
-          : colors.light
-      };
-      font-weight: 700;
-      background-color: ${(props) => getBgColor(props)}};
-    `};
-
-  ${(props) =>
-    props.txtColor &&
-    css`
-      font-weight: 700;
-      color: ${(props) => getTxtColor(props)};
-    `};
 
   ${(props) =>
     props.hover &&

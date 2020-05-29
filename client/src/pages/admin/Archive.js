@@ -12,8 +12,6 @@ const Archive = () => {
       ? "arch-emp"
       : stored === "arch-serv"
       ? "arch-serv"
-      : stored === "arch-review"
-      ? "arch-review"
       : "arch-emp"
   );
 
@@ -76,14 +74,6 @@ const Archive = () => {
               name="archive"
               value="arch-serv"
               id="service"
-              onChange={handleRadio}
-            />
-            <DRadio.RadioInput
-              checked={isArchive === "arch-review" ? true : false}
-              label="Testimonials"
-              name="archive"
-              value="arch-review"
-              id="review"
               onChange={handleRadio}
             />
           </DRadio.RadioGroup>

@@ -44,7 +44,7 @@ const ArchEmpRestore = ({ empId }) => {
     <Popup
       open={popRestore}
       trigger={
-        <DButton flex bgconfirm flex onClick={handleRestoreConfirm}>
+        <DButton flex confirm flex onClick={handleRestoreConfirm}>
           <Restore size="22px" />
         </DButton>
       }

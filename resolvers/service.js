@@ -15,9 +15,9 @@ module.exports = {
     },
     allServices: async (_, { active }) => {
       try {
-        const services = await Service.find({ active });
+        const allservices = await Service.find({ active });
 
-        return services;
+        return allservices;
       } catch (err) {
         throw err;
       }

@@ -56,7 +56,7 @@ const ArchEmpDelete = ({ empId }) => {
     <Popup
       open={popDelete}
       trigger={
-        <DButton bgalert flex onClick={handleDeleteNotif}>
+        <DButton alert flex onClick={handleDeleteNotif}>
           <DeleteForever size="22px" />
         </DButton>
       }

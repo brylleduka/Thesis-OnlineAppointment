@@ -162,7 +162,7 @@ const ArchEmpView = ({ empId, empView, setEmpView }) => {
               <Popup
                 open={popWarning}
                 trigger={
-                  <DButton bgalert flex onClick={handleWarning}>
+                  <DButton alert flex onClick={handleWarning}>
                     <DeleteForever size="22px" />
                     Delete Permanently
                   </DButton>
@@ -229,7 +229,7 @@ const ArchEmpView = ({ empId, empView, setEmpView }) => {
               justify="flex-end"
               align="center"
             >
-              <DButton bgconfirm onClick={confirmRestore}>
+              <DButton confirm onClick={confirmRestore}>
                 {loadArchived ? (
                   <Spinner row small content="Restoring..." />
                 ) : (

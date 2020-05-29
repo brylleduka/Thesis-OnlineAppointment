@@ -9,7 +9,8 @@ const DTextAreaStyled = styled.div`
   width: 100%;
   margin: 0 auto;
   position: relative;
-  overflow: visible;
+  overflow-x: hidden;
+  overflow-y: auto;
   ${(props) =>
     props.border &&
     css`
