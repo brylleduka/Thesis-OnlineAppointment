@@ -474,7 +474,7 @@ const typeDefs = gql`
       photo: String
     ): Category
     addCategoryPhoto(_id: ID!, file: Upload): Boolean
-    archivedCategory(_id: ID!): Boolean
+    archivedCategory(_id: ID!, active: Boolean): Category
     deleteCategory(_id: ID!): String
 
     #Service

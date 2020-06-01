@@ -89,15 +89,15 @@ module.exports = {
         throw err;
       }
     },
-    archivedCategory: async (_, { _id }) => {
+    archivedCategory: async (_, { _id, active }) => {
       try {
         const archivedService = await Category.findOneAndUpdate(
           { _id },
-          { $set: { active: false } },
+          { $set: { active } },
           { new: true }
         );
 
-        return true;
+        return archivedService;
       } catch (err) {
         throw err;
       }

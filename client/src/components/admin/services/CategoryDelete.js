@@ -12,16 +12,33 @@ import { Cancel } from "@styled-icons/typicons";
 import { Warning } from "@styled-icons/material-rounded";
 
 const CategoryDelete = ({ setOpen, open, historyCallback, category }) => {
+  // Archive category file
   const [archivedCategory] = useMutation(ARCHIVE_CATEGORY, {
-    variables: { categoryId: category._id },
-    refetchQueries: [
-      { query: FETCH_ALL_CATEGORIES_QUERY, variables: { active: true } },
-    ],
+    variables: { categoryId: category._id, active: false },
+    // refetchQueries: [
+    //   { query: FETCH_ALL_CATEGORIES_QUERY, variables: { active: true } },
+    // ],
+    update(cache) {
+      const data = cache.readQuery({
+        query: FETCH_ALL_CATEGORIES_QUERY,
+        variables: { active: true },
+      });
+
+      data.categories = data.categories.filter(
+        (categ) => categ._id !== category._id
+      );
+
+      cache.writeQuery({
+        query: FETCH_ALL_CATEGORIES_QUERY,
+        variables: { active: true },
+        data: { categories: [...data.categories] },
+      });
+    },
     onCompleted() {
       historyCallback();
     },
   });
-
+  // Delete Permanently
   const [deleteCategory] = useMutation(DELETE_CATEGORY_MUTATION, {
     update(cache) {
       const data = cache.readQuery({
@@ -152,8 +169,13 @@ const CategoryDelete = ({ setOpen, open, historyCallback, category }) => {
 };
 
 const ARCHIVE_CATEGORY = gql`
-  mutation archivedCategory($categoryId: ID!) {
-    archivedCategory(_id: $categoryId)
+  mutation archivedCategory($categoryId: ID!, $active: Boolean) {
+    archivedCategory(_id: $categoryId, active: $active) {
+      _id
+      name
+      description
+      photo
+    }
   }
 `;
 

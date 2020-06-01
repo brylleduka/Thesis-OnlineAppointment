@@ -84,53 +84,56 @@ const Categories = () => {
             <Spinner content="Please wait while we fetch your data" />
           ) : (
             <DGrid three gap="15px" margin="40px 0">
-              {categories.map((category) => (
-                <DCard
-                  key={category._id}
-                  dw={wid < 524 ? "70%" : "90%"}
-                  dh="250px"
-                  mcenter
-                  p="0px"
-                  grayzoom
-                  overlaying
-                >
-                  <DImage height="100%" width="100%" grayscaling>
-                    <img
-                      src={
-                        category.photo
-                          ? `/images/service/${category.photo}`
-                          : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                      }
-                      alt={category.name}
-                    />
-                  </DImage>
-
-                  <Overlay
-                    bgc
-                    width="100%"
-                    height="100%"
-                    flex
-                    justify="center"
-                    align="center"
-                    initbox
+              {data &&
+                data.categories.map((category) => (
+                  <DCard
+                    key={category._id}
+                    dw={wid < 524 ? "70%" : "90%"}
+                    dh="250px"
+                    mcenter
+                    p="0px"
+                    grayzoom
+                    overlaying
                   >
-                    <div className="overlay-box">
-                      <div className="overlay-box__content dark">
-                        <h3 className="title">{category.name}</h3>
+                    <DImage height="100%" width="100%" grayscaling>
+                      <img
+                        src={
+                          category.photo
+                            ? `/images/service/${category.photo}`
+                            : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                        }
+                        alt={category.name}
+                      />
+                    </DImage>
 
-                        {category.description.length > 100
-                          ? parser(category.description.substr(0, 100) + "...")
-                          : parser(category.description.substr(0, 100))}
+                    <Overlay
+                      bgc
+                      width="100%"
+                      height="100%"
+                      flex
+                      justify="center"
+                      align="center"
+                      initbox
+                    >
+                      <div className="overlay-box">
+                        <div className="overlay-box__content dark">
+                          <h3 className="title">{category.name}</h3>
 
-                        <ReadMore center size="14px">
-                          Learn More
-                        </ReadMore>
+                          {category.description.length > 100
+                            ? parser(
+                                category.description.substr(0, 100) + "..."
+                              )
+                            : parser(category.description.substr(0, 100))}
+
+                          <ReadMore center size="14px">
+                            Learn More
+                          </ReadMore>
+                        </div>
                       </div>
-                    </div>
-                  </Overlay>
-                  <Link to={`/zeadmin/category/${category._id}`} />
-                </DCard>
-              ))}
+                    </Overlay>
+                    <Link to={`/zeadmin/category/${category._id}`} />
+                  </DCard>
+                ))}
             </DGrid>
           )}
         </Content>
