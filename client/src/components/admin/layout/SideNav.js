@@ -15,6 +15,7 @@ import {
   AccountBox,
   AccountCircle,
   Dashboard,
+  Close,
 } from "@styled-icons/material";
 import { FileDirectory } from "@styled-icons/octicons";
 import { Profile } from "@styled-icons/icomoon/Profile";
@@ -26,9 +27,16 @@ import { NavItem } from "../../styled/utils";
 import Accordion from "../../Accordion";
 import { IconWrap } from "../../styled/utils";
 
-const SideNav = () => {
+const SideNav = ({ isOpenMenu, handleOpenMenu }) => {
   return (
-    <SideNavLayout>
+    <SideNavLayout openMenu={isOpenMenu ? true : null}>
+      <Close
+        size="36px"
+        className="menu-close"
+        onClick={handleOpenMenu}
+        title="Close Menu"
+      />
+
       <NavItem>
         <NavLink to="/zeadmin/dashboard">
           <Dashboard size="16px" />

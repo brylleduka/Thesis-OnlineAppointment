@@ -4,12 +4,13 @@ import { FETCH_EMPLOYEE_QUERY } from "../../../util/graphql/employee";
 import { HeaderLayout } from "../../styled/layout";
 import { Link } from "react-router-dom";
 import { DImage, Overlay, DCard } from "../../styled/containers";
+import { MenuAltLeft } from "@styled-icons/boxicons-regular";
 
 import { AuthContext } from "../../../context/auth";
 import { Dropdown, Icon } from "semantic-ui-react";
 import Spinner from "../../Spinner";
 
-const Header = () => {
+const Header = ({ handleOpenMenu }) => {
   const { employeeLogout, employeeAuth } = useContext(AuthContext);
   const empId = employeeAuth._id || employeeAuth.id;
   const [empLog, setEmpLog] = useState({});
@@ -31,6 +32,14 @@ const Header = () => {
 
   return (
     <HeaderLayout>
+      <div className="burger-menu">
+        <MenuAltLeft
+          size="36px"
+          color={({ theme }) => theme.light}
+          className="burger-icon"
+          onClick={handleOpenMenu}
+        />
+      </div>
       {loadEmpLog ? (
         <Spinner small />
       ) : (

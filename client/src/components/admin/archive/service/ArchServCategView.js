@@ -80,6 +80,7 @@ const ArchServCategView = ({ categoryId, categoryView, setCategoryView }) => {
           variables: { active: false },
         },
       ],
+
       onCompleted() {
         setCategoryView(false);
         toaster.notify(
