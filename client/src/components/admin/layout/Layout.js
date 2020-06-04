@@ -14,14 +14,9 @@ const Layout = (props) => {
   };
   return (
     <LayoutContainer>
+      <Header handleOpenMenu={handleOpenMenu} />
       <SideNav isOpenMenu={isOpenMenu} handleOpenMenu={handleOpenMenu} />
-
-      <MainLayout>
-        <div className="lay_header">
-          <Header handleOpenMenu={handleOpenMenu} />
-        </div>
-        <main style={{ width: "100%", height: "100%" }}>{props.children}</main>
-      </MainLayout>
+      <MainLayout>{props.children}</MainLayout>
     </LayoutContainer>
   );
 };

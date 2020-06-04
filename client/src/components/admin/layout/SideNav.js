@@ -33,6 +33,7 @@ const SideNav = ({ isOpenMenu, handleOpenMenu }) => {
       <Close
         size="36px"
         className="menu-close"
+      
         onClick={handleOpenMenu}
         title="Close Menu"
       />
