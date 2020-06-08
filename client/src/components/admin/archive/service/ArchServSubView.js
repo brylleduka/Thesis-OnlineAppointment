@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import gql from "graphql-tag";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import {
-  FETCH_CATEGORY_QUERY,
-  FETCH_ALL_CATEGORIES_QUERY,
+  FETCH_SINGLE_SERVICE_QUERY,
+  FETCH_ALL_SERVICES_QUERY,
 } from "../../../../util/graphql/service";
 import { DButton, IconWrap } from "../../../styled/utils";
 import { DGrid, Content } from "../../../styled/containers";
@@ -20,38 +20,38 @@ import toaster from "toasted-notes";
 import Toasted from "../../../Toasted";
 import Spinner from "../../../Spinner";
 
-const ArchServCategView = ({ categoryId, categoryView, setCategoryView }) => {
+const ArchServSubView = ({ serviceId, serviceView, setServiceView }) => {
   const { width: wid } = useWindowSize();
-  const [categ, setCateg] = useState({});
-  const [popWarnCateg, setPopWarnCateg] = useState(false);
+  const [serv, setServ] = useState({});
+  const [popWarnServ, setPopWarnServ] = useState(false);
 
   // QUERY CATEGORY
-  const { data: categoryData, loading: categoryLoad } = useQuery(
-    FETCH_CATEGORY_QUERY,
+  const { data: serviceData, loading: serviceLoad } = useQuery(
+    FETCH_SINGLE_SERVICE_QUERY,
     {
-      variables: { categoryId },
+      variables: { serviceId },
     }
   );
 
   useEffect(() => {
-    if (categoryData) setCateg(categoryData.category);
-  }, [categoryData]);
+    if (serviceData) setServ(serviceData.service);
+  }, [serviceData]);
 
   // DELETE CATEGORY
-  const [deleteCategory, { loading: loadResult }] = useMutation(
-    DELETE_CATEG_PERM,
+  const [deleteService, { loading: loadServiceResult }] = useMutation(
+    DELETE_SERVICE_PERM,
     {
       variables: {
-        categoryId,
+        serviceId,
       },
       refetchQueries: [
         {
-          query: FETCH_ALL_CATEGORIES_QUERY,
+          query: FETCH_ALL_SERVICES_QUERY,
           variables: { active: false },
         },
       ],
       onCompleted() {
-        setCategoryView(false);
+        setServiceView(false);
         toaster.notify(
           ({ onClose }) => (
             <Toasted success onClick={onClose}>
@@ -66,36 +66,36 @@ const ArchServCategView = ({ categoryId, categoryView, setCategoryView }) => {
   // END DELETE
 
   // RESTORE
-  const [archiveServCategory, { loading: loadArchServCategory }] = useMutation(
-    RESTORE_SERVICE_CATEGORY,
+  const [archiveServSub, { loading: loadArchServSub }] = useMutation(
+    RESTORE_SERVICE_SUB,
     {
       variables: {
-        categoryId,
+        serviceId,
         active: true,
       },
 
       refetchQueries: [
         {
-          query: FETCH_ALL_CATEGORIES_QUERY,
+          query: FETCH_ALL_SERVICES_QUERY,
           variables: { active: false },
         },
       ],
 
       update(cache) {
         const data = cache.readQuery({
-          query: FETCH_ALL_CATEGORIES_QUERY,
+          query: FETCH_ALL_SERVICES_QUERY,
           variables: { active: false },
         });
 
         cache.writeQuery({
-          query: FETCH_ALL_CATEGORIES_QUERY,
+          query: FETCH_ALL_SERVICES_QUERY,
           variables: { active: true },
-          data: { categories: [...data.categories] },
+          data: { services: [...data.services] },
         });
       },
 
       onCompleted() {
-        setCategoryView(false);
+        setServiceView(false);
         toaster.notify(
           ({ onClose }) => (
             <Toasted success onClick={onClose}>
@@ -110,28 +110,28 @@ const ArchServCategView = ({ categoryId, categoryView, setCategoryView }) => {
   // END RESTORE
 
   const handleWarning = () => {
-    setPopWarnCateg(!popWarnCateg);
+    setPopWarnServ(!popWarnServ);
   };
 
-  const handleDeleteConfirm = (e) => {
+  const handleDeleteServiceConfirm = (e) => {
     e.preventDefault();
-    deleteCategory();
+    deleteService();
   };
 
-  const confirmRestoreCateg = (e) => {
+  const confirmRestoreServ = (e) => {
     e.preventDefault();
-    archiveServCategory();
+    archiveServSub();
   };
 
   return (
     <>
       <Modal
         size={wid < 1024 ? "tiny" : "small"}
-        open={categoryView}
-        onClose={() => setCategoryView(false)}
+        open={serviceView}
+        onClose={() => setServiceView(false)}
         closeIcon
       >
-        {categoryLoad ? (
+        {serviceLoad ? (
           <Spinner medium content="Please wait while we fetch data..." />
         ) : (
           <DGrid two>
@@ -144,11 +144,11 @@ const ArchServCategView = ({ categoryId, categoryView, setCategoryView }) => {
                 <div className="profile-image">
                   <img
                     src={
-                      categ.photo
-                        ? `/images/service/${categ.photo}`
+                      serv.photo
+                        ? `/images/service/${serv.photo}`
                         : "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample83.jpg"
                     }
-                    alt={categ.photo}
+                    alt={serv.photo}
                   />
                 </div>
               </JCard4>
@@ -156,12 +156,12 @@ const ArchServCategView = ({ categoryId, categoryView, setCategoryView }) => {
             <Modal.Content scrolling className="modal-content2">
               <JCard3>
                 <div className="description">
-                  <h1>{categ.name}</h1>
+                  <h1>{serv.name}</h1>
 
                   <p style={{ letterSpacing: "2px", lineHeight: 1.5 }}>
-                    {categ.description
-                      ? parser(categ.description)
-                      : categ.description}
+                    {serv.description
+                      ? parser(serv.description)
+                      : serv.description}
                   </p>
                 </div>
               </JCard3>
@@ -184,7 +184,7 @@ const ArchServCategView = ({ categoryId, categoryView, setCategoryView }) => {
               align="center"
             >
               <Popup
-                open={popWarnCateg}
+                open={popWarnServ}
                 trigger={
                   <DButton alert flex onClick={handleWarning}>
                     <DeleteForever size="22px" />
@@ -199,9 +199,9 @@ const ArchServCategView = ({ categoryId, categoryView, setCategoryView }) => {
                     size="22px"
                     color="green"
                     margin="0 auto"
-                    onClick={handleDeleteConfirm}
+                    onClick={handleDeleteServiceConfirm}
                   >
-                    {loadResult ? (
+                    {loadServiceResult ? (
                       <Spinner small row content="Deleting..." />
                     ) : (
                       <>
@@ -215,7 +215,7 @@ const ArchServCategView = ({ categoryId, categoryView, setCategoryView }) => {
                     size="22px"
                     color="red"
                     margin="0 auto"
-                    onClick={() => setPopWarnCateg(false)}
+                    onClick={() => setPopWarnServ(false)}
                   >
                     <Cancel title="Cancel action" />
                     Cancel
@@ -253,9 +253,9 @@ const ArchServCategView = ({ categoryId, categoryView, setCategoryView }) => {
               justify="flex-end"
               align="center"
             >
-              <DButton confirm onClick={confirmRestoreCateg}>
-                {loadArchServCategory ? (
-                  <Spinner row small content="Restoring..." />
+              <DButton confirm onClick={confirmRestoreServ}>
+                {loadArchServSub ? (
+                  <Spinner row small inverted content="Restoring..." />
                 ) : (
                   <>
                     <Restore size="22px" />
@@ -271,21 +271,16 @@ const ArchServCategView = ({ categoryId, categoryView, setCategoryView }) => {
   );
 };
 
-const DELETE_CATEG_PERM = gql`
-  mutation deleteCategory($categoryId: ID!) {
-    deleteCategory(_id: $categoryId)
+const DELETE_SERVICE_PERM = gql`
+  mutation deleteService($serviceId: ID!) {
+    deleteService(_id: $serviceId)
   }
 `;
 
-const RESTORE_SERVICE_CATEGORY = gql`
-  mutation archivedCategory($categoryId: ID!, $active: Boolean) {
-    archivedCategory(_id: $categoryId, active: $active) {
-      _id
-      name
-      description
-      photo
-    }
+const RESTORE_SERVICE_SUB = gql`
+  mutation archivedService($serviceId: ID!, $active: Boolean) {
+    archivedService(_id: $serviceId, active: $active)
   }
 `;
 
-export default ArchServCategView;
+export default ArchServSubView;

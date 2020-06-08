@@ -11,9 +11,12 @@ import { Grid } from "@styled-icons/boxicons-solid/Grid";
 import Page404 from "../../../../pages/Page404";
 import parser from "html-react-parser";
 import { DCard, Content } from "../../../styled/containers";
+import ArchServSubView from "./ArchServSubView";
 
 const ArchServSub = () => {
   const [archServices, setArchServices] = useState([]);
+  const [serviceIdVal, setServiceIdVal] = useState("");
+  const [serviceView, setServiceView] = useState(false);
 
   const {
     data: servicesData,
@@ -25,131 +28,142 @@ const ArchServSub = () => {
     if (servicesData) setArchServices(servicesData.allServices);
   }, [servicesData]);
 
-  console.log(archServices);
+  const handleServiceHover = (e) => {
+    setServiceIdVal(e.currentTarget.dataset.serviceid);
+  };
+
+  const columns = [
+    {
+      cell: () => <Grid size="22px" color="green" />,
+      width: "56px",
+      style: {
+        borderBottom: "1px solid #fff",
+        marginBottom: "-1px",
+      },
+    },
+
+    {
+      name: "Thumbnail",
+      selector: "photo",
+      grow: 0.5,
+      hide: "md",
+      cell: (row) => (
+        <img
+          height="80px"
+          width="52px"
+          alt={row.photo}
+          src={
+            row.photo !== null
+              ? `/images/service/${row.photo}`
+              : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+          }
+        />
+      ),
+    },
+    {
+      name: "Name",
+      selector: "name",
+      wrap: true,
+      sortable: true,
+      cell: (row) => <span>{row.name}</span>,
+    },
+    {
+      name: "Description",
+      selector: "description",
+      cell: (row) =>
+        row.description.length > 100
+          ? parser(row.description.substr(0, 100)) + "..."
+          : parser(row.description.substr(0, 100)),
+    },
+
+    {
+      name: "Status",
+      selector: "active",
+      sortable: true,
+      wrap: true,
+      cell: (row) =>
+        row.active ? (
+          <span
+            style={{
+              fontWeight: "bold",
+              fontSize: "14px",
+              color: "#0f9b0f",
+            }}
+          >
+            Active
+          </span>
+        ) : (
+          <span
+            style={{
+              fontWeight: "bold",
+              fontSize: "14px",
+              color: "#f12711",
+            }}
+          >
+            Inactive
+          </span>
+        ),
+    },
+    {
+      name: "Actions",
+      grow: 1,
+      cell: (row) => (
+        <Content
+          flex
+          margin="0 auto"
+          align="center"
+          justify="center"
+          width="300px"
+          height="100%"
+          pad="3px 0"
+          flow="row nowrap"
+          data-serviceid={row._id}
+          onMouseOver={handleServiceHover}
+        >
+          <DButton flex onClick={() => setServiceView(true)}>
+            <Eye size={"18px"} title="View Details" />
+          </DButton>
+          <DButton flex confirm>
+            <Restore size={"18px"} title="Restore file" />
+          </DButton>
+          <DButton flex alert>
+            <DeleteForever size={"18px"} title="Delete Permanently" />
+          </DButton>
+        </Content>
+      ),
+    },
+  ];
 
   return (
-    <DCard dw="100%" dh="100%" margin="12px auto" flex fcol>
-      <DLabel size="22px" bgblue color="light" rounded>
-        Sub Services
-      </DLabel>
-      <DataTable
-        columns={columns}
-        data={archServices}
-        responsive
-        customStyles={customStyles}
-        pagination={true}
-        paginationPerPage={10}
-        paginationRowsPerPageOptions={paginationRowsPerPageOptions}
-        highlightOnHover
-        pointerOnHover
-        progressPending={servicesLoad}
-        progressComponent={
-          <Spinner content="Please wait while we fetch our data..." />
-        }
+    <>
+      <DCard dw="100%" dh="100%" margin="12px auto" flex fcol>
+        <DLabel size="22px" bgblue color="light" rounded>
+          Sub Services
+        </DLabel>
+        <DataTable
+          columns={columns}
+          data={archServices}
+          responsive
+          customStyles={customStyles}
+          pagination={true}
+          paginationPerPage={10}
+          paginationRowsPerPageOptions={paginationRowsPerPageOptions}
+          highlightOnHover
+          pointerOnHover
+          progressPending={servicesLoad}
+          progressComponent={
+            <Spinner content="Please wait while we fetch our data..." />
+          }
+        />
+      </DCard>
+      <ArchServSubView
+        serviceId={serviceIdVal}
+        serviceView={serviceView}
+        setServiceView={setServiceView}
       />
-    </DCard>
+    </>
   );
 };
-
-const columns = [
-  {
-    cell: () => <Grid size="22px" color="green" />,
-    width: "56px",
-    style: {
-      borderBottom: "1px solid #fff",
-      marginBottom: "-1px",
-    },
-  },
-
-  {
-    name: "Thumbnail",
-    selector: "photo",
-    grow: 0.5,
-    hide: "md",
-    cell: (row) => (
-      <img
-        height="80px"
-        width="52px"
-        alt={row.photo}
-        src={
-          row.photo !== null
-            ? `/images/service/${row.photo}`
-            : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-        }
-      />
-    ),
-  },
-  {
-    name: "Name",
-    selector: "name",
-    wrap: true,
-    sortable: true,
-    cell: (row) => <span>{row.name}</span>,
-  },
-  {
-    name: "Description",
-    selector: "description",
-    cell: (row) =>
-      row.description.length > 100
-        ? parser(row.description.substr(0, 100)) + "..."
-        : parser(row.description.substr(0, 100)),
-  },
-
-  {
-    name: "Status",
-    selector: "active",
-    sortable: true,
-    wrap: true,
-    cell: (row) =>
-      row.active ? (
-        <span
-          style={{
-            fontWeight: "bold",
-            fontSize: "14px",
-            color: "#0f9b0f",
-          }}
-        >
-          Active
-        </span>
-      ) : (
-        <span
-          style={{
-            fontWeight: "bold",
-            fontSize: "14px",
-            color: "#f12711",
-          }}
-        >
-          Inactive
-        </span>
-      ),
-  },
-  {
-    name: "Actions",
-    grow: 1,
-    cell: (row) => (
-      <Content
-        flex
-        margin="0 auto"
-        align="center"
-        justify="center"
-        width="300px"
-        height="100%"
-        pad="3px 0"
-        flow="row nowrap"
-      >
-        <DButton flex>
-          <Eye size={"18px"} title="View Details" />
-        </DButton>
-        <DButton flex confirm>
-          <Restore size={"18px"} title="Restore file" />
-        </DButton>
-        <DButton flex alert>
-          <DeleteForever size={"18px"} title="Delete Permanently" />
-        </DButton>
-      </Content>
-    ),
-  },
-];
 
 const customStyles = {
   headRow: {

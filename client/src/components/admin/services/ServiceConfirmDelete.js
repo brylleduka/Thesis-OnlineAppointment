@@ -21,7 +21,7 @@ const ServiceConfirmDelete = ({
   const [archiveService, { loading: loadArchiveService }] = useMutation(
     ARCHIVE_SERVICE,
     {
-      variables: { serviceId: service._id },
+      variables: { serviceId: service._id, active: false },
       refetchQueries: [
         {
           query: FETCH_SERVICES_QUERY,
@@ -172,8 +172,8 @@ const ServiceConfirmDelete = ({
 };
 
 const ARCHIVE_SERVICE = gql`
-  mutation archivedService($serviceId: ID!) {
-    archivedService(_id: $serviceId)
+  mutation archivedService($serviceId: ID!, $active: Boolean) {
+    archivedService(_id: $serviceId, active: $active)
   }
 `;
 

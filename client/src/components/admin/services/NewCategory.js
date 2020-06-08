@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import { useForm } from "../../../util/hooks/useForm";
+
 import { FETCH_ALL_CATEGORIES_QUERY } from "../../../util/graphql/service";
 
 import { Modal, Form, Label } from "semantic-ui-react";
@@ -30,23 +30,23 @@ const NewCategory = ({ open, setOpen }) => {
         description: content,
       },
 
-      // update(cache, result) {
-      //   setOpen(false);
-      //   const data = cache.readQuery({
-      //     query: FETCH_ALL_CATEGORIES_QUERY,
-      //     variables: { active: true },
-      //   });
+      update(cache, result) {
+        setOpen(false);
+        const data = cache.readQuery({
+          query: FETCH_ALL_CATEGORIES_QUERY,
+          variables: { active: true },
+        });
 
-      //   const newCategory = result.data.createCategory;
-      //   cache.writeQuery({
-      //     query: FETCH_ALL_CATEGORIES_QUERY,
-      //     variables: { active: true },
-      //     data: { categories: [newCategory, ...data.categories] },
-      //   });
-      // },
-      refetchQueries: [
-        { query: FETCH_ALL_CATEGORIES_QUERY, variables: { active: true } },
-      ],
+        const newCategory = result.data.createCategory;
+        cache.writeQuery({
+          query: FETCH_ALL_CATEGORIES_QUERY,
+          variables: { active: true },
+          data: { categories: [newCategory, ...data.categories] },
+        });
+      },
+      // refetchQueries: [
+      //   { query: FETCH_ALL_CATEGORIES_QUERY, variables: { active: true } },
+      // ],
       onCompleted() {
         setOpen(false);
         setContent("");

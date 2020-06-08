@@ -102,11 +102,11 @@ module.exports = {
       }
     },
 
-    archivedService: async (_, { _id }) => {
+    archivedService: async (_, { _id, active }) => {
       try {
         await Service.findOneAndUpdate(
           { _id },
-          { $set: { active: false } },
+          { $set: { active } },
           { new: true }
         );
 

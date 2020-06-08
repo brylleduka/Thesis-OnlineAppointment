@@ -11,6 +11,8 @@ import { Grid } from "@styled-icons/boxicons-solid/Grid";
 import Page404 from "../../../../pages/Page404";
 import { DCard, Content } from "../../../styled/containers";
 import ArchServCategView from "./ArchServCategView";
+import ArchServCategRestore from "./ArchServCategRestore";
+import ArchServCategDelete from "./ArchServCategDelete";
 
 const ArchServCateg = () => {
   const [archServCateg, setArchServCateg] = useState([]);
@@ -117,12 +119,8 @@ const ArchServCateg = () => {
           <DButton flex onClick={() => setCategoryView(true)}>
             <Eye size={"18px"} title="View Details" />
           </DButton>
-          <DButton flex confirm>
-            <Restore size={"18px"} title="Restore file" />
-          </DButton>
-          <DButton flex alert>
-            <DeleteForever size={"18px"} title="Delete Permanently" />
-          </DButton>
+          <ArchServCategRestore categoryId={row._id} />
+          <ArchServCategDelete categoryId={row._id} />
         </Content>
       ),
     },
