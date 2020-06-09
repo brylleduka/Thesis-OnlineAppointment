@@ -88,18 +88,7 @@ const validateEmployeeLoginInput = (empId, password) => {
 };
 
 //New Employee Validate
-const validateEmployeeInput = (
-  empId,
-  firstName,
-  lastName,
-  email,
-  role,
-  day,
-  workStart,
-  workLength,
-  breakStart,
-  breakLength
-) => {
+const validateEmployeeInput = (empId, firstName, lastName, email, role) => {
   let errors = {};
 
   if (empId.trim() === "") {
@@ -172,6 +161,30 @@ const validateServiceInput = (name, duration, price) => {
   };
 };
 
+const validateInquiry = (email, message, subject) => {
+  const errors = {};
+
+  if (email.trim() === "") {
+    errors.email = "Email must not be empty";
+  }
+
+  if (!email.match(regex)) {
+    errors.emailX = "Email must be a valid Address";
+  }
+
+  if (message.trim() === "") {
+    errors.message = "Message must not be empty";
+  }
+  if (subject.trim() === "") {
+    errors.subject = "Subject must not be empty";
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1,
+  };
+};
+
 module.exports = {
   validateUserCreateInput,
   validateUserLoginInput,
@@ -179,4 +192,5 @@ module.exports = {
   validateEmployeeInput,
   validateEmployeePersonal,
   validateServiceInput,
+  validateInquiry,
 };

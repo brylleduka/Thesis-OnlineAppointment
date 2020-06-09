@@ -250,7 +250,8 @@ export const DRightMenu = styled(DMenu)`
     color: #232323;
   }
 
-  ${(props) => props.scrolled && ".avatarLog {color: #fff}"};
+  ${(props) =>
+    props.scrolled && ".avatarLog {color: #fff}; li a {color: #fff};"};
 
   li:first-child {
     padding: 10px;

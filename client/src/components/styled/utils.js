@@ -31,20 +31,6 @@ const colors = {
   grey: ({ theme }) => theme.grey,
 };
 
-const getBgColor = (props) => {
-  if (props.color === "primary") return colors.primary;
-  if (props.color === "secondary") return colors.secondary;
-  if (props.color === "dark") return colors.dark;
-  if (props.color === "light") return colors.light;
-  if (props.color === "bluer") return colors.bluer;
-  if (props.color === "blue") return colors.blue;
-  if (props.color === "red") return colors.red;
-  if (props.color === "green") return colors.green;
-  if (props.color === "yellow") return colors.yellow;
-
-  return "transparent";
-};
-
 const getTxtColor = (props) => {
   if (props.color === "primary") return colors.primary;
   if (props.color === "secondary") return colors.secondary;
@@ -241,7 +227,7 @@ export const DLabel = styled.label`
   padding: ${(props) => (props.pad ? props.pad : "5px 10px")};
   margin: ${(props) => (props.m ? props.m : "2%")};
   background: ${(props) => getBGColor(props)};
-  color: ${(props) => getTxtColor(props)};
+  color: ${(props) => getTxtColor(props)} !important;
   border-radius: ${(props) => props.rounded && "5px"};
   text-align: ${(props) => (props.textalign ? props.textalign : "left")};
   text-transform: ${(props) => props.tt && props.tt};
@@ -735,10 +721,10 @@ export const DInput = styled.input`
   ${(props) =>
     props.error &&
     css`
-      background: #fff6f6;
-      color: #ce9a99;
+      background: #fff6f6 !important;
+      color: #ce9a99 !important;
       font-weight: 700;
-      border-color: #ce9a99;
+      border-color: #ce9a99 !important;
     `};
 
   ${(props) =>

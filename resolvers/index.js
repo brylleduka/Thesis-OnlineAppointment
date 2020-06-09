@@ -9,6 +9,7 @@ const showcaseCMSResolvers = require("./showcaseCms");
 const aboutCMSResolvers = require("./aboutCms");
 const testimonialResolvers = require("./testimonial");
 const galleryResolvers = require("./gallery");
+const contactResolvers = require("./contact");
 
 module.exports = {
   Query: {
@@ -23,6 +24,7 @@ module.exports = {
     ...aboutCMSResolvers.Query,
     ...testimonialResolvers.Query,
     ...galleryResolvers.Query,
+    ...contactResolvers.Query,
   },
   Mutation: {
     ...userResolvers.Mutation,
@@ -36,5 +38,6 @@ module.exports = {
     ...aboutCMSResolvers.Mutation,
     ...testimonialResolvers.Mutation,
     ...galleryResolvers.Mutation,
+    ...contactResolvers.Mutation,
   },
 };

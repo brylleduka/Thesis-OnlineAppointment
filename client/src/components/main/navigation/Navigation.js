@@ -126,7 +126,7 @@ const Navigation = ({ open, setOpen }) => {
             </Link>
           </li>
           <li>
-            <Link to="/contact">Contact</Link>
+            <Link to="/#contact" scroll={scrollBehavior}>Contact</Link>
           </li>
           <li>
             <Link to="/testimonials/#tstmnl" scroll={scrollBehavior}>

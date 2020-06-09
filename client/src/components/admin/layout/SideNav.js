@@ -6,6 +6,7 @@ import {
   MessageSquare,
   MessageRoundedDetail,
   CalendarEvent,
+  MapAlt,
 } from "@styled-icons/boxicons-solid";
 
 import { Gallery, Service } from "@styled-icons/remix-fill";
@@ -25,7 +26,6 @@ import { SideNavLayout } from "../../styled/layout";
 import { NavItem } from "../../styled/utils";
 
 import Accordion from "../../Accordion";
-import { IconWrap } from "../../styled/utils";
 
 const SideNav = ({ isOpenMenu, handleOpenMenu }) => {
   return (
@@ -33,7 +33,6 @@ const SideNav = ({ isOpenMenu, handleOpenMenu }) => {
       <Close
         size="36px"
         className="menu-close"
-      
         onClick={handleOpenMenu}
         title="Close Menu"
       />
@@ -101,9 +100,9 @@ const SideNav = ({ isOpenMenu, handleOpenMenu }) => {
             Testimonials
           </span>
         </NavLink>
-        <NavLink to="/zeadmin/contact" activeClassName="navlink-active">
+        <NavLink to="/zeadmin/cms_contact" activeClassName="navlink-active">
           <span>
-            <Dashboard size="16px" style={styles.ml} />
+            <MapAlt size="16px" style={styles.ml} />
             Contact
           </span>
         </NavLink>

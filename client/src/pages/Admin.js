@@ -30,6 +30,7 @@ import About from "./admin/cms/About";
 import Testimonial from "./admin/cms/Testimonial";
 import Gallery from "./admin/cms/Gallery";
 import Album from "./admin/cms/Album";
+import Contact from "./admin/cms/Contact";
 import Archive from "./admin/Archive";
 import Page404 from "../pages/Page404";
 
@@ -96,6 +97,7 @@ const Admin = () => {
           <PrivateRoute exact path="/zeadmin/cms_about" component={About} />
           <PrivateRoute exact path="/zeadmin/cms_gallery" component={Gallery} />
           <PrivateRoute exact path="/zeadmin/album/:_id" component={Album} />
+          <PrivateRoute exact path="/zeadmin/cms_contact" component={Contact} />
           <PrivateRoute exact path="/zeadmin/archives" component={Archive} />
           <PrivateRoute
             exact

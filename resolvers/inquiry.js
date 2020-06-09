@@ -1,5 +1,7 @@
 const Inquiry = require("../models/Inquiry");
 const transportMail = require("../utils/transportMail");
+const { UserInputError } = require("apollo-server-express");
+const { validateInquiry } = require("../utils/validators");
 
 module.exports = {
   Query: {
@@ -30,6 +32,12 @@ module.exports = {
   },
   Mutation: {
     sendInquiry: async (_, { name, email, to, subject, message }) => {
+      const { errors, valid } = validateInquiry(email, subject, message);
+
+      if (!valid) {
+        throw new UserInputError("Input Error", { errors });
+      }
+
       const newInquiry = await new Inquiry({
         name,
         email,

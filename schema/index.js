@@ -203,6 +203,16 @@ const typeDefs = gql`
     paragraph: String
   }
 
+  type Contact {
+    _id: ID
+    address: String
+    lat: Float
+    lng: Float
+    mapKey: String
+    phone: String
+    mobile: String
+  }
+
   # INPUTS
   input AppointmentInput {
     serviceId: ID!
@@ -345,6 +355,9 @@ const typeDefs = gql`
     # Gallery
     galleries(active: Boolean): [Gallery]
     gallery(_id: ID!, active: Boolean): Gallery
+
+    # Contact
+    contact: [Contact]
 
     # CMS
     showcaseCMS(sectionName: String): ShowcaseCMS
@@ -513,6 +526,26 @@ const typeDefs = gql`
     addGalleryPhoto(_id: ID!, image: [Upload]): Gallery
     archiveGalleryPhoto(active: Boolean): Gallery
     deleteGalleryPhoto(_id: ID!): Gallery
+
+    # Contact
+    addContact(
+      address: String
+      lat: Float
+      lng: Float
+      mapKey: String
+      phone: String
+      mobile: String
+    ): Contact
+
+    updateContact(
+      _id: ID
+      address: String
+      lat: Float
+      lng: Float
+      mapKey: String
+      phone: String
+      mobile: String
+    ): Contact
 
     # CMSHOME
     # SHOWCASE

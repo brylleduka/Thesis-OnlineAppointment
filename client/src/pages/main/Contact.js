@@ -11,6 +11,9 @@ import {
 import { DButton, DLabel } from "../../components/styled/utils";
 import { Form } from "semantic-ui-react";
 import toaster from "toasted-notes";
+import GoogleMapReact from "google-map-react";
+
+import { Marker } from "@styled-icons/foundation";
 
 const Contact = () => {
   const [errors, setErrors] = useState({});
@@ -130,7 +133,25 @@ Dasmariñas, Cavite 4114"
           justify="center"
           align="center"
         >
-          Map
+          <GoogleMapReact
+            bootstrapURLKeys={{
+              key: "AIzaSyAF8qgxG2aEudQxqxsKjZF1n7MkGXURvoo",
+            }}
+            defaultCenter={{ lat: 14.326171, lng: 120.9369621 }}
+            defaultZoom={15}
+          >
+            <div
+              style={{
+                position: "absolute",
+                transform: "translate(-50%,-50%)",
+              }}
+              lat={14.326171}
+              lng={120.9369621}
+              text="MARKER"
+            >
+              <Marker color="#fe8c00" size="48px" />
+            </div>
+          </GoogleMapReact>
         </Content>
       </DSection>
     </DContainer>

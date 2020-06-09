@@ -5,6 +5,7 @@ import CategorySection from "../../components/main/home/CategorySection";
 import TeamSection from "../../components/main/home/TeamSection";
 import AboutSection from "../../components/main/home/AboutSection";
 import PromoSection1 from "../../components/main/home/PromoSection1";
+import ContactMap from "../../components/main/home/ContactMap";
 import TestimonialSection from "../../components/main/home/TestimonialSection";
 import { DContainer } from "../../components/styled/containers";
 import ScrollButton from "../../components/main/utils/ScrollButton";
@@ -26,7 +27,7 @@ const Home = () => {
       <PromoSection1 />
       <TeamSection cards={card1} />
       <TestimonialSection />
-      <PromoSection1 />
+      <ContactMap />
     </DContainer>
   );
 };
