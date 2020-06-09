@@ -6,7 +6,7 @@ import {
   DContainer,
   DSection,
   DGrid,
-  Content
+  Content,
 } from "../../components/styled/containers";
 import { DButton, DLabel } from "../../components/styled/utils";
 import { Form } from "semantic-ui-react";
@@ -18,7 +18,7 @@ const Contact = () => {
     name: "",
     email: "",
     subject: "",
-    message: ""
+    message: "",
   });
 
   const [sendInquiry, { loading }] = useMutation(SEND_INQUIRY, {
@@ -27,7 +27,7 @@ const Contact = () => {
       email: values.email,
       subject: values.subject,
       message: values.message,
-      to: values.email
+      to: values.email,
     },
 
     update() {
@@ -38,7 +38,7 @@ const Contact = () => {
     },
     onCompleted(result) {
       toaster.notify("Message sent");
-    }
+    },
   });
 
   function sendInquiryCallback() {

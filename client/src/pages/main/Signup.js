@@ -10,7 +10,7 @@ import {
 
 const Signup = (props) => {
   const { from } = props.location.state || {
-    from: { pathname: "/home" },
+    from: { pathname: "/" },
   };
 
   const hist = props.history;
