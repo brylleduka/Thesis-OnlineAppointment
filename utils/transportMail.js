@@ -9,7 +9,8 @@ const Mailer = ({ from, to, subject, text, html, url, temp }) => {
     // port: 587,
     // secure: false,
     // true for 465, false for other ports
-    service: "gmail",
+    service: 'gmail',
+    host: 'smtp.gmail.com',
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS
