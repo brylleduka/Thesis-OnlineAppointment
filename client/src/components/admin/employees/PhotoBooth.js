@@ -107,6 +107,7 @@ const PhotoBooth = ({
           small
           pad="3px"
           bgcolor={({ theme }) => theme.bluer}
+        
         >
           <Camera title="Upload" />
           <input {...getInputProps()} />

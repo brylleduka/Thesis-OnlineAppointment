@@ -112,6 +112,7 @@ const PersonalCard = ({ employee }) => {
               circle
               shadow
               pad="3px"
+              color="light"
             >
               <Edit onClick={handleEditPersonal} />
             </IconWrap>
@@ -124,6 +125,7 @@ const PersonalCard = ({ employee }) => {
               circle
               shadow
               color="red"
+              
             >
               <Cancel onClick={handleEditPersonal} />
             </IconWrap>

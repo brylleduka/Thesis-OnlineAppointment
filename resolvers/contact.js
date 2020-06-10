@@ -47,7 +47,7 @@ module.exports = {
           throw new UserInputError("Contact Does not exist");
 
         if (address) {
-          updateEmployee.address = address;
+          updateContact.address = address;
         }
         if (lat) {
           updateContact.lat = lat;
@@ -57,9 +57,8 @@ module.exports = {
           updateContact.lng = lng;
         }
 
-        if (mapKey) {
-          updateContact.mapKey = mapKey;
-        }
+        updateContact.mapKey = mapKey;
+
         if (phone) {
           updateContact.phone = phone;
         }

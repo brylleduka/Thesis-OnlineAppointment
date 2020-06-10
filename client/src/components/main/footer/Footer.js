@@ -1,111 +1,117 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { HashLink as Link } from "react-router-hash-link";
 import { DFooter, DFooterLinks } from "../../styled/containers";
+import {
+  LinkedinSquare,
+  FacebookCircle,
+  Twitter,
+} from "@styled-icons/boxicons-logos";
+
+import { Icon } from "semantic-ui-react";
+
 const Footer = () => {
   return (
     <>
       <DFooterLinks>
         <div className="links-inner">
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <h2>Z&nbsp;ESSENCE&nbsp;FACIAL&nbsp;AND&nbsp;SPA</h2>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis,
+              rerum quaerat quasi dolore ex recusandae quas eligendi dolor?
+              Dolores, provident.
+            </p>
+          </div>
           <ul>
             <li>
-              <h3>What's new</h3>
+              <h3>Explore</h3>
             </li>
             <li>
-              <Link to="/">Beauty</Link>
+              <Link to="/#home">Home</Link>
             </li>
             <li>
-              <Link to="/">Beauty</Link>
+              <Link to="/services&rates/#services">Services</Link>
             </li>
             <li>
-              <Link to="/">Beauty</Link>
+              <Link to="/about/#about">About Us</Link>
+            </li>
+
+            <li>
+              <Link to="/about/#team">Our Team</Link>
             </li>
             <li>
-              <Link to="/">Beauty</Link>
+              <Link to="/gallery/#gallery">Gallery</Link>
+            </li>
+            <li>
+              <Link to="/testimonials/#tstmnl">Testimonials</Link>
+            </li>
+            <li>
+              <Link to="/appointment">Appointment</Link>
+            </li>
+          </ul>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-around",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                marginBottom: "10px",
+              }}
+            >
+              <h3>Visit</h3>
+              <p>
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                Pariatur, quae.
+              </p>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <h3>Contact</h3>
+              <ul>
+                <li>zessence@gmail.com</li>
+                <li>09876543121</li>
+                <li>431-4031</li>
+              </ul>
+            </div>
+          </div>
+          <ul>
+            <li>
+              <h3>Follow</h3>
+            </li>
+            <li>
+              <a href="https://www.facebook.com/zessencedasma">
+                <FacebookCircle size="28px" color="#4267B2" />
+              </a>
+            </li>
+            <li>
+              <a href="/">
+                <Icon name="instagram" size="big" className="logo-ig" />
+              </a>
+            </li>
+            <li>
+              <a href="/">
+                <Twitter size="28px" color="#00acee" />
+              </a>
+            </li>
+            <li>
+              <a href="/">
+                <LinkedinSquare size="28px" color="#0e76a8" />
+              </a>
             </li>
           </ul>
           <ul>
             <li>
-              <h3>What's new</h3>
+              <h3>Legal</h3>
             </li>
             <li>
-              <Link to="/">Beauty</Link>
+              <Link to="/">Terms</Link>
             </li>
             <li>
-              <Link to="/">Beauty</Link>
-            </li>
-            <li>
-              <Link to="/">Beauty</Link>
-            </li>
-            <li>
-              <Link to="/">Beauty</Link>
-            </li>
-          </ul>
-          <ul>
-            <li>
-              <h3>What's new</h3>
-            </li>
-            <li>
-              <Link to="/">Beauty</Link>
-            </li>
-            <li>
-              <Link to="/">Beauty</Link>
-            </li>
-            <li>
-              <Link to="/">Beauty</Link>
-            </li>
-            <li>
-              <Link to="/">Beauty</Link>
-            </li>
-          </ul>
-          <ul>
-            <li>
-              <h3>What's new</h3>
-            </li>
-            <li>
-              <Link to="/">Beauty</Link>
-            </li>
-            <li>
-              <Link to="/">Beauty</Link>
-            </li>
-            <li>
-              <Link to="/">Beauty</Link>
-            </li>
-            <li>
-              <Link to="/">Beauty</Link>
-            </li>
-          </ul>
-          <ul>
-            <li>
-              <h3>What's new</h3>
-            </li>
-            <li>
-              <Link to="/">Beauty</Link>
-            </li>
-            <li>
-              <Link to="/">Beauty</Link>
-            </li>
-            <li>
-              <Link to="/">Beauty</Link>
-            </li>
-            <li>
-              <Link to="/">Beauty</Link>
-            </li>
-          </ul>
-          <ul>
-            <li>
-              <h3>What's new</h3>
-            </li>
-            <li>
-              <Link to="/">Beauty</Link>
-            </li>
-            <li>
-              <Link to="/">Beauty</Link>
-            </li>
-            <li>
-              <Link to="/">Beauty</Link>
-            </li>
-            <li>
-              <Link to="/">Beauty</Link>
+              <Link to="/">Privacy</Link>
             </li>
           </ul>
         </div>
@@ -114,28 +120,10 @@ const Footer = () => {
         <div className="footer-inner">
           <div>English (Philippines)</div>
 
-          <ul>
-            <li>
-              <Link to="/">Beauty</Link>
-            </li>
-            <li>
-              <Link to="/">Beauty</Link>
-            </li>
-            <li>
-              <Link to="/">Beautiful and Pretty</Link>
-            </li>
-            <li>
-              <Link to="/">Beauty</Link>
-            </li>
-            <li>
-              <Link to="/">Beauty</Link>
-            </li>
-            <li>
-              <Link to="/">
-                &copy; Z Essence 2019-{new Date().getFullYear()}
-              </Link>
-            </li>
-          </ul>
+          <div>
+            &copy; Z Essence 2019-{new Date().getFullYear()}. All Rights
+            Reserved
+          </div>
         </div>
       </DFooter>
     </>

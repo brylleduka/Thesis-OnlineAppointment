@@ -13,6 +13,7 @@ import {
 } from "../../styled/navigation";
 import Burger from "./Burger";
 import useScroll from "../../../util/hooks/useScroll";
+import { ReactComponent as ZEssenceLogo } from "../../../ze_logo.svg";
 
 const Navigation = ({ open, setOpen }) => {
   const scrolling = useScroll();
@@ -45,7 +46,10 @@ const Navigation = ({ open, setOpen }) => {
     <DNavigation ref={node} scrolled={scrolling ? true : false}>
       <div className="content">
         <Link to="/">
-          <img src={"/images/logo.png"} alt="Z Essence" className="logo" />
+          <div className="brand-container">
+            <img src={"/images/logo.png"} alt="Z Essence" className="brand" />
+            {/* <ZEssenceLogo className="brand" /> */}
+          </div>
         </Link>
         <Burger open={open} setOpen={setOpen} />
 
@@ -126,7 +130,9 @@ const Navigation = ({ open, setOpen }) => {
             </Link>
           </li>
           <li>
-            <Link to="/#contact" scroll={scrollBehavior}>Contact</Link>
+            <Link to="/#contact" scroll={scrollBehavior}>
+              Contact
+            </Link>
           </li>
           <li>
             <Link to="/testimonials/#tstmnl" scroll={scrollBehavior}>

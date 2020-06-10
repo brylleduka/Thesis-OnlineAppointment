@@ -43,7 +43,7 @@ const EmployeeDelete = ({ employee }) => {
   return (
     <>
       <Content flex width="100%" justify="flex-end" align="center">
-        <DButton flex bgalert onClick={() => setIsDlt(true)}>
+        <DButton flex alert onClick={() => setIsDlt(true)}>
           <Delete size="22px" title="Delete Employee Info" />
           Delete
         </DButton>
@@ -57,6 +57,8 @@ const EmployeeDelete = ({ employee }) => {
               mcenter
               title="Info"
               pad="3px"
+              color="light"
+              bgcolor={({ theme }) => theme.blue}
             >
               <Question />
             </IconWrap>
@@ -157,7 +159,7 @@ const EmployeeDelete = ({ employee }) => {
               justify="flex-end"
               align="center"
             >
-              <DButton basic confirm onClick={() => archiveEmployee()}>
+              <DButton confirm color="light" onClick={() => archiveEmployee()}>
                 {loadArchived ? (
                   <Spinner small inverted row content="Loading..." />
                 ) : (

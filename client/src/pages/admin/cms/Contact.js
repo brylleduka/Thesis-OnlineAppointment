@@ -2,9 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_CONTACT_INFO } from "../../../util/graphql/contact";
 import Layout from "../../../components/admin/layout/Layout";
-import { DSection, Content } from "../../../components/styled/containers";
+import {
+  DSection,
+  Content,
+  DCard,
+} from "../../../components/styled/containers";
 import { Breadcrumb } from "semantic-ui-react";
 import ContactModal from "../../../components/admin/contact/ContactModal";
+import ContactDetails from "../../../components/admin/contact/ContactDetails";
+import ContactMap from "../../../components/admin/contact/ContactMap";
 import Spinner from "../../../components/Spinner";
 
 const Contact = () => {
@@ -50,8 +56,16 @@ const Contact = () => {
           {contacts.length < 1 && <ContactModal />}
         </Content>
         <DSection width="100%" height="100%" flex direct="column">
-          <Content>Details</Content>
-          <Content>Map</Content>
+          {contacts.length > 0 && (
+            <>
+              <ContactDetails contactInfo={contacts[0]} />
+              <ContactMap
+                lat={contacts[0].lat}
+                lng={contacts[0].lng}
+                mapKey={contacts[0].mapKey}
+              />
+            </>
+          )}
         </DSection>
       </DSection>
     </Layout>

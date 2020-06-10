@@ -26,6 +26,7 @@ import { SideNavLayout } from "../../styled/layout";
 import { NavItem } from "../../styled/utils";
 
 import Accordion from "../../Accordion";
+import { ReactComponent as ZEssenceLogo } from "../../../ze_logo.svg";
 
 const SideNav = ({ isOpenMenu, handleOpenMenu }) => {
   return (
@@ -76,6 +77,20 @@ const SideNav = ({ isOpenMenu, handleOpenMenu }) => {
         hcolor="#fff"
         fs="14px"
       >
+        <NavLink to="/zeadmin/cms_brand" activeClassName="navlink-active">
+          <span>
+            <ZEssenceLogo
+              style={{
+                width: "25px",
+                height: "25px",
+
+                marginRight: "5px",
+              }}
+              className="zbrand"
+            />
+            Brand
+          </span>
+        </NavLink>
         <NavLink to="/zeadmin/cms_home" activeClassName="navlink-active">
           <span>
             <BookContent size="16px" style={styles.ml} />

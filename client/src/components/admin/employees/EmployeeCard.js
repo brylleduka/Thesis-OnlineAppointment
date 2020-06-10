@@ -79,7 +79,7 @@ const EmployeeCard = ({ employee }) => {
         align="center"
       >
         <DLabel size={wid < 768 ? "18px !important" : "22px"} weight={700}>
-          Personal Details
+          Employee Details
         </DLabel>
         {(employeeAuth.role === "ADMIN" || employeeAuth.level > 2) && (
           <>
@@ -92,6 +92,7 @@ const EmployeeCard = ({ employee }) => {
               circle
               shadow
               pad="3px"
+              color="light"
             >
               <Edit onClick={handleEditEmplAcct} />
             </IconWrap>

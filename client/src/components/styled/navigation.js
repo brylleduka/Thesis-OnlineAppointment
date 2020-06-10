@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Dropdown } from "semantic-ui-react";
 
 export const DNavigation = styled.nav`
@@ -12,6 +12,7 @@ export const DNavigation = styled.nav`
   z-index: 10;
 
   .content {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -27,29 +28,29 @@ export const DNavigation = styled.nav`
     outline: 0;
     border: 0;
 
-    .logo {
-      width: 90px;
+    .brand-container {
+      width: 100px;
+      height: 100%;
+
+      .brand {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        ${(props) =>
+          props.scrolled &&
+          "filter: invert(41%) sepia(97%) saturate(507%) hue-rotate(164deg) brightness(100%) contrast(98%)"};
+      }
     }
 
     @media (max-width: 1024px) {
       padding: 10px 0;
       height: 7rem;
       width: 100%;
-
-      .logo {
-        width: 90px;
-        margin-left: 60px;
-      }
     }
 
     @media (max-width: 768px) {
       padding: 10px 0;
       height: 100px;
-
-      .logo {
-        width: 90px;
-        margin-left: 60px;
-      }
     }
 
     @media (max-width: 500px) {
@@ -320,14 +321,14 @@ export const DBurger = styled.nav`
   }
   &:hover {
     div {
-      background: ${({ theme }) => theme.blue};
+      background: ${({ theme }) => theme.light};
     }
   }
 
   div {
     width: 2rem;
     height: 0.3rem;
-    background: ${({ theme, open }) => (open ? theme.dark : theme.blue)};
+    background: ${({ theme, open }) => (open ? theme.secondary : theme.blue)};
     transition: all 0.3s linear;
     position: relative;
     transform-origin: 1px;
@@ -347,6 +348,13 @@ export const DBurger = styled.nav`
     :nth-child(3) {
       transform: ${({ open }) => (open ? "rotate(-45deg)" : "rotate(0)")};
     }
+
+    ${(props) =>
+      props.scrolled &&
+      css`
+        background: ${({ theme, open }) =>
+          open ? theme.secondary : theme.light};
+      `};
   }
 
   @media only screen and (min-width: 1025px) {

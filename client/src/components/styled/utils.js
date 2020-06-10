@@ -43,7 +43,7 @@ const getTxtColor = (props) => {
   if (props.color === "green") return colors.green;
   if (props.color === "yellow") return colors.yellow;
 
-  return colors.light;
+  return colors.dark;
 };
 
 const getNotifColor = (props) => {
@@ -129,7 +129,7 @@ export const DButton = styled.button`
   border-style: ${(props) => props.basic && "solid"};
   border-color: ${(props) => getBtnColor(props)};
       
-  color:  ${(props) => getTxtColor(props)};
+  color:  #fff;
 
   background: ${(props) => getBtnColor(props)};
 
@@ -138,6 +138,12 @@ export const DButton = styled.button`
     css`
       background: #e9e4f0;
       color: #d3cce3;
+    `};
+
+  ${(props) =>
+    props.basic &&
+    css`
+      color: ${(props) => getBtnColor(props)};
     `};
 
 
@@ -336,6 +342,11 @@ export const DAccordion = styled.section`
   flex-direction: column;
   width: 90%;
 
+  .zbrand {
+    filter: invert(45%) sepia(72%) saturate(450%) hue-rotate(145deg)
+      brightness(94%) contrast(97%);
+  }
+
   .accordion-title {
     background: ${(props) => (props.bg ? props.bg : colors.dark)};
     color: ${(props) => (props.color ? props.color : "#fff")};
@@ -416,11 +427,19 @@ export const DAccordion = styled.section`
         color: white;
         background: ${colors.blue};
         opacity: 0.9;
+
+        .zbrand {
+          filter: brightness(0%) invert(100%);
+        }
       }
 
       &.active {
         color: white;
         background: ${colors.bluer};
+
+        .zbrand {
+          filter: brightness(0%) invert(100%);
+        }
       }
     }
   }
@@ -537,12 +556,11 @@ export const IconCustom = styled(Icon)`
 export const IconWrap = styled.div`
   display: flex;
   align-items: center;
-  color: ${(props) => getTxtColor(props)};
+
   font-weight: 500;
   cursor: pointer;
 
   ${StyledIconBase} {
-    color: ${(props) => getTxtColor(props)};
     cursor: pointer;
     opacity: 0.8;
     transition: all 0.5s ease;
@@ -558,7 +576,10 @@ export const IconWrap = styled.div`
       props.bgcolor &&
       css`
         background-color: ${props.bgcolor};
+        color: #fff;
       `};
+
+    color: ${(props) => props.color && props.color};
 
     ${(props) =>
       props.shadow &&

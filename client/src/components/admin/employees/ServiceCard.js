@@ -84,6 +84,7 @@ const ServiceCard = ({ employee }) => {
               shadow
               bgcolor={({ theme }) => theme.bluer}
               onClick={() => setOpenAddService(true)}
+              color="light"
             >
               <Plus />
             </IconWrap>

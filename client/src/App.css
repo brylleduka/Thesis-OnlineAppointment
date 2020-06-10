@@ -121,6 +121,10 @@ select {
   color: white;
 }
 
+.navlink-active span .zbrand {
+  filter: brightness(0%) invert(100%);
+}
+
 /* CUSTOM MODAL */
 .modal-content2 {
   height: 300px !important;

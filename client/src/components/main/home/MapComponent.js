@@ -4,7 +4,6 @@ import GoogleMapReact from "google-map-react";
 import { Marker } from "@styled-icons/foundation";
 
 const MapComponent = ({ lat, lng, mapKey }) => {
-  console.log(mapKey);
   return (
     <Content
       height="70vh"

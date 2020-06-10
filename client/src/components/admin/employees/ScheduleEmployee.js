@@ -105,6 +105,7 @@ const ScheduleEmployee = ({ employee }) => {
                   circle
                   shadow
                   pad="3px"
+                  color="light"
                 >
                   <Edit onClick={handleEditSched} />
                 </IconWrap>

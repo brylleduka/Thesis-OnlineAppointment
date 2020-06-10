@@ -62,7 +62,6 @@ const ContactModal = () => {
     addContact();
   };
 
-  console.log(contactVals);
   return (
     <>
       <DButton flex onClick={() => setIsOpenContact(true)}>

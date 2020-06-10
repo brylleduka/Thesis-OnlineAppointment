@@ -599,23 +599,74 @@ export const DCard = styled.div`
 `;
 
 export const DFooterLinks = styled.section`
-  background: #f2f2f2;
-  color: #616161;
+  background: ${({ theme }) => theme.dark};
+  color: ${({ theme }) => theme.light};
   font-size: 12px;
   padding: 35px 0;
+  width: 100%;
 
   .links-inner {
-    max-width: 1200px;
+    width: 95%;
     margin: 0 auto;
     padding: 0 20px;
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-gap: 10px;
+    grid-template-columns: 2fr repeat(4, 1fr);
+    grid-gap: 20px;
     align-items: flex-start;
     justify-content: center;
+    font-weight: 500;
+
+    .logo-ig {
+      color: transparent !important;
+      background: -webkit-radial-gradient(
+        30% 107%,
+        circle,
+        #fdf497 0%,
+        #fdf497 5%,
+        #fd5949 45%,
+        #d6249f 60%,
+        #285aeb 90%
+      ) !important;
+      background: -o-radial-gradient(
+        30% 107%,
+        circle,
+        #fdf497 0%,
+        #fdf497 5%,
+        #fd5949 45%,
+        #d6249f 60%,
+        #285aeb 90%
+      ) !important;
+      background: radial-gradient(
+        circle at 30% 107%,
+        #fdf497 0%,
+        #fdf497 5%,
+        #fd5949 45%,
+        #d6249f 60%,
+        #285aeb 90%
+      ) !important;
+      background: -webkit-radial-gradient(
+        circle at 30% 107%,
+        #fdf497 0%,
+        #fdf497 5%,
+        #fd5949 45%,
+        #d6249f 60%,
+        #285aeb 90%
+      ) !important;
+      background-clip: text !important;
+      -webkit-background-clip: text !important;
+    }
 
     li {
       line-height: 2.8;
+    }
+
+    a {
+      font-weight: 500;
+      letter-spacing: 2px;
+
+      &:hover {
+        color: #fff;
+      }
     }
 
     @media (max-width: 768px) {
@@ -629,10 +680,10 @@ export const DFooterLinks = styled.section`
 `;
 
 export const DFooter = styled.footer`
-  background: #f2f2f2;
+  background: ${({ theme }) => theme.dark};
   font-size: 12px;
   padding: 20px 0;
-  color: #616161;
+  color: ${({ theme }) => theme.light};
 
   .footer-inner {
     max-width: 1200px;
