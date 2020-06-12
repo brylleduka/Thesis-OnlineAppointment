@@ -12,6 +12,7 @@ import Page404 from "../../../../pages/Page404";
 import parser from "html-react-parser";
 import { DCard, Content } from "../../../styled/containers";
 import ArchServSubView from "./ArchServSubView";
+import ArchServSubRestore from "./ArchServSubRestore";
 
 const ArchServSub = () => {
   const [archServices, setArchServices] = useState([]);
@@ -123,9 +124,7 @@ const ArchServSub = () => {
           <DButton flex onClick={() => setServiceView(true)}>
             <Eye size={"18px"} title="View Details" />
           </DButton>
-          <DButton flex confirm>
-            <Restore size={"18px"} title="Restore file" />
-          </DButton>
+          <ArchServSubRestore serviceId={row._id} />
           <DButton flex alert>
             <DeleteForever size={"18px"} title="Delete Permanently" />
           </DButton>

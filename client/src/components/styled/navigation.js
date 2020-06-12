@@ -50,17 +50,21 @@ export const DNavigation = styled.nav`
 
     @media (max-width: 768px) {
       padding: 10px 0;
-      height: 100px;
+
+      .brand-container {
+        width: 100px;
+
+        border: 1px solid #fff;
+      }
     }
 
     @media (max-width: 500px) {
       padding: 2px 0;
-      height: 80px;
+
       width: 90%;
 
-      .logo {
+      .brand-container {
         width: 70px;
-        margin: 5px 0;
       }
     }
   }

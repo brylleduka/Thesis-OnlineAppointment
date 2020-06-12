@@ -604,77 +604,101 @@ export const DFooterLinks = styled.section`
   font-size: 12px;
   padding: 35px 0;
   width: 100%;
+  overflow: hidden;
 
-  .links-inner {
+  .footer-container {
     width: 95%;
     margin: 0 auto;
     padding: 0 20px;
     display: grid;
-    grid-template-columns: 2fr repeat(4, 1fr);
+    grid-template-columns: 1fr 2fr;
     grid-gap: 20px;
-    align-items: flex-start;
-    justify-content: center;
     font-weight: 500;
 
-    .logo-ig {
-      color: transparent !important;
-      background: -webkit-radial-gradient(
-        30% 107%,
-        circle,
-        #fdf497 0%,
-        #fdf497 5%,
-        #fd5949 45%,
-        #d6249f 60%,
-        #285aeb 90%
-      ) !important;
-      background: -o-radial-gradient(
-        30% 107%,
-        circle,
-        #fdf497 0%,
-        #fdf497 5%,
-        #fd5949 45%,
-        #d6249f 60%,
-        #285aeb 90%
-      ) !important;
-      background: radial-gradient(
-        circle at 30% 107%,
-        #fdf497 0%,
-        #fdf497 5%,
-        #fd5949 45%,
-        #d6249f 60%,
-        #285aeb 90%
-      ) !important;
-      background: -webkit-radial-gradient(
-        circle at 30% 107%,
-        #fdf497 0%,
-        #fdf497 5%,
-        #fd5949 45%,
-        #d6249f 60%,
-        #285aeb 90%
-      ) !important;
-      background-clip: text !important;
-      -webkit-background-clip: text !important;
+    .branding {
+      display: inline-block;
+      word-break: break-word;
     }
 
-    li {
-      line-height: 2.8;
-    }
+    .inner-links {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 10px;
 
-    a {
-      font-weight: 500;
-      letter-spacing: 2px;
+      .logo-ig {
+        color: transparent !important;
+        background: -webkit-radial-gradient(
+          30% 107%,
+          circle,
+          #fdf497 0%,
+          #fdf497 5%,
+          #fd5949 45%,
+          #d6249f 60%,
+          #285aeb 90%
+        ) !important;
+        background: -o-radial-gradient(
+          30% 107%,
+          circle,
+          #fdf497 0%,
+          #fdf497 5%,
+          #fd5949 45%,
+          #d6249f 60%,
+          #285aeb 90%
+        ) !important;
+        background: radial-gradient(
+          circle at 30% 107%,
+          #fdf497 0%,
+          #fdf497 5%,
+          #fd5949 45%,
+          #d6249f 60%,
+          #285aeb 90%
+        ) !important;
+        background: -webkit-radial-gradient(
+          circle at 30% 107%,
+          #fdf497 0%,
+          #fdf497 5%,
+          #fd5949 45%,
+          #d6249f 60%,
+          #285aeb 90%
+        ) !important;
+        background-clip: text !important;
+        -webkit-background-clip: text !important;
+      }
 
-      &:hover {
+      li {
+        line-height: 2.8;
+      }
+
+      a {
+        font-weight: 500;
+        letter-spacing: 2px;
         color: #fff;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+
+    @media (max-width: 1024) {
+      grid-template-columns: repeat(2, 1fr);
+      .branding {
+        h2 {
+          font-size: 38px;
+          word-wrap: break-word;
+        }
+      }
+
+      .inner-links {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
     @media (max-width: 768px) {
-      grid-template-columns: repeat(4, 1fr);
-    }
-
-    @media (max-width: 500px) {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr;
+      .inner-links {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
   }
 `;
