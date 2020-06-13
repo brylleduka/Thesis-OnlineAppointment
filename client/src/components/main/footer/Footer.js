@@ -14,15 +14,23 @@ const Footer = () => {
     <>
       <DFooterLinks>
         <div className="footer-container">
-          <div
-            style={{ display: "flex", flexDirection: "column" }}
-            className="branding"
-          >
-            <h2>Z ESSENCE FACIAL AND SPA</h2>
+          <div className="branding">
+            <div className="brand-content">
+              <div className="brand-container">
+                <img
+                  src={"/images/logo.png"}
+                  alt="Z Essence"
+                  className="brand"
+                />
+              </div>
+              <h3>Z ESSENCE FACIAL AND SPA</h3>
+            </div>
+
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis,
-              rerum quaerat quasi dolore ex recusandae quas eligendi dolor?
-              Dolores, provident.
+              Specialize on facial treatments & spa services. ensuring our
+              clients the best quality of services with satisfying result as
+              much as possible,with modern machines for aesthetics and a
+              friendly accommodating staffs.
             </p>
           </div>
           <div className="inner-links">
@@ -68,15 +76,12 @@ const Footer = () => {
                 }}
               >
                 <h3>Visit</h3>
-                <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Pariatur, quae.
-                </p>
+                <p>114 Malihan St, Dasmariñas, Cavite</p>
               </div>
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <h3>Contact</h3>
                 <ul>
-                  <li>zessence@gmail.com</li>
+                  <li>zessence.spa@gmail.com</li>
                   <li>09876543121</li>
                   <li>431-4031</li>
                 </ul>

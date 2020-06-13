@@ -13,6 +13,7 @@ import parser from "html-react-parser";
 import { DCard, Content } from "../../../styled/containers";
 import ArchServSubView from "./ArchServSubView";
 import ArchServSubRestore from "./ArchServSubRestore";
+import ArchServSubDelete from "./ArchServSubDelete";
 
 const ArchServSub = () => {
   const [archServices, setArchServices] = useState([]);
@@ -23,7 +24,7 @@ const ArchServSub = () => {
     data: servicesData,
     loading: servicesLoad,
     error: servicesErr,
-  } = useQuery(FETCH_ALL_SERVICES_QUERY, { variables: { active: true } });
+  } = useQuery(FETCH_ALL_SERVICES_QUERY, { variables: { active: false } });
 
   useEffect(() => {
     if (servicesData) setArchServices(servicesData.allServices);
@@ -125,9 +126,7 @@ const ArchServSub = () => {
             <Eye size={"18px"} title="View Details" />
           </DButton>
           <ArchServSubRestore serviceId={row._id} />
-          <DButton flex alert>
-            <DeleteForever size={"18px"} title="Delete Permanently" />
-          </DButton>
+          <ArchServSubDelete serviceId={row._id} />
         </Content>
       ),
     },

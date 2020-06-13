@@ -104,13 +104,13 @@ module.exports = {
 
     archivedService: async (_, { _id, active }) => {
       try {
-        await Service.findOneAndUpdate(
+        const updatedService = await Service.findOneAndUpdate(
           { _id },
           { $set: { active } },
-          { new: true }
+          { new: true, upsert: true }
         );
 
-        return true;
+        return updatedService;
       } catch (err) {
         throw err;
       }

@@ -616,8 +616,39 @@ export const DFooterLinks = styled.section`
     font-weight: 500;
 
     .branding {
-      display: inline-block;
-      word-break: break-word;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      p {
+        font-size: 12px;
+        letter-spacing: 1.5px;
+      }
+
+      .brand-content {
+        width: 100%;
+        display: flex;
+        align-items: center;
+
+        h3 {
+          font-size: 22px;
+        }
+
+        .brand-container {
+          width: 80px;
+          height: 100%;
+          margin-right: 5px;
+
+          .brand {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: grayscale(100%) brightness(0%) invert(100%);
+            -webkit-filter: grayscale(100%) brightness(0%) invert(100%);
+            -moz-filter: grayscale(100%) brightness(0%) invert(100%);
+          }
+        }
+      }
     }
 
     .inner-links {

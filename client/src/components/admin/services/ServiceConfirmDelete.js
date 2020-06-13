@@ -154,7 +154,7 @@ const ServiceConfirmDelete = ({
             justify="flex-end"
             align="center"
           >
-            <DButton basic confirm onClick={() => archiveService()}>
+            <DButton confirm onClick={() => archiveService()}>
               {loadArchiveService ? (
                 <Spinner inverted small row content="Loading..." />
               ) : (
@@ -173,7 +173,15 @@ const ServiceConfirmDelete = ({
 
 const ARCHIVE_SERVICE = gql`
   mutation archivedService($serviceId: ID!, $active: Boolean) {
-    archivedService(_id: $serviceId, active: $active)
+    archivedService(_id: $serviceId, active: $active) {
+      _id
+      name
+      duration
+      price
+      description
+      photo
+      active
+    }
   }
 `;
 

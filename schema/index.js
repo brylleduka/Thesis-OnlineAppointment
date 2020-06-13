@@ -499,7 +499,7 @@ const typeDefs = gql`
       duration: Int
       description: String
     ): Service
-    archivedService(_id: ID!, active: Boolean): Boolean
+    archivedService(_id: ID!, active: Boolean): Service
     deleteService(_id: ID!): Boolean
     addServicePhoto(_id: ID!, file: Upload): Boolean
 

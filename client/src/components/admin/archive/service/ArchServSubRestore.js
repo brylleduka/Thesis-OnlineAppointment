@@ -98,7 +98,15 @@ const ArchServSubRestore = ({ serviceId }) => {
 
 const RESTORE_SERVICE_SUB = gql`
   mutation archivedService($serviceId: ID!, $active: Boolean) {
-    archivedService(_id: $serviceId, active: $active)
+    archivedService(_id: $serviceId, active: $active) {
+      _id
+      name
+      duration
+      price
+      description
+      photo
+      active
+    }
   }
 `;
 

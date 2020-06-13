@@ -36,9 +36,6 @@ export const DNavigation = styled.nav`
         width: 100%;
         height: 100%;
         object-fit: contain;
-        ${(props) =>
-          props.scrolled &&
-          "filter: invert(41%) sepia(97%) saturate(507%) hue-rotate(164deg) brightness(100%) contrast(98%)"};
       }
     }
 
@@ -68,10 +65,6 @@ export const DNavigation = styled.nav`
       }
     }
   }
-
-  ${(props) =>
-    props.scrolled &&
-    "background: rgba(0,0,0,0.4); height: 12vh; transition: all 0.2s ease-in-out;"};
 `;
 
 export const DMenu = styled.ul`
@@ -84,8 +77,6 @@ export const DMenu = styled.ul`
     padding-bottom: 2px;
     color: ${({ theme }) => theme.dark};
   }
-
-  ${(props) => props.scrolled && "li a {color: #fff}"};
 
   li a:hover,
   &.active {
@@ -255,9 +246,6 @@ export const DRightMenu = styled(DMenu)`
     color: #232323;
   }
 
-  ${(props) =>
-    props.scrolled && ".avatarLog {color: #fff}; li a {color: #fff};"};
-
   li:first-child {
     padding: 10px;
   }
@@ -398,8 +386,6 @@ export const DropdownCustomNav = styled(Dropdown)`
     font-weight: 500;
     color: ${({ theme }) => theme.primary} !important;
   }
-
-  ${(props) => props.scrolled && "color: #fff; a {color: #fff}"};
 
   @media (max-width: 1024px) {
     a {
