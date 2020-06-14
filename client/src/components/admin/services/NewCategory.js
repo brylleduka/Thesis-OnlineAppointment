@@ -44,9 +44,9 @@ const NewCategory = ({ open, setOpen }) => {
           data: { categories: [newCategory, ...data.categories] },
         });
       },
-      // refetchQueries: [
-      //   { query: FETCH_ALL_CATEGORIES_QUERY, variables: { active: true } },
-      // ],
+      refetchQueries: [
+        { query: FETCH_ALL_CATEGORIES_QUERY, variables: { active: true } },
+      ],
       onCompleted() {
         setOpen(false);
         setContent("");
@@ -147,7 +147,7 @@ const NewCategory = ({ open, setOpen }) => {
           </DButton>
           <DButton confirm flex onClick={handleSaveCategory}>
             {loading ? (
-              <Spinner inverted small content="Loading..." />
+              <Spinner inverted small row content="Loading..." />
             ) : (
               <>
                 <Check size="22px" />

@@ -132,6 +132,11 @@ const typeDefs = gql`
   }
 
   #CMS
+  type Brand {
+    _id: ID
+    image: String
+    active: Boolean
+  }
 
   type HomeCMS {
     _id: ID
@@ -364,6 +369,10 @@ const typeDefs = gql`
     homeCMS(sectionName: String): HomeCMS
     # CMS ABOUT
     aboutUsCMS(contentName: String): AboutCMS
+
+    brands: [Brand]
+    brand(_id: ID): Brand
+    brandActive: Brand
   }
 
   type Mutation {
@@ -568,6 +577,11 @@ const typeDefs = gql`
     updateAboutUs(inputAbout: AboutInput): AboutCMS
     updateStory(inputStory: StoryInput): AboutCMS
     updateMission(inputMissionVision: MissionVisionInput): AboutCMS
+
+    # BRAND
+    addBrand(image: Upload): Brand
+    updateActiveBrand(_id: ID): Brand
+    deleteBrand(_id: ID): Brand
   }
 `;
 

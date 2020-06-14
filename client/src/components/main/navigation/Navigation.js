@@ -12,8 +12,8 @@ import {
   DropdownCustomNav,
 } from "../../styled/navigation";
 import Burger from "./Burger";
+import Branding from "./Branding";
 import useScroll from "../../../util/hooks/useScroll";
-import { ReactComponent as ZEssenceLogo } from "../../../ze_logo.svg";
 
 const Navigation = ({ open, setOpen }) => {
   const scrolling = useScroll();
@@ -46,10 +46,7 @@ const Navigation = ({ open, setOpen }) => {
     <DNavigation ref={node} scrolled={scrolling ? true : false}>
       <div className="content">
         <Link to="/">
-          <div className="brand-container">
-            <img src={"/images/logo.png"} alt="Z Essence" className="brand" />
-            {/* <ZEssenceLogo className="brand" /> */}
-          </div>
+          <Branding />
         </Link>
         <Burger open={open} setOpen={setOpen} />
 

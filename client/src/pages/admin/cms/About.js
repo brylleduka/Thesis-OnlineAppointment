@@ -38,7 +38,7 @@ const About = () => {
         </div>
       </Content>
       <Heading />
-      <Mission />
+      {/* <Mission /> */}
       <Story />
     </Layout>
   );

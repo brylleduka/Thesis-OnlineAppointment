@@ -48,7 +48,7 @@ const Heading = () => {
           >
             <h1 style={{ fontSize: "38px" }}>{isAbout.title}</h1>
             {isAbout.subtitle !== "" && <h4>{isAbout.subtitle}</h4>}
-            <MouseScroll />
+            <MouseScroll inverted={isAbout.dark ? true : false} />
           </Content>
           <Overlay bgc={isAbout.overlay ? true : false} />
           <ModalHeading isAbout={dataAboutContent.aboutUsCMS} />

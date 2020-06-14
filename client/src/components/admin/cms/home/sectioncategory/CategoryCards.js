@@ -30,7 +30,7 @@ const CategoryCards = ({ gridCount }) => {
   if (error) return Page404;
 
   return (
-    <Content height="100%" width="100%">
+    <Content height="auto" width="100%">
       {loading ? (
         <DGrid four gap="20px">
           <Skeleton width="100%" height={300} />

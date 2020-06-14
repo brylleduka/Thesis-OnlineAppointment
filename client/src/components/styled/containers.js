@@ -341,7 +341,6 @@ export const Overlay = styled.div`
   .overlay-box {
     width: ${(props) => (props.initbox ? "110%" : "0")};
     height: 110%;
-    border: 1px solid white;
     margin: 0 auto;
     transform: rotate(45deg);
     transform-origin: center;

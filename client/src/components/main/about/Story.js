@@ -7,7 +7,7 @@ const Story = ({ content, aboutUS }) => {
 
   return (
     <>
-      <DSection
+      {/* <DSection
         height="100%"
         width="90%"
         flex
@@ -65,7 +65,7 @@ const Story = ({ content, aboutUS }) => {
             />
           </DImage>
         </Content>
-      </DSection>
+      </DSection> */}
       <DSection
         height="100%"
         width="90%"

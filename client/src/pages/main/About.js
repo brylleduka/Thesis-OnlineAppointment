@@ -68,7 +68,10 @@ const About = () => {
             </h1>
             {loadAbout && <Spinner medium inverted />}
             {about.subtitle !== "" && <h3>{about.subtitles}</h3>}
-            <MouseScroll onClick={scrollDown} />
+            <MouseScroll
+              onClick={scrollDown}
+              inverted={about.dark ? true : false}
+            />
           </Content>
           <Overlay bgc={about.overlay ? true : false} />
         </DSection>
