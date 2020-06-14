@@ -50,8 +50,6 @@ export const DNavigation = styled.nav`
 
       .brand-container {
         width: 100px;
-
-        border: 1px solid #fff;
       }
     }
 
