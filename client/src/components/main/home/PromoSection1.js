@@ -12,12 +12,8 @@ const PromoSection1 = () => {
       className="dark"
     >
       <Content>
-        <h2>Simply Beauty</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-          aliquam culpa veniam harum deleniti nihil, aut quasi ipsam minus.
-          Quidem!
-        </p>
+        <h2>The Concept of Beauty</h2>
+        <p>Love your Skin. Feel Fabulous.</p>
         <Link to="/appointment" className="btn">
           Book Now!
         </Link>
