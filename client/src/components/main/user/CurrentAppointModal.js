@@ -11,7 +11,6 @@ import CancelAppoint from "./CancelAppoint";
 import ReschedModal from "../appointment/ReschedModal";
 import Spinner from "../../Spinner";
 
-
 const CurrentAppointModal = ({ appointId, open, setOpen }) => {
   let verified;
   let pending;
@@ -64,8 +63,40 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
           ) : (
             <>
               <Modal.Content scrolling>
-                <Content width="80%" height="100%" margin="0 auto">
+                <Content width="100%" height="100%" margin="0 auto">
                   <DGrid>
+                    <Content
+                      width="100%"
+                      flex
+                      justify="space-between"
+                      align="center"
+                    >
+                      <DLabel
+                        flex
+                        justifyCenter
+                        alignCenter
+                        weight={700}
+                        w={"40%"}
+                        size="16px"
+                        bgcolor="#eee"
+                        rounded
+                      >
+                        <span>Appointment ID:</span>
+                      </DLabel>
+                      <Content
+                        width="50%"
+                        flex
+                        justify="flex-start"
+                        align="center"
+                        pad="10px 15px"
+                      >
+                        <h5>
+                          {appointmentInfo.appointment._id !== null
+                            ? appointmentInfo.appointment._id
+                            : "N/A"}
+                        </h5>
+                      </Content>
+                    </Content>
                     <Content
                       width="100%"
                       flex
@@ -91,7 +122,11 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
                         align="center"
                         pad="10px 15px"
                       >
-                        <h5>{appointmentInfo.appointment.service.name}</h5>
+                        <h5>
+                          {appointmentInfo.appointment.service !== null
+                            ? appointmentInfo.appointment.service.name
+                            : "N/A"}
+                        </h5>
                       </Content>
                     </Content>
                     <Content width="100%" flex justify="space-between">
@@ -114,11 +149,15 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
                         align="center"
                         pad="10px 15px"
                       >
-                        <h5>
-                          {appointmentInfo.appointment.employee.title}{" "}
-                          {appointmentInfo.appointment.employee.firstName}{" "}
-                          {appointmentInfo.appointment.employee.lastName}
-                        </h5>
+                        {appointmentInfo.appointment.employee !== null ? (
+                          <h5>
+                            {appointmentInfo.appointment.employee.title}{" "}
+                            {appointmentInfo.appointment.employee.firstName}{" "}
+                            {appointmentInfo.appointment.employee.lastName}
+                          </h5>
+                        ) : (
+                          "N/A"
+                        )}
                       </Content>
                     </Content>
                     <Content width="100%" flex justify="space-between">
@@ -191,9 +230,13 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
                         align="center"
                         pad="10px 15px"
                       >
-                        <h5>
-                          {appointmentInfo.appointment.service.duration} min
-                        </h5>
+                        {appointmentInfo.appointment.service !== null ? (
+                          <h5>
+                            {appointmentInfo.appointment.service.duration} min
+                          </h5>
+                        ) : (
+                          "N/A"
+                        )}
                       </Content>
                     </Content>
                     <Content width="100%" flex justify="space-between">
@@ -248,14 +291,14 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
                       align="center"
                     >
                       <Accordion
-                        title={"Message"}
+                        title={"Note"}
                         fs="14px"
                         bg="#eee"
                         color="#232323"
                         hoverColorText="#fff"
                         rounded
                       >
-                        <p>{appointmentInfo.appointment.message}</p>
+                        <p>{appointmentInfo.appointment.note}</p>
                       </Accordion>
                     </Content>
                     <Content

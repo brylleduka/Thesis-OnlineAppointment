@@ -45,7 +45,7 @@ const AccountContentOne = ({ handleAppointments, handleDetails, userInfo }) => {
 
   return (
     <Content width="100%" height="auto">
-      <Content flex direct="column" align="center" height="100%" width="100%">
+      <Content flex direct="column" align="center" height="auto" width="100%">
         <DCard dh="200px" flex justifyBetween alignCenter fcol>
           {loading ? (
             <h1>Loading..</h1>
@@ -66,7 +66,6 @@ const AccountContentOne = ({ handleAppointments, handleDetails, userInfo }) => {
             <Camera size="18px" color="white" />
             <input {...getInputProps()} />
           </span>
-          <Edit size="18px" />
           <ModalGateway>
             {viewerIsOpen ? (
               <Modal onClose={closeLightbox}>

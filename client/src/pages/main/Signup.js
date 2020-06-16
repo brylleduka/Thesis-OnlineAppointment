@@ -41,10 +41,8 @@ const Signup = (props) => {
           <Content width="90%" className="dark" style={{ zIndex: 2 }}>
             <h2>Sign Up</h2>
             <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit
-              magnam in veniam cupiditate voluptatem, aspernatur quod nesciunt
-              est, iure iusto ea voluptatum illo quaerat voluptas exercitationem
-              repudiandae tempore alias ratione.
+              Is your skin looking tired, dull and dehydrated? Find out how to
+              revive and renew your skin...
             </p>
           </Content>
           <Overlay />

@@ -6,16 +6,20 @@ import { Link } from "react-router-dom";
 import { Form, Icon, Dimmer, Loader, Label, Input } from "semantic-ui-react";
 import { Content } from "../../styled/containers";
 import { DButton } from "../../styled/utils";
+import TermsConditionsModal from "./TermsConditionsModal";
+import toaster from "toasted-notes";
+import Toasted from "../../Toasted";
 
 const SignupForm = ({ hist, from }) => {
   const [errors, setErrors] = useState({});
+  const [isTermsChecked, setIsTermsChecked] = useState(false);
 
   const { handleChange, handleSubmit, values } = useForm(registerCallBack, {
     firstName: "",
     lastName: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
 
   const [register, { loading }] = useMutation(REGISTER_USER, {
@@ -25,12 +29,24 @@ const SignupForm = ({ hist, from }) => {
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
-    variables: values
+    variables: values,
   });
 
   function registerCallBack() {
-    register();
+    if (isTermsChecked) {
+      register();
+    } else {
+      toaster.notify(({ onClose }) => (
+        <Toasted warning onClick={onClose}>
+          Agreeing to our terms and conditions in order to proceed.
+        </Toasted>
+      ));
+    }
   }
+
+  const handleTermsChecked = (e) => {
+    setIsTermsChecked(!isTermsChecked);
+  };
 
   return (
     <Content width="100%" flex justify="center" margin="50px 0 80px 0">
@@ -141,8 +157,36 @@ const SignupForm = ({ hist, from }) => {
             placeholder="************"
           />
         </Form.Field>
+        <Form.Field>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            <div className="pretty p-default  p-curve p-pulse">
+              <input
+                type="checkbox"
+                name="terms"
+                value="terms"
+                onChange={handleTermsChecked}
+              />
+              <div className="state  p-info-o">
+                <label></label>
+              </div>
+            </div>
+            <TermsConditionsModal />
+          </div>
+        </Form.Field>
 
-        <DButton type="submit" fluid="true" size="3rem" fSize="18px" text="uppercase">
+        <DButton
+          type="submit"
+          fluid="true"
+          size="3rem"
+          fSize="18px"
+          text="uppercase"
+        >
           {loading ? (
             <Dimmer active style={{ background: "transparent" }}>
               <Loader />
@@ -157,7 +201,7 @@ const SignupForm = ({ hist, from }) => {
             marginTop: "1rem",
             textTransform: "uppercase",
             fontSize: "12px",
-            fontWeight: "700"
+            fontWeight: "700",
           }}
         >
           <Link to="/login">

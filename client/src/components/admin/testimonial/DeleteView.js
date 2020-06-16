@@ -15,17 +15,18 @@ import Toasted from "../../../components/Toasted";
 
 const DeleteView = ({ ridd, rvw, isDltModal, setIsDltModal }) => {
   const { width: wdth } = useWindowSize();
+
   const [errors, setErrors] = useState({});
 
-  const [archiveTestimonial, { loading: loadArchive }] = useMutation(
-    ARCHIVED_REVIEW,
+  const [deleteTestimonial, { loading: loadArchive }] = useMutation(
+    DELETE_REVIEW,
     {
       variables: { id: ridd },
       refetchQueries: [
         { query: FETCH_TESTIMONIALS, variables: { active: true } },
       ],
       onCompleted() {
-        toaster.notify("Testimonial was sent to archive files");
+        toaster.notify("Testimonial was delete permanently");
       },
       onError(err) {
         if (err.graphQLErrors[0].extensions.exception.errors.unauth) {
@@ -42,8 +43,8 @@ const DeleteView = ({ ridd, rvw, isDltModal, setIsDltModal }) => {
     }
   );
 
-  const handleArchive = () => {
-    archiveTestimonial();
+  const handleDelete = () => {
+    deleteTestimonial();
   };
 
   return (
@@ -80,7 +81,11 @@ const DeleteView = ({ ridd, rvw, isDltModal, setIsDltModal }) => {
               <Popup
                 content="Deleting will permanently erase this review"
                 trigger={
-                  <DButton alert style={{ fontSize: "12px" }}>
+                  <DButton
+                    alert
+                    style={{ fontSize: "12px" }}
+                    onClick={handleDelete}
+                  >
                     <DeleteForever size="22px" /> Delete Permanently
                   </DButton>
                 }
@@ -88,18 +93,8 @@ const DeleteView = ({ ridd, rvw, isDltModal, setIsDltModal }) => {
               />
             </Content>
             <Content width="auto" flex justify="space-around" align="center">
-              <DButton confirm onClick={handleArchive} basic>
-                {loadArchive ? (
-                  <Spinner inverted small />
-                ) : (
-                  <>
-                    <Icon name="check" /> Yes
-                  </>
-                )}
-              </DButton>
-
-              <DButton alert onClick={() => setIsDltModal(false)} basic>
-                <Icon name="ban" /> No
+              <DButton primary onClick={() => setIsDltModal(false)}>
+                <Icon name="ban" /> Cancel
               </DButton>
             </Content>
           </Content>
@@ -109,9 +104,9 @@ const DeleteView = ({ ridd, rvw, isDltModal, setIsDltModal }) => {
   );
 };
 
-const ARCHIVED_REVIEW = gql`
-  mutation archiveTestimonial($id: ID!) {
-    archiveTestimonial(_id: $id)
+const DELETE_REVIEW = gql`
+  mutation deleteTestimonial($id: ID!) {
+    deleteTestimonial(_id: $id)
   }
 `;
 

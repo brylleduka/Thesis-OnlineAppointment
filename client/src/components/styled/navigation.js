@@ -339,12 +339,6 @@ export const DBurger = styled.nav`
       transform: ${({ open }) => (open ? "rotate(-45deg)" : "rotate(0)")};
     }
 
-    ${(props) =>
-      props.scrolled &&
-      css`
-        background: ${({ theme, open }) =>
-          open ? theme.secondary : theme.light};
-      `};
   }
 
   @media only screen and (min-width: 1025px) {

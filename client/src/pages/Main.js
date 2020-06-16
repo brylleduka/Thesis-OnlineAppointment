@@ -15,6 +15,7 @@ import Service from "./main/Service";
 import ThankYou from "./main/ThankYou";
 import VerifyNotice from "./main/VerifyNotice";
 import Account from "./main/Account";
+import Terms from "./main/Terms";
 import { UserAuthRoute } from "../util/AuthRoute";
 import { UserPrivateRoute } from "../util/PrivateRoute";
 import Footer from "../components/main/footer/Footer";
@@ -33,11 +34,13 @@ function Main({ match }) {
         <Route path={`/about`} component={About} exact />
         <Route path={`/contact`} component={Contact} exact />
         <Route path={`/gallery`} component={Gallery} exact />
+
         <Route path={`/album/:_id`} component={Album} exact />
         <Route path={`/testimonials`} component={Testimonials} exact />
         <Route path={`/services&rates`} component={Services} exact />
         <Route path={`/service/:_id`} component={Service} exact />
         <Route path={`/verified/:emailToken`} component={ThankYou} exact />
+        <Route path={`/terms&conditions`} component={Terms} exact />
         <UserPrivateRoute
           path={`/verifynotice`}
           component={VerifyNotice}

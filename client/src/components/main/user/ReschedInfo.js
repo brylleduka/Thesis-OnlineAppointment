@@ -13,8 +13,8 @@ const ReschedInfo = ({ appointResched }) => {
     FETCH_SINGLE_APPOINTMENT_QUERY,
     {
       variables: {
-        appointmentId: reschedId
-      }
+        appointmentId: reschedId,
+      },
     }
   );
 
@@ -59,7 +59,11 @@ const ReschedInfo = ({ appointResched }) => {
                   align="center"
                   pad="10px 15px"
                 >
-                  <h6>{reschedData.appointment.service.name}</h6>
+                  <h6>
+                    {reschedData.appointment.service !== null
+                      ? reschedData.appointment.service.name
+                      : "N/A"}
+                  </h6>
                 </Content>
               </Content>
               <Content
@@ -88,11 +92,15 @@ const ReschedInfo = ({ appointResched }) => {
                   align="center"
                   pad="10px 15px"
                 >
-                  <h6>
-                    {reschedData.appointment.employee.title}{" "}
-                    {reschedData.appointment.employee.firstName}{" "}
-                    {reschedData.appointment.employee.lastName}
-                  </h6>
+                  {reschedData.appointment.employee !== null ? (
+                    <h6>
+                      {reschedData.appointment.employee.title}{" "}
+                      {reschedData.appointment.employee.firstName}{" "}
+                      {reschedData.appointment.employee.lastName}
+                    </h6>
+                  ) : (
+                    "N/A"
+                  )}
                 </Content>
               </Content>
               <Content

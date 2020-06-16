@@ -4,7 +4,8 @@ import { FETCH_MY_CURRENT_APPOINTMENTS } from "../../../util/graphql/appointment
 import { Content } from "../../styled/containers";
 import { DButton } from "../../styled/utils";
 import DataTable from "react-data-table-component";
-import { Grid, Popup, Icon } from "semantic-ui-react";
+import { Popup, Icon } from "semantic-ui-react";
+import Spinner from "../../Spinner";
 import moment from "moment";
 import CurrentAppointModal from "./CurrentAppointModal";
 
@@ -41,13 +42,17 @@ const CurrentAppointment = () => {
       selector: "employee",
       wrap: true,
       sortable: true,
-      format: (row) => `${row.employee.firstName} ${row.employee.lastName}`,
+      cell: (row) =>
+        row.employee === null
+          ? "N/A"
+          : row.employee.firstName + " " + row.employee.lastName,
     },
     {
       name: "Service",
       selector: "service.name",
       wrap: true,
       sortable: true,
+      cell: (row) => (row.service === null ? "N/A" : row.service.name),
     },
     {
       name: "Date",
@@ -77,17 +82,12 @@ const CurrentAppointment = () => {
     },
     {
       name: "Actions",
-
+      right: true,
       cell: (row) => (
         <>
           <Popup
             trigger={
-              <DButton
-                height="auto"
-                width="100%"
-                pad="2px 8px"
-                onClick={() => setOpen(true)}
-              >
+              <DButton flex onClick={() => setOpen(true)}>
                 <Icon name="eye" fitted />
               </DButton>
             }
@@ -97,60 +97,6 @@ const CurrentAppointment = () => {
             position="left center"
             size="tiny"
           />
-
-          <Popup
-            wide
-            trigger={
-              <DButton
-                alert
-                height="auto"
-                width="100%"
-                pad="2px 8px"
-                onClick={handlePop}
-              >
-                <Icon name="ban" fitted />
-              </DButton>
-            }
-            open={isPop}
-            position="top right"
-          >
-            <Grid divided columns="equal">
-              <Grid.Column>
-                <Popup
-                  trigger={
-                    <DButton confirm height="auto" width="100%" pad="2px 8px">
-                      <Icon name="check" fitted />
-                    </DButton>
-                  }
-                  mouseEnterDelay={500}
-                  mouseLeaveDelay={500}
-                  content="Yes I want to cancel my appointment"
-                  position="top center"
-                  size="tiny"
-                />
-              </Grid.Column>
-              <Grid.Column>
-                <Popup
-                  trigger={
-                    <DButton
-                      alert
-                      height="auto"
-                      width="100%"
-                      pad="2px 8px"
-                      onClick={() => setIsPop(false)}
-                    >
-                      <Icon name="close" fitted />
-                    </DButton>
-                  }
-                  mouseEnterDelay={500}
-                  mouseLeaveDelay={500}
-                  content="No, I do not want to cancel my appointment."
-                  position="top center"
-                  size="tiny"
-                />
-              </Grid.Column>
-            </Grid>
-          </Popup>
           <CurrentAppointModal
             appointId={row._id}
             open={open}
@@ -171,21 +117,21 @@ const CurrentAppointment = () => {
       width="100%"
       rounded
     >
-      {currentAppointLoading ? (
-        <h2>Loading...</h2>
-      ) : (
-        <DataTable
-          columns={columns}
-          data={currentAppoint}
-          responsive
-          pagination={true}
-          paginationPerPage={5}
-          paginationRowsPerPageOptions={paginationRowsPerPageOptions}
-          customStyles={customStyles}
-          highlightOnHover
-          pointerOnHover
-        />
-      )}
+      <DataTable
+        columns={columns}
+        data={currentAppoint}
+        responsive
+        pagination={true}
+        paginationPerPage={5}
+        paginationRowsPerPageOptions={paginationRowsPerPageOptions}
+        customStyles={customStyles}
+        progressPending={currentAppointLoading}
+        progressComponent={
+          <Spinner content="Please wait while we fetch our data..." />
+        }
+        highlightOnHover
+        pointerOnHover
+      />
     </Content>
   );
 };

@@ -29,14 +29,9 @@ const Signin = (props) => {
           }
           className="signin-left"
         >
-          <Content width="90%">
+          <Content width="90%" className="dark">
             <h2>Sign In</h2>
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Impedit
-              magnam in veniam cupiditate voluptatem, aspernatur quod nesciunt
-              est, iure iusto ea voluptatum illo quaerat voluptas exercitationem
-              repudiandae tempore alias ratione.
-            </p>
+            <p>A beautiful day begins with a beautiful mindset.</p>
           </Content>
         </DSection>
         <DSection
