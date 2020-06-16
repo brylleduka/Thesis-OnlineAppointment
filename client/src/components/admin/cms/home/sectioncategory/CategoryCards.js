@@ -10,7 +10,7 @@ import {
 } from "../../../../styled/containers";
 import useWindowSize from "../../../../../util/hooks/useWindowSize";
 import ReadMore from "../../../../ReadMore";
-import Skeleton from "react-loading-skeleton";
+import Spinner from "../../../../Spinner";
 import parser from "html-react-parser";
 import Page404 from "../../../../../pages/Page404";
 
@@ -32,12 +32,9 @@ const CategoryCards = ({ gridCount }) => {
   return (
     <Content height="auto" width="100%">
       {loading ? (
-        <DGrid four gap="20px">
-          <Skeleton width="100%" height={300} />
-          <Skeleton width="100%" height={300} />
-          <Skeleton width="100%" height={300} />
-          <Skeleton width="100%" height={300} />
-        </DGrid>
+        <Content width="100%" margin="0 auto" height="80vh">
+          <Spinner />
+        </Content>
       ) : (
         <DGrid
           two={gridCount === 2 ? true : false}

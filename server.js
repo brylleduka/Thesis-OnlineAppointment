@@ -18,9 +18,9 @@ mongoose
   .connect(uri, {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   })
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
 
 mongoose.set("useFindAndModify", false);
 
@@ -33,18 +33,18 @@ const server = new ApolloServer({
   cors: true,
   typeDefs,
   resolvers,
-  context: ({ req, res }) => ({ req, res })
+  context: ({ req, res }) => ({ req, res }),
 });
 
 server.applyMiddleware({ app });
 
-// if (process.env.NODE_ENV === "production") {
-//   app.use((req, res, next) => {
-//     if (req.header("x-forwarded-proto") !== "https")
-//       res.redirect(`https://${req.header("host")}${req.url}`);
-//     else next();
-//   });
-// }
+if (process.env.NODE_ENV === "production") {
+  app.use((req, res, next) => {
+    if (req.header("x-forwarded-proto") !== "https")
+      res.redirect(`https://${req.header("host")}${req.url}`);
+    else next();
+  });
+}
 
 app.use("/images", express.static(path.join(__dirname, "/images")));
 

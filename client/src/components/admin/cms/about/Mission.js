@@ -3,7 +3,8 @@ import { useQuery } from "@apollo/react-hooks";
 import { FETCH_ABOUT_CMS } from "../../../../util/graphql/cms";
 import { DSection, Content, DImage } from "../../../styled/containers";
 import ModalMissionVision from "./ModalMissionVision";
-import Skeleton from "react-loading-skeleton";
+
+import Spinner from "../../../Spinner";
 import useWindowSize from "../../../../util/hooks/useWindowSize";
 
 const Story = () => {
@@ -35,7 +36,7 @@ const Story = () => {
           align="center"
           mcenter
         >
-          <Skeleton width="50%" height="50vh" />
+          <Spinner />
         </DSection>
       ) : (
         <DSection

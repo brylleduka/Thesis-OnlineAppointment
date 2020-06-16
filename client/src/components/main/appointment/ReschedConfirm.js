@@ -3,16 +3,13 @@ import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { FETCH_SINGLE_SERVICE_QUERY } from "../../../util/graphql/service";
 import { FETCH_EMPLOYEE_QUERY } from "../../../util/graphql/employee";
-import {
-  FETCH_MY_APPOINTMENTS
-} from "../../../util/graphql/appointment";
+import { FETCH_MY_APPOINTMENTS } from "../../../util/graphql/appointment";
 import { Modal } from "semantic-ui-react";
 import { DButton, DLabel, Toasted } from "../../styled/utils";
 import { Content, DGrid } from "../../styled/containers";
 import Spinner from "../../Spinner";
 import toaster from "toasted-notes";
 import moment from "moment";
-import Skeleton from "react-loading-skeleton";
 
 const ReschedConfirm = ({
   serviceValue,
@@ -23,7 +20,7 @@ const ReschedConfirm = ({
   appointmentId,
   setOpen,
   isAdmin,
-  status
+  status,
 }) => {
   // const [addInfo, setAddInfo] = useState("");
   // const history = useHistory();
@@ -33,8 +30,8 @@ const ReschedConfirm = ({
     FETCH_SINGLE_SERVICE_QUERY,
     {
       variables: {
-        serviceId: serviceValue
-      }
+        serviceId: serviceValue,
+      },
     }
   );
 
@@ -42,15 +39,15 @@ const ReschedConfirm = ({
     FETCH_EMPLOYEE_QUERY,
     {
       variables: {
-        employeeId: employeeVal
-      }
+        employeeId: employeeVal,
+      },
     }
   );
 
   const [reschedAppointment, { loading }] = useMutation(RESCHED_APPOINTMENT, {
     update(cache, result) {
       const data = cache.readQuery({
-        query: FETCH_MY_APPOINTMENTS
+        query: FETCH_MY_APPOINTMENTS,
       });
 
       const reAppointment = result.data.reschedAppointment;
@@ -58,8 +55,8 @@ const ReschedConfirm = ({
       cache.writeQuery({
         query: FETCH_MY_APPOINTMENTS,
         data: {
-          appointments: [reAppointment, ...data.appointments]
-        }
+          appointments: [reAppointment, ...data.appointments],
+        },
       });
     },
     onCompleted(data) {
@@ -93,8 +90,8 @@ const ReschedConfirm = ({
       start: selectedTime,
       isAdmin,
       status,
-      message: ""
-    }
+      message: "",
+    },
   });
 
   // const handleMessage = e => {
@@ -256,10 +253,10 @@ const ReschedConfirm = ({
                 </DGrid>
               </Content>
             ) : (
-              <Skeleton count={5} />
+              <Spinner content="Fetching data..." />
             )
           ) : (
-            <Skeleton count={5} />
+            <Spinner content="Fetching data..." />
           )}
         </Modal.Content>
         <Modal.Actions>

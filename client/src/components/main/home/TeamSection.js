@@ -5,7 +5,8 @@ import { FETCH_EMPLOYEES_NOT_ADMIN_QUERY } from "../../../util/graphql/employee"
 import { HashLink as Link } from "react-router-hash-link";
 import { DGrid, DSection, Content } from "../../styled/containers";
 import { JCard4 } from "../../styled/card";
-import Skeleton from "react-loading-skeleton";
+
+import Spinner from "../../Spinner";
 import parser from "html-react-parser";
 import ReadMore from "../utils/ReadMore";
 import FancyText from "../../FancyText";
@@ -45,61 +46,42 @@ const TeamSection = ({ cards }) => {
       margin="48px auto"
     >
       <FancyText size="28px">Our Team</FancyText>
-
-      <DGrid four gap="25px">
-        {loading_employeesAR ? (
-          <>
-            <div style={styles.dloading}>
-              <Skeleton width="150px" height="150px" circle={true} />
-              <Skeleton width="250px" count={4} />
-            </div>
-
-            <div style={styles.dloading}>
-              <Skeleton width="150px" height="150px" circle={true} />
-              <Skeleton width="250px" count={4} />
-            </div>
-            <div style={styles.dloading}>
-              <Skeleton width="150px" height="150px" circle={true} />
-              <Skeleton width="250px" count={4} />
-            </div>
-            <div style={styles.dloading}>
-              <Skeleton width="150px" height="150px" circle={true} />
-              <Skeleton width="250px" count={4} />
-            </div>
-          </>
-        ) : (
-          employeesAR &&
-          employeesAR.map((employee) => (
-            <Content margin="0 auto" width="90%" height="100%">
-              <JCard4 data-emp={employee._id} key={employee._id}>
-                <div className="profile-image">
-                  <img
-                    src={
-                      employee.photo
-                        ? `/images/employees/${employee.photo}`
-                        : "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample83.jpg"
-                    }
-                    alt={employee.photo}
-                  />
-                </div>
-                <figcaption>
-                  <h3>
-                    {employee.title} {employee.firstName} {employee.lastName}
-                  </h3>
-                  <h4>{employee.role}</h4>
-                  <p>
-                    {employee.bio.length > 100
-                      ? parser(employee.bio.substr(0, 100) + "...")
-                      : parser(employee.bio.substr(0, 100))}
-                  </p>
-                  <ReadMore hover={0}>Read More</ReadMore>
-                </figcaption>
-                <Link to="/about" className="linkToPage" />
-              </JCard4>
-            </Content>
-          ))
-        )}
-      </DGrid>
+      {loading_employeesAR ? (
+        <Spinner />
+      ) : (
+        <DGrid four gap="25px">
+          {employeesAR &&
+            employeesAR.map((employee) => (
+              <Content margin="0 auto" width="90%" height="100%">
+                <JCard4 data-emp={employee._id} key={employee._id}>
+                  <div className="profile-image">
+                    <img
+                      src={
+                        employee.photo
+                          ? `/images/employees/${employee.photo}`
+                          : "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample83.jpg"
+                      }
+                      alt={employee.photo}
+                    />
+                  </div>
+                  <figcaption>
+                    <h3>
+                      {employee.title} {employee.firstName} {employee.lastName}
+                    </h3>
+                    <h4>{employee.role}</h4>
+                    <p>
+                      {employee.bio.length > 100
+                        ? parser(employee.bio.substr(0, 100) + "...")
+                        : parser(employee.bio.substr(0, 100))}
+                    </p>
+                    <ReadMore hover={0}>Read More</ReadMore>
+                  </figcaption>
+                  <Link to="/about" className="linkToPage" />
+                </JCard4>
+              </Content>
+            ))}
+        </DGrid>
+      )}
 
       <Link to="/about/#team" className="btn btn-blue">
         Learn More

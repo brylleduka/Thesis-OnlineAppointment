@@ -4,7 +4,6 @@ import { AuthContext } from "../../context/auth";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_EMPLOYEE_QUERY } from "../../util/graphql/employee";
 import { DSection, DGrid } from "../../components/styled/containers";
-import Skeleton from "react-loading-skeleton";
 import Spinner from "../../components/Spinner";
 import PhotoBooth from "../../components/admin/accounts/PhotoBooth";
 import AccountInfo from "../../components/admin/accounts/AccountInfo";

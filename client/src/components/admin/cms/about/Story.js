@@ -4,7 +4,7 @@ import { DSection, Content, DImage } from "../../../styled/containers";
 import { FETCH_ABOUT_CMS } from "../../../../util/graphql/cms";
 import useWindowSize from "../../../../util/hooks/useWindowSize";
 import ModalStory from "./ModalStory";
-import Skeleton from "react-loading-skeleton";
+import Spinner from "../../../Spinner";
 import parser from "html-react-parser";
 
 const Story = () => {
@@ -26,7 +26,7 @@ const Story = () => {
     <>
       {loadStoryContent ? (
         <DSection width="90%" mcenter>
-          <Skeleton width="100%" height="50vh" />
+          <Spinner />
         </DSection>
       ) : (
         <DSection

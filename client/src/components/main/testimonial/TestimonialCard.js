@@ -6,7 +6,8 @@ import Slider from "react-slick";
 import { DTestimonialCard } from "../../styled/card";
 import { Rating } from "semantic-ui-react";
 import Review from "./Review";
-import Skeleton from "react-loading-skeleton";
+
+import Spinner from "../../Spinner";
 import moment from "moment";
 
 const TestimonialCard = ({ content }) => {
@@ -28,11 +29,7 @@ const TestimonialCard = ({ content }) => {
       <Review />
       <Content width="80%" height="100%" margin="0 auto" pad="50px 0">
         {loadTestimonials ? (
-          <DGrid three gap="20px">
-            <Skeleton width={"100%"} height={"350px"} />
-            <Skeleton width={"100%"} height={"350px"} />
-            <Skeleton width={"100%"} height={"350px"} />
-          </DGrid>
+          <Spinner />
         ) : (
           <Slider {...settings}>
             {isTestimonials &&

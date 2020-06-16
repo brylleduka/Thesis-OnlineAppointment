@@ -12,7 +12,7 @@ import {
   DImage,
 } from "../../styled/containers";
 import FancyText from "../../FancyText";
-import Skeleton from "react-loading-skeleton";
+import Spinner from "../../Spinner";
 import parser from "html-react-parser";
 import ReadMore from "../utils/ReadMore";
 import useWindowSize from "../../../util/hooks/useWindowSize";
@@ -85,12 +85,9 @@ const CategorySection = ({ setRef }) => {
 
         <Content height="100%" width="100%">
           {loadingCategories ? (
-            <DGrid four gap="20px">
-              <Skeleton width="100%" height={300} />
-              <Skeleton width="100%" height={300} />
-              <Skeleton width="100%" height={300} />
-              <Skeleton width="100%" height={300} />
-            </DGrid>
+            <Content width="100%" height="80vh" margin="0 auto">
+              <Spinner />
+            </Content>
           ) : (
             <DGrid
               two={categorySection.grid === 2 ? true : false}

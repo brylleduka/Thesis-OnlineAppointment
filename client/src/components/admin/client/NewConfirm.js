@@ -11,7 +11,7 @@ import { Content, DGrid } from "../../styled/containers";
 import Spinner from "../../Spinner";
 import toaster from "toasted-notes";
 import moment from "moment";
-import Skeleton from "react-loading-skeleton";
+
 
 const NewConfirm = ({
   serviceValue,
@@ -240,15 +240,19 @@ const NewConfirm = ({
                 </DGrid>
               </Content>
             ) : (
-              <Skeleton count={5} />
+              <Spinner medium content="Please wait while we fetch your data" />
             )
           ) : (
-            <Skeleton count={5} />
+            <Spinner medium content="Please wait while we fetch your data" />
           )}
         </Modal.Content>
         <Modal.Actions>
           <DButton onClick={handleNewAppointment}>
-            {loading ? <Spinner small inverted /> : "Make Appointment"}
+            {loading ? (
+              <Spinner small row inverted content="Booking..." />
+            ) : (
+              "Make Appointment"
+            )}
           </DButton>
         </Modal.Actions>
       </Modal>

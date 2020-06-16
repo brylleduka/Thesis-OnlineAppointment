@@ -14,7 +14,6 @@ import Story from "../../components/main/about/Story";
 import Team from "../../components/main/about/Team";
 import MouseScroll from "../../components/MouseScroll";
 import { scrollView } from "../../util/useScrollDown";
-import Skeleton from "react-loading-skeleton";
 import Spinner from "../../components/Spinner";
 
 const About = () => {
@@ -86,10 +85,7 @@ const About = () => {
             margin="20px auto"
             pad="20px 0"
           >
-            <DGrid two gap="10px">
-              <Skeleton height="100%" width="100%" />
-              <Skeleton width="100%" height={20} count={10} />
-            </DGrid>
+            <Spinner content="Please wait while we fetch data..." />
           </DSection>
         ) : (
           <Story content={content} aboutUS={dataAbout.aboutUsCMS} />

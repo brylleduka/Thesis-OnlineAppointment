@@ -11,7 +11,6 @@ import {
 } from "../../components/styled/containers";
 import { DButton } from "../../components/styled/utils";
 import { JCard2 } from "../../components/styled/card";
-import Skeleton from "react-loading-skeleton";
 import parser from "html-react-parser";
 import { Icon } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";

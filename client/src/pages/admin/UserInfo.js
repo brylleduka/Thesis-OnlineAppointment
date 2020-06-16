@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { FETCH_USER_ACCOUNT } from "../../util/graphql/user";
 import Layout from "../../components/admin/layout/Layout";
 import { DSection, DGrid, Content } from "../../components/styled/containers";
-import Skeleton from "react-loading-skeleton";
+import Spinner from "../../components/Spinner";
 import PhotoBooth from "../../components/admin/client/PhotoBooth";
 import ClientDetails from "../../components/admin/client/ClientDetails";
 import { Breadcrumb } from "semantic-ui-react";
@@ -55,26 +55,18 @@ const UserInfo = (props) => {
           <AppointmentModal clientId={clientId} />
         </Content>
 
-        <DGrid custom="300px 1fr" gap="10px">
-          {dataClient && dataClient.user ? (
-            !loadingClient ? (
-              <>
-                <PhotoBooth photo={dataClient.user.photo} />
-                <ClientDetails userInfo={dataClient.user} />
-              </>
-            ) : (
-              <>
-                <Skeleton height={200} width={200} circle />
-                <Skeleton height={200} count={2} />
-              </>
-            )
+        {dataClient && dataClient.user ? (
+          !loadingClient ? (
+            <DGrid custom="300px 1fr" gap="10px">
+              <PhotoBooth photo={dataClient.user.photo} />
+              <ClientDetails userInfo={dataClient.user} />
+            </DGrid>
           ) : (
-            <>
-              <Skeleton height={200} width={200} circle />
-              <Skeleton height={200} count={2} />
-            </>
-          )}
-        </DGrid>
+            <Spinner content="Fetching data..." />
+          )
+        ) : (
+          <Spinner content="Fetching data..." />
+        )}
       </DSection>
     </Layout>
   );

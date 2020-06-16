@@ -10,7 +10,7 @@ import {
 } from "../../components/styled/containers";
 import AccountContentOne from "../../components/main/user/AccountContentOne";
 import AccountContentTwo from "../../components/main/user/AccountContentTwo";
-import Skeleton from "react-loading-skeleton";
+import Spinner from "../../components/Spinner";
 
 const Account = (props) => {
   const { user } = useContext(AuthContext);
@@ -22,7 +22,7 @@ const Account = (props) => {
       ? "details"
       : stored === "appointments"
       ? "appointments"
-      : "details"
+      : "appointments"
   );
 
   const { data: userInfo, loading: userLoading } = useQuery(
@@ -53,15 +53,8 @@ const Account = (props) => {
         <h1>Account</h1>
         {!userInfo ? (
           <DSection width="80%" mcenter height="100vh">
-            <Content flex justify="space-around" width="100%" height="100%">
-              <Skeleton circle height="150px" width="150px" />
-              <div style={{ width: "70%", margin: "0 auto" }}>
-                <Skeleton width="100%" height="100px" />
-                <br />
-                <Skeleton width="100%" height="50px" />
-                <Skeleton width="100%" height="50px" />
-                <Skeleton width="100%" height="50px" />
-              </div>
+            <Content flex justify="center" width="100%" height="100%">
+              <Spinner content="We're fetching your data..." />
             </Content>
           </DSection>
         ) : (

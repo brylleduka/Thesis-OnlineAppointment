@@ -9,8 +9,8 @@ import moment from "moment";
 import ReschedInfo from "./ReschedInfo";
 import CancelAppoint from "./CancelAppoint";
 import ReschedModal from "../appointment/ReschedModal";
+import Spinner from "../../Spinner";
 
-import Skeleton from "react-loading-skeleton";
 
 const CurrentAppointModal = ({ appointId, open, setOpen }) => {
   let verified;
@@ -28,8 +28,8 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
     FETCH_SINGLE_APPOINTMENT_QUERY,
     {
       variables: {
-        appointmentId: appointId
-      }
+        appointmentId: appointId,
+      },
     }
   );
 
@@ -41,9 +41,7 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
     cancelled = appointmentInfo.appointment.status === "CANCELLED";
 
     appointedDate = new Date(parseInt(appointmentInfo.appointment.date));
-    addDate = moment()
-      .add(1, "d")
-      .format("M/D/YYYY");
+    addDate = moment().add(1, "d").format("M/D/YYYY");
     diffDate = appointedDate <= new Date(addDate);
   }
 
@@ -61,8 +59,7 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
         {appointmentInfo ? (
           appointmentLoading ? (
             <Modal.Content>
-              <Skeleton />
-              <Skeleton count={5} />
+              <Spinner content="Fetching data..." />
             </Modal.Content>
           ) : (
             <>
@@ -224,7 +221,7 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
                             ({
                               width: "60%",
                               fontSize: "12px",
-                              fontWeight: 700
+                              fontWeight: 700,
                             },
                             verified
                               ? { color: "#0f9b0f" }
@@ -327,7 +324,7 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
           )
         ) : (
           <Modal.Content>
-            <Skeleton count={5} />
+            <Spinner content="Fetching data..." />
           </Modal.Content>
         )}
       </Modal>

@@ -3,8 +3,8 @@ import { useQuery } from "@apollo/react-hooks";
 import { FETCH_ABOUT_CMS } from "../../../../util/graphql/cms";
 import { DSection, Content, Overlay } from "../../../styled/containers";
 import MouseScroll from "../../../MouseScroll";
+import Spinner from "../../../Spinner";
 import ModalHeading from "./ModalHeading";
-import Skeleton from "react-loading-skeleton";
 
 const Heading = () => {
   const [isAbout, setIsAbout] = useState({});
@@ -24,7 +24,7 @@ const Heading = () => {
     <>
       {loadAboutContent ? (
         <DSection width="90%" mcenter>
-          <Skeleton width="100%" height="50vh" />
+          <Spinner  />
         </DSection>
       ) : (
         <DSection
