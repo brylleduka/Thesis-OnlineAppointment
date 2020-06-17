@@ -4,6 +4,8 @@ const Employee = require("../models/Employee");
 const { createWriteStream } = require("fs");
 const path = require("path");
 
+const { handleFileUpload } = require("../utils/handleFileUpload");
+
 module.exports = {
   Query: {
     categories: async (_, { active }) => {
@@ -69,22 +71,25 @@ module.exports = {
 
     addCategoryPhoto: async (_, { _id, file }) => {
       try {
-        const { createReadStream, filename } = await file;
-        await new Promise((res) =>
-          createReadStream().pipe(
-            createWriteStream(
-              path.join(__dirname, "../images/service", filename)
-            ).on("close", res)
-          )
-        );
+        const { filename } = await file;
+        // await new Promise((res) =>
+        //   createReadStream().pipe(
+        //     createWriteStream(
+        //       path.join(__dirname, "../images/service", filename)
+        //     ).on("close", res)
+        //   )
+        // );
+        const folder = "services";
 
-        const category = await Category.updateOne(
+        const response = await handleFileUpload(file, folder);
+
+        await Category.updateOne(
           { _id },
-          { $set: { photo: filename } },
+          { $set: { photo: filename, imageURL: response.Location } },
           { new: true, upsert: true }
         );
 
-        return true;
+        return response;
       } catch (err) {
         throw err;
       }

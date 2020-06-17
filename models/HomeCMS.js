@@ -8,12 +8,13 @@ const homeCMS = new Schema(
     subtitle: String,
     paragraph: String,
     bgImg: String,
+    bgImgURL: String,
     bgColor: String,
     position: String,
     dark: Boolean,
     grid: Number,
     alt: Boolean,
-    sectionName: String
+    sectionName: String,
   },
   { timestamps: true }
 );

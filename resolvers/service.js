@@ -5,6 +5,7 @@ const Employee = require("../models/Employee");
 const { validateServiceInput } = "../utils/validators";
 const { createWriteStream, unlink, stat } = require("fs");
 const path = require("path");
+const { handleFileUpload } = require("../utils/handleFileUpload");
 
 module.exports = {
   Query: {
@@ -144,41 +145,45 @@ module.exports = {
     },
     addServicePhoto: async (_, { _id, file }) => {
       try {
-        const service = await Service.findById(_id);
-        const getServiceImg = service.photo;
+        // const service = await Service.findById(_id);
+        // const getServiceImg = service.photo;
 
-        stat("./images/service/" + getServiceImg, function (err, stats) {
-          console.log(stats); //here we got all information of file in stats variable
+        // stat("./images/service/" + getServiceImg, function (err, stats) {
+        //   console.log(stats); //here we got all information of file in stats variable
 
-          if (err) {
-            return console.error(err);
-          }
+        //   if (err) {
+        //     return console.error(err);
+        //   }
 
-          unlink("./images/service/" + getServiceImg, function (err) {
-            if (err) return console.log(err);
-            console.log("file deleted successfully");
-          });
-        });
+        //   unlink("./images/service/" + getServiceImg, function (err) {
+        //     if (err) return console.log(err);
+        //     console.log("file deleted successfully");
+        //   });
+        // });
 
-        const { createReadStream, filename } = await file;
+        const { filename } = await file;
 
-        const newfile = Math.random().toString(36).substring(7) + filename;
+        // const newfile = Math.random().toString(36).substring(7) + filename;
 
-        await new Promise((res) =>
-          createReadStream().pipe(
-            createWriteStream(
-              path.join(__dirname, "../images/service", newfile)
-            ).on("close", res)
-          )
-        );
+        // await new Promise((res) =>
+        //   createReadStream().pipe(
+        //     createWriteStream(
+        //       path.join(__dirname, "../images/service", newfile)
+        //     ).on("close", res)
+        //   )
+        // );
+
+        const folder = "services";
+
+        const response = await handleFileUpload(file, folder);
 
         await Service.updateOne(
           { _id },
-          { $set: { photo: newfile } },
+          { $set: { photo: filename, imageURL: response.Location } },
           { new: true, upsert: true }
         );
 
-        return true;
+        return response;
       } catch (err) {
         throw err;
       }

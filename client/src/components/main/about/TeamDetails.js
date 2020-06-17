@@ -18,9 +18,9 @@ const TeamDetails = ({ employee }) => {
         <div className="profile-image">
           <img
             src={
-              employee.photo
-                ? `/images/employees/${employee.photo}`
-                : "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample83.jpg"
+              employee.imageURL !== null
+                ? employee.imageURL
+                : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png"
             }
             alt={employee.photo}
           />
@@ -56,9 +56,9 @@ const TeamDetails = ({ employee }) => {
               <div className="profile-image">
                 <img
                   src={
-                    employee.photo
-                      ? `/images/employees/${employee.photo}`
-                      : "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample83.jpg"
+                    employee.imageURL !== null
+                      ? employee.imageURL
+                      : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png"
                   }
                   alt={employee.photo}
                 />

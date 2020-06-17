@@ -55,22 +55,27 @@ const Service = (props) => {
   };
 
   // DROPZONE
-  const [addServicePhoto, { loading }] = useMutation(UPLOAD_SERVICE_PHOTO, {
-    refetchQueries: [
-      { query: FETCH_SINGLE_SERVICE_QUERY, variables: { serviceId } },
-    ],
-    onCompleted() {
-      toaster.notify(({ onClose }) => (
-        <Toasted success onClick={onClose}>
-          Image Uploaded
-        </Toasted>
-      ));
-    },
-  });
+  const [addServicePhoto, { loading, data: dataServImg }] = useMutation(
+    UPLOAD_SERVICE_PHOTO,
+    {
+      refetchQueries: [
+        { query: FETCH_SINGLE_SERVICE_QUERY, variables: { serviceId } },
+      ],
+      onCompleted() {
+        toaster.notify(({ onClose }) => (
+          <Toasted success onClick={onClose}>
+            Image Uploaded
+          </Toasted>
+        ));
+      },
+    }
+  );
 
   const onDrop = useCallback(
     ([file]) => {
-      addServicePhoto({ variables: { serviceId, file } });
+      if (file) {
+        addServicePhoto({ variables: { serviceId, file } });
+      }
     },
     [addServicePhoto]
   );
@@ -85,9 +90,11 @@ const Service = (props) => {
 
   const images = [
     {
-      src: service.photo
-        ? `/images/service/${service.photo}`
-        : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      src: dataServImg
+        ? dataServImg.addServicePhoto.Location
+        : service.imageURL !== null
+        ? service.imageURL
+        : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png",
     },
   ];
 
@@ -158,14 +165,16 @@ const Service = (props) => {
                     grayzoom
                   >
                     {loading ? (
-                      <Spinner content="Loading..." medium />
+                      <Spinner content="Uploading..." medium />
                     ) : (
                       <DImage height="100%" width="100%">
                         <img
                           src={
-                            service.photo
-                              ? `/images/service/${service.photo}`
-                              : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                            dataServImg
+                              ? dataServImg.addServicePhoto.Location
+                              : service.imageURL !== null
+                              ? service.imageURL
+                              : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png"
                           }
                           alt={service.name}
                           onClick={openLightbox}
@@ -214,7 +223,9 @@ const Service = (props) => {
 
 const UPLOAD_SERVICE_PHOTO = gql`
   mutation addServicePhoto($serviceId: ID!, $file: Upload) {
-    addServicePhoto(_id: $serviceId, file: $file)
+    addServicePhoto(_id: $serviceId, file: $file) {
+      Location
+    }
   }
 `;
 

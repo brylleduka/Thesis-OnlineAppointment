@@ -8,9 +8,10 @@ import { DButton } from "../../styled/utils";
 import { Camera } from "@styled-icons/boxicons-solid/Camera";
 import { Edit } from "@styled-icons/boxicons-regular/Edit";
 import Carousel, { Modal, ModalGateway } from "react-images";
+import toaster from "toasted-notes";
+import Toasted from "../../Toasted";
 
 const AccountContentOne = ({ handleAppointments, handleDetails, userInfo }) => {
-  const [preview, setPreview] = useState();
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
 
   const openLightbox = () => {
@@ -29,8 +30,13 @@ const AccountContentOne = ({ handleAppointments, handleDetails, userInfo }) => {
   const onDrop = useCallback(
     ([file]) => {
       if (file) {
-        setPreview(URL.createObjectURL(file));
         addUserPhoto({ variables: { userId: userInfo._id, file } });
+      } else {
+        toaster.notify(({ onClose }) => (
+          <Toasted warning onClick={onClose}>
+            File size is to big
+          </Toasted>
+        ));
       }
     },
     [addUserPhoto]
@@ -38,14 +44,16 @@ const AccountContentOne = ({ handleAppointments, handleDetails, userInfo }) => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    maxSize: 1024000,
+    maxSize: 2048000,
   });
 
   const images = [
     {
-      src:
-        (uploadFileData && uploadFileData.addUserPhoto.Location) ||
-        userInfo.imageURL,
+      src: uploadFileData
+        ? uploadFileData.addUserPhoto.Location
+        : userInfo
+        ? userInfo.imageURL
+        : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png",
     },
   ];
 
@@ -63,7 +71,7 @@ const AccountContentOne = ({ handleAppointments, handleDetails, userInfo }) => {
                     ? uploadFileData.addUserPhoto.Location
                     : userInfo.imageURL !== null
                     ? userInfo.imageURL
-                    : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                    : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png"
                 }
                 alt="Avatar"
                 onClick={openLightbox}

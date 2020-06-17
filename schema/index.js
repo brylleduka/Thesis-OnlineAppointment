@@ -52,6 +52,7 @@ const typeDefs = gql`
     contact: String
     email: String!
     photo: String
+    imageURL: String
     bio: String
     dateOfBirth: String
     role: String
@@ -78,6 +79,7 @@ const typeDefs = gql`
     name: String!
     description: String
     photo: String
+    imageURL: String
     active: Boolean
     services: [Service] #list of services
     employees: [Employee]
@@ -92,6 +94,7 @@ const typeDefs = gql`
     duration: Int!
     description: String
     photo: String
+    imageURL: String
     active: Boolean
     category: Category #parent: Category type
     createdAt: String
@@ -142,6 +145,7 @@ const typeDefs = gql`
   type Brand {
     _id: ID
     image: String
+    imageURL: String
     active: Boolean
   }
 
@@ -151,6 +155,7 @@ const typeDefs = gql`
     subtitle: String
     paragraph: String
     bgImg: String
+    bgImgURL: String
     bgColor: String
     dark: Boolean
     grid: Int
@@ -183,6 +188,7 @@ const typeDefs = gql`
     dark: Boolean
     overlay: Boolean
     bgImg: String
+    bgImgURL: String
     bgColor: String
     story: Story
     missionvision: MissionVision
@@ -193,11 +199,13 @@ const typeDefs = gql`
     subtitle: String
     paragraph: String
     photo: String
+    imageURL: String
     alt: Boolean
   }
 
   type MissionVision {
     photo: String
+    imageURL: String
     alt: Boolean
     mission: Mission
     vision: Vision
@@ -489,7 +497,7 @@ const typeDefs = gql`
       breakLength: Int
     ): Employee
 
-    addEmployeePhoto(_id: ID!, file: Upload): Boolean
+    addEmployeePhoto(_id: ID!, file: Upload): S3Object
     archiveEmployee(_id: ID!, active: Boolean): Employee
     deleteEmployee(_id: ID!): Boolean #admin only
     addService(employeeId: ID!, categoryId: [ID]): Employee
@@ -503,7 +511,7 @@ const typeDefs = gql`
       description: String
       photo: String
     ): Category
-    addCategoryPhoto(_id: ID!, file: Upload): Boolean
+    addCategoryPhoto(_id: ID!, file: Upload): S3Object
     archivedCategory(_id: ID!, active: Boolean): Category
     deleteCategory(_id: ID!): String
 
@@ -518,7 +526,7 @@ const typeDefs = gql`
     ): Service
     archivedService(_id: ID!, active: Boolean): Service
     deleteService(_id: ID!): Boolean
-    addServicePhoto(_id: ID!, file: Upload): Boolean
+    addServicePhoto(_id: ID!, file: Upload): S3Object
 
     # INQ
     sendInquiry(

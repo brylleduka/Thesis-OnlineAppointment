@@ -36,33 +36,49 @@ const PhotoBooth = ({
   };
 
   // DROPZONE
-  const [addEmployeePhoto, { loading }] = useMutation(UPLOAD_EMPLOYEE_PHOTO, {
-    refetchQueries: [
-      { query: FETCH_EMPLOYEE_QUERY, variables: { employeeId } },
-    ],
-    onCompleted() {
-      toaster.notify(({ onClose }) => (
-        <Toasted success onClick={onClose}>
-          Image Uploaded
-        </Toasted>
-      ));
-    },
-  });
+  const [addEmployeePhoto, { loading, data: empDataImg }] = useMutation(
+    UPLOAD_EMPLOYEE_PHOTO,
+    {
+      refetchQueries: [
+        { query: FETCH_EMPLOYEE_QUERY, variables: { employeeId } },
+      ],
+      onCompleted() {
+        toaster.notify(({ onClose }) => (
+          <Toasted success onClick={onClose}>
+            Image Uploaded
+          </Toasted>
+        ));
+      },
+    }
+  );
 
   const onDrop = useCallback(
     ([file]) => {
-      addEmployeePhoto({ variables: { employeeId, file } });
+      if (file) {
+        addEmployeePhoto({ variables: { employeeId, file } });
+      } else {
+        toaster.notify(({ onClose }) => (
+          <Toasted warning onClick={onClose}>
+            File size is to big
+          </Toasted>
+        ));
+      }
     },
     [addEmployeePhoto]
   );
 
-  const { getRootProps, getInputProps } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    maxSize: 2048000,
+  });
 
   const images = [
     {
-      src: employee.photo
-        ? `/images/employees/${employee.photo}`
-        : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      src: empDataImg
+        ? empDataImg.addEmployeePhoto.Location
+        : employee.imageURL !== null
+        ? employee.imageURL
+        : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png",
     },
   ];
 
@@ -89,9 +105,11 @@ const PhotoBooth = ({
           <DImage height="100%" width="100%">
             <img
               src={
-                employee.photo !== undefined
-                  ? `/images/employees/${employee.photo}`
-                  : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                empDataImg
+                  ? empDataImg.addEmployeePhoto.Location
+                  : employee.imageURL !== null
+                  ? employee.imageURL
+                  : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png"
               }
               alt={employee.name}
               onClick={openLightbox}
@@ -134,7 +152,9 @@ const PhotoBooth = ({
 
 const UPLOAD_EMPLOYEE_PHOTO = gql`
   mutation addEmployeePhoto($employeeId: ID!, $file: Upload) {
-    addEmployeePhoto(_id: $employeeId, file: $file)
+    addEmployeePhoto(_id: $employeeId, file: $file) {
+      Location
+    }
   }
 `;
 

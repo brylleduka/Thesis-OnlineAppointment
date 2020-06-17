@@ -7,6 +7,7 @@ const FETCH_ALL_CATEGORIES_QUERY = gql`
       name
       description
       photo
+      imageURL
       services {
         _id
         name
@@ -14,6 +15,7 @@ const FETCH_ALL_CATEGORIES_QUERY = gql`
         duration
         description
         photo
+        imageURL
         active
       }
       employees {
@@ -34,6 +36,7 @@ const FETCH_CATEGORY_QUERY = gql`
       name
       description
       photo
+      imageURL
       services {
         _id
         name
@@ -41,6 +44,7 @@ const FETCH_CATEGORY_QUERY = gql`
         duration
         description
         photo
+        imageURL
         active
       }
       employees {
@@ -68,6 +72,7 @@ const FETCH_ALL_SERVICES_QUERY = gql`
       duration
       price
       photo
+      imageURL
       description
       active
       category {
@@ -87,6 +92,7 @@ const FETCH_SERVICES_QUERY = gql`
       price
       description
       photo
+      imageURL
       active
       category {
         _id
@@ -106,6 +112,7 @@ const FETCH_SINGLE_SERVICE_QUERY = gql`
       price
       description
       photo
+      imageURL
       active
       category {
         _id

@@ -16,9 +16,9 @@ const Branding = () => {
     <div className="brand-container">
       <img
         src={
-          isBranding ? `/images/brands/${isBranding.image}` : "/images/logo.png"
+          "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png"
         }
-        alt={isBranding ? `/images/brands/${isBranding.image}` : "Z Essence"}
+        alt={"Z Essence"}
         className="brand"
       />
     </div>

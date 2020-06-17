@@ -10,16 +10,19 @@ const aboutCMS = Schema(
     dark: Boolean,
     overlay: Boolean,
     bgImg: String,
+    bgImgURL: String,
     bgColor: String,
     story: {
       title: String,
       subtitle: String,
       paragraph: String,
       photo: String,
+      imageURL: String,
       alt: Boolean,
     },
     missionvision: {
       photo: String,
+      imageURL: String,
       alt: Boolean,
       mission: {
         title: String,

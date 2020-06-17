@@ -11,6 +11,7 @@ const categorySchema = new Schema(
     },
     description: String,
     photo: String,
+    imageURL: String,
     active: Boolean,
     services: [
       {

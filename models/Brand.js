@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const brandSchema = new Schema(
   {
     image: String,
+    imageURL: String,
     active: Boolean,
   },
   { timestamps: true }

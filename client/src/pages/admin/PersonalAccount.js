@@ -53,6 +53,7 @@ const PersonalAccount = (props) => {
             <PhotoBooth
               handleDetails={handleDetails}
               handleSchedule={handleSchedule}
+              photoURL={empData.employee.imageURL}
               photo={empData.employee.photo}
               id={empData.employee._id}
               fetchEmployee={FETCH_EMPLOYEE_QUERY}

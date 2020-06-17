@@ -55,9 +55,9 @@ const ServiceList = ({ categoryId }) => {
           width="56px"
           alt={row.name}
           src={
-            row.photo !== null
-              ? `/images/service/${row.photo}`
-              : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            row.imageURL !== null
+              ? row.imageURL
+              : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png"
           }
         />
       ),

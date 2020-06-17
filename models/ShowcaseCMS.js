@@ -11,11 +11,12 @@ const showcaseCMS = new Schema(
         subtitle: String,
         paragraph: String,
         bgImg: String,
+        bgImgURL: String,
         bgColor: String,
         position: String,
-        dark: Boolean
-      }
-    ]
+        dark: Boolean,
+      },
+    ],
   },
   { timestamps: true }
 );

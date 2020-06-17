@@ -13,6 +13,7 @@ const FETCH_ALL_EMPLOYEES_QUERY = gql`
       contact
       email
       photo
+      imageURL
       role
       level
       schedule {
@@ -44,6 +45,7 @@ const FETCH_EMPLOYEES_NOT_ADMIN_QUERY = gql`
       contact
       email
       photo
+      imageURL
       bio
       role
       level
@@ -60,6 +62,7 @@ const FETCH_EMPLOYEES_NOT_ADMIN_QUERY = gql`
         name
         description
         photo
+        imageURL
       }
     }
   }
@@ -76,6 +79,7 @@ const FETCH_EMPLOYEE_QUERY = gql`
       contact
       email
       photo
+      imageURL
       role
       level
       dateOfBirth
@@ -93,6 +97,7 @@ const FETCH_EMPLOYEE_QUERY = gql`
         name
         description
         photo
+        imageURL
       }
     }
   }

@@ -27,6 +27,7 @@ const employeeSchema = new Schema(
       required: true,
     },
     photo: String,
+    imageURL: String,
     bio: String,
     dateOfBirth: Date,
     certificates: [

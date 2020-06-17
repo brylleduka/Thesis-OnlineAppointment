@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { useDropzone } from "react-dropzone";
-import { DGrid, Content, DCard, DImage } from "../../styled/containers";
+import { Content, DCard, DImage } from "../../styled/containers";
 import { DButton, IconWrap } from "../../styled/utils";
 import { Camera } from "@styled-icons/boxicons-solid/Camera";
 import Carousel, { Modal, ModalGateway } from "react-images";
@@ -11,6 +11,7 @@ import Spinner from "../../Spinner";
 const PhotoBooth = ({
   id,
   photo,
+  photoURL,
   fetchEmployee,
   handleDetails,
   handleSchedule,
@@ -26,16 +27,19 @@ const PhotoBooth = ({
   };
 
   // DROPZONE
-  const [addEmployeePhoto, { loading }] = useMutation(UPLOAD_EMPLOYEE_PHOTO, {
-    refetchQueries: [
-      {
-        query: fetchEmployee,
-        variables: {
-          employeeId: id,
+  const [addEmployeePhoto, { loading, data: dataEmpImg }] = useMutation(
+    UPLOAD_EMPLOYEE_PHOTO,
+    {
+      refetchQueries: [
+        {
+          query: fetchEmployee,
+          variables: {
+            employeeId: id,
+          },
         },
-      },
-    ],
-  });
+      ],
+    }
+  );
 
   const onDrop = useCallback(
     ([file]) => {
@@ -54,9 +58,9 @@ const PhotoBooth = ({
 
   const images = [
     {
-      src: photo
-        ? `/images/employees/${photo}`
-        : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      src:
+        (dataEmpImg && dataEmpImg.addEmployeePhoto.Location) ||
+        (photoURL && photoURL),
     },
   ];
 
@@ -87,11 +91,13 @@ const PhotoBooth = ({
           ) : (
             <img
               src={
-                photo !== null
-                  ? `/images/employees/${photo}`
-                  : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                dataEmpImg
+                  ? dataEmpImg.addEmployeePhoto.Location
+                  : photoURL !== null
+                  ? photoURL
+                  : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png"
               }
-              alt="Avatar"
+              alt={photo}
               onClick={openLightbox}
             />
           )}
@@ -138,7 +144,9 @@ const PhotoBooth = ({
 
 const UPLOAD_EMPLOYEE_PHOTO = gql`
   mutation addEmployeePhoto($employeeId: ID!, $file: Upload) {
-    addEmployeePhoto(_id: $employeeId, file: $file)
+    addEmployeePhoto(_id: $employeeId, file: $file) {
+      Location
+    }
   }
 `;
 

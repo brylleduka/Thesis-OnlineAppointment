@@ -18,7 +18,7 @@ const s3DefaultParams = {
   ACL: "public-read",
   Bucket: process.env.S3_BUCKET,
   Conditions: [
-    ["content-length-range", 0, 1024000], // 1 Mb
+    ["content-length-range", 0, 2048000], // 2 Mb
     { acl: "public-read" },
   ],
 };

@@ -51,7 +51,7 @@ const Header = ({ handleOpenMenu }) => {
                   src={
                     dataEmpLog &&
                     dataEmpLog.employee &&
-                    `/images/employees/${dataEmpLog.employee.photo}`
+                    dataEmpLog.employee.imageURL
                   }
                   alt={empLog.lastName}
                 />

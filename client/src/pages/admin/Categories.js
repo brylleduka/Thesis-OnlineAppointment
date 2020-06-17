@@ -98,9 +98,9 @@ const Categories = () => {
                     <DImage height="100%" width="100%" grayscaling>
                       <img
                         src={
-                          category.photo
-                            ? `/images/service/${category.photo}`
-                            : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                          category.imageURL
+                            ? category.imageURL
+                            : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png"
                         }
                         alt={category.name}
                       />

@@ -56,22 +56,33 @@ const Category = (props) => {
   };
 
   // DROPZONE
-  const [addCategoryPhoto, { loading }] = useMutation(UPLOAD_CATEGORY_PHOTO, {
-    refetchQueries: [
-      { query: FETCH_CATEGORY_QUERY, variables: { categoryId: categoryId } },
-    ],
-    onCompleted() {
-      toaster.notify(({ onClose }) => (
-        <Toasted success onClick={onClose}>
-          Upload Success
-        </Toasted>
-      ));
-    },
-  });
+  const [addCategoryPhoto, { loading, data: dataCategImg }] = useMutation(
+    UPLOAD_CATEGORY_PHOTO,
+    {
+      refetchQueries: [
+        { query: FETCH_CATEGORY_QUERY, variables: { categoryId: categoryId } },
+      ],
+      onCompleted() {
+        toaster.notify(({ onClose }) => (
+          <Toasted success onClick={onClose}>
+            Upload Success
+          </Toasted>
+        ));
+      },
+    }
+  );
 
   const onDrop = useCallback(
     ([file]) => {
-      addCategoryPhoto({ variables: { categoryId: categoryId, file } });
+      if (file) {
+        addCategoryPhoto({ variables: { categoryId: categoryId, file } });
+      } else {
+        toaster.notify(({ onClose }) => (
+          <Toasted warning onClick={onClose}>
+            File size is to big
+          </Toasted>
+        ));
+      }
     },
     [addCategoryPhoto]
   );
@@ -80,9 +91,11 @@ const Category = (props) => {
 
   const images = [
     {
-      src: category.photo
-        ? `/images/service/${category.photo}`
-        : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      src: dataCategImg
+        ? dataCategImg.addCategoryPhoto.Location
+        : category.imageURL !== null
+        ? category.imageURL
+        : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png",
     },
   ];
 
@@ -158,9 +171,11 @@ const Category = (props) => {
                       <DImage height="100%" width="100%">
                         <img
                           src={
-                            category.photo
-                              ? `/images/service/${category.photo}`
-                              : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                            dataCategImg
+                              ? dataCategImg.addCategoryPhoto.Location
+                              : category.imageURL !== null
+                              ? category.imageURL
+                              : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png"
                           }
                           alt={category.name}
                           onClick={openLightbox}
@@ -212,7 +227,9 @@ const Category = (props) => {
 
 const UPLOAD_CATEGORY_PHOTO = gql`
   mutation addCategoryPhoto($categoryId: ID!, $file: Upload) {
-    addCategoryPhoto(_id: $categoryId, file: $file)
+    addCategoryPhoto(_id: $categoryId, file: $file) {
+      Location
+    }
   }
 `;
 

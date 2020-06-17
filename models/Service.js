@@ -13,6 +13,7 @@ const serviceSchema = new Schema(
     price: Number,
     description: String,
     photo: String,
+    imageURL: String,
     active: Boolean,
     category: {
       type: Schema.Types.ObjectId,
