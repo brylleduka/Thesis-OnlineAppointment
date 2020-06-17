@@ -39,8 +39,8 @@ const TestimonialCard = ({ content }) => {
                     <div className="profile">
                       <img
                         src={
-                          testimonial.user && testimonial.user.photo !== null
-                            ? `/images/users/${testimonial.user.photo}`
+                          testimonial.user && testimonial.user.imageURL !== null
+                            ? testimonial.user.imageURL
                             : "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample3.jpg"
                         }
                         alt="profile-sample3"

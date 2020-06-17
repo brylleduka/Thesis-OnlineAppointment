@@ -10,6 +10,7 @@ import { Edit } from "@styled-icons/boxicons-regular/Edit";
 import Carousel, { Modal, ModalGateway } from "react-images";
 
 const AccountContentOne = ({ handleAppointments, handleDetails, userInfo }) => {
+  const [preview, setPreview] = useState();
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
 
   const openLightbox = () => {
@@ -21,27 +22,32 @@ const AccountContentOne = ({ handleAppointments, handleDetails, userInfo }) => {
   };
 
   // DROPZONE
-  const [addUserPhoto, { loading }] = useMutation(UPLOAD_USER_PHOTO, {
-    refetchQueries: [
-      {
-        query: FETCH_USER_ACCOUNT,
-        variables: {
-          userId: userInfo._id,
-        },
-      },
-    ],
-  });
+  const [addUserPhoto, { loading, data: uploadFileData }] = useMutation(
+    UPLOAD_USER_PHOTO
+  );
 
   const onDrop = useCallback(
     ([file]) => {
-      addUserPhoto({ variables: { userId: userInfo._id, file } });
+      if (file) {
+        setPreview(URL.createObjectURL(file));
+        addUserPhoto({ variables: { userId: userInfo._id, file } });
+      }
     },
     [addUserPhoto]
   );
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    maxSize: 1024000,
+  });
 
-  const images = [{ src: `/images/users/${userInfo.photo}` }];
+  const images = [
+    {
+      src:
+        (uploadFileData && uploadFileData.addUserPhoto.Location) ||
+        userInfo.imageURL,
+    },
+  ];
 
   return (
     <Content width="100%" height="auto">
@@ -53,8 +59,10 @@ const AccountContentOne = ({ handleAppointments, handleDetails, userInfo }) => {
             <DImage circle height="150px" width="150px">
               <img
                 src={
-                  userInfo.photo !== null
-                    ? `/images/users/${userInfo.photo}`
+                  uploadFileData
+                    ? uploadFileData.addUserPhoto.Location
+                    : userInfo.imageURL !== null
+                    ? userInfo.imageURL
                     : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
                 }
                 alt="Avatar"
@@ -89,7 +97,9 @@ const AccountContentOne = ({ handleAppointments, handleDetails, userInfo }) => {
 
 const UPLOAD_USER_PHOTO = gql`
   mutation addUserPhoto($userId: ID!, $file: Upload) {
-    addUserPhoto(_id: $userId, file: $file)
+    addUserPhoto(_id: $userId, file: $file) {
+      Location
+    }
   }
 `;
 

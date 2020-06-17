@@ -1,6 +1,12 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
+  type S3Object {
+    ETag: String
+    Location: String!
+    Key: String!
+    Bucket: String!
+  }
   type User {
     _id: ID!
     firstName: String
@@ -9,6 +15,7 @@ const typeDefs = gql`
     email: String
     password: String
     photo: String
+    imageURL: String
     dateOfBirth: String
     token: String!
     createdAt: String
@@ -424,7 +431,8 @@ const typeDefs = gql`
       password: String
       oldpassword: String
     ): User
-    addUserPhoto(_id: ID!, file: Upload): Boolean
+
+    addUserPhoto(_id: ID!, file: Upload): S3Object
 
     # createAdmin(adminInput: AdminInput): Admin
 

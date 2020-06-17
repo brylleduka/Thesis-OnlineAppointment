@@ -14,6 +14,7 @@ const FETCH_TESTIMONIALS = gql`
         firstName
         lastName
         photo
+        imageURL
       }
     }
   }

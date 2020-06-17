@@ -22,6 +22,7 @@ const userSchema = new Schema(
     dateOfBirth: Date,
     address: String,
     photo: String,
+    imageURL: String,
     password: {
       type: String,
       required: true,

@@ -9,6 +9,7 @@ const FETCH_USER_ACCOUNT = gql`
       email
       contact
       photo
+      imageURL
       dateOfBirth
     }
   }
