@@ -34,6 +34,7 @@ const FETCH_USER_REVIEW = gql`
         firstName
         lastName
         photo
+        imageURL
       }
     }
   }
@@ -53,6 +54,7 @@ const FETCH_VIEWS = gql`
         firstName
         lastName
         photo
+        imageURL
       }
     }
   }

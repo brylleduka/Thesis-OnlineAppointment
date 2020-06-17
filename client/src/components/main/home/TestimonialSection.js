@@ -48,8 +48,8 @@ const TestimonialSection = () => {
                     <div className="profile">
                       <img
                         src={
-                          rev.user.photo
-                            ? `/images/users/${rev.user.photo}`
+                          rev.user.imageURL
+                            ? rev.user.imageURL
                             : "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample3.jpg"
                         }
                         alt="profile-sample3"
