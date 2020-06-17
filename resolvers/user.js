@@ -202,7 +202,7 @@ module.exports = {
         // );
         const folder = "clients";
 
-        const response = handleFileUpload(file, folder);
+        const response = await handleFileUpload(file, folder);
 
         // const { createReadStream, filename } = await file;
 
