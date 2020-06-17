@@ -20,9 +20,9 @@ const PhotoBooth = ({ photo }) => {
   const images = [
     {
       src: photo
-        ? `/images/users/${photo}`
-        : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-    }
+        ? photo
+        : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    },
   ];
 
   return (
@@ -33,7 +33,7 @@ const PhotoBooth = ({ photo }) => {
             <img
               src={
                 photo !== null
-                  ? `/images/users/${photo}`
+                  ? photo
                   : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
               }
               alt="Avatar"

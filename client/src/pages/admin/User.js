@@ -43,7 +43,7 @@ const User = () => {
     },
     {
       name: "Profile",
-      selector: "photo",
+      selector: "imageURL",
       grow: 0,
       cell: (row) => (
         <img
@@ -51,8 +51,8 @@ const User = () => {
           width="52px"
           alt={row.empId}
           src={
-            row.photo !== null
-              ? `/images/${row.photo}`
+            row.imageURL !== null
+              ? row.imageURL
               : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
           }
         />
@@ -81,14 +81,13 @@ const User = () => {
     },
     {
       name: "Actions",
+      right: true,
       cell: (row) => (
-        <DButton as={Link} to={`/zeadmin/userInfo/${row._id}`}>
-          <Eye size="18px" style={{ color: "white" }} />
+        <DButton flex as={Link} to={`/zeadmin/userInfo/${row._id}`}>
+          <Eye size="22px" style={{ color: "white" }} />
         </DButton>
       ),
       button: true,
-      allowOverflow: true,
-      width: "80px",
     },
   ];
 

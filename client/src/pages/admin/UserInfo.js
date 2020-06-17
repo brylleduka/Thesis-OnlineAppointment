@@ -58,7 +58,7 @@ const UserInfo = (props) => {
         {dataClient && dataClient.user ? (
           !loadingClient ? (
             <DGrid custom="300px 1fr" gap="10px">
-              <PhotoBooth photo={dataClient.user.photo} />
+              <PhotoBooth photo={dataClient.user.imageURL} />
               <ClientDetails userInfo={dataClient.user} />
             </DGrid>
           ) : (
