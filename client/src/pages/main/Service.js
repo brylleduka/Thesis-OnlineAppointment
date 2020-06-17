@@ -112,9 +112,9 @@ const Service = (props) => {
                         <div className="thumbnail">
                           <img
                             src={
-                              service.photo !== null
-                                ? `/images/service/${service.photo}`
-                                : "https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/photo-1429043794791-eb8f26f44081.jpeg"
+                              service.imageURL !== null
+                                ? service.imageURL
+                                : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png"
                             }
                           />
                         </div>
