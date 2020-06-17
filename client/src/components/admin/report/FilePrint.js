@@ -13,7 +13,7 @@ import DecoupledEditor from "@ckeditor/ckeditor5-build-decoupled-document";
 
 const FilePrint = ({ filteredItems, isPrintOpen, setIsPrintOpen }) => {
   const [content, setContent] = useState(
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit.Voluptatum quo maiores nam distinctio reiciendis iusto quod aspernatur error corporis, sit debitis fugit consequatur adipisci similique quaerat nesciunt temporibus enim earum."
+    "This report are the list of appointments for the month of June 2020."
   );
   const [author, setAuthor] = useState({
     one: "",
@@ -70,7 +70,7 @@ const FilePrint = ({ filteredItems, isPrintOpen, setIsPrintOpen }) => {
               style={{ position: "absolute", top: 0, right: 0, opacity: 0.5 }}
             >
               <DImage objFit="contain" circle height="200px" width="200px">
-                <img src="/images/logo.png" />
+                <img src="https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png" />
               </DImage>
             </div>
 
@@ -78,11 +78,12 @@ const FilePrint = ({ filteredItems, isPrintOpen, setIsPrintOpen }) => {
               width="100%"
               height="100%"
               flex
-              justify="flex-start"
-              align="flex-start"
+              justify="center"
+              align="center"
               direct="column"
               margin="12px auto"
             >
+              <h3>Z Essence Facial and Spa</h3>
               <Content
                 width="100%"
                 height="auto"

@@ -14,7 +14,7 @@ import useWindowSize from "../../../util/hooks/useWindowSize";
 
 const EmployeeCard = ({ employee }) => {
   const { width: wid } = useWindowSize();
-  const {    } = useContext(AuthContext);
+  const { employeeAuth } = useContext(AuthContext);
 
   const [isEditEmpAcct, setIsEditEmpAcct] = useState(false);
 

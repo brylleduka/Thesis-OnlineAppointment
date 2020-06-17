@@ -438,13 +438,14 @@ export const JCard4 = styled.figure`
 
     h3 {
       font-weight: 600;
-      font-size: 1.3em;
+      font-size: 16px;
     }
 
     h4 {
       color: #8c8c8c;
       font-weight: 400;
       letter-spacing: 2px;
+      font-size: 12px;
     }
 
     p {

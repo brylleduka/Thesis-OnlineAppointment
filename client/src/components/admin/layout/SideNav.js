@@ -70,7 +70,7 @@ const SideNav = ({ isOpenMenu, handleOpenMenu }) => {
         <NavLink to="/zeadmin/user" activeClassName="navlink-active">
           <span>
             <AccountCircle size="16px" style={styles.ml} />
-            Users
+            Clients
           </span>
         </NavLink>
       </Accordion>

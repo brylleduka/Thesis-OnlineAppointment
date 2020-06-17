@@ -63,8 +63,8 @@ const UpcommingAppointments = ({ appointments, loading }) => {
       name: "Actions",
 
       cell: (row) => (
-        <DButton as={Link} to={`/zeadmin/appointment/${row._id}`}>
-          <Eye size="18px" style={{ color: "white" }} />
+        <DButton flex as={Link} to={`/zeadmin/appointment/${row._id}`}>
+          <Eye size="22px" style={{ color: "white" }} />
         </DButton>
       ),
     },

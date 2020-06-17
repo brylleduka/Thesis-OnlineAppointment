@@ -49,7 +49,7 @@ const TeamSection = ({ cards }) => {
       {loading_employeesAR ? (
         <Spinner />
       ) : (
-        <DGrid four gap="25px">
+        <DGrid three gap="25px">
           {employeesAR &&
             employeesAR.map((employee) => (
               <Content margin="0 auto" width="90%" height="100%">
@@ -65,9 +65,9 @@ const TeamSection = ({ cards }) => {
                     />
                   </div>
                   <figcaption>
-                    <h3>
+                    <h4>
                       {employee.title} {employee.firstName} {employee.lastName}
-                    </h3>
+                    </h4>
                     <h4>{employee.role}</h4>
                     <p>
                       {employee.bio.length > 100
