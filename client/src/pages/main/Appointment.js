@@ -36,10 +36,21 @@ const Appointment = () => {
         className="dark"
         flex
         justify="center"
-        align="flex-end"
+        align="center"
         width="100%"
+        direct="column"
       >
-        <h1 style={{ margin: "24px" }}>Appointment</h1>
+        <h1 style={{ margin: "24px" }}>Make an Appointment Now</h1>
+        <p
+          style={{
+            width: "90%",
+            margin: "0 auto",
+            textAlign: "center",
+            fontSize: "13px",
+          }}
+        >
+          Great skin doesn't happen by chance. It happens by Appointment
+        </p>
       </DSection>
       <DSection
         flex

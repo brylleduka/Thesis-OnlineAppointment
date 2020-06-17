@@ -6,8 +6,10 @@ import { useMutation } from "@apollo/react-hooks";
 import jwtDecode from "jwt-decode";
 import { DSection, Content } from "../../components/styled/containers";
 import { DButton } from "../../components/styled/utils";
+import useWindowSize from "../../util/hooks/useWindowSize";
 
-const ThankYou = props => {
+const ThankYou = (props) => {
+  const { width: wid } = useWindowSize();
   const { userId } = useContext(AuthContext);
   const emailToken = props.match.params.emailToken;
   const history = useHistory();
@@ -19,8 +21,8 @@ const ThankYou = props => {
 
   const [verifiedAppointment] = useMutation(VERRIFIED_APPOINTMENT, {
     variables: {
-      appointmentId: _id
-    }
+      appointmentId: _id,
+    },
   });
 
   window.onload = () => {
@@ -60,14 +62,12 @@ const ThankYou = props => {
           justify="space-around"
           align="center"
           margin="0 auto"
+          direction={wid < 768 ? "column" : "row"}
         >
           <DButton as={Link} to="/">
             Explore
           </DButton>
-          <DButton
-            as={Link}
-            to={userId ? `/account/${userId}` : `/login`}
-          >
+          <DButton as={Link} to={userId ? `/account/${userId}` : `/login`}>
             Go to my account
           </DButton>
         </Content>

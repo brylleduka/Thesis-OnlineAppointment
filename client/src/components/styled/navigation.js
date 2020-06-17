@@ -98,8 +98,13 @@ export const DMainMenu = styled(DMenu)`
     font-size: 16px;
   }
 
+  .signout_link {
+    display: none;
+  }
+
   @media (max-width: 1024px) {
-    height: 100vh;
+    height: 100%;
+    min-height: 100vh;
     width: 100%;
     background: ${({ theme }) => theme.blue};
     display: flex;
@@ -117,6 +122,14 @@ export const DMainMenu = styled(DMenu)`
     transition: transform 0.3s ease-in-out;
     border: 1px solid #fff;
 
+    .signout_link {
+      display: block;
+      cursor: pointer;
+      &:hover {
+        color: ${({ theme }) => theme.secondary};
+      }
+    }
+
     li:nth-child(1),
     li:nth-child(2) {
       display: block;
@@ -126,10 +139,10 @@ export const DMainMenu = styled(DMenu)`
     }
     li:nth-child(2) {
       .btn {
-        background: none;
-        font-size: 16px;
+        font-size: 14px;
         margin: 0;
-        padding: 0;
+        padding: 5px 6px;
+        background-color: #fe8c00;
       }
     }
 
@@ -138,6 +151,7 @@ export const DMainMenu = styled(DMenu)`
       flex-direction: column;
       justify-content: flex-end;
       align-items: flex-end;
+      line-height: 1.4;
     }
 
     .account-nav li,
@@ -151,13 +165,6 @@ export const DMainMenu = styled(DMenu)`
 
     .account-nav li:first-child span {
       margin-left: 10px;
-    }
-
-    .account-nav .signing_out {
-      cursor: pointer;
-      &:hover {
-        color: ${({ theme }) => theme.secondary};
-      }
     }
 
     .hr-nav {
@@ -338,7 +345,6 @@ export const DBurger = styled.nav`
     :nth-child(3) {
       transform: ${({ open }) => (open ? "rotate(-45deg)" : "rotate(0)")};
     }
-
   }
 
   @media only screen and (min-width: 1025px) {

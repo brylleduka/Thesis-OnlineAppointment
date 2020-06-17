@@ -48,9 +48,9 @@ ul {
   border: 0;
   font-weight: bold;
   padding: 10px 20px;
-  background-color: #fe8c00 !important;
+  background-color: #fe8c00;
   color: #fff !important;
-  font-size: 18px;
+  font-size: 14px;
   z-index: 2;
   border-radius: 5px;
 }

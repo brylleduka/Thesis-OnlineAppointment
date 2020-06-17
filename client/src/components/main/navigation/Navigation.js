@@ -26,6 +26,7 @@ const Navigation = ({ open, setOpen }) => {
 
   const handleLogout = () => {
     logout();
+    setOpen(false);
     // history.push("");
   };
 
@@ -57,23 +58,28 @@ const Navigation = ({ open, setOpen }) => {
                 Signed is as <span>{user.firstName}</span>
               </li>
               <li>
-                <Link to={`/myaccount/${user.userId || user._id}`}>
+                <Link
+                  to={`/account/${user.userId || user._id}`}
+                  onClick={() => setOpen(false)}
+                >
                   My Account
                 </Link>
-              </li>
-              <li>
-                <span onClick={handleLogout} className="signing_out">
-                  Sign out
-                </span>
               </li>
             </div>
           ) : (
             <li>
-              <Link to="/login">Sign in</Link>
+              <Link to="/login" onClick={() => setOpen(false)}>
+                Sign in
+              </Link>
             </li>
           )}
+
           <li>
-            <Link to="/appointment" className="btn">
+            <Link
+              to="/appointment"
+              className="btn btn_appoint"
+              onClick={() => setOpen(false)}
+            >
               Book Appointment
             </Link>
           </li>
@@ -81,12 +87,20 @@ const Navigation = ({ open, setOpen }) => {
             <hr className="hr-one" />
           </li>
           <li>
-            <Link to={`/#home`} scroll={scrollBehavior}>
+            <Link
+              to={`/#home`}
+              scroll={scrollBehavior}
+              onClick={() => setOpen(false)}
+            >
               Home
             </Link>
           </li>
           <li>
-            <Link to="/services&rates/#services" scroll={scrollBehavior}>
+            <Link
+              to="/services&rates/#services"
+              scroll={scrollBehavior}
+              onClick={() => setOpen(false)}
+            >
               Services
             </Link>
           </li>
@@ -94,7 +108,11 @@ const Navigation = ({ open, setOpen }) => {
           {/* <Link to="/about">About&nbsp;Us</Link> */}
           <DropdownCustomNav
             trigger={
-              <Link to="/about/#about" scroll={scrollBehavior}>
+              <Link
+                to="/about/#about"
+                scroll={scrollBehavior}
+                onClick={() => setOpen(false)}
+              >
                 About&nbsp;Us
               </Link>
             }
@@ -107,6 +125,7 @@ const Navigation = ({ open, setOpen }) => {
                 as={Link}
                 to="/about/#story"
                 scroll={scrollBehavior}
+                onClick={() => setOpen(false)}
               >
                 Our Story
               </Dropdown.Item>
@@ -115,6 +134,7 @@ const Navigation = ({ open, setOpen }) => {
                 as={Link}
                 to="/about/#team"
                 scroll={scrollBehavior}
+                onClick={() => setOpen(false)}
               >
                 Our Team
               </Dropdown.Item>
@@ -122,19 +142,36 @@ const Navigation = ({ open, setOpen }) => {
           </DropdownCustomNav>
 
           <li>
-            <Link to="/gallery/#gallery" scroll={scrollBehavior}>
+            <Link
+              to="/gallery/#gallery"
+              scroll={scrollBehavior}
+              onClick={() => setOpen(false)}
+            >
               Gallery
             </Link>
           </li>
           <li>
-            <Link to="/#contact" scroll={scrollBehavior}>
+            <Link
+              to="/#contact"
+              scroll={scrollBehavior}
+              onClick={() => setOpen(false)}
+            >
               Contact
             </Link>
           </li>
           <li>
-            <Link to="/testimonials/#tstmnl" scroll={scrollBehavior}>
+            <Link
+              to="/testimonials/#tstmnl"
+              scroll={scrollBehavior}
+              onClick={() => setOpen(false)}
+            >
               Testimonials
             </Link>
+          </li>
+          <li className="signout_link">
+            <span onClick={handleLogout} className="signing_out">
+              Sign out
+            </span>
           </li>
         </DMainMenu>
         <DRightMenu scrolled={scrolling ? true : false}>
