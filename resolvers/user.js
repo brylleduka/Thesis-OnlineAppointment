@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const Auth = require("../utils/check-auth");
-const { createWriteStream } = require("fs");
+// const { createWriteStream } = require("fs");
 const path = require("path");
 const {
   validateUserCreateInput,

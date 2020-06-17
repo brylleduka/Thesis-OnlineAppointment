@@ -27,11 +27,25 @@ const NewBrand = () => {
   // DROPZONE
   const onDrop = useCallback(
     ([file]) => {
-      addBrand({ variables: { image: file } });
+      if (file) {
+        addBrand({ variables: { image: file } });
+      } else {
+        toaster.notify(
+          ({ onClose }) => (
+            <Toasted alert onClick={onClose}>
+              File size was to large
+            </Toasted>
+          ),
+          { position: "bottom-right" }
+        );
+      }
     },
     [addBrand]
   );
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    maxSize: 1024000,
+  });
   return (
     <Content
       width="100%"
@@ -68,6 +82,7 @@ const ADD_BRAND = gql`
     addBrand(image: $image) {
       _id
       image
+      imageURL
       active
     }
   }

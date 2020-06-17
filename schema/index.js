@@ -137,6 +137,7 @@ const typeDefs = gql`
     name: String
     caption: String
     src: String
+    imageURL: String
     height: Float
     width: Float
   }
@@ -161,6 +162,7 @@ const typeDefs = gql`
     grid: Int
     alt: Boolean
     sectionName: String
+    s3Object: S3Object
   }
 
   type ShowcaseCMS {
@@ -175,6 +177,7 @@ const typeDefs = gql`
     subtitle: String
     paragraph: String
     bgImg: String
+    bgImgURL: String
     bgColor: String
     position: String
     dark: Boolean

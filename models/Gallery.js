@@ -10,6 +10,7 @@ const gallerySchema = new Schema(
         name: String,
         caption: String,
         src: String,
+        imageURL: String,
         height: Number,
         width: Number,
       },

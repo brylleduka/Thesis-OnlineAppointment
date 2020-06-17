@@ -40,7 +40,6 @@ const ModalHeading = ({ isAbout }) => {
   const {
     preview,
     selectedFile,
-    setSelectedFile,
     onSelectedFile,
   } = useUploadFile();
 
@@ -104,11 +103,8 @@ const ModalHeading = ({ isAbout }) => {
                 {selectedFile ? (
                   <img src={preview} alt="showcase" />
                 ) : (
-                  isAbout.bgImg && (
-                    <img
-                      src={`/images/cms/about/${isAbout.bgImg}`}
-                      alt="showcase"
-                    />
+                  isAbout.bgImgURL && (
+                    <img src={isAbout.bgImgURL} alt="About US" />
                   )
                 )}
               </DImage>
@@ -303,6 +299,7 @@ const UPDATE_ABOUT_HEADER = gql`
       title
       subtitle
       bgImg
+      bgImgURL
       bgColor
       dark
       overlay

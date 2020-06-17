@@ -88,6 +88,7 @@ const ADD_PHOTOS = gql`
         name
         caption
         src
+        imageURL
         height
         width
       }

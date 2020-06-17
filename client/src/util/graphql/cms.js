@@ -10,6 +10,7 @@ const FETCH_THE_SHOWCASE = gql`
         subtitle
         paragraph
         bgImg
+        bgImgURL
         bgColor
         position
         dark
@@ -26,6 +27,7 @@ const FETCH_HOME_SECTION = gql`
       subtitle
       paragraph
       bgImg
+      bgImgURL
       bgColor
       grid
       dark
@@ -42,6 +44,7 @@ const FETCH_ABOUT_CMS = gql`
       subtitle
       paragraph
       bgImg
+      bgImgURL
       bgColor
       dark
       overlay
@@ -50,10 +53,12 @@ const FETCH_ABOUT_CMS = gql`
         subtitle
         paragraph
         photo
+        imageURL
         alt
       }
       missionvision {
         photo
+        imageURL
         alt
         mission {
           title

@@ -2,6 +2,7 @@ const { createWriteStream, unlink, stat } = require("fs");
 const stream = require("stream");
 const path = require("path");
 const AboutCMS = require("../models/AboutCMS");
+const { handleFileUpload } = require("../utils/handleFileUpload");
 
 module.exports = {
   Query: {
@@ -31,45 +32,50 @@ module.exports = {
       }
     ) => {
       try {
-        const about = await AboutCMS.findOne({ contentName: "ABOUTUS" });
+        // const about = await AboutCMS.findOne({ contentName: "ABOUTUS" });
 
-        const getAboutImg = about.bgImg;
+        // const getAboutImg = about.bgImg;
 
-        stat("./images/cms/about/" + getAboutImg, function (err, stats) {
-          console.log(stats); //here we got all information of file in stats variable
+        // stat("./images/cms/about/" + getAboutImg, function (err, stats) {
+        //   console.log(stats); //here we got all information of file in stats variable
 
-          if (err) {
-            return console.error(err);
-          }
+        //   if (err) {
+        //     return console.error(err);
+        //   }
 
-          unlink("./images/cms/about/" + getAboutImg, function (err) {
-            if (err) return console.log(err);
-            console.log("file deleted successfully");
-          });
-        });
+        //   unlink("./images/cms/about/" + getAboutImg, function (err) {
+        //     if (err) return console.log(err);
+        //     console.log("file deleted successfully");
+        //   });
+        // });
 
         let bgImgFile;
+        let locationURL;
 
-        if (about) {
-          bgImgFile = about.bgImg || "";
-        } else {
-          bgImgFile = "";
-        }
+        // if (about) {
+        //   bgImgFile = about.bgImg || "";
+        // } else {
+        //   bgImgFile = "";
+        // }
 
         if (bgImg instanceof stream.Readable || bgImg) {
-          const { createReadStream, filename } = await bgImg;
+          const { filename } = await bgImg;
 
-          const newfile = Math.random().toString(36).substring(7) + filename;
+          // const newfile = Math.random().toString(36).substring(7) + filename;
 
-          await new Promise((res) =>
-            createReadStream().pipe(
-              createWriteStream(
-                path.join(__dirname, "../images/cms/about", newfile)
-              ).on("close", res)
-            )
-          );
+          // await new Promise((res) =>
+          //   createReadStream().pipe(
+          //     createWriteStream(
+          //       path.join(__dirname, "../images/cms/about", newfile)
+          //     ).on("close", res)
+          //   )
+          // );
+          const folder = "cms";
 
-          bgImgFile = newfile;
+          const response = await handleFileUpload(bgImg, folder);
+          locationURL = response.Location;
+
+          bgImgFile = filename;
         }
 
         const aboutUpdate = await AboutCMS.findOneAndUpdate(
@@ -80,6 +86,7 @@ module.exports = {
               subtitle,
               paragraph,
               bgImg: bgImgFile,
+              bgImgURL: locationURL,
               bgColor,
               dark,
               overlay,
@@ -100,26 +107,24 @@ module.exports = {
       _,
       { inputStory: { title, subtitle, paragraph, photo, alt } }
     ) => {
-      let sPhotoFile;
       try {
-        const storyContent = await AboutCMS.findOne({ contentName: "ABOUTUS" });
+        let sPhotoFile;
+        let locationURL;
+        // const storyContent = await AboutCMS.findOne({ contentName: "ABOUTUS" });
 
-        if (storyContent) {
-          sPhotoFile = storyContent.story.photo || "";
-        } else {
-          sPhotoFile = "";
-        }
+        // if (storyContent) {
+        //   sPhotoFile = storyContent.story.photo || "";
+        // } else {
+        //   sPhotoFile = "";
+        // }
 
         if (photo instanceof stream.Readable || photo) {
-          const { createReadStream, filename } = await photo;
+          const { filename } = await photo;
 
-          await new Promise((res) =>
-            createReadStream().pipe(
-              createWriteStream(
-                path.join(__dirname, "../images/cms/about", filename)
-              ).on("close", res)
-            )
-          );
+          const folder = "cms";
+
+          const response = await handleFileUpload(photo, folder);
+          locationURL = response.Location;
 
           sPhotoFile = filename;
         }
@@ -133,6 +138,7 @@ module.exports = {
                 subtitle,
                 paragraph,
                 photo: sPhotoFile,
+                imageURL: locationURL,
                 alt,
               },
             },
@@ -163,28 +169,26 @@ module.exports = {
         },
       }
     ) => {
-      let sMissionFile;
       try {
-        const missionContent = await AboutCMS.findOne({
-          contentName: "ABOUTUS",
-        });
+        let sMissionFile;
+        let locationURL;
+        // const missionContent = await AboutCMS.findOne({
+        //   contentName: "ABOUTUS",
+        // });
 
-        if (missionContent) {
-          sMissionFile = missionContent.missionvision.photo || "";
-        } else {
-          sMissionFile = "";
-        }
+        // if (missionContent) {
+        //   sMissionFile = missionContent.missionvision.photo || "";
+        // } else {
+        //   sMissionFile = "";
+        // }
 
         if (photo instanceof stream.Readable || photo) {
-          const { createReadStream, filename } = await photo;
+          const { filename } = await photo;
 
-          await new Promise((res) =>
-            createReadStream().pipe(
-              createWriteStream(
-                path.join(__dirname, "../images/cms/about", filename)
-              ).on("close", res)
-            )
-          );
+          const folder = "cms";
+
+          const response = await handleFileUpload(photo, folder);
+          locationURL = response.Location;
 
           sMissionFile = filename;
         }
@@ -195,6 +199,7 @@ module.exports = {
             $set: {
               missionvision: {
                 photo: sMissionFile,
+                imageURL: locationURL,
                 alt,
                 mission: {
                   title: mtitle,

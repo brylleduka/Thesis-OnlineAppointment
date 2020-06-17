@@ -2,6 +2,7 @@ const { createWriteStream } = require("fs");
 const stream = require("stream");
 const path = require("path");
 const ShowcaseCMS = require("../models/ShowcaseCMS");
+const { handleFileUpload } = require("../utils/handleFileUpload");
 
 module.exports = {
   Query: {
@@ -30,21 +31,26 @@ module.exports = {
       }
     ) => {
       try {
-        let fileImg = "";
+        // let fileImg = "";
 
-        if (bgImg instanceof stream.Readable || bgImg) {
-          const { createReadStream, filename } = await bgImg;
+        // if (bgImg instanceof stream.Readable || bgImg) {
+        //   const { filename } = await bgImg;
 
-          await new Promise((res) =>
-            createReadStream().pipe(
-              createWriteStream(
-                path.join(__dirname, "../images/cms/home", filename)
-              ).on("close", res)
-            )
-          );
+        //   // await new Promise((res) =>
+        //   //   createReadStream().pipe(
+        //   //     createWriteStream(
+        //   //       path.join(__dirname, "../images/cms/home", filename)
+        //   //     ).on("close", res)
+        //   //   )
+        //   // );
 
-          fileImg = filename;
-        }
+        //   fileImg = filename;
+        // }
+        const { filename } = await bgImg;
+
+        const folder = "cms";
+
+        const response = await handleFileUpload(bgImg, folder);
 
         const showcasing = await ShowcaseCMS.findOneAndUpdate(
           { sectionName: "SHOWCASE" },
@@ -54,7 +60,8 @@ module.exports = {
                 title,
                 subtitle,
                 paragraph,
-                bgImg: fileImg,
+                bgImg: filename,
+                bgImgURL: response.Location,
                 bgColor,
                 position,
                 dark,
@@ -101,17 +108,22 @@ module.exports = {
         });
 
         let fileImgUpdate = bgImgString.toString();
+        let locationURL = "";
 
         if (bgImg instanceof stream.Readable || bgImg) {
-          const { createReadStream, filename } = await bgImg;
+          const { filename } = await bgImg;
 
-          await new Promise((res) =>
-            createReadStream().pipe(
-              createWriteStream(
-                path.join(__dirname, "../images/cms/home", filename)
-              ).on("close", res)
-            )
-          );
+          // await new Promise((res) =>
+          //   createReadStream().pipe(
+          //     createWriteStream(
+          //       path.join(__dirname, "../images/cms/home", filename)
+          //     ).on("close", res)
+          //   )
+          // );
+          const folder = "cms";
+
+          const response = await handleFileUpload(bgImg, folder);
+          locationURL = response.Location;
 
           fileImgUpdate = filename;
         }
@@ -124,6 +136,7 @@ module.exports = {
               "content.$.subtitle": subtitle,
               "content.$.paragraph": paragraph,
               "content.$.bgImg": fileImgUpdate,
+              "content.$.bgImgURL": locationURL,
               "content.$.bgColor": bgColor,
               "content.$.position": position,
               "content.$.dark": dark,

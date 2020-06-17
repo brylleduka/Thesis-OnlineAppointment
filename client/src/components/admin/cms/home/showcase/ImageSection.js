@@ -4,7 +4,7 @@ import {
   DImage,
   Content,
   DSection,
-  Overlay
+  Overlay,
 } from "../../../../styled/containers";
 
 const ImageSection = ({
@@ -15,7 +15,7 @@ const ImageSection = ({
   selectedFile,
   onSelectedFile,
   values,
-  bgImg
+  bgImgURL,
 }) => {
   const fileInput = useRef();
 
@@ -30,7 +30,7 @@ const ImageSection = ({
           {selectedFile ? (
             <img src={preview} alt="showcase" />
           ) : (
-            bgImg && <img src={`/images/cms/home/${bgImg}`} alt="showcase" />
+            bgImgURL && <img src={bgImgURL} alt="showcase" />
           )}
         </DImage>
 
@@ -79,8 +79,6 @@ const ImageSection = ({
           onChange={onSelectedFile}
           style={{ display: "none" }}
           ref={fileInput}
-
-          
         />
         <Popup
           content="Select image for background slide"

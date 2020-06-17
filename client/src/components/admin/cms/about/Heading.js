@@ -24,11 +24,11 @@ const Heading = () => {
     <>
       {loadAboutContent ? (
         <DSection width="90%" mcenter>
-          <Spinner  />
+          <Spinner />
         </DSection>
       ) : (
         <DSection
-          background={isAbout.bgImg && `/images/cms/about/${isAbout.bgImg}`}
+          background={isAbout.bgImgURL}
           bgcolor={isAbout.bgColors}
           width="90%"
           mcenter

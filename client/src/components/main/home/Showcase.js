@@ -73,7 +73,7 @@ const Showcase = ({ nextSection }) => {
               height="90vh"
               key={sc._id}
               bgcolor={sc.bgColor}
-              background={sc.bgImg && `/images/cms/home/${sc.bgImg}`}
+              background={sc.bgImgURL && sc.bgImgURL}
             >
               {/* {sc.bgImg && (
                 <DImage height="100%">

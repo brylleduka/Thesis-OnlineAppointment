@@ -11,6 +11,7 @@ const FETCH_GALLERIES = gql`
         name
         caption
         src
+        imageURL
         height
         width
       }
@@ -31,6 +32,7 @@ const FETCH_GALLERY = gql`
         name
         caption
         src
+        imageURL
         height
         width
       }

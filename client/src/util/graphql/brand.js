@@ -5,6 +5,7 @@ const FETCH_BRANDS = gql`
     brands {
       _id
       image
+      imageURL
       active
     }
   }
@@ -15,6 +16,7 @@ const FETCH_BRAND = gql`
     brand(_id: $id) {
       _id
       image
+      imageURL
       active
     }
   }
@@ -25,6 +27,7 @@ const FETCH_BRAND_ACTIVE = gql`
     brandActive {
       _id
       image
+      imageURL
       active
     }
   }

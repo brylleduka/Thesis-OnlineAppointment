@@ -114,6 +114,7 @@ const ModalSlide = ({ open, setOpen, showcase }) => {
             onSelectedFile={onSelectedFile}
             values={values}
             bgImg={showcase && showcase.bgImg}
+            bgImgURL={showcase && showcase.bgImgURL}
           />
         </Modal.Content>
         <Modal.Content scrolling>
@@ -286,6 +287,7 @@ const ADD_NEW_SLIDE = gql`
         subtitle
         paragraph
         bgImg
+        bgImgURL
         bgColor
         position
         dark
@@ -324,6 +326,7 @@ const UPDATE_SLIDE = gql`
         subtitle
         paragraph
         bgImg
+        bgImgURL
         bgColor
         position
         dark

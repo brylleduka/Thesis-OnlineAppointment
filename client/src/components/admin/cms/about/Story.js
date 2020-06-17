@@ -56,7 +56,7 @@ const Story = () => {
               <img
                 src={
                   isStory
-                    ? `/images/cms/about/${isStory.photo}`
+                    ? isStory.imageURL
                     : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
                 }
                 alt="about"

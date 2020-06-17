@@ -5,7 +5,7 @@ import {
   DShowCase,
   Overlay,
   DSection,
-  DImage
+  DImage,
 } from "../../../../styled/containers";
 import NewSlide from "./NewSlide";
 import EditSlide from "./EditSlide";
@@ -19,8 +19,8 @@ const Showcase = () => {
     FETCH_THE_SHOWCASE,
     {
       variables: {
-        sectionName: "SHOWCASE"
-      }
+        sectionName: "SHOWCASE",
+      },
     }
   );
 
@@ -36,7 +36,7 @@ const Showcase = () => {
     fade: true,
     speed: 500,
     slidesToShow: 1,
-    slidesToScroll: 1
+    slidesToScroll: 1,
   };
 
   return (
@@ -54,11 +54,11 @@ const Showcase = () => {
           </DShowCase>
         ) : (
           <Slider {...settings}>
-            {showcase.map(sc => (
+            {showcase.map((sc) => (
               <DShowCase
                 height="80vh"
                 key={sc._id}
-                background={sc.bgImg && `/images/cms/home/${sc.bgImg}`}
+                background={sc.bgImgURL && sc.bgImgURL}
                 bgcolor={sc.bgColor}
               >
                 <Overlay
@@ -102,7 +102,7 @@ const Showcase = () => {
                     width: "auto",
                     display: "flex",
                     justifyContent: "center",
-                    alignItems: "center"
+                    alignItems: "center",
                   }}
                 >
                   <EditSlide showcase={sc} />

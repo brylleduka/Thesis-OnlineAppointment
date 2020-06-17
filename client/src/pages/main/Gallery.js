@@ -121,7 +121,7 @@ const Gallery = () => {
                 <GalleryThumb
                   background={
                     gallery.photos.length > 0
-                      ? `/images/gallery/${gallery.photos[0].src}`
+                      ? gallery.photos[0].imageURL
                       : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
                   }
                   title="Event Photos"
@@ -144,7 +144,7 @@ const Gallery = () => {
               photos={allPhotos.map((photo) => ({
                 height: photo.height,
                 width: photo.width,
-                src: `/images/gallery/${photo.src}`,
+                src: photo.imageURL,
                 alt: photo.alt,
                 id: photo._id,
               }))}
@@ -158,7 +158,7 @@ const Gallery = () => {
                     currentIndex={currentImage}
                     views={allPhotos.map((photo) => ({
                       ...photo,
-                      src: `/images/gallery/${photo.src}`,
+                      src: photo.imageURL,
                       srcset: photo.srcSet,
                       caption:
                         photo.caption !== null

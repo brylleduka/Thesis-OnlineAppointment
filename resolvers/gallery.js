@@ -3,6 +3,7 @@ const path = require("path");
 
 const Gallery = require("../models/Gallery");
 const { UserInputError } = require("apollo-server-express");
+const { handleFileUpload } = require("../utils/handleFileUpload");
 
 module.exports = {
   Query: {
@@ -52,25 +53,30 @@ module.exports = {
         const randNum2 = Math.random() * 2 + 3;
 
         let process_upload = async (upload) => {
-          let { filename, createReadStream } = await upload;
+          let { filename } = await upload;
 
-          const newfile = Math.random().toString(36).substring(7) + filename;
+          // const newfile = Math.random().toString(36).substring(7) + filename;
 
-          await new Promise((res) =>
-            createReadStream().pipe(
-              createWriteStream(
-                path.join(__dirname, "../images/gallery", newfile)
-              ).on("close", res)
-            )
-          );
+          // await new Promise((res) =>
+          //   createReadStream().pipe(
+          //     createWriteStream(
+          //       path.join(__dirname, "../images/gallery", newfile)
+          //     ).on("close", res)
+          //   )
+          // );
+
+          const folder = "galleries";
+
+          const response = await handleFileUpload(upload, folder);
 
           const newPhoto = await Gallery.updateMany(
             { _id },
             {
               $addToSet: {
                 photos: {
-                  name: newfile.replace(/\.[^/.]+$/, ""),
-                  src: newfile,
+                  name: filename.replace(/\.[^/.]+$/, ""),
+                  src: filename,
+                  imageURL: response.Location,
                   height: randNum1,
                   width: randNum2,
                 },

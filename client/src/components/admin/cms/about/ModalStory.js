@@ -78,11 +78,8 @@ const ModalStory = ({ isStory }) => {
                 {selectedFile ? (
                   <img src={preview} alt="showcase" />
                 ) : (
-                  isStory.photo && (
-                    <img
-                      src={`/images/cms/about/${isStory.photo}`}
-                      alt="showcase"
-                    />
+                  isStory.imageURL && (
+                    <img src={isStory.imageURL} alt="showcase" />
                   )
                 )}
               </DImage>
@@ -216,6 +213,7 @@ const UPDATE_ABOUT_STORY = gql`
         subtitle
         paragraph
         photo
+        imageURL
         alt
       }
     }

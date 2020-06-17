@@ -1,11 +1,11 @@
 const Brand = require("../models/Brand");
 
 const { UserInputError, ForbiddenError } = require("apollo-server-express");
-const Auth = require("../utils/check-auth");
 
 const { createWriteStream, unlink, stat } = require("fs");
 
 const path = require("path");
+const { handleFileUpload } = require("../utils/handleFileUpload");
 
 module.exports = {
   Query: {
@@ -42,23 +42,28 @@ module.exports = {
   Mutation: {
     addBrand: async (_, { image }) => {
       try {
-        const { createReadStream, filename } = await image;
-        const newfile = Math.random().toString(36).substring(7) + filename;
+        const { filename } = await image;
+        // const newfile = Math.random().toString(36).substring(7) + filename;
 
-        await new Promise((res) =>
-          createReadStream().pipe(
-            createWriteStream(
-              path.join(__dirname, "../images/brands", newfile)
-            ).on("close", res)
-          )
-        );
+        // await new Promise((res) =>
+        //   createReadStream().pipe(
+        //     createWriteStream(
+        //       path.join(__dirname, "../images/brands", newfile)
+        //     ).on("close", res)
+        //   )
+        // );
+
+        const folder = "brands";
+
+        const response = await handleFileUpload(image, folder);
 
         const newBrand = new Brand({
-          image: newfile,
+          image: filename,
+          imageURL: response.Location,
           active: false,
         });
 
-        const brandSave = newBrand.save();
+        const brandSave = await newBrand.save();
 
         return brandSave;
       } catch (err) {
@@ -87,20 +92,20 @@ module.exports = {
 
     deleteBrand: async (_, { _id }) => {
       const brand = await Brand.findById(_id);
-      const getImg = brand.image;
+      // const getImg = brand.image;
 
-      stat("./images/brands/" + getImg, function (err, stats) {
-        console.log(stats); //here we got all information of file in stats variable
+      // stat("./images/brands/" + getImg, function (err, stats) {
+      //   console.log(stats); //here we got all information of file in stats variable
 
-        if (err) {
-          return console.error(err);
-        }
+      //   if (err) {
+      //     return console.error(err);
+      //   }
 
-        unlink("./images/brands/" + getImg, function (err) {
-          if (err) return console.log(err);
-          console.log("file deleted successfully");
-        });
-      });
+      //   unlink("./images/brands/" + getImg, function (err) {
+      //     if (err) return console.log(err);
+      //     console.log("file deleted successfully");
+      //   });
+      // });
 
       await Brand.findByIdAndDelete(_id);
 

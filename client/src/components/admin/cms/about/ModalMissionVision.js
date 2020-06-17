@@ -83,11 +83,8 @@ const ModalMissionVision = ({ isMissionVision }) => {
                 {selectedFileMV ? (
                   <img src={previewMV} alt="showcase" />
                 ) : (
-                  isMissionVision.photo && (
-                    <img
-                      src={`/images/cms/about/${isMissionVision.photo}`}
-                      alt="about"
-                    />
+                  isMissionVision.imageURL && (
+                    <img src={isMissionVision.imageURL} alt="about" />
                   )
                 )}
               </DImage>
@@ -252,6 +249,7 @@ const UPDATE_ABOUT_MISSIONVISION = gql`
     ) {
       missionvision {
         photo
+        imageURL
         alt
         mission {
           title

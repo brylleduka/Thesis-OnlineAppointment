@@ -106,7 +106,7 @@ const Album = (props) => {
             photos={albumPhotos.map((photo) => ({
               height: photo.height,
               width: photo.width,
-              src: `/images/gallery/${photo.src}`,
+              src: photo.imageURL,
               alt: photo.src,
               id: photo._id,
               key: photo._id,
@@ -135,7 +135,7 @@ const Album = (props) => {
                   currentIndex={currentImage}
                   views={albumPhotos.map((photo) => ({
                     ...photo,
-                    src: `/images/gallery/${photo.src}`,
+                    src: photo.imageURL,
                     caption:
                       photo.caption !== null
                         ? `${photo.name} - ${photo.caption}`

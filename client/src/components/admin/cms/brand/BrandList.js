@@ -74,7 +74,7 @@ const BrandList = () => {
             onMouseOver={() => setImageID(brand._id)}
             onClick={updateLOGO}
           >
-            <img src={`../images/brands/${brand.image}`} alt={brand.image} />
+            <img src={brand.imageURL} alt={brand.image} />
           </label>
           {loadUpdateActiveBrand && (
             <Overlay bg="rgba(0,0,0,0.2)" flex justify="center" align="center">
@@ -92,6 +92,7 @@ const UPDATE_BRAND_ACTIVE = gql`
     updateActiveBrand(_id: $id) {
       _id
       image
+      imageURL
       active
     }
   }

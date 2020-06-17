@@ -29,6 +29,8 @@ const Gallery = () => {
     }
   }, [dataGalleries]);
 
+  console.log(galleries.map((gl) => gl));
+
   const imageRenderer = useCallback(
     ({ index, left, top, key, photo }) => (
       <ImageSelected
@@ -117,7 +119,7 @@ const Gallery = () => {
                   key={gallery._id}
                   background={
                     gallery.photos.length > 0
-                      ? `/images/gallery/${gallery.photos[0].src}`
+                      ? gallery.photos[0].imageURL
                       : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
                   }
                   title={`${gallery.title} Photos`}
@@ -153,7 +155,7 @@ const Gallery = () => {
             photos={allPhotos.map((photo) => ({
               height: photo.height,
               width: photo.width,
-              src: `/images/gallery/${photo.src}`,
+              src: photo.imageURL,
               alt: photo.src,
               id: photo._id,
               key: photo._id,
@@ -170,7 +172,7 @@ const Gallery = () => {
                   currentIndex={currentImage}
                   views={allPhotos.map((photo) => ({
                     ...photo,
-                    src: `/images/gallery/${photo.src}`,
+                    src: photo.imageURL,
                     caption:
                       photo.caption !== null
                         ? `${photo.name} - ${photo.caption}`
