@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_ALL_CATEGORIES_QUERY } from "../../../util/graphql/service";
 import { FETCH_HOME_SECTION } from "../../../util/graphql/cms";
-import { Link } from "react-router-dom";
+
+import { HashLink as Link } from "react-router-hash-link";
 import {
   DGrid,
   DSection,
@@ -139,7 +140,7 @@ const CategorySection = ({ setRef }) => {
                       </div>
                     </div>
                   </Overlay>
-                  <Link to={`/zeadmin/category/${category._id}`} />
+                  <Link to={`/service/${category._id}/#${category._id}`} />
                 </DCard>
               ))}
             </DGrid>

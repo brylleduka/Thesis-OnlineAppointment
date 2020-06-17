@@ -116,8 +116,8 @@ const AboutSection = ({ nextSection }) => {
                 ) : (
                   <img
                     src={
-                      about.story && about.story.photo
-                        ? `/images/cms/about/${about.story.photo}`
+                      about.story && about.story.imageURL
+                        ? about.story.imageURL
                         : "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
                     }
                   />
@@ -129,8 +129,8 @@ const AboutSection = ({ nextSection }) => {
                 ) : (
                   <img
                     src={
-                      about.missionvision && about.missionvision.photo
-                        ? `/images/cms/about/${about.missionvision.photo}`
+                      about.missionvision && about.missionvision.imageURL
+                        ? about.missionvision.imageURL
                         : "https://images.pexels.com/photos/3779501/pexels-photo-3779501.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
                     }
                   />

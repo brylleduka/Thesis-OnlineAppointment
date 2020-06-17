@@ -124,8 +124,12 @@ const Gallery = () => {
                       ? gallery.photos[0].imageURL
                       : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
                   }
-                  title="Event Photos"
-                  subtitle="50 Event Photos"
+                  title={`${gallery.title} Photos`}
+                  subtitle={`${gallery.photos.length}${
+                    gallery.photos.length > 20 ? "+" : ""
+                  } ${gallery.title} Photo${
+                    gallery.photos.length > 1 ? "s" : ""
+                  }`}
                   link={`/album/${gallery._id}`}
                 />
               ))}
