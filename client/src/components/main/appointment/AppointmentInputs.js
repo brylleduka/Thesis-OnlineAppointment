@@ -197,7 +197,7 @@ const AppointmentInputs = ({
                 {employees &&
                   employees.map((servEmp) => (
                     <option key={servEmp._id} value={servEmp._id}>
-                      {servEmp.firstName}
+                      {servEmp.title} {servEmp.firstName} {servEmp.lastName}
                     </option>
                   ))}
               </select>

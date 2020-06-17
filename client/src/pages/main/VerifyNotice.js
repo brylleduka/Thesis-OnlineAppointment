@@ -39,10 +39,9 @@ const VerifyNotice = () => {
           align="center"
           margin="0 auto"
         >
-          <DButton as={Link} to="/home" basic>
+          <DButton as={Link} to="/">
             Explore
           </DButton>
-         
         </Content>
       </Content>
     </DSection>

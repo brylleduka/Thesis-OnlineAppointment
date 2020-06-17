@@ -90,12 +90,7 @@ const MyAppointmentHistory = () => {
       cell: (row) => (
         <Popup
           trigger={
-            <DButton
-              height="32px"
-              pad="2px 8px"
-              value={row._id}
-              onClick={handleRow}
-            >
+            <DButton flex value={row._id} onClick={handleRow}>
               <Icon name="eye" />
             </DButton>
           }

@@ -6,8 +6,9 @@ import { FETCH_SINGLE_SERVICE_QUERY } from "../../../util/graphql/service";
 import { FETCH_EMPLOYEE_QUERY } from "../../../util/graphql/employee";
 import { FETCH_MY_CURRENT_APPOINTMENTS } from "../../../util/graphql/appointment";
 import { Modal, Form } from "semantic-ui-react";
-import { DButton, DLabel, Toasted } from "../../styled/utils";
+import { DButton, DLabel } from "../../styled/utils";
 import Spinner from "../../Spinner";
+import Toasted from "../../Toasted";
 import toaster from "toasted-notes";
 
 const Confirmation = ({
@@ -16,7 +17,7 @@ const Confirmation = ({
   serviceValue,
   employeeVal,
   startDate,
-  selectedTime
+  selectedTime,
 }) => {
   const history = useHistory();
   const [errors, setErrors] = useState({});
@@ -27,8 +28,8 @@ const Confirmation = ({
     FETCH_SINGLE_SERVICE_QUERY,
     {
       variables: {
-        serviceId: serviceValue
-      }
+        serviceId: serviceValue,
+      },
     }
   );
 
@@ -42,15 +43,15 @@ const Confirmation = ({
     FETCH_EMPLOYEE_QUERY,
     {
       variables: {
-        employeeId: employeeVal
-      }
+        employeeId: employeeVal,
+      },
     }
   );
 
   const [createAppointment, { loading }] = useMutation(CREATE_NEW_APPOINTMENT, {
     update(cache, result) {
       const data = cache.readQuery({
-        query: FETCH_MY_CURRENT_APPOINTMENTS
+        query: FETCH_MY_CURRENT_APPOINTMENTS,
       });
 
       const newAppointment = result.data.createAppointment;
@@ -58,8 +59,8 @@ const Confirmation = ({
       cache.writeQuery({
         query: FETCH_MY_CURRENT_APPOINTMENTS,
         data: {
-          myCurrentAppointment: [newAppointment, ...data.myCurrentAppointment]
-        }
+          myCurrentAppointment: [newAppointment, ...data.myCurrentAppointment],
+        },
       });
     },
     onCompleted(data) {
@@ -68,13 +69,8 @@ const Confirmation = ({
       if (data) {
         toaster.notify(
           ({ onClose }) => (
-            <Toasted status={"success"}>
-              <span className="description">
-                Successfully booked an appointment
-              </span>
-              <span className="close" onClick={onClose}>
-                &times;
-              </span>
+            <Toasted success onClick={onClose}>
+              Successfully booked an appointment
             </Toasted>
           ),
           { position: "bottom-right" }
@@ -115,11 +111,11 @@ const Confirmation = ({
       employeeId: employeeVal,
       date: new Date(startDate).toLocaleDateString(),
       start: selectedTime,
-      message: addInfo
-    }
+      message: addInfo,
+    },
   });
 
-  const handleMessage = e => {
+  const handleMessage = (e) => {
     setAddInfo(e.target.value);
   };
 
@@ -206,7 +202,9 @@ const Confirmation = ({
         <DButton confirm onClick={handleCreateAppointment}>
           {loading ? <Spinner small inverted /> : "Book"}
         </DButton>
-        <DButton alert onClick={() => setOpen(false)}>Cancel</DButton>
+        <DButton alert onClick={() => setOpen(false)}>
+          Cancel
+        </DButton>
       </Modal.Actions>
     </Modal>
   );
@@ -269,8 +267,8 @@ const styles = {
     diplay: "flex",
     justifyContent: "center",
     alignItems: "center",
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
 };
 
 export default Confirmation;

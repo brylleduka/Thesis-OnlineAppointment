@@ -18,10 +18,10 @@ const Account = (props) => {
 
   const stored = localStorage.getItem("account");
   const [isAccount, setIsAccount] = useState(
-    stored === "details"
-      ? "details"
-      : stored === "appointments"
+    stored === "appointments"
       ? "appointments"
+      : stored === "details"
+      ? "details"
       : "appointments"
   );
 

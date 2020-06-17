@@ -88,7 +88,7 @@ const CurrentAppointment = () => {
           <Popup
             trigger={
               <DButton flex onClick={() => setOpen(true)}>
-                <Icon name="eye" fitted />
+                <Icon name="eye" />
               </DButton>
             }
             mouseEnterDelay={500}
