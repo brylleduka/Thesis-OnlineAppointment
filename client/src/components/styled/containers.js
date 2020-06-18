@@ -165,7 +165,7 @@ export const DSection = styled.section`
   background-image: url(${(props) => props.background && props.background});
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
+  background-size: ${(props) => (props.bgsize ? props.bgsize : "cover")};
   background-attachment: fixed;
 
   display: ${(props) => props.flex && "flex"};
@@ -184,6 +184,17 @@ export const DSection = styled.section`
     props.maxh &&
     css`
       min-height: ${props.maxh};
+    `};
+
+  ${(props) =>
+    props.minw &&
+    css`
+      min-height: ${props.minw};
+    `};
+  ${(props) =>
+    props.maxw &&
+    css`
+      min-height: ${props.maxw};
     `};
 
   @media (max-width: 768px) {

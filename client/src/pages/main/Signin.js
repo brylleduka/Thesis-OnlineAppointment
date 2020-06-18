@@ -1,13 +1,16 @@
 import React from "react";
 import SigninForm from "../../components/main/authenticate/SigninForm";
 import {
-  DGrid,
   Content,
   DSection,
   DContainer,
+  Overlay,
+  DImage,
 } from "../../components/styled/containers";
+import useWindowSize from "../../util/hooks/useWindowSize";
 
 const Signin = (props) => {
+  const { width: wid } = useWindowSize();
   const { from } = props.location.state || {
     from: { pathname: "/" },
   };
@@ -16,35 +19,66 @@ const Signin = (props) => {
 
   return (
     <DContainer>
-      <DGrid two className="signin-custom">
+      <DSection width="100%" height="100%" flex center>
+        {wid > 768 && (
+          <DSection
+            height="100%"
+            flex
+            justify="center"
+            align="center"
+            width="60%"
+            margin="0"
+            minh="80vh"
+            minw="auto"
+            maxw="100%"
+            style={{ overFlow: "hidden" }}
+          >
+            <DImage height="100vh" width="100%">
+              <img
+                src={
+                  "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/jasmin_model.jpg"
+                }
+                alt="Avatar"
+              />
+            </DImage>
+            <Overlay bgc>
+              <Content
+                flex
+                justify="center"
+                align="center"
+                width="80%"
+                height="100%"
+                margin="0 auto"
+                direct="column"
+                className="dark"
+              >
+                <h1>Sign in your account</h1>
+                <p
+                  style={{
+                    fontWeight: 500,
+                    textAlign: "center",
+                    fontSize: "14px",
+                  }}
+                >
+                  A beautiful day begins with a beautiful mindset.
+                </p>
+              </Content>
+            </Overlay>
+          </DSection>
+        )}
+
         <DSection
-          height="100vh"
+          height="100%"
           flex
           justify="center"
           align="center"
-          width="100%"
-          margin="0"
-          background={
-            "https://images.pexels.com/photos/458766/pexels-photo-458766.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-          }
-          className="signin-left"
-        >
-          <Content width="90%" className="dark">
-            <h2>Sign In</h2>
-            <p>A beautiful day begins with a beautiful mindset.</p>
-          </Content>
-        </DSection>
-        <DSection
-          height="100vh"
-          flex
-          justify="center"
-          align="center"
-          width="100%"
-          className="signin-right"
+          width="80%"
+          mcenter
+          minh="80vh"
         >
           <SigninForm from={from} hist={hist} />
         </DSection>
-      </DGrid>
+      </DSection>
     </DContainer>
   );
 };
