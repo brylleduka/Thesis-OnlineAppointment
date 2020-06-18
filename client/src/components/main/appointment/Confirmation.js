@@ -10,6 +10,7 @@ import { DButton, DLabel } from "../../styled/utils";
 import Spinner from "../../Spinner";
 import Toasted from "../../Toasted";
 import toaster from "toasted-notes";
+import moment from "moment";
 
 const Confirmation = ({
   open,
@@ -123,8 +124,6 @@ const Confirmation = ({
     createAppointment();
   };
 
-  console.log(errors);
-
   return (
     <Modal size="tiny" open={open} onClose={() => setOpen(false)}>
       <Modal.Header>Appointment Confirmation</Modal.Header>
@@ -200,7 +199,11 @@ const Confirmation = ({
       </Modal.Content>
       <Modal.Actions>
         <DButton confirm onClick={handleCreateAppointment}>
-          {loading ? <Spinner small inverted /> : "Book"}
+          {loading ? (
+            <Spinner small inverted row content="Booking..." />
+          ) : (
+            "Book"
+          )}
         </DButton>
         <DButton alert onClick={() => setOpen(false)}>
           Cancel

@@ -33,11 +33,18 @@ const CurrentAppointments = () => {
       },
     },
     {
+      name: "ID",
+      selector: "_id",
+      wrap: true,
+      cell: (row) => row._id.slice(-10),
+    },
+    {
       name: "Aesthetician",
       selector: "employee.lastName",
       wrap: true,
       sortable: true,
-      format: (row) => `${row.employee.firstName} ${row.employee.lastName}`,
+      format: (row) =>
+        `${row.employee.title} ${row.employee.firstName} ${row.employee.lastName}`,
     },
     {
       name: "Service",
@@ -51,7 +58,7 @@ const CurrentAppointments = () => {
       selector: "date",
       wrap: true,
       sortable: true,
-      format: (row) => `${moment(parseInt(row.date)).format("LL")}`,
+      format: (row) => `${moment(row.date).format("LL")}`,
     },
     {
       name: "Status",

@@ -66,7 +66,7 @@ module.exports = {
       try {
         const checkAppointments = await Appointment.find({
           employee: employeeId,
-          date: new Date(date).toISOString(),
+          date: new Date(date).toLocaleDateString(),
           $or: [
             { status: "PENDING" },
             { status: "VERIFIED" },
@@ -153,7 +153,7 @@ module.exports = {
 
         const checkTime = await Appointment.findOne({
           employee: employeeId,
-          date: new Date(date).toISOString(),
+          date: new Date(date).toLocaleDateString(),
           slot_start,
         });
 
@@ -170,7 +170,7 @@ module.exports = {
           user: newGuestUser,
           service,
           employee,
-          date: new Date(date).toISOString(),
+          date: new Date(date).toLocaleDateString(),
           duration,
           slot_start,
           message,
@@ -210,7 +210,7 @@ module.exports = {
 
         const checkTime = await Appointment.findOne({
           employee: employeeId,
-          date: new Date(date).toISOString(),
+          date: new Date(date).toLocaleDateString(),
           slot_start,
         });
 
@@ -231,7 +231,7 @@ module.exports = {
           user: userId,
           service,
           employee,
-          date: new Date(date).toISOString(),
+          date: new Date(date).toLocaleDateString(),
           duration,
           slot_start,
           message,
@@ -274,7 +274,7 @@ module.exports = {
 
         const checkTime = await Appointment.findOne({
           employee: employeeId,
-          date: new Date(date).toISOString(),
+          date: new Date(date).toLocaleDateString(),
           slot_start,
           $or: [
             { status: "PENDING" },
@@ -306,7 +306,7 @@ module.exports = {
           user,
           service,
           employee,
-          date: new Date(date).toISOString(),
+          date: new Date(date).toLocaleDateString(),
           duration,
           slot_start,
           message,
@@ -451,7 +451,7 @@ module.exports = {
 
       const checkTime = await Appointment.findOne({
         employee: employeeId,
-        date: new Date(date).toISOString(),
+        date: new Date(date).toLocaleDateString(),
         slot_start,
       });
 
@@ -473,7 +473,7 @@ module.exports = {
         user,
         service,
         employee,
-        date: new Date(date).toISOString(),
+        date: new Date(date).toLocaleDateString(),
         duration,
         slot_start,
         message,

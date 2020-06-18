@@ -130,7 +130,7 @@ const columns = [
     cell: (row) =>
       row.employee !== null ? (
         <span>
-          {row.employee.firstName} {row.employee.lastName}
+          ${row.employee.title} {row.employee.firstName} {row.employee.lastName}
         </span>
       ) : (
         "NF"

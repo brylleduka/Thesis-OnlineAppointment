@@ -80,7 +80,7 @@ const AppointmentInputs = ({
   const handleChange = (e) => {
     e.preventDefault();
     setCategoryValue(e.target.value);
-    loadService();
+    if (categoryValue !== "CHECK_UP") loadService();
   };
 
   const handleServiceChange = (e) => {
@@ -127,6 +127,7 @@ const AppointmentInputs = ({
               <option value="" disabled>
                 Select Service Category...
               </option>
+              <option value="CHECK_UP">Check up</option>
               {categories &&
                 categories.map((category) => (
                   <option value={category._id} key={category._id}>
@@ -137,7 +138,7 @@ const AppointmentInputs = ({
           )}
         </Form.Field>
 
-        {called && (
+        {called && categoryValue !== "CHECK_UP" && (
           <Form.Field>
             <label style={{ textTransform: "uppercase", fontWeight: 700 }}>
               Select Sub-Service
@@ -177,7 +178,7 @@ const AppointmentInputs = ({
           </Form.Field>
         )}
 
-        {calledServiceEmp && (
+        {calledServiceEmp && categoryValue !== "CHECK_UP" && (
           <Form.Field>
             <label style={{ textTransform: "uppercase", fontWeight: 700 }}>
               Select Aesthetician

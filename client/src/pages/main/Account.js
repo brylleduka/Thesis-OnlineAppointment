@@ -49,10 +49,19 @@ const Account = (props) => {
 
   return (
     <DContainer>
-      <DSection width="90%" mcenter pad="40px 0" height="100%">
-        <h1>Account</h1>
+      <DSection
+        width="90%"
+        flex
+        align="center"
+        justify="center"
+        direct="column"
+        mcenter
+        pad="40px 0"
+        height="100%"
+      >
+        <h2>My Account</h2>
         {!userInfo ? (
-          <DSection width="80%" mcenter height="100vh">
+          <DSection width="90%" mcenter height="100vh">
             <Content flex justify="center" width="100%" height="100%">
               <Spinner content="We're fetching your data..." />
             </Content>

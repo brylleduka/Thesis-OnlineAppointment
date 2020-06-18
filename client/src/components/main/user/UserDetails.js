@@ -23,7 +23,7 @@ const UserDetails = ({ userInfo }) => {
 
   return (
     <Content width="100%">
-      <DGrid gap="15px">
+      <DGrid gap="15px" med10={"1fr"} med7={"1fr"}>
         <DCard dw="100%" dh="100%" flex fcol justifyBetween>
           <Content flex width="100%" justify="space-between" aling="center">
             <h3>Personal Details</h3>

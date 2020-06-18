@@ -16,6 +16,7 @@ const FETCH_ALL_EMPLOYEES_QUERY = gql`
       imageURL
       role
       level
+      password
       schedule {
         _id
         day
@@ -49,6 +50,7 @@ const FETCH_EMPLOYEES_NOT_ADMIN_QUERY = gql`
       bio
       role
       level
+      password
       schedule {
         _id
         day
@@ -84,6 +86,7 @@ const FETCH_EMPLOYEE_QUERY = gql`
       level
       dateOfBirth
       bio
+      password
       schedule {
         _id
         day

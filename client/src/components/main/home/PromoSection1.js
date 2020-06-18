@@ -11,8 +11,8 @@ const PromoSection1 = () => {
     >
       <Content>
         <h2>The Concept of Beauty</h2>
-        <p>Love your Skin. Feel Fabulous.</p>
-        <Link to="/appointment" className="btn">
+        <p style={{ fontWeight: 500 }}>Love your Skin. Feel Fabulous.</p>
+        <Link to="/appointment" className="btn btn-blue">
           Book Now!
         </Link>
       </Content>

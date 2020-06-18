@@ -77,9 +77,10 @@ export const DMenu = styled.ul`
   }
 
   li a:hover,
-  &.active {
-    color: ${({ theme }) => theme.primary};
-    border-bottom: 2px solid ${({ theme }) => theme.primary};
+  &.active,
+  .main_nav_link-active {
+    color: ${({ theme }) => theme.blue};
+    border-bottom: 2px solid ${({ theme }) => theme.blue};
   }
 `;
 
@@ -139,10 +140,12 @@ export const DMainMenu = styled(DMenu)`
     }
     li:nth-child(2) {
       .btn {
-        font-size: 14px;
+        font-size: 16px;
         margin: 0;
         padding: 5px 6px;
-        background-color: #fe8c00;
+        &:hover {
+          color: ${({ theme }) => theme.secondary};
+        }
       }
     }
 
@@ -160,7 +163,7 @@ export const DMainMenu = styled(DMenu)`
       display: flex;
       justify-content: flex-end;
       align-items: flex-end;
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .account-nav li:first-child span {
@@ -316,16 +319,11 @@ export const DBurger = styled.nav`
   &:focus {
     outline: none;
   }
-  &:hover {
-    div {
-      background: ${({ theme }) => theme.light};
-    }
-  }
 
   div {
     width: 2rem;
     height: 0.3rem;
-    background: ${({ theme, open }) => (open ? theme.secondary : theme.blue)};
+    background: ${({ theme, open }) => (open ? theme.light : theme.blue)};
     transition: all 0.3s linear;
     position: relative;
     transform-origin: 1px;

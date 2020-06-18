@@ -196,6 +196,7 @@ const EmployeeCard = ({ employee }) => {
                 value={empAcctValue.role}
                 onChange={handleEmpAcctValue}
               >
+                <option>ADMIN</option>
                 <option>AESTHETICIAN</option>
                 <option>RECEPTIONIST</option>
               </DSelect>

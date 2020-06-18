@@ -13,7 +13,7 @@ const AppointmentDone = ({ openDone, setOpenDone, appointmentId }) => {
     DONE_APPOINTMENT_MUTATION,
     {
       variables: {
-        appointmentId
+        appointmentId,
       },
       refetchQueries: [{ query: FETCH_APPOINTMENTS_QUERY }],
       onCompleted(data) {
@@ -22,7 +22,7 @@ const AppointmentDone = ({ openDone, setOpenDone, appointmentId }) => {
       },
       onError(err) {
         setOpenDone(false);
-      }
+      },
     }
   );
 
@@ -37,11 +37,15 @@ const AppointmentDone = ({ openDone, setOpenDone, appointmentId }) => {
         <h2>Appointment already done?</h2>
       </Modal.Content>
       <Modal.Actions>
-        <DButton alert basic onClick={() => setOpenDone(false)}>
+        <DButton alert onClick={() => setOpenDone(false)}>
           Close
         </DButton>
-        <DButton confirm basic onClick={handleConfirm}>
-          {loading ? <Spinner small inverted /> : "Yes"}
+        <DButton confirm onClick={handleConfirm}>
+          {loading ? (
+            <Spinner small inverted row content="Confirming..." />
+          ) : (
+            "Yes"
+          )}
         </DButton>
       </Modal.Actions>
     </Modal>

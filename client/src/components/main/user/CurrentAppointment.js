@@ -59,7 +59,7 @@ const CurrentAppointment = () => {
       selector: "date",
       wrap: true,
       sortable: true,
-      format: (row) => `${moment(parseInt(row.date)).format("LL")}`,
+      format: (row) => `${moment(row.date).format("LL")}`,
     },
     {
       name: "Status",
@@ -87,8 +87,8 @@ const CurrentAppointment = () => {
         <>
           <Popup
             trigger={
-              <DButton flex onClick={() => setOpen(true)}>
-                <Icon name="eye" />
+              <DButton onClick={() => setOpen(true)}>
+                <Icon name="eye" fitted />
               </DButton>
             }
             mouseEnterDelay={500}

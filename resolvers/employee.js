@@ -16,7 +16,7 @@ const { handleFileUpload } = require("../utils/handleFileUpload");
 
 module.exports = {
   Query: {
-    employees: async ({ active }) => {
+    employees: async (_, { active }) => {
       try {
         const getAllEmployee = await Employee.find({
           active,

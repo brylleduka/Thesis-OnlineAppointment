@@ -47,7 +47,7 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
   return (
     <>
       <Modal
-        size="tiny"
+        size="small"
         open={open}
         onClose={() => {
           setOpen(false);
@@ -181,9 +181,9 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
                         pad="10px 15px"
                       >
                         <h5>
-                          {moment(
-                            parseInt(appointmentInfo.appointment.date)
-                          ).format("LL")}
+                          {moment(appointmentInfo.appointment.date).format(
+                            "LL"
+                          )}
                         </h5>
                       </Content>
                     </Content>

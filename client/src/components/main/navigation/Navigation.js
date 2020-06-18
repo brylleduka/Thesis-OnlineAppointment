@@ -3,7 +3,10 @@ import { AuthContext } from "../../../context/auth";
 import { bool } from "prop-types";
 import { useOnClickOutside } from "./navHook";
 import { useHistory } from "react-router-dom";
-import { HashLink as Link } from "react-router-hash-link";
+import {
+  HashLink as Link,
+  NavHashLink as NavLink,
+} from "react-router-hash-link";
 import { Dropdown, Icon } from "semantic-ui-react";
 import {
   DNavigation,
@@ -96,25 +99,27 @@ const Navigation = ({ open, setOpen }) => {
             </Link>
           </li>
           <li>
-            <Link
+            <NavLink
               to="/services&rates/#services"
               scroll={scrollBehavior}
               onClick={() => setOpen(false)}
+              activeClassName="main_nav_link-active"
             >
               Services
-            </Link>
+            </NavLink>
           </li>
 
-          {/* <Link to="/about">About&nbsp;Us</Link> */}
+          {/* <NavLink to="/about">About&nbsp;Us</NavLink> */}
           <DropdownCustomNav
             trigger={
-              <Link
+              <NavLink
                 to="/about/#about"
                 scroll={scrollBehavior}
                 onClick={() => setOpen(false)}
+                activeClassName="main_nav_link-active"
               >
                 About&nbsp;Us
-              </Link>
+              </NavLink>
             }
             simple
             scrolled={scrolling ? true : undefined}
@@ -142,13 +147,14 @@ const Navigation = ({ open, setOpen }) => {
           </DropdownCustomNav>
 
           <li>
-            <Link
+            <NavLink
               to="/gallery/#gallery"
               scroll={scrollBehavior}
               onClick={() => setOpen(false)}
+              activeClassName="main_nav_link-active"
             >
               Gallery
-            </Link>
+            </NavLink>
           </li>
           <li>
             <Link
@@ -160,13 +166,14 @@ const Navigation = ({ open, setOpen }) => {
             </Link>
           </li>
           <li>
-            <Link
+            <NavLink
               to="/testimonials/#tstmnl"
               scroll={scrollBehavior}
               onClick={() => setOpen(false)}
+              activeClassName="main_nav_link-active"
             >
               Testimonials
-            </Link>
+            </NavLink>
           </li>
           <li className="signout_link">
             <span onClick={handleLogout} className="signing_out">
@@ -186,13 +193,14 @@ const Navigation = ({ open, setOpen }) => {
                   </Dropdown.Item>
 
                   <Dropdown.Item>
-                    <Link
+                    <NavLink
                       to={`/account/${user.userId || user._id}`}
                       className="account-right"
                       onClick={() => localStorage.setItem("account", "details")}
+                      activeClassName="main_nav_link-active"
                     >
                       My Account
-                    </Link>
+                    </NavLink>
                   </Dropdown.Item>
                   <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
                 </Dropdown.Menu>

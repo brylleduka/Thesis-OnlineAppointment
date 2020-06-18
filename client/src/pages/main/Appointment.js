@@ -121,10 +121,12 @@ const Appointment = () => {
                 size="50px"
                 onClick={() => setOpen(true)}
                 disabled={
-                  categoryValue === "" ||
-                  serviceValue === "" ||
-                  employeeVal === "" ||
-                  selectedTime === ""
+                  categoryValue === "CHECK_UP"
+                    ? false
+                    : categoryValue === "" ||
+                      serviceValue === "" ||
+                      employeeVal === "" ||
+                      selectedTime === ""
                     ? true
                     : false
                 }

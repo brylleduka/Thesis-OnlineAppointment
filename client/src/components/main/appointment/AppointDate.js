@@ -80,6 +80,7 @@ const AppointDate = ({
     const breakLength = isEmp.employee && isEmp.employee.schedule.breakLength;
 
     isEmp.employee && isEmp.employee.schedule.day.map((d) => days.push(d));
+
     data_appointments.checkedAppointments.map((occcupied) =>
       appointmentTimes.push(occcupied.slot_start)
     );
@@ -88,7 +89,8 @@ const AppointDate = ({
 
     const breakStime = moment(breakStart, "h:m a").format("HH:mm");
 
-    const intervalTime = isServ.service.duration;
+    const intervalTime =
+      isServ.service.duration !== undefined && isServ.service.duration;
 
     const workingTime = timeLineLabels(
       startTime,
@@ -107,6 +109,8 @@ const AppointDate = ({
     });
     finalTime.map((ft) => times.push(ft));
   }
+
+  console.log(new Date(startDate).toLocaleDateString());
 
   return (
     <DGrid two gap="10px">

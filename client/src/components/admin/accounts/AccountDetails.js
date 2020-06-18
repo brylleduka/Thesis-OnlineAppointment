@@ -5,6 +5,8 @@ import { Edit } from "@styled-icons/boxicons-regular/Edit";
 import AccountModal from "./AccountModal";
 import PersonalModal from "./PersonalModal";
 import SecurityModal from "./SecurityModal";
+import PersonalCard from "./PersonalCard";
+import EmployeeCard from "./EmployeeCard";
 import moment from "moment";
 
 const AccountDetails = ({ employee, fetchEmployee }) => {
@@ -24,159 +26,9 @@ const AccountDetails = ({ employee, fetchEmployee }) => {
 
   return (
     <Content width="100%">
-      <DGrid gap="15px">
-        <DCard dw="100%" dh="100%" flex fcol justifyBetween>
-          <Content flex width="100%" justify="space-between" aling="center">
-            <h3>Personal Details</h3>
-            <div className="content-edit" onClick={handlePersonal}>
-              <Edit size="22px" />
-              <span>Edit</span>
-            </div>
-          </Content>
-          <Content width="80%" height="100%" margin="0 auto">
-            <DGrid>
-              <Content width="100%" flex justify="center">
-                <DLabel
-                  flex
-                  justifyEnd
-                  alignCenter
-                  weight={700}
-                  w={"40%"}
-                  size="14px"
-                >
-                  Name:
-                </DLabel>
-                <Content
-                  width="100%"
-                  flex
-                  justify="flex-start"
-                  align="center"
-                  pad="10px 15px"
-                >
-                  {employee.title} {employee.firstName} {employee.lastName}
-                </Content>
-              </Content>
-              <Content width="100%" flex justify="center">
-                <DLabel
-                  flex
-                  justifyEnd
-                  alignCenter
-                  weight={700}
-                  w={"40%"}
-                  size="14px"
-                >
-                  Date of Birth:
-                </DLabel>
-                <Content
-                  width="100%"
-                  flex
-                  justify="flex-start"
-                  align="center"
-                  pad="10px 15px"
-                >
-                  {moment(parseInt(employee.dateOfBirth)).format("LL")}
-                </Content>
-              </Content>
-              <Content width="100%" flex justify="center">
-                <DLabel
-                  flex
-                  justifyEnd
-                  alignCenter
-                  weight={700}
-                  w={"40%"}
-                  size="14px"
-                >
-                  Contact:
-                </DLabel>
-                <Content
-                  width="100%"
-                  flex
-                  justify="flex-start"
-                  align="center"
-                  pad="10px 15px"
-                >
-                  {employee.contact}
-                </Content>
-              </Content>
-              <Content width="100%" flex justify="center">
-                <DLabel
-                  flex
-                  justifyEnd
-                  alignCenter
-                  weight={700}
-                  w={"40%"}
-                  size="14px"
-                >
-                  Email:
-                </DLabel>
-                <Content
-                  width="100%"
-                  flex
-                  justify="flex-start"
-                  align="center"
-                  pad="10px 15px"
-                >
-                  {employee.email}
-                </Content>
-              </Content>
-            </DGrid>
-          </Content>
-        </DCard>
-        <DCard dw="100%" dh="100%" flex fcol justifyBetween>
-          <Content flex width="100%" justify="space-between" aling="center">
-            <h3>Employee Details</h3>
-            <div className="content-edit">
-              {/* <Edit size="22px" /> */}
-              {/* <span>Edit</span> */}
-            </div>
-          </Content>
-          <Content width="80%" height="100%" margin="0 auto">
-            <DGrid>
-              <Content width="100%" flex justify="center">
-                <DLabel
-                  flex
-                  justifyEnd
-                  alignCenter
-                  weight={700}
-                  w={"40%"}
-                  size="14px"
-                >
-                  Employee ID:
-                </DLabel>
-                <Content
-                  width="100%"
-                  flex
-                  justify="flex-start"
-                  align="center"
-                  pad="10px 15px"
-                >
-                  {employee.empId}
-                </Content>
-              </Content>
-              <Content width="100%" flex justify="center">
-                <DLabel
-                  flex
-                  justifyEnd
-                  alignCenter
-                  weight={700}
-                  w={"40%"}
-                  size="14px"
-                >
-                  Role:
-                </DLabel>
-                <Content
-                  width="100%"
-                  flex
-                  justify="flex-start"
-                  align="center"
-                  pad="10px 15px"
-                >
-                  {employee.role}
-                </Content>
-              </Content>
-            </DGrid>
-          </Content>
-        </DCard>
+      <DGrid gap="15px" med7="1fr" med10="1fr">
+        <PersonalCard employee={employee} />
+        <EmployeeCard employee={employee} />
         <DCard dw="100%" dh="100%" flex fcol justifyBetween>
           <Content flex width="100%" justify="space-between" aling="center">
             <h3>Security</h3>
@@ -205,7 +57,9 @@ const AccountDetails = ({ employee, fetchEmployee }) => {
                   align="center"
                   pad="10px 15px"
                 >
-                  <strong>**********</strong>
+                  <strong>
+                    {employee.password.replace(/./g, "*").substr(0, 30)}
+                  </strong>
                 </Content>
               </Content>
             </DGrid>

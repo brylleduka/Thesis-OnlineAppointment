@@ -13,7 +13,7 @@ const AppointmentCancel = ({ openCancel, setOpenCancel, appointmentId }) => {
     CANCEL_APPOINTMENT_MUTATION,
     {
       variables: {
-        appointmentId
+        appointmentId,
       },
       refetchQueries: [{ query: FETCH_APPOINTMENTS_QUERY }],
       onCompleted(data) {
@@ -22,7 +22,7 @@ const AppointmentCancel = ({ openCancel, setOpenCancel, appointmentId }) => {
       },
       onError(err) {
         setOpenCancel(false);
-      }
+      },
     }
   );
 
@@ -37,11 +37,11 @@ const AppointmentCancel = ({ openCancel, setOpenCancel, appointmentId }) => {
         <h2>Are you sure you want to cancel the appointment?</h2>
       </Modal.Content>
       <Modal.Actions>
-        <DButton confirm basic onClick={() => setOpenCancel(false)}>
+        <DButton confirm onClick={() => setOpenCancel(false)}>
           No
         </DButton>
-        <DButton alert basic onClick={handleConfirm}>
-          {loading ? <Spinner small inverted /> : "Yes"}
+        <DButton alert onClick={handleConfirm}>
+          {loading ? <Spinner small inverted content="Loading..." /> : "Yes"}
         </DButton>
       </Modal.Actions>
     </Modal>

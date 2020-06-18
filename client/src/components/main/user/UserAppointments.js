@@ -6,13 +6,13 @@ import MyAppointmentHistory from "./MyAppointmentHistory";
 const UserAppointments = () => {
   return (
     <Content width="100%" height="100%">
-      <DGrid dh="100%" gap="20px">
+      <DGrid dh="100%" gap="20px" med7={"1fr"} med10="1fr">
         <DCard dw="100%" flex fcol justifyCenter>
-          <h2>Ongoing Appointment</h2>
+          <h3>Ongoing Appointment</h3>
           <CurrentAppointment />
         </DCard>
         <DCard dw="100%" dh="100%" flex fcol justifyCenter>
-          <h2>Appointment History</h2>
+          <h3>Appointment History</h3>
           <MyAppointmentHistory />
         </DCard>
       </DGrid>

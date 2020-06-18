@@ -90,6 +90,7 @@ export const HeaderLayout = styled.div`
     position: fixed;
     left: 10px;
     cursor: pointer;
+    z-index: 3;
     &:hover,
     &:focus {
       color: ${({ theme }) => theme.blue};
