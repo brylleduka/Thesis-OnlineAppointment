@@ -18,6 +18,7 @@ const AppointDate = ({
   employeeVal,
   serviceValue,
   calendarSize,
+  categoryValue,
 }) => {
   let days = [];
   let times = [];

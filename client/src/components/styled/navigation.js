@@ -8,7 +8,7 @@ export const DNavigation = styled.nav`
   top: 0;
   right: 0;
   left: 0;
-  height: 12vh;
+  height: 15vh;
   z-index: 10;
 
   .content {
@@ -39,10 +39,19 @@ export const DNavigation = styled.nav`
       }
     }
 
+    .menu-container {
+      display: none;
+      justify-content: space-around;
+      align-items: center;
+    }
+
     @media (max-width: 1024px) {
       padding: 10px 0;
       height: 7rem;
       width: 100%;
+      .menu-container {
+        display: flex;
+      }
     }
 
     @media (max-width: 768px) {
@@ -68,10 +77,14 @@ export const DNavigation = styled.nav`
 export const DMenu = styled.ul`
   display: flex;
 
+  align-items: center;
+  justify-content: flex-end;
+
   li {
-    padding: 0 10px;
+    padding: 10px;
   }
   li a {
+    font-size: 14px;
     padding-bottom: 2px;
     color: ${({ theme }) => theme.dark};
   }
@@ -300,9 +313,6 @@ export const DRightMenu = styled(DMenu)`
 `;
 
 export const DBurger = styled.nav`
-  position: fixed;
-  top: 5%;
-  right: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: space-around;

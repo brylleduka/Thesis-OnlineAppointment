@@ -19,6 +19,7 @@ const Confirmation = ({
   employeeVal,
   startDate,
   selectedTime,
+  categoryValue,
 }) => {
   const history = useHistory();
   const [errors, setErrors] = useState({});
@@ -108,8 +109,8 @@ const Confirmation = ({
       }
     },
     variables: {
-      serviceId: serviceValue,
-      employeeId: employeeVal,
+      serviceId: serviceValue !== null ? serviceValue : null,
+      employeeId: employeeVal !== null ? employeeVal : null,
       date: new Date(startDate).toLocaleDateString(),
       start: selectedTime,
       message: addInfo,

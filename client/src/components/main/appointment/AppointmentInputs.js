@@ -127,7 +127,7 @@ const AppointmentInputs = ({
               <option value="" disabled>
                 Select Service Category...
               </option>
-              <option value="CHECK_UP">Check up</option>
+              {/* <option value="CHECK_UP">Check up</option> */}
               {categories &&
                 categories.map((category) => (
                   <option value={category._id} key={category._id}>

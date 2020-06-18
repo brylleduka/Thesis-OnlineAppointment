@@ -114,6 +114,7 @@ const Appointment = () => {
               startDate={startDate}
               employeeVal={employeeVal}
               serviceValue={serviceValue}
+              categoryValue={categoryValue}
               calendarSize={"calendar_large"}
             />
             <Content width="100%" flex justify="center" align="center">
@@ -136,6 +137,7 @@ const Appointment = () => {
               <Confirmation
                 open={open}
                 setOpen={setOpen}
+                categoryValue={categoryValue}
                 serviceValue={serviceValue}
                 employeeVal={employeeVal}
                 startDate={startDate}

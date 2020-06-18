@@ -1,4 +1,6 @@
-import React, { useRef, useContext } from "react";
+import React, { useRef, useContext, useState, useEffect } from "react";
+import { useQuery } from "@apollo/react-hooks";
+import { FETCH_USER_ACCOUNT } from "../../../util/graphql/user";
 import { AuthContext } from "../../../context/auth";
 import { bool } from "prop-types";
 import { useOnClickOutside } from "./navHook";
@@ -14,19 +16,33 @@ import {
   DRightMenu,
   DropdownCustomNav,
 } from "../../styled/navigation";
+import { DCard, DImage } from "../../styled/containers";
 import Burger from "./Burger";
 import Branding from "./Branding";
 import useScroll from "../../../util/hooks/useScroll";
+import { UserCircle } from "@styled-icons/fa-solid/UserCircle";
 
 const Navigation = ({ open, setOpen }) => {
   const scrolling = useScroll();
-
   const node = useRef();
-  useOnClickOutside(node, () => setOpen(false));
-  // let history = useHistory();
-
   const { user, logout } = useContext(AuthContext);
+  const [client, setClient] = useState({});
 
+  const { data: dataClient, loading: loadDataClient } = useQuery(
+    FETCH_USER_ACCOUNT,
+    {
+      variables: {
+        userId: (user && user.userId) || (user && user._id),
+      },
+    }
+  );
+
+  useEffect(() => {
+    if (dataClient) setClient(dataClient.user);
+  }, [dataClient]);
+
+  // let history = useHistory();
+  useOnClickOutside(node, () => setOpen(false));
   const handleLogout = () => {
     logout();
     setOpen(false);
@@ -36,9 +52,19 @@ const Navigation = ({ open, setOpen }) => {
   const trigger = (
     <>
       {user && (
-        <span style={{ fontSize: "12px" }}>
-          <Icon name="user" /> Hello, {user.firstName}
-        </span>
+        <DCard
+          dw="40px"
+          dh="40px"
+          mcenter
+          circle
+          p="0px"
+          grayzoom
+          style={{ marginRight: "1.2rem" }}
+        >
+          <DImage circle height="100%" width="100%">
+            <img src={client.imageURL} alt={client.firstName} />
+          </DImage>
+        </DCard>
       )}
     </>
   );
@@ -49,10 +75,36 @@ const Navigation = ({ open, setOpen }) => {
   return (
     <DNavigation ref={node} scrolled={scrolling ? true : false}>
       <div className="content">
-        <Link to="/">
+        <Link to="/#home">
           <Branding />
         </Link>
-        <Burger open={open} setOpen={setOpen} />
+        <div className="menu-container">
+          <Link to={user ? `/account/${user.userId || user._id}` : "/login"}>
+            {user ? (
+              <DCard
+                dw="30px"
+                dh="30px"
+                mcenter
+                circle
+                p="0px"
+                grayzoom
+                style={{ marginRight: "1.2rem" }}
+              >
+                <DImage circle height="100%" width="100%">
+                  <img src={client.imageURL} alt={client.firstName} />
+                </DImage>
+              </DCard>
+            ) : (
+              <UserCircle
+                size="22px"
+                style={{ marginRight: "1.2rem" }}
+                title="Sign in"
+              />
+            )}
+          </Link>
+
+          <Burger open={open} setOpen={setOpen} />
+        </div>
 
         <DMainMenu open={open} scrolled={scrolling ? true : false}>
           {user ? (
@@ -89,7 +141,7 @@ const Navigation = ({ open, setOpen }) => {
           <li className="hr-nav">
             <hr className="hr-one" />
           </li>
-          <li>
+          {/* <li>
             <Link
               to={`/#home`}
               scroll={scrollBehavior}
@@ -97,7 +149,7 @@ const Navigation = ({ open, setOpen }) => {
             >
               Home
             </Link>
-          </li>
+          </li> */}
           <li>
             <NavLink
               to="/services&rates/#services"
@@ -175,16 +227,23 @@ const Navigation = ({ open, setOpen }) => {
               Testimonials
             </NavLink>
           </li>
-          <li className="signout_link">
-            <span onClick={handleLogout} className="signing_out">
-              Sign out
-            </span>
-          </li>
+          {user && (
+            <li className="signout_link">
+              <span onClick={handleLogout} className="signing_out">
+                Sign out
+              </span>
+            </li>
+          )}
         </DMainMenu>
         <DRightMenu scrolled={scrolling ? true : false}>
           {user ? (
             <li>
-              <Dropdown trigger={trigger} className="avatarLog">
+              <Dropdown
+                pointing="top left"
+                icon={null}
+                trigger={trigger}
+                className="avatarLog"
+              >
                 <Dropdown.Menu>
                   <Dropdown.Item disabled>
                     <span style={{ fontSize: "10px" }}>
