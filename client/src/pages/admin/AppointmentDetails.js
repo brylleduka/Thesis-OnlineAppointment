@@ -198,7 +198,7 @@ const AppointmentDetails = (props) => {
                         w={"50%"}
                         size="15px"
                       >
-                        {moment(parseInt(myAppoint.date)).format("LL")}
+                        {moment(myAppoint.date).format("LL")}
                       </DLabel>
                     </Content>
                   </Content>
