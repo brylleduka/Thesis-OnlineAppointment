@@ -42,8 +42,8 @@ const About = () => {
       <>
         <DSection
           background={
-            about.bgImg
-              ? `/images/cms/about/${about.bgImg}`
+            about.bgImgURL
+              ? about.bgImgURL
               : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
           }
           bgcolor={about.bgColor}

@@ -17,7 +17,7 @@ const GalleryThumb = (props) => {
       <div className="explore">
         <span>{props.subtitle}</span>
       </div>
-      <button className="btn">View More</button>
+      <button className="btn btn-blue">View More</button>
       <Link to={props.link} />
     </GalleryCard>
   );
