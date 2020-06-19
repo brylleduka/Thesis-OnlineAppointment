@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { Breadcrumb } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/auth";
 import { FETCH_EMPLOYEE_QUERY } from "../../util/graphql/employee";
+import { Breadcrumb } from "semantic-ui-react";
 import Layout from "../../components/admin/layout/Layout";
 import { DGrid, DSection, Content } from "../../components/styled/containers";
 
@@ -13,6 +14,7 @@ import Info from "../../components/admin/employees/Info";
 import EmployeeDelete from "../../components/admin/employees/EmployeeDelete";
 
 const Employee = (props) => {
+  const { employeeAuth } = useContext(AuthContext);
   const employeeId = props.match.params._id;
   const { width: wid } = useWindowSize();
   const [employee, setEmployee] = useState({});
@@ -97,6 +99,7 @@ const Employee = (props) => {
                   handleDetails={handleDetails}
                   handleSchedule={handleSchedule}
                 />
+
                 <Content
                   flex
                   direct="column"
@@ -109,7 +112,10 @@ const Employee = (props) => {
                     isEmpInfo={isEmpInfo}
                     employee={employeeData && employeeData.employee}
                   />
-                  <EmployeeDelete employee={employee} />
+                  {(employeeAuth.role === "ADMIN" ||
+                    employeeAuth.level >= 3) && (
+                    <EmployeeDelete employee={employee} />
+                  )}
                 </Content>
               </DGrid>
             </Content>

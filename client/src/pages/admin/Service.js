@@ -1,13 +1,23 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
+import { AuthContext } from "../../context/auth";
 import gql from "graphql-tag";
 import { useDropzone } from "react-dropzone";
 import { useQuery, useMutation } from "@apollo/react-hooks";
+import { Breadcrumb } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { Camera } from "@styled-icons/boxicons-solid/Camera";
+import toaster from "toasted-notes";
 import {
   FETCH_ALL_SERVICES_QUERY,
   FETCH_SINGLE_SERVICE_QUERY,
 } from "../../util/graphql/service";
+import useWindowSize from "../../util/hooks/useWindowSize";
+import ServiceDetails from "../../components/admin/services/ServiceDetails";
 import Layout from "../../components/admin/layout/Layout";
-import { Breadcrumb } from "semantic-ui-react";
+import { IconWrap } from "../../components/styled/utils";
+import Spinner from "../../components/Spinner";
+import Carousel, { Modal, ModalGateway } from "react-images";
+import Toasted from "../../components/Toasted";
 import {
   DGrid,
   DSection,
@@ -15,18 +25,10 @@ import {
   DCard,
   DImage,
 } from "../../components/styled/containers";
-import { Link } from "react-router-dom";
-import { IconWrap } from "../../components/styled/utils";
-import { Camera } from "@styled-icons/boxicons-solid/Camera";
-import Spinner from "../../components/Spinner";
-import Carousel, { Modal, ModalGateway } from "react-images";
-import ServiceDetails from "../../components/admin/services/ServiceDetails";
-import useWindowSize from "../../util/hooks/useWindowSize";
-import toaster from "toasted-notes";
-import Toasted from "../../components/Toasted";
 
 const Service = (props) => {
   const serviceId = props.match.params._id;
+  const { employeeAuth } = useContext(AuthContext);
   const [service, setService] = useState({});
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
   const { width: wid } = useWindowSize();
@@ -181,17 +183,20 @@ const Service = (props) => {
                         />
                       </DImage>
                     )}
-                    <IconWrap
-                      {...getRootProps()}
-                      circle
-                      bottomcenter
-                      small
-                      bgcolor={({ theme }) => theme.bluer}
-                      pad="2px"
-                    >
-                      <Camera title="Upload" />
-                      <input {...getInputProps()} />
-                    </IconWrap>
+                    {(employeeAuth.role === "ADMIN" ||
+                      employeeAuth.level >= 3) && (
+                      <IconWrap
+                        {...getRootProps()}
+                        circle
+                        bottomcenter
+                        small
+                        bgcolor={({ theme }) => theme.bluer}
+                        pad="2px"
+                      >
+                        <Camera title="Upload" />
+                        <input {...getInputProps()} />
+                      </IconWrap>
+                    )}
                   </DCard>
 
                   <ModalGateway>
@@ -208,6 +213,8 @@ const Service = (props) => {
                       <ServiceDetails
                         service={serviceData.service}
                         serviceHistoryCallback={serviceHistoryCallback}
+                        employeeAuthRole={employeeAuth.role}
+                        employeeAuthLvl={employeeAuth.level}
                       />
                     </DCard>
                   </DGrid>

@@ -130,7 +130,7 @@ const columns = [
     cell: (row) =>
       row.employee !== null ? (
         <span>
-          ${row.employee.title} {row.employee.firstName} {row.employee.lastName}
+          {row.employee.title} {row.employee.firstName} {row.employee.lastName}
         </span>
       ) : (
         "NF"
@@ -148,7 +148,7 @@ const columns = [
     selector: "date",
     wrap: true,
     sortable: true,
-    format: (row) => `${moment(parseInt(row.date)).format("LL")}`,
+    format: (row) => `${moment(row.date).format("LL")}`,
   },
   {
     name: "Status",

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
+import { AuthContext } from "../../../context/auth";
 import { FETCH_EMPLOYEE_QUERY } from "../../../util/graphql/employee";
 import { IconWrap } from "../../styled/utils";
 import { Cross } from "@styled-icons/entypo/Cross";
@@ -10,6 +11,7 @@ import Page404 from "../../../pages/Page404";
 import Spinner from "../../Spinner";
 
 const RemoveService = ({ categId, employeeId, refetchCategories }) => {
+  const { employeeAuth } = useContext(AuthContext);
   const [categValue, setCategValue] = useState("");
 
   const [removeService, { loading: loadRemoving }] = useMutation(
@@ -44,10 +46,12 @@ const RemoveService = ({ categId, employeeId, refetchCategories }) => {
     <div data-categid={categId} onMouseOver={handleCategoryValue}>
       {loadRemoving ? (
         <Spinner mini inverted />
-      ) : (
+      ) : employeeAuth.role === "ADMIN" || employeeAuth.level >= 3 ? (
         <IconWrap tiny margin="0 2px" onClick={handleRemoveService}>
           <Cross />
         </IconWrap>
+      ) : (
+        ""
       )}
     </div>
   );

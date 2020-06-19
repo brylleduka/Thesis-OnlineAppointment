@@ -48,7 +48,7 @@ ul {
   border: 0;
   font-weight: bold;
   padding: 10px 20px;
-  background-color: #2193b0;
+  background-color: #71cbd2;
   color: #fff !important;
   font-size: 14px;
   z-index: 2;
@@ -56,7 +56,7 @@ ul {
 }
 
 .btn-blue {
-  background-color: #2980b9 !important;
+  background-color: #71cbd2 !important;
 }
 .btn:hover {
   opacity: 0.9;

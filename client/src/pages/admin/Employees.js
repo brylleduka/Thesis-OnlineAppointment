@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
+import { AuthContext } from "../../context/auth";
 import { FETCH_EMPLOYEES_NOT_ADMIN_QUERY } from "../../util/graphql/employee";
 import Layout from "../../components/admin/layout/Layout";
 import { Link } from "react-router-dom";
@@ -10,7 +11,7 @@ import { Content, DSection } from "../../components/styled/containers";
 import DataTable from "react-data-table-component";
 import Spinner from "../../components/Spinner";
 import NewEmployee from "../../components/admin/employees/NewEmployee";
-import { AuthContext } from "../../context/auth";
+
 import Page404 from "../../pages/Page404";
 
 const Employees = () => {
@@ -95,7 +96,7 @@ const Employees = () => {
       right: true,
       cell: (row) => (
         <DButton flex as={Link} to={`/zeadmin/employee/${row._id}`}>
-          <Eye size="18px" />
+          <Eye size="18px" color="#fff" />
         </DButton>
       ),
     },

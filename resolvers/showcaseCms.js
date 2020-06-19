@@ -36,14 +36,6 @@ module.exports = {
         // if (bgImg instanceof stream.Readable || bgImg) {
         //   const { filename } = await bgImg;
 
-        //   // await new Promise((res) =>
-        //   //   createReadStream().pipe(
-        //   //     createWriteStream(
-        //   //       path.join(__dirname, "../images/cms/home", filename)
-        //   //     ).on("close", res)
-        //   //   )
-        //   // );
-
         //   fileImg = filename;
         // }
         const { filename } = await bgImg;
@@ -96,6 +88,7 @@ module.exports = {
     ) => {
       try {
         let bgImgString = [];
+        let bgImgURLString = [];
         const showcaseCheck = await ShowcaseCMS.findOne(
           {
             sectionName: "SHOWCASE",
@@ -105,21 +98,15 @@ module.exports = {
 
         showcaseCheck.content.map((x) => {
           bgImgString.push(x.bgImg);
+          bgImgURLString.push(x.bgImgURL);
         });
 
         let fileImgUpdate = bgImgString.toString();
-        let locationURL = "";
+        let locationURL = bgImgURLString.toString();
 
         if (bgImg instanceof stream.Readable || bgImg) {
           const { filename } = await bgImg;
 
-          // await new Promise((res) =>
-          //   createReadStream().pipe(
-          //     createWriteStream(
-          //       path.join(__dirname, "../images/cms/home", filename)
-          //     ).on("close", res)
-          //   )
-          // );
           const folder = "cms";
 
           const response = await handleFileUpload(bgImg, folder);

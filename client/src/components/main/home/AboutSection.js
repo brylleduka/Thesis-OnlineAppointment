@@ -97,12 +97,12 @@ const AboutSection = ({ nextSection }) => {
                 </h1>
                 <p>
                   {about.story &&
-                    (about.story.paragraph.length > 300
-                      ? parser(about.story.paragraph.substr(0, 300)) + "..."
-                      : parser(about.story.paragraph.substr(0, 300)))}
+                    (about.story.paragraph.length > 1000
+                      ? parser(about.story.paragraph.substr(0, 1000)) + "..."
+                      : parser(about.story.paragraph.substr(0, 1000)))}
                 </p>
-                <ReadMore>
-                  <Link to="/about/#story">Learn More</Link>
+                <ReadMore style={{ padding: "5px", fontSize: "14px" }}>
+                  <Link to="/about/#story">Read More</Link>
                 </ReadMore>
               </div>
             </div>

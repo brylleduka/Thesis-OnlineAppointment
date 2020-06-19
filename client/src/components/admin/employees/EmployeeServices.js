@@ -11,14 +11,14 @@ const EmployeeServices = ({ employee }) => {
     <DGrid rowCustom="4fr 1fr">
       <Content width="100%" style={{ overflow: "auto" }}>
         {employee &&
-          employee.services.map(service => (
+          employee.services.map((service) => (
             <DLabel
-              bgcolor="#2980B9"
-              color="white"
               rounded
               pad="3px 8px"
               hover
-              style={{ display: "inline-block" }}
+              style={{
+                display: "inline-block",
+              }}
             >
               {service.name}
               <span style={styles.close}>&times;</span>
@@ -36,8 +36,8 @@ const EmployeeServices = ({ employee }) => {
 const styles = {
   close: {
     fontSize: "16px",
-    marginLeft: "3px"
-  }
+    marginLeft: "3px",
+  },
 };
 
 export default EmployeeServices;

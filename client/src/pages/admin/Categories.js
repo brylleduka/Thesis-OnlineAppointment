@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_ALL_CATEGORIES_QUERY } from "../../util/graphql/service";
-
+import { AuthContext } from "../../context/auth";
 import { Link } from "react-router-dom";
 import Layout from "../../components/admin/layout/Layout";
 import {
@@ -23,6 +23,7 @@ import useWindowSize from "../../util/hooks/useWindowSize";
 import Page404 from "../Page404";
 
 const Categories = () => {
+  const { employeeAuth } = useContext(AuthContext);
   const { width: wid } = useWindowSize();
   const [open, setOpen] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -69,14 +70,16 @@ const Categories = () => {
             <Breadcrumb.Divider icon="right chevron" />
             <Breadcrumb.Section active>Service Category</Breadcrumb.Section>
           </Breadcrumb>
-          <DButton
-            onClick={handleOpenModal}
-            flex
-            circle={wid < 768 ? true : null}
-          >
-            <Plus size="22px" />
-            {wid > 768 && "New Category"}
-          </DButton>
+          {(employeeAuth.role === "ADMIN" || employeeAuth.level >= 3) && (
+            <DButton
+              onClick={handleOpenModal}
+              flex
+              circle={wid < 768 ? true : null}
+            >
+              <Plus size="22px" />
+              {wid > 768 && "New Category"}
+            </DButton>
+          )}
         </Content>
 
         <Content width="100%" height="100%">

@@ -16,7 +16,12 @@ import Toasted from "../../../components/Toasted";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import DecoupledEditor from "@ckeditor/ckeditor5-build-decoupled-document";
 
-const CategoryDetails = ({ category, historyCallback }) => {
+const CategoryDetails = ({
+  category,
+  historyCallback,
+  employeeAuthRole,
+  employeeAuthLvl,
+}) => {
   const [open, setOpen] = useState(false);
   // const [errors, setErrors] = useState({});
   const [isEdit, setIsEdit] = useState(false);
@@ -67,24 +72,29 @@ const CategoryDetails = ({ category, historyCallback }) => {
     <>
       <Form noValidate>
         <DGrid>
-          <MenuDots topright medium>
-            <Grid divided columns={2}>
-              <Grid.Column>
-                <DButton confirm onClick={handleEdit} flex>
-                  <IconWrap mcenter>
-                    <Edit size="22px" title="Update Content" />
-                  </IconWrap>
-                </DButton>
-              </Grid.Column>
-              <Grid.Column>
-                <DButton alert flex onClick={() => setOpen(true)}>
-                  <IconWrap mcenter>
-                    <Trash size="22px" title="Archive or Permanently Delete" />
-                  </IconWrap>
-                </DButton>
-              </Grid.Column>
-            </Grid>
-          </MenuDots>
+          {(employeeAuthRole === "ADMIN" || employeeAuthLvl >= 3) && (
+            <MenuDots topright medium>
+              <Grid divided columns={2}>
+                <Grid.Column>
+                  <DButton confirm onClick={handleEdit} flex>
+                    <IconWrap mcenter>
+                      <Edit size="22px" title="Update Content" />
+                    </IconWrap>
+                  </DButton>
+                </Grid.Column>
+                <Grid.Column>
+                  <DButton alert flex onClick={() => setOpen(true)}>
+                    <IconWrap mcenter>
+                      <Trash
+                        size="22px"
+                        title="Archive or Permanently Delete"
+                      />
+                    </IconWrap>
+                  </DButton>
+                </Grid.Column>
+              </Grid>
+            </MenuDots>
+          )}
 
           <Content
             width="100%"

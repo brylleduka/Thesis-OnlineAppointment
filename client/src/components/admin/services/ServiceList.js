@@ -12,7 +12,7 @@ import Spinner from "../../Spinner";
 import NewService from "./NewService";
 import parse from "html-react-parser";
 
-const ServiceList = ({ categoryId }) => {
+const ServiceList = ({ categoryId, employeeAuthRole, employeeAuthLvl }) => {
   const [services, setServices] = useState([]);
   const [open, setOpen] = useState(false);
 
@@ -128,19 +128,22 @@ const ServiceList = ({ categoryId }) => {
   const paginationRowsPerPageOptions = [5, 10, 15, 20];
   return (
     <>
-      <Content width="100%" flex justify="flex-end" align="center">
-        <IconWrap
-          medium
-          title={"Add Service"}
-          topright
-          circle
-          shadow
-          bgcolor={({ theme }) => theme.bluer}
-          onClick={() => setOpen(true)}
-        >
-          <Plus />
-        </IconWrap>
-      </Content>
+      {(employeeAuthRole === "ADMIN" || employeeAuthLvl >= 3) && (
+        <Content width="100%" flex justify="flex-end" align="center">
+          <IconWrap
+            medium
+            title={"Add Service"}
+            topright
+            circle
+            shadow
+            bgcolor={({ theme }) => theme.bluer}
+            onClick={() => setOpen(true)}
+          >
+            <Plus />
+          </IconWrap>
+        </Content>
+      )}
+
       <DataTable
         title={title}
         columns={columns}

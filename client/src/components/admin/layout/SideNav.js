@@ -132,34 +132,36 @@ const SideNav = ({ isOpenMenu, handleOpenMenu }) => {
               </span>
             </NavLink>
           </Accordion>
-          {/* FILE ACCORDION */}
-          <Accordion
-            title={"File Maintenance"}
-            icon={<FileDirectory size="16px" />}
-            hcolor="#fff"
-            fs="14px"
-          >
-            <NavLink to="/zeadmin/categories" activeClassName="navlink-active">
-              <span>
-                <Service size="16px" style={styles.ml} />
-                Services
-              </span>
-            </NavLink>
-            <NavLink to="/zeadmin/employees" activeClassName="navlink-active">
-              <span>
-                <Profile size="16px" style={styles.ml} />
-                Employees
-              </span>
-            </NavLink>
-            <NavLink to="/zeadmin/archives" activeClassName="navlink-active">
-              <span style={{ display: "flex", alignItems: "center" }}>
-                <Archive size="16px" style={styles.ml} />
-                Archive
-              </span>
-            </NavLink>
-          </Accordion>
         </>
       )}
+      {/* FILE ACCORDION */}
+      <Accordion
+        title={"File Maintenance"}
+        icon={<FileDirectory size="16px" />}
+        hcolor="#fff"
+        fs="14px"
+      >
+        <NavLink to="/zeadmin/categories" activeClassName="navlink-active">
+          <span>
+            <Service size="16px" style={styles.ml} />
+            Services
+          </span>
+        </NavLink>
+        <NavLink to="/zeadmin/employees" activeClassName="navlink-active">
+          <span>
+            <Profile size="16px" style={styles.ml} />
+            Employees
+          </span>
+        </NavLink>
+        {(employeeAuth.role === "ADMIN" || employeeAuth.level >= 3) && (
+          <NavLink to="/zeadmin/archives" activeClassName="navlink-active">
+            <span style={{ display: "flex", alignItems: "center" }}>
+              <Archive size="16px" style={styles.ml} />
+              Archive
+            </span>
+          </NavLink>
+        )}
+      </Accordion>
 
       <NavItem>
         <NavLink to="/zeadmin/report">

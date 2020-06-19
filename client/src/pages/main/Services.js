@@ -131,7 +131,7 @@ const Services = () => {
                           : parser(category.description.substr(0, 100))}
 
                         <ReadMore center size="14px">
-                          Learn More
+                          View More
                         </ReadMore>
                       </div>
                     </div>

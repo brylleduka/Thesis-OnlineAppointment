@@ -414,8 +414,9 @@ export const JCard4 = styled.figure`
   }
 
   figcaption {
+    position: relative;
     width: 100%;
-    height: 250px;
+    height: 300px;
     background-color: #ffffff;
     color: #555;
     padding: 125px 25px 25px;
@@ -569,8 +570,9 @@ export const DTestimonialCard = styled.div`
         border-radius: 5px;
         -webkit-box-shadow: inset -1.4px -1.4px 2px rgba(0, 0, 0, 0.3);
         box-shadow: inset -1.4px -1.4px 2px rgba(0, 0, 0, 0.3);
-        text-align: left;
+
         position: relative;
+        text-align: center;
 
         color: ${(props) =>
           props.inverted

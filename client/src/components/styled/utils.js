@@ -238,6 +238,7 @@ export const DLabel = styled.label`
   text-align: ${(props) => (props.textalign ? props.textalign : "left")};
   text-transform: ${(props) => props.tt && props.tt};
   width: ${(props) => (props.w ? props.w : "auto")};
+  height: auto;
   display: ${(props) => (props.flex ? "flex" : "inline-block")};
   justify-content: ${(props) =>
     props.justifyCenter
@@ -495,16 +496,21 @@ export const Toasted = styled.div`
 `;
 
 export const ReadMore = styled.p`
-  text-align: ${(props) =>
-    props.center ? "center" : props.left ? "left" : "right"};
+  text-align: center;
   cursor: pointer !important;
 
+  width: 150px;
+  background: ${(props) => (props.color ? props.color : colors.primary)};
+  &:hover {
+    background: ${colors.blue};
+  }
   span {
-    color: ${(props) => (props.color ? props.color : colors.secondary)};
+    color: ${(props) => (props.color ? props.color : colors.light)};
     display: inline-block;
     position: relative;
     font-weight: 700;
     font-size: ${(props) => (props.size ? props.size : "12px")};
+    padding: 10px;
     &:after {
       content: "\f061";
       font-family: FontAwesome;
@@ -522,7 +528,7 @@ export const ReadMore = styled.p`
       transition: margin 0.3s, opacity 0.3s;
     }
     a {
-      color: ${colors.secondary};
+      color: ${colors.light};
     }
     &:hover {
       &:after {

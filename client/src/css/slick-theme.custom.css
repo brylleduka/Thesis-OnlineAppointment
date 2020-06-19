@@ -47,11 +47,11 @@
 .slick-next:before {
   /* font-family: 'slick'; */
   font-family: "FontAwesome";
-  font-size: 38px;
+  font-size: 42px;
   line-height: 1;
 
   opacity: 0.75;
-  color: #dbd2d2;
+  color: #b6b4b4;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

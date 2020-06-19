@@ -104,11 +104,11 @@ const ServiceCard = ({ employee }) => {
           {employee.categoryServices.map((categ) => (
             <Content
               width="auto"
-              height={wid < 768 ? "15px" : "25px"}
-              margin={wid < 1024 ? "8px 3px" : "5px"}
+              height={wid < 768 ? "20px" : "25px"}
+              margin={wid < 1024 ? "10px 3px" : "5px"}
               key={categ._id}
             >
-              <DLabel rounded color="bluer" pad="3px 8px">
+              <DLabel rounded pad="3px 5px">
                 <DGrid
                   custom="7fr 1fr"
                   med5={"7fr 1fr"}
@@ -116,6 +116,7 @@ const ServiceCard = ({ employee }) => {
                   med10={"7fr 1fr"}
                 >
                   {categ.name}
+
                   <RemoveService
                     categId={categ._id}
                     employeeId={employee._id}

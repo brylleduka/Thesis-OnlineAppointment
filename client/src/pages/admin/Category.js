@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
+import { AuthContext } from "../../context/auth";
 import gql from "graphql-tag";
 import { useDropzone } from "react-dropzone";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { Link } from "react-router-dom";
-import {
-  FETCH_CATEGORY_QUERY,
-  FETCH_ALL_CATEGORIES_QUERY,
-} from "../../util/graphql/service";
+import { FETCH_CATEGORY_QUERY } from "../../util/graphql/service";
 import Layout from "../../components/admin/layout/Layout";
 import {
   Content,
@@ -28,6 +26,7 @@ import Toasted from "../../components/Toasted";
 import Page404 from "../Page404";
 
 const Category = (props) => {
+  const { employeeAuth } = useContext(AuthContext);
   const categoryId = props.match.params._id;
   const [category, setCategory] = useState({});
 
@@ -182,17 +181,20 @@ const Category = (props) => {
                         />
                       </DImage>
                     )}
-                    <IconWrap
-                      {...getRootProps()}
-                      circle
-                      bottomcenter
-                      small
-                      pad="2px"
-                      bgcolor={({ theme }) => theme.bluer}
-                    >
-                      <Camera title="Upload" />
-                      <input {...getInputProps()} />
-                    </IconWrap>
+                    {(employeeAuth.role === "ADMIN" ||
+                      employeeAuth.level >= 3) && (
+                      <IconWrap
+                        {...getRootProps()}
+                        circle
+                        bottomcenter
+                        small
+                        pad="2px"
+                        bgcolor={({ theme }) => theme.bluer}
+                      >
+                        <Camera title="Upload" />
+                        <input {...getInputProps()} />
+                      </IconWrap>
+                    )}
                   </DCard>
 
                   <ModalGateway>
@@ -209,10 +211,16 @@ const Category = (props) => {
                       <CategoryDetails
                         category={data.category}
                         historyCallback={historyCallback}
+                        employeeAuthRole={employeeAuth.role}
+                        employeeAuthLvl={employeeAuth.level}
                       />
                     </DCard>
                     <DCard dw="100%" dh="100%">
-                      <ServiceList categoryId={data.category._id} />
+                      <ServiceList
+                        categoryId={data.category._id}
+                        employeeAuthRole={employeeAuth.role}
+                        employeeAuthLvl={employeeAuth.level}
+                      />
                     </DCard>
                   </DGrid>
                 </Content>

@@ -31,7 +31,7 @@ export const DShowCase = styled.div`
   background: ${(props) => props.bgcolor && props.bgcolor};
   background-image: url(${(props) => props.background && props.background});
   background-repeat: no-repeat;
-  background-position: calc(100% - 20%) calc(100% - 20%);
+  background-position: calc(100% - 20%) calc(100% + 20vh);
   background-size: cover;
   background-attachment: fixed;
 
@@ -41,14 +41,14 @@ export const DShowCase = styled.div`
   align-items: flex-start;
   text-align: center;
 
-  h1,
-  h2,
-  p {
-    margin-left: 48px;
-  }
-  .btn {
-    margin-left: 48px;
-  }
+  // h1,
+  // h2,
+  // p {
+  //   margin-left: 48px;
+  // }
+  // .btn {
+  //   margin-left: 48px;
+  // }
 
   img {
     height: 100%;
@@ -56,9 +56,9 @@ export const DShowCase = styled.div`
     object-fit: cover;
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: 768px) {
     width: 100%;
-    background-position: calc(100% - 30%) calc(100% - 30%);
+    background-position: calc(100% - 30%) calc(100% + 15vh);
     align-items: center;
     text-align: center;
 
@@ -326,9 +326,9 @@ export const Overlay = styled.div`
     props.bg
       ? props.bg
       : props.bgr
-      ? "linear-gradient(270deg, rgba(0,0,0,0.4) 8%, rgba(255,255,255,0) 100%)"
+      ? "linear-gradient(270deg, rgba(0,0,0,0.4) 10%, rgba(255,255,255,0) 100%)"
       : props.bgl
-      ? "linear-gradient(90deg, rgba(0,0,0,0.4) 8%, rgba(255,255,255,0) 100%)"
+      ? "linear-gradient(90deg, rgba(0,0,0,0.4) 10%, rgba(255,255,255,0) 100%)"
       : props.bgc
       ? "rgba(0,0,0,0.4)"
       : "rgba(0, 0, 0, 0)"};
@@ -395,46 +395,64 @@ export const Overlay = styled.div`
   }
 
   .overlay-content {
-    width: ${(props) => (props.cwidth ? props.cwidth : "80%")};
+    width: ${(props) => (props.cwidth ? props.cwidth : "auto")};
     text-align: ${(props) => (props.talign ? props.talign : "left")};
     height: auto;
-    margin: ${(props) => (props.cmarg ? props.cmarg : "0 24px")};
+    margin: ${(props) => (props.cmarg ? props.cmarg : "0 38px")};
     padding: 10px 40px;
 
-    h1,
-    h2,
-    p {
-      letter-spacing: 5px;
-      line-height: 1.4;
+    .title-container {
+      position: relative;
+      width: auto;
+
+      .title_logo {
+        position: absolute;
+        top: -26px;
+        right: -12px;
+      }
+
+      .title {
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 52px;
+        letter-spacing: 4px;
+        text-shadow: 0.4px 0.4px 0.4px rgba(255, 255, 255, 0.6);
+      }
     }
 
-    h3,
-    h4,
-    .ps {
-      letter-spacing: 1px;
-      line-height: 1.4;
-    }
-    .ps {
-      font-size: 10px;
+    .subtitle {
+      font-size: 22px;
     }
 
-    h1 {
-      font-size: ${(props) => (props.fs ? props.fs : "60px")};
-      font-weight: 700;
-      text-transform: uppercase;
+    .subtitle,
+    .paragraph {
+      font-weight: 500;
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     .overlay-content {
       min-width: 90%;
-      h1 {
-        font-size: 32px;
-      }
-      h1,
-      p {
-        letter-spacing: 2px;
-        line-height: 2;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin: 0;
+
+      .title-container {
+        .title {
+          font-size: 38px;
+        }
+        .title_logo {
+          position: absolute;
+          top: -27px;
+          right: -15px;
+        }
       }
     }
   }

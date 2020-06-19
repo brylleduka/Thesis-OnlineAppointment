@@ -1,11 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useQuery } from "@apollo/react-hooks";
+import { FETCH_THE_SHOWCASE } from "../../../util/graphql/cms";
 import { Link } from "react-router-dom";
 import { DSection, Content } from "../../styled/containers";
 
 const PromoSection1 = () => {
+  const [isShowcase, setIsShowcase] = useState([]);
+  const { data: dataShowcase, loading: loadShowcase } = useQuery(
+    FETCH_THE_SHOWCASE,
+    {
+      variables: {
+        sectionName: "SHOWCASE",
+      },
+    }
+  );
+
+  useEffect(() => {
+    if (dataShowcase) {
+      setIsShowcase(dataShowcase.showcaseCMS.content);
+    }
+  }, [dataShowcase]);
+
   return (
     <DSection
-      background={"/images/bgem.jpg"}
+      background={isShowcase[0] !== undefined && isShowcase[0].bgImgURL}
       pad="100px 0 0 30px"
       className="dark"
     >

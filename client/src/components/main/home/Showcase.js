@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_THE_SHOWCASE } from "../../../util/graphql/cms";
+
 import { Link } from "react-router-dom";
-import { DShowCase, Overlay } from "../../styled/containers";
+import { DShowCase, Overlay, DImage } from "../../styled/containers";
 import { JButton } from "../../styled/button";
 import Slider from "react-slick";
 import MouseScroll from "../../MouseScroll";
+import useWindowSize from "../../../util/hooks/useWindowSize";
 
 const Showcase = ({ nextSection }) => {
+  const { width: wid } = useWindowSize();
   const [showcase, setShowcase] = useState([]);
 
   function scrollView(ref) {
@@ -45,7 +48,7 @@ const Showcase = ({ nextSection }) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 5000,
+    autoplaySpeed: 7000,
     adaptiveHeight: true,
     responsive: [
       {
@@ -89,6 +92,13 @@ const Showcase = ({ nextSection }) => {
               )} */}
 
               <Overlay
+                cmarg={
+                  sc.position === "left"
+                    ? "0 0 0 5rem"
+                    : sc.position === "right"
+                    ? "0 5rem 0 0"
+                    : "0"
+                }
                 flex
                 bgr={sc.dark && sc.position === "right" ? true : false}
                 bgl={sc.dark && sc.position === "left" ? true : false}
@@ -115,9 +125,18 @@ const Showcase = ({ nextSection }) => {
                 className={sc.dark ? "dark" : ""}
               >
                 <div className="overlay-content">
-                  <h1>{sc.title}</h1>
-                  <h2>{sc.subtitle}</h2>
-                  <p>{sc.paragraph}</p>
+                  <div className="title-container">
+                    <h1 className="title">{sc.title}</h1>
+
+                    <div className="title_logo">
+                      <DImage objFit="contain" height="65px" width="65px">
+                        <img src="https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png" />
+                      </DImage>
+                    </div>
+                  </div>
+
+                  <h3 className="subtitle">{sc.subtitle}</h3>
+                  <p className="paragraph">{sc.paragraph}</p>
                   <JButton
                     className={sc.dark ? "dark" : ""}
                     dark={sc.dark ? true : false}

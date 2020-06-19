@@ -43,7 +43,7 @@ const TestimonialSection = () => {
           <Slider {...settings}>
             {reviews &&
               reviews.map((rev) => (
-                <DTestimonialCard basic inverted>
+                <DTestimonialCard basic inverted key={rev._id}>
                   <figure className="testimonial">
                     <div className="profile">
                       <img

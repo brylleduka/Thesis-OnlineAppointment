@@ -174,6 +174,7 @@ const NewEmployee = ({ setOpen, open }) => {
                 <label>Role</label>
                 <select name="role" onChange={handleChange} value={values.role}>
                   <option></option>
+                  <option value="ADMIN">ADMIN</option>
                   <option value="AESTHETICIAN">AESTHETICIAN</option>
                   <option value="RECEPTIONIST">RECEPTIONIST</option>
                 </select>

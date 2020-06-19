@@ -20,7 +20,12 @@ import Spinner from "../../../components/Spinner";
 import DTextArea from "../../../components/DTextArea";
 import parser from "html-react-parser";
 
-const ServiceDetails = ({ service, serviceHistoryCallback }) => {
+const ServiceDetails = ({
+  service,
+  serviceHistoryCallback,
+  employeeAuthRole,
+  employeeAuthLvl,
+}) => {
   const [open, setOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   // const [errors, setErrors] = useState({});
@@ -65,24 +70,26 @@ const ServiceDetails = ({ service, serviceHistoryCallback }) => {
   return (
     <>
       <DSection pad="20px 0" height="100%">
-        <MenuDots topright medium>
-          <Grid divided columns={2}>
-            <Grid.Column>
-              <DButton confirm onClick={handleEdit} flex>
-                <IconWrap mcenter>
-                  <Edit size="22px" title="Update Content" />
-                </IconWrap>
-              </DButton>
-            </Grid.Column>
-            <Grid.Column>
-              <DButton alert flex onClick={() => setOpen(true)}>
-                <IconWrap mcenter>
-                  <Trash size="22px" title="Archive or Permanently Delete" />
-                </IconWrap>
-              </DButton>
-            </Grid.Column>
-          </Grid>
-        </MenuDots>
+        {(employeeAuthRole === "ADMIN" || employeeAuthLvl >= 3) && (
+          <MenuDots topright medium>
+            <Grid divided columns={2}>
+              <Grid.Column>
+                <DButton confirm onClick={handleEdit} flex>
+                  <IconWrap mcenter>
+                    <Edit size="22px" title="Update Content" />
+                  </IconWrap>
+                </DButton>
+              </Grid.Column>
+              <Grid.Column>
+                <DButton alert flex onClick={() => setOpen(true)}>
+                  <IconWrap mcenter>
+                    <Trash size="22px" title="Archive or Permanently Delete" />
+                  </IconWrap>
+                </DButton>
+              </Grid.Column>
+            </Grid>
+          </MenuDots>
+        )}
 
         <DGrid gap="10px">
           <Content width="100%">

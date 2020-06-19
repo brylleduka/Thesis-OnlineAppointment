@@ -84,7 +84,7 @@ export const DMenu = styled.ul`
     padding: 10px;
   }
   li a {
-    font-size: 14px;
+    font-size: 16px;
     padding-bottom: 2px;
     color: ${({ theme }) => theme.dark};
   }
@@ -92,8 +92,8 @@ export const DMenu = styled.ul`
   li a:hover,
   &.active,
   .main_nav_link-active {
-    color: ${({ theme }) => theme.blue};
-    border-bottom: 2px solid ${({ theme }) => theme.blue};
+    color: ${({ theme }) => theme.primary};
+    border-bottom: 2px solid ${({ theme }) => theme.primary};
   }
 `;
 
@@ -120,7 +120,7 @@ export const DMainMenu = styled(DMenu)`
     height: 100%;
     min-height: 100vh;
     width: 100%;
-    background: ${({ theme }) => theme.blue};
+    background: ${({ theme }) => theme.primary};
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-end;
@@ -333,7 +333,7 @@ export const DBurger = styled.nav`
   div {
     width: 2rem;
     height: 0.3rem;
-    background: ${({ theme, open }) => (open ? theme.light : theme.blue)};
+    background: ${({ theme, open }) => (open ? theme.light : theme.primary)};
     transition: all 0.3s linear;
     position: relative;
     transform-origin: 1px;
@@ -401,7 +401,7 @@ export const DropdownCustomNav = styled(Dropdown)`
       margin-right: 24px;
     }
     a:hover {
-      color: ${({ theme }) => theme.secondary};
+      color: ${({ theme }) => theme.bluer};
       font-size: 18px;
       text-transform: uppercase;
       margin-right: 24px;
@@ -415,6 +415,6 @@ export const DropdownCustomNav = styled(Dropdown)`
     font-size: 14px !important;
   }
   .customDropMenu .customDropMenuItem:hover {
-    color: ${({ theme }) => theme.secondary};
+    color: ${({ theme }) => theme.bluer};
   }
 `;

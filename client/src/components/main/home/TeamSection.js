@@ -74,7 +74,17 @@ const TeamSection = ({ cards }) => {
                         ? parser(employee.bio.substr(0, 100) + "...")
                         : parser(employee.bio.substr(0, 100))}
                     </p>
-                    <ReadMore hover={0}>Read More</ReadMore>
+                    <ReadMore
+                      hover={0}
+                      style={{
+                        position: "absolute",
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                      }}
+                    >
+                      Read More
+                    </ReadMore>
                   </figcaption>
                   <Link to="/about" className="linkToPage" />
                 </JCard4>
