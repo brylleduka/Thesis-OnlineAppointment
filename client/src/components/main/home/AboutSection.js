@@ -7,8 +7,10 @@ import { TweenMax, TimelineLite, Power3 } from "gsap";
 import ReadMore from "../utils/ReadMore";
 import parser from "html-react-parser";
 import Spinner from "../../Spinner";
+import useWindowSize from "../../../util/hooks/useWindowSize";
 
 const AboutSection = ({ nextSection }) => {
+  const { width: wid } = useWindowSize();
   const [isAboutSection, setIsAboutSection] = useState({});
   const [about, setAbout] = useState({});
 
@@ -97,9 +99,9 @@ const AboutSection = ({ nextSection }) => {
                 </h1>
                 <p>
                   {about.story &&
-                    (about.story.paragraph.length > 1000
-                      ? parser(about.story.paragraph.substr(0, 1000)) + "..."
-                      : parser(about.story.paragraph.substr(0, 1000)))}
+                    (about.story.paragraph.length > 800 && wid < 768
+                      ? parser(about.story.paragraph.substr(0, 400)) + "..."
+                      : parser(about.story.paragraph.substr(0, 800)) + "...")}
                 </p>
                 <ReadMore style={{ padding: "5px", fontSize: "14px" }}>
                   <Link to="/about/#story">Read More</Link>

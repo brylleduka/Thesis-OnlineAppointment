@@ -184,13 +184,15 @@ const settings = {
     {
       breakpoint: 1024,
       settings: {
-        slidesPerRow: 2,
+        slidesToScroll: 1,
+        slidesToShow: 1,
       },
     },
     {
       breakpoint: 768,
       settings: {
-        slidesPerRow: 1,
+        slidesToScroll: 1,
+        slidesToShow: 1,
       },
     },
   ],

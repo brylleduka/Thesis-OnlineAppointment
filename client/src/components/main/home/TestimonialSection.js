@@ -7,8 +7,10 @@ import { DTestimonialCard } from "../../styled/card";
 import { Rating } from "semantic-ui-react";
 import FancyText from "../../FancyText";
 import Spinner from "../../Spinner";
+import useWindowSize from "../../../util/hooks/useWindowSize";
 
 const TestimonialSection = () => {
+  const { width: wid } = useWindowSize();
   const [reviews, setReviews] = useState([]);
 
   const { data: dataReviews, loading: loadReviews } = useQuery(FETCH_VIEWS, {
@@ -33,7 +35,6 @@ const TestimonialSection = () => {
       }
       fixed
       flex
-      justify="center"
       align="center"
     >
       {loadReviews ? (
@@ -79,12 +80,17 @@ const TestimonialSection = () => {
         bg={"rgba(0,0,0,0.5)"}
         className="dark"
         flex
-        justify="center"
+        justify="flex-start"
+        align="flex-start"
         pad="20px"
+        width="100%"
+        height="100%"
       >
-        <FancyText size="28px" alt>
-          What Our Client Say
-        </FancyText>
+        <div style={{ position: "absolute", top: "20px", left: 0, right: 0 }}>
+          <FancyText size={wid <= 768 ? "22px" : "28px"} alt>
+            What Our Client Say
+          </FancyText>
+        </div>
       </Overlay>
     </DSection>
   );

@@ -11,6 +11,7 @@ export const DFancyText = styled.h1`
   display: table;
   white-space: nowrap;
   overflow: hidden;
+
   &:before,
   &:after {
     border-top-width: 2px;
@@ -35,12 +36,20 @@ export const DFancyText = styled.h1`
     left: 3%;
   }
   @media (max-width: 768px) {
-    margin: 0 auto;
+    margin: 24px auto;
+    font-size: 16px;
 
-    font-size: 18px;
+    &:before,
+    &:after {
+      width: 50px;
+    }
   }
 
   @media (max-width: 360px) {
-    font-size: 16px;
+    font-size: 14px;
+    &:before,
+    &:after {
+      width: 40px;
+    }
   }
 `;

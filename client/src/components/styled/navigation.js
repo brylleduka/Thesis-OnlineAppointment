@@ -48,7 +48,8 @@ export const DNavigation = styled.nav`
     @media (max-width: 1024px) {
       padding: 10px 0;
       height: 7rem;
-      width: 100%;
+      width: 90%;
+      margin: 0 auto;
       .menu-container {
         display: flex;
       }
@@ -119,7 +120,8 @@ export const DMainMenu = styled(DMenu)`
   @media (max-width: 1024px) {
     height: 100%;
     min-height: 100vh;
-    width: 100%;
+    width: 90%;
+
     background: ${({ theme }) => theme.primary};
     display: flex;
     flex-flow: column nowrap;

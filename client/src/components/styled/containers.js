@@ -41,24 +41,19 @@ export const DShowCase = styled.div`
   align-items: flex-start;
   text-align: center;
 
-  // h1,
-  // h2,
-  // p {
-  //   margin-left: 48px;
-  // }
-  // .btn {
-  //   margin-left: 48px;
-  // }
-
   img {
     height: 100%;
     width: auto;
     object-fit: cover;
   }
 
+  @media (max-width: 1024px) {
+    background-position: calc(100% - 30%) calc(100%);
+  }
+
   @media (max-width: 768px) {
     width: 100%;
-    background-position: calc(100% - 30%) calc(100% + 15vh);
+    background-position: calc(100% - 30%) calc(100%);
     align-items: center;
     text-align: center;
 
@@ -825,15 +820,17 @@ export const Section2Styled = styled.div`
       justify-content: space-between;
       ${(props) => props.alt && "flex-direction: row-reverse"};
       margin: 0 auto;
-      height: 100vh;
+      height: 100%;
+      min-height: 80vh;
 
       .sec2-content {
         width: 50%;
-
+        height: 100%;
         .sec2-content_inner {
           width: 90%;
           margin: 0 auto;
           color: #323232;
+          height: 100%;
           h1 {
             font-weight: 500;
             font-size: 32px;
@@ -849,7 +846,7 @@ export const Section2Styled = styled.div`
             font-size: 14px;
             line-height: 24px;
             padding: 12px;
-            margin-bottom: 56px;
+            margin-bottom: 12px;
             text-align: justify;
           }
         }
