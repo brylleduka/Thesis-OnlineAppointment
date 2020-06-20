@@ -38,7 +38,7 @@ const Team = () => {
           justify="center"
           align="center"
           width="100%"
-          height="50vh"
+          height="40vh"
         >
           <FancyText size="48px">Our TEAM</FancyText>
         </Content>

@@ -854,6 +854,7 @@ export const Section2Styled = styled.div`
       .sec2-images {
         width: 55%;
         height: 100%;
+        min-height: 100vh;
         position: relative;
 
         .sec2-images_inner {
