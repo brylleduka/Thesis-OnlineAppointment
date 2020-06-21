@@ -101,7 +101,7 @@ const CurrentAppointments = () => {
     >
       <DataTable
         columns={columns}
-        data={isCurrentAppoint.map((currAppoint) => currAppoint)}
+        data={isCurrentAppoint}
         responsive
         customStyles={customStyles}
         pagination={true}
