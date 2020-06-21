@@ -18,7 +18,7 @@ const ReschedConfirm = ({
   selectedTime,
   setIsResched,
   appointmentId,
-  setOpen,
+  setOpenResched,
   isAdmin,
   status,
 }) => {
@@ -62,7 +62,7 @@ const ReschedConfirm = ({
     onCompleted(data) {
       setIsReschedConfirm(false);
       setIsResched(false);
-      setOpen(false);
+      setOpenResched(false);
 
       if (data) {
         toaster.notify(

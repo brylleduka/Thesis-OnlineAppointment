@@ -10,6 +10,7 @@ import ReschedInfo from "./ReschedInfo";
 import CancelAppoint from "./CancelAppoint";
 import ReschedModal from "../appointment/ReschedModal";
 import Spinner from "../../Spinner";
+import { QuestionMarkCircle } from "@styled-icons/evaicons-solid";
 
 const CurrentAppointModal = ({ appointId, open, setOpen }) => {
   let verified;
@@ -330,6 +331,7 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
                         isAdmin={false}
                         setOpen={setOpen}
                         appointmentId={appointmentInfo.appointment._id}
+                        diffHours={diffHours}
                       />
                     )}
 
@@ -341,17 +343,16 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
                       Cancel
                     </DButton>
                     <Popup
+                      inverted
                       trigger={
-                        <Icon
-                          circular
-                          name="question"
-                          size="medium"
-                          color="black"
+                        <QuestionMarkCircle
+                          size="28px"
+                          color="rgba(0,0,0,0.7)"
                         />
                       }
                       mouseEnterDelay={500}
                       mouseLeaveDelay={500}
-                      content="Cancellation of appointment may place 12 hours before the scheduled appointment day. If you wish to still cancel your appointment, you may call us on (+63) 926 652 4505. Thank you!"
+                      content="Cancellation and Rescheduling of appointment may place 12 hours before the scheduled appointment day. If you wish to still cancel or reschedule your appointment, you may call us on (+63) 926 652 4505. Thank you!"
                     />
                   </>
                 ) : (

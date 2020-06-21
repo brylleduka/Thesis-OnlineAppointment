@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_SINGLE_APPOINTMENT_QUERY } from "../../util/graphql/appointment";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
   DSection,
   Content,
@@ -28,9 +28,10 @@ const AppointmentDetails = (props) => {
   const history = useHistory();
   const appointmentId = props.match.params._id;
   const [myAppoint, setMyAppoint] = useState({});
-  const [open, setOpen] = useState(false);
+
   const [openCancel, setOpenCancel] = useState(false);
   const [openDone, setOpenDone] = useState(false);
+  const [openResched, setOpenResched] = useState(false);
 
   const { data, loading: dataLoading } = useQuery(
     FETCH_SINGLE_APPOINTMENT_QUERY,
@@ -46,8 +47,6 @@ const AppointmentDetails = (props) => {
       setMyAppoint(data.appointment);
     }
   }, [data]);
-
-  console.log(myAppoint.service);
 
   return (
     <Layout>
@@ -435,9 +434,7 @@ const AppointmentDetails = (props) => {
                   >
                     <Icon name="calendar check" /> Confirm
                   </DButton>
-                  <DButton fluid="true">
-                    <Icon name="calendar alternate" /> Rebook
-                  </DButton>
+                  <ReschedModal appointmentId={appointmentId} isAdmin={true} />
                   <DButton
                     alert
                     fluid="true"

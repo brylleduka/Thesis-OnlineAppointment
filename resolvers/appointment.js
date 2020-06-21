@@ -497,7 +497,9 @@ module.exports = {
       }
 
       const service = await Service.findById(serviceId);
+      const serviceName = service.name;
       const employee = await Employee.findById(employeeId);
+      const employeeName = `${employee.title} ${employee.firstName} ${employee.lastName}`;
       const duration = service.duration;
 
       const rescheduleAppointment = await new Appointment({
@@ -530,7 +532,7 @@ module.exports = {
         }
       );
 
-      if (isAdmin !== true) {
+      if (!isAdmin) {
         jwt.sign(
           { _id: rescheduleAppointment._id },
 
@@ -547,6 +549,12 @@ module.exports = {
               subject: "Appointment Confirmation",
               text: "Good Day", // plain text body
               temp: "index",
+              url,
+              userName,
+              serviceName,
+              employeeName,
+              date: moment(date).format("LL"),
+              time: slot_start,
             });
           }
         );
@@ -556,7 +564,12 @@ module.exports = {
           to: userEmail, // list of receivers
           subject: "Appointment Rescheduling",
           text: "Good Day", // plain text body
-          temp: "index",
+          temp: "resched",
+          userName,
+          serviceName,
+          employeeName,
+          date: moment(date).format("LL"),
+          time: slot_start,
         });
       }
 
