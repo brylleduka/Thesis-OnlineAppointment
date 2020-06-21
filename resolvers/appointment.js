@@ -266,6 +266,7 @@ module.exports = {
 
         const userInfo = await User.findOne({ _id: user });
         const userEmail = userInfo.email;
+        const userName = `${userInfo.firstName} ${userInfo.lastName}`;
 
         const checkAppointment = await Appointment.findOne({
           user,
@@ -300,7 +301,9 @@ module.exports = {
         }
 
         const service = await Service.findById(serviceId);
+        const serviceName = service.name;
         const employee = await Employee.findById(employeeId);
+        const employeeName = `${employee.title} ${employee.firstName} ${employee.lastName}`;
         const duration = service.duration;
         const newAppointment = await new Appointment({
           user,
@@ -332,6 +335,11 @@ module.exports = {
               text: "Good Day", // plain text body
               temp: "index",
               url,
+              userName,
+              serviceName,
+              employeeName,
+              date: moment(date).format("LL"),
+              time: slot_start,
             });
           }
         );

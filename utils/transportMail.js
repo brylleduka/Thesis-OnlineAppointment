@@ -3,18 +3,31 @@ const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
 const path = require("path");
 
-const Mailer = ({ from, to, subject, text, html, url, temp }) => {
+const Mailer = ({
+  from,
+  to,
+  subject,
+  text,
+  html,
+  url,
+  temp,
+  userName,
+  date,
+  time,
+  serviceName,
+  employeeName,
+}) => {
   let transporter = nodemailer.createTransport({
     // host: "mail.privateemail.com",
     // port: 587,
     // secure: false,
     // true for 465, false for other ports
-    service: 'gmail',
-    host: 'smtp.gmail.com',
+    service: "gmail",
+    host: "smtp.gmail.com",
     auth: {
       user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
+      pass: process.env.EMAIL_PASS,
+    },
   });
 
   const handlebarOptions = {
@@ -22,10 +35,10 @@ const Mailer = ({ from, to, subject, text, html, url, temp }) => {
       extName: ".hbs",
       partialsDir: path.resolve("./views/"),
       layoutsDir: path.resolve("./views/"),
-      defaultLayout: ""
+      defaultLayout: "",
     },
     viewPath: path.resolve("./views/"),
-    extName: ".hbs"
+    extName: ".hbs",
   };
 
   transporter.use("compile", hbs(handlebarOptions));
@@ -37,8 +50,13 @@ const Mailer = ({ from, to, subject, text, html, url, temp }) => {
     text, // plain text body
     template: temp,
     context: {
-      url: url
-    }
+      url: url,
+      userName,
+      serviceName,
+      employeeName,
+      date,
+      time,
+    },
   };
 
   transporter.sendMail(mailOptions, (err, res) => {
