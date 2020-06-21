@@ -15,6 +15,8 @@ const Mailer = ({
   time,
   serviceName,
   employeeName,
+  message,
+  name,
 }) => {
   let transporter = nodemailer.createTransport({
     // host: "mail.privateemail.com",
@@ -57,6 +59,8 @@ const Mailer = ({
       employeeName,
       date,
       time,
+      message,
+      name,
     },
   };
 
