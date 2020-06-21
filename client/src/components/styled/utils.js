@@ -369,7 +369,6 @@ export const DAccordion = styled.section`
     }
 
     .accordion-icon {
-      display: flex;
       align-items: center;
       justify-content: center;
       transition: transform 0.6s ease;
@@ -397,18 +396,19 @@ export const DAccordion = styled.section`
       transform: rotate(90deg);
     }
   }
+
   .accordion-content {
     width: 100%;
-
     display: flex;
     flex-direction: column;
     background-color: white;
     overflow: hidden;
+    max-height: 500px;
+    -moz-max-height: 500px;
     transition: max-height 0.4s ease-in-out;
 
     span {
       width: 100%;
-      height: 100%;
       display: flex;
       align-items: center;
       margin-left: 5px;
@@ -420,7 +420,7 @@ export const DAccordion = styled.section`
 
     a {
       width: 100%;
-      height: 100%;
+      // height: 100%;
       font-size: 16px;
       padding-left: 20px;
 

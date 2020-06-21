@@ -30,7 +30,7 @@ const Story = () => {
         </DSection>
       ) : (
         <DSection
-          height="100%"
+          height="auto"
           width="90%"
           mcenter
           flex
@@ -44,7 +44,7 @@ const Story = () => {
 
           <Content
             flex
-            justify="flex-start"
+            justify="center"
             align="center"
             direct="column"
             width="90%"
@@ -86,7 +86,7 @@ const Story = () => {
                 padding: "10px",
               }}
             >
-              {isStory.paragraph}
+              {isStory.paragraph && parser(isStory.paragraph)}
             </p>
           </Content>
         </DSection>

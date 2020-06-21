@@ -141,7 +141,7 @@ const Navigation = ({ open, setOpen }) => {
           <li className="hr-nav">
             <hr className="hr-one" />
           </li>
-          {/* <li>
+          <li>
             <Link
               to={`/#home`}
               scroll={scrollBehavior}
@@ -149,7 +149,7 @@ const Navigation = ({ open, setOpen }) => {
             >
               Home
             </Link>
-          </li> */}
+          </li>
           <li>
             <NavLink
               to="/services&rates/#services"

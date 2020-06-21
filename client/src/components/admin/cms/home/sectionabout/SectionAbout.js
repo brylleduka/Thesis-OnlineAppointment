@@ -8,6 +8,7 @@ import { Section2Styled, Content } from "../../../../styled/containers";
 import EditModal from "./EditModal";
 import Spinner from "../../../../Spinner";
 import parser from "html-react-parser";
+import truncateString from "../../../../../util/hooks/truncateString";
 
 const SectionAbout = () => {
   const [isAbout, setIsAbout] = useState({});
@@ -74,9 +75,12 @@ const SectionAbout = () => {
                 </h1>
                 <p>
                   {about.story &&
-                    (about.story.paragraph.length > 300
-                      ? parser(about.story.paragraph.substr(0, 300)) + "..."
-                      : parser(about.story.paragraph.substr(0, 300)))}
+                    (about.story.paragraph.length > 500
+                      ? parser(
+                          truncateString(about.story.paragraph, 500) + "..."
+                        )
+                      : parser(truncateString(about.story.paragraph, 500)))}
+                  {/* {about.story && parser(about.story.paragraph)} */}
                 </p>
               </div>
             </div>

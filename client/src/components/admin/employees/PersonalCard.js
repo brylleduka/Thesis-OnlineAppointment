@@ -7,7 +7,6 @@ import { DCard, Content } from "../../styled/containers";
 import { DLabel, IconWrap, DInput, DSelect, DButton } from "../../styled/utils";
 import { Edit } from "@styled-icons/boxicons-regular/Edit";
 import { Cancel } from "@styled-icons/material/Cancel";
-// import { Cancel } from "@styled-icons/typicons/Cancel";
 
 import DatePicker from "react-datepicker";
 import Spinner from "../../Spinner";
@@ -125,7 +124,6 @@ const PersonalCard = ({ employee }) => {
               circle
               shadow
               color="red"
-              
             >
               <Cancel onClick={handleEditPersonal} />
             </IconWrap>

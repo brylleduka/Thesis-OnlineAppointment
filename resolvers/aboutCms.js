@@ -1,4 +1,4 @@
-const { createWriteStream, unlink, stat } = require("fs");
+// const { createWriteStream, unlink, stat } = require("fs");
 const stream = require("stream");
 const path = require("path");
 const AboutCMS = require("../models/AboutCMS");
@@ -32,7 +32,7 @@ module.exports = {
       }
     ) => {
       try {
-        // const about = await AboutCMS.findOne({ contentName: "ABOUTUS" });
+        const about = await AboutCMS.findOne({ contentName: "ABOUTUS" });
 
         // const getAboutImg = about.bgImg;
 
@@ -52,11 +52,13 @@ module.exports = {
         let bgImgFile;
         let locationURL;
 
-        // if (about) {
-        //   bgImgFile = about.bgImg || "";
-        // } else {
-        //   bgImgFile = "";
-        // }
+        if (about) {
+          bgImgFile = about.bgImg || "";
+          locationURL = about.bgImgURL || "";
+        } else {
+          bgImgFile = "";
+          locationURL = "";
+        }
 
         if (bgImg instanceof stream.Readable || bgImg) {
           const { filename } = await bgImg;
@@ -110,13 +112,15 @@ module.exports = {
       try {
         let sPhotoFile;
         let locationURL;
-        // const storyContent = await AboutCMS.findOne({ contentName: "ABOUTUS" });
+        const storyContent = await AboutCMS.findOne({ contentName: "ABOUTUS" });
 
-        // if (storyContent) {
-        //   sPhotoFile = storyContent.story.photo || "";
-        // } else {
-        //   sPhotoFile = "";
-        // }
+        if (storyContent) {
+          sPhotoFile = storyContent.story.photo || "";
+          locationURL = storyContent.story.imageURL || "";
+        } else {
+          sPhotoFile = "";
+          locationURL = "";
+        }
 
         if (photo instanceof stream.Readable || photo) {
           const { filename } = await photo;
@@ -172,15 +176,17 @@ module.exports = {
       try {
         let sMissionFile;
         let locationURL;
-        // const missionContent = await AboutCMS.findOne({
-        //   contentName: "ABOUTUS",
-        // });
+        const missionContent = await AboutCMS.findOne({
+          contentName: "ABOUTUS",
+        });
 
-        // if (missionContent) {
-        //   sMissionFile = missionContent.missionvision.photo || "";
-        // } else {
-        //   sMissionFile = "";
-        // }
+        if (missionContent) {
+          sMissionFile = missionContent.missionvision.photo || "";
+          locationURL = missionContent.missionvision.imageURL || "";
+        } else {
+          sMissionFile = "";
+          locationURL = "";
+        }
 
         if (photo instanceof stream.Readable || photo) {
           const { filename } = await photo;

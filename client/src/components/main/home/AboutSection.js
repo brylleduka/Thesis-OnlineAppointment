@@ -8,6 +8,7 @@ import ReadMore from "../utils/ReadMore";
 import parser from "html-react-parser";
 import Spinner from "../../Spinner";
 import useWindowSize from "../../../util/hooks/useWindowSize";
+import truncateString from "../../../util/hooks/truncateString";
 
 const AboutSection = ({ nextSection }) => {
   const { width: wid } = useWindowSize();
@@ -100,8 +101,12 @@ const AboutSection = ({ nextSection }) => {
                 <p>
                   {about.story &&
                     (about.story.paragraph.length > 800 && wid < 768
-                      ? parser(about.story.paragraph.substr(0, 400)) + "..."
-                      : parser(about.story.paragraph.substr(0, 800)) + "...")}
+                      ? parser(
+                          truncateString(about.story.paragraph, 400) + "..."
+                        )
+                      : parser(
+                          truncateString(about.story.paragraph, 800) + "..."
+                        ))}
                 </p>
                 <ReadMore style={{ padding: "5px", fontSize: "14px" }}>
                   <Link to="/about/#story">Read More</Link>

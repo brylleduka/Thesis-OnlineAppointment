@@ -3,6 +3,8 @@ import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { FETCH_ABOUT_CMS } from "../../../../util/graphql/cms";
 import { Icon, Modal, Form, Popup, TextArea } from "semantic-ui-react";
+import CKEditor from "@ckeditor/ckeditor5-react";
+import DecoupledEditor from "@ckeditor/ckeditor5-build-decoupled-document";
 import {
   DImage,
   Content,
@@ -10,8 +12,9 @@ import {
   Overlay,
   DGrid,
 } from "../../../styled/containers";
-import { DButtonFree, DButton } from "../../../styled/utils";
+import { DButtonFree, DButton, DLabel } from "../../../styled/utils";
 import Spinner from "../../../Spinner";
+import DTextArea from "../../../DTextArea";
 import useUploadFile from "../../../../util/hooks/useUploadFile";
 import toaster from "toasted-notes";
 
@@ -19,11 +22,10 @@ const ModalStory = ({ isStory }) => {
   const fileInput = useRef();
   const [openStory, setOpenStory] = useState(false);
   const [reverse, setReverse] = useState(isStory ? isStory.alt : false);
-
+  const [content, setContent] = useState(isStory ? isStory.paragraph : "");
   const [stories, setStories] = useState({
     title: isStory ? isStory.title : "",
     subtitle: isStory ? isStory.subtitle : "",
-    paragraph: isStory ? isStory.paragraph : "",
   });
 
   const { preview, selectedFile, onSelectedFile } = useUploadFile();
@@ -31,6 +33,7 @@ const ModalStory = ({ isStory }) => {
   const [updateStory, { loading }] = useMutation(UPDATE_ABOUT_STORY, {
     variables: {
       ...stories,
+      paragraph: content,
       photo: selectedFile,
       alt: reverse,
     },
@@ -71,7 +74,7 @@ const ModalStory = ({ isStory }) => {
       </DButtonFree>
       <Modal open={openStory} onClose={() => setOpenStory(false)} closeIcon>
         <Modal.Header>Update Header Content</Modal.Header>
-        <DGrid custom="2fr 1fr" gap="20px">
+        <DGrid two gap="20px">
           <Modal.Content style={{ padding: "10px" }}>
             <DSection width="100%" height="50vh">
               <DImage dashed height="100%" width="100%">
@@ -136,7 +139,7 @@ const ModalStory = ({ isStory }) => {
                 />
               </Form.Field>
 
-              <Form.Field>
+              {/* <Form.Field>
                 <label>Paragraph</label>
                 <TextArea
                   style={{ minHeight: 100 }}
@@ -144,7 +147,55 @@ const ModalStory = ({ isStory }) => {
                   value={stories.paragraph || ""}
                   onChange={handleChangeStory}
                 />
-              </Form.Field>
+              </Form.Field> */}
+              <Content
+                width="100%"
+                height="100%"
+                flex
+                justify="flex-start"
+                align="flex-start"
+                direct="column"
+                margin="12px auto"
+              >
+                <DLabel
+                  flex
+                  justifyEnd
+                  alignCenter
+                  weight={700}
+                  w={"40%"}
+                  size="14px"
+                >
+                  Paragraph
+                </DLabel>
+                <Content
+                  width="100%"
+                  height="auto"
+                  flex
+                  justify="center"
+                  align="center"
+                  pad="3px 15px"
+                >
+                  <DTextArea border active={true}>
+                    <CKEditor
+                      onInit={(editor) => {
+                        // Insert the toolbar before the editable area.
+                        editor.ui
+                          .getEditableElement()
+                          .parentElement.insertBefore(
+                            editor.ui.view.toolbar.element,
+                            editor.ui.getEditableElement()
+                          );
+                      }}
+                      onChange={(event, editor) => {
+                        const data = editor.getData();
+                        setContent(data);
+                      }}
+                      editor={DecoupledEditor}
+                      data={content}
+                    />
+                  </DTextArea>
+                </Content>
+              </Content>
 
               <Form.Field>
                 <label>
