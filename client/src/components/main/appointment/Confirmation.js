@@ -92,7 +92,7 @@ const Confirmation = ({
 
       if (err.graphQLErrors[0].extensions.exception.errors.check) {
         toaster.notify(({ onClose }) => (
-          <Toasted lalert onClick={onClose}>
+          <Toasted alert onClick={onClose}>
             {err.graphQLErrors[0].extensions.exception.errors.check}
           </Toasted>
         ));

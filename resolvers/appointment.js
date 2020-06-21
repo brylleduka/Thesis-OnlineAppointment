@@ -35,7 +35,7 @@ module.exports = {
     },
     currentAppointments: async () => {
       const getCurrentAppointments = await Appointment.find({
-        $or: [{ status: "VERIFIED" }],
+        $or: [{ status: "VERIFIED", status: "PENDING" }],
       }).sort({ createdAt: -1 });
 
       return getCurrentAppointments;
