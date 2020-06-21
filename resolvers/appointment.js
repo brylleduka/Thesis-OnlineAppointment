@@ -353,13 +353,22 @@ module.exports = {
       try {
         const errors = {};
         const appointmentDay = await Appointment.findById(_id);
-
+        // ID
         const userId = appointmentDay.user;
+        const serviceId = appointmentDay.service;
+        const employeeId = appointmentDay.employee;
+
         const userInfo = await User.findOne({ _id: userId });
         const userName = userInfo.firstName + " " + userInfo.lastName;
         const userEmail = userInfo.email;
 
+        const service = await Service.findById(serviceId);
+        const serviceName = service.name;
+        const employee = await Employee.findById(employeeId);
+        const employeeName = `${employee.title} ${employee.firstName} ${employee.lastName}`;
+
         const date = moment(appointmentDay.date).format("M/D/YYYY");
+        const time = appointmentDay.slot_start;
 
         if (date <= moment().add(12, "h").format("M/D/YYYY")) {
           errors.invalidCancellation =
@@ -377,6 +386,11 @@ module.exports = {
             subject: "Appointment Cancellation",
             text: `${userName}, we received your cancellation notice, and we want to let you know that we are sorry to hear of your decisions. If you would, please tell us why you have made this decision so our company can provide better service in the future.`,
             temp: "cancel",
+            userName,
+            employeeName,
+            serviceName,
+            date: moment(date).format("LL"),
+            time,
           });
 
           return result;
@@ -390,9 +404,20 @@ module.exports = {
         const appointment = await Appointment.findById(_id);
 
         const userId = appointment.user;
+        const serviceId = appointment.service;
+        const employeeId = appointment.employee;
+
         const userInfo = await User.findOne({ _id: userId });
-        const userName = userInfo.firstName + " " + userInfo.lastName;
+        const userName = `${userInfo.firstName} ${userInfo.lastName}`;
         const userEmail = userInfo.email;
+
+        const service = await Service.findById(serviceId);
+        const serviceName = service.name;
+        const employee = await Employee.findById(employeeId);
+        const employeeName = `${employee.title} ${employee.firstName} ${employee.lastName}`;
+
+        const date = appointment.date;
+        const time = appointment.slot_start;
 
         const result = await Appointment.updateOne(
           { _id },
@@ -400,11 +425,16 @@ module.exports = {
         );
 
         transportMail({
-          from: '"Z Essence Facial and Spa"<smtp.mailtrap.io>',
+          from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
           to: userEmail,
           subject: "Appointment Cancellation",
           text: `${userName}, we received your cancellation notice, and we want to let you know that we are sorry to hear of your decisions. If you would, please tell us why you have made this decision so our company can provide better service in the future.`,
           temp: "cancel",
+          userName,
+          employeeName,
+          serviceName,
+          date: moment(date).format("LL"),
+          time,
         });
 
         return result;
