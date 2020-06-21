@@ -84,26 +84,16 @@ const Confirmation = ({
 
       if (err.graphQLErrors[0].extensions.exception.errors.expiredLog) {
         toaster.notify(({ onClose }) => (
-          <Toasted status={"error"}>
-            <span className="description">
-              {err.graphQLErrors[0].extensions.exception.errors.expiredLog}
-            </span>
-            <span className="close" onClick={onClose}>
-              &times;
-            </span>
+          <Toasted alert onClick={onClose}>
+            {err.graphQLErrors[0].extensions.exception.errors.expiredLog}
           </Toasted>
         ));
       }
 
       if (err.graphQLErrors[0].extensions.exception.errors.check) {
         toaster.notify(({ onClose }) => (
-          <Toasted status={"error"}>
-            <span className="description">
-              {err.graphQLErrors[0].extensions.exception.errors.check}
-            </span>
-            <span className="close" onClick={onClose}>
-              &times;
-            </span>
+          <Toasted lalert onClick={onClose}>
+            {err.graphQLErrors[0].extensions.exception.errors.check}
           </Toasted>
         ));
       }
