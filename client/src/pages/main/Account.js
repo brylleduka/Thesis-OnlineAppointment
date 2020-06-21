@@ -18,11 +18,11 @@ const Account = (props) => {
 
   const stored = localStorage.getItem("account");
   const [isAccount, setIsAccount] = useState(
-    stored === "appointments"
-      ? "appointments"
-      : stored === "details"
-      ? "details"
-      : "appointments"
+    stored === "user_appointments"
+      ? "user_appointments"
+      : stored === "user_details"
+      ? "user_details"
+      : "user_appointments"
   );
 
   const { data: userInfo, loading: userLoading } = useQuery(
@@ -39,12 +39,12 @@ const Account = (props) => {
   }
 
   const handleDetails = () => {
-    setIsAccount("details");
-    localStorage.setItem("account", "details");
+    setIsAccount("user_details");
+    localStorage.setItem("account", "user_details");
   };
   const handleAppointments = () => {
-    setIsAccount("appointments");
-    localStorage.setItem("account", "appointments");
+    setIsAccount("user_appointments");
+    localStorage.setItem("account", "user_appointments");
   };
 
   return (

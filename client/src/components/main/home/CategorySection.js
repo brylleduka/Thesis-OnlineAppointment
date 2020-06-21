@@ -155,6 +155,7 @@ const CategorySection = ({ setRef }) => {
                         </div>
                       </div>
                     </Overlay>
+                    <Link to={`/service/${category._id}/#serv`} />
                   </DCard>
                 </div>
               ))}

@@ -49,7 +49,7 @@ const Service = (props) => {
         }
         height="50vh"
         fixed
-        id={data && data.category._id}
+        id={"serv"}
       >
         <Content
           flex

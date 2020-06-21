@@ -4,9 +4,9 @@ import UserAppointments from "./UserAppointments";
 
 const AccountContentTwo = ({ isAccount, userInfo }) => {
   switch (isAccount) {
-    case "appointments":
+    case "user_appointments":
       return <UserAppointments />;
-    case "details":
+    case "user_details":
       return <UserDetails userInfo={userInfo} />;
     default:
       return <h1>Something went wrong</h1>;

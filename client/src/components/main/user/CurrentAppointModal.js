@@ -17,9 +17,7 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
   let done;
   let rescheduled;
   let cancelled;
-  let appointedDate;
-  let addDate;
-  let diffDate;
+  let diffHours;
 
   const [isCancelOpen, setIsCancelOpen] = useState(false);
 
@@ -39,9 +37,12 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
     rescheduled = appointmentInfo.appointment.status === "RESCHEDULED";
     cancelled = appointmentInfo.appointment.status === "CANCELLED";
 
-    appointedDate = new Date(parseInt(appointmentInfo.appointment.date));
-    addDate = moment().add(1, "d").format("M/D/YYYY");
-    diffDate = appointedDate <= new Date(addDate);
+    const dateTime = `${appointmentInfo.appointment.date} ${appointmentInfo.appointment.slot_start}`;
+
+    const now = moment(); //todays date
+    const end = moment(dateTime); // another date
+    const duration = moment.duration(end.diff(now));
+    diffHours = duration.asHours();
   }
 
   return (
@@ -335,7 +336,7 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
                     <DButton
                       alert
                       onClick={() => setIsCancelOpen(true)}
-                      disabled={diffDate ? true : false}
+                      disabled={diffHours < 12 ? true : false}
                     >
                       Cancel
                     </DButton>
@@ -344,13 +345,13 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
                         <Icon
                           circular
                           name="question"
-                          size="small"
-                          color="blue"
+                          size="medium"
+                          color="black"
                         />
                       }
                       mouseEnterDelay={500}
                       mouseLeaveDelay={500}
-                      content="Cancellation of appointment may place under 12 hours before the scheduled appointment day. If you wish to still cancel your appointment, you may call us on (+63) 926 652 4505. Thank you!"
+                      content="Cancellation of appointment may place 12 hours before the scheduled appointment day. If you wish to still cancel your appointment, you may call us on (+63) 926 652 4505. Thank you!"
                     />
                   </>
                 ) : (

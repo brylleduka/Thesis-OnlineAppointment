@@ -8,7 +8,6 @@ const Mailer = ({
   to,
   subject,
   text,
-  html,
   url,
   temp,
   userName,
@@ -51,6 +50,7 @@ const Mailer = ({
     text, // plain text body
     template: temp,
     context: {
+      to,
       url: url,
       userName,
       serviceName,

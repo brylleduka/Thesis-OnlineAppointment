@@ -3,7 +3,6 @@ import { useQuery } from "@apollo/react-hooks";
 import { FETCH_USER_REVIEW } from "../../../util/graphql/testimonial";
 import { AuthContext } from "../../../context/auth";
 import { Content } from "../../styled/containers";
-import { DTestimonialCard } from "../../styled/card";
 import { DButton } from "../../styled/utils";
 import { Icon } from "semantic-ui-react";
 import ModalReview from "./ModalReview";
@@ -62,7 +61,7 @@ const Review = () => {
           <ModalReview
             openReview={openReview}
             setOpenReview={setOpenReview}
-            userReview={dataUserReview && dataUserReview.userTestimonial}
+            userReview={userReview.userTestimonial}
             user={user}
           />
         </>

@@ -214,7 +214,7 @@ export const JCard2 = styled.div`
         text-transform: uppercase;
       }
       .title {
-        color: #ccc;
+        color: #232323;
         font-size: 16px;
         font-weight: 400;
         text-transform: uppercase;

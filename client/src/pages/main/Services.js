@@ -11,7 +11,7 @@ import {
   DImage,
 } from "../../components/styled/containers";
 import parser from "html-react-parser";
-import { Link } from "react-router-dom";
+import { HashLink as Link } from "react-router-hash-link";
 import ReadMore from "../../components/main/utils/ReadMore";
 import ScrollButton from "../../components/main/utils/ScrollButton";
 import useScroll from "../../util/hooks/useScroll";
@@ -136,7 +136,7 @@ const Services = () => {
                       </div>
                     </div>
                   </Overlay>
-                  <Link to={`/service/${category._id}`} />
+                  <Link to={`/service/${category._id}/#serv`} />
                 </DCard>
               ))}
             </DGrid>

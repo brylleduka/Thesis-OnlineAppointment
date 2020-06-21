@@ -28,8 +28,6 @@ const CurrentAppointment = () => {
     }
   }, [currentAppointData]);
 
-  console.log(currentAppoint);
-
   const columns = [
     {
       name: "ID",

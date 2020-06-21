@@ -351,50 +351,43 @@ module.exports = {
     },
     cancelAppointment: async (_, { _id, note }) => {
       try {
-        const errors = {};
-        const appointmentDay = await Appointment.findById(_id);
-        // ID
-        const userId = appointmentDay.user;
-        const serviceId = appointmentDay.service;
-        const employeeId = appointmentDay.employee;
+        const appointment = await Appointment.findById(_id);
+
+        const userId = appointment.user;
+        const serviceId = appointment.service;
+        const employeeId = appointment.employee;
 
         const userInfo = await User.findOne({ _id: userId });
-        const userName = userInfo.firstName + " " + userInfo.lastName;
+        const userName = `${userInfo.firstName} ${userInfo.lastName}`;
         const userEmail = userInfo.email;
 
         const service = await Service.findById(serviceId);
         const serviceName = service.name;
-        const employee = await Employee.findById(employeeId);
-        const employeeName = `${employee.title} ${employee.firstName} ${employee.lastName}`;
+        const employeeInfo = await Employee.findById(employeeId);
+        const employeeName = `${employeeInfo.title} ${employeeInfo.firstName} ${employeeInfo.lastName}`;
 
-        const date = moment(appointmentDay.date).format("M/D/YYYY");
-        const time = appointmentDay.slot_start;
+        const date = appointment.date;
+        const time = appointment.slot_start;
 
-        if (date <= moment().add(12, "h").format("M/D/YYYY")) {
-          errors.invalidCancellation =
-            "You can't cancel your appointment. If you wish to cancel your appointment, please contact our hotline";
-          throw new UserInputError("Error", { errors });
-        } else {
-          const result = await Appointment.updateOne(
-            { _id },
-            { $set: { status: "CANCELLED", note } }
-          );
+        const result = await Appointment.updateOne(
+          { _id },
+          { $set: { status: "CANCELLED", note } }
+        );
 
-          transportMail({
-            from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
-            to: userEmail,
-            subject: "Appointment Cancellation",
-            text: `${userName}, we received your cancellation notice, and we want to let you know that we are sorry to hear of your decisions. If you would, please tell us why you have made this decision so our company can provide better service in the future.`,
-            temp: "cancel",
-            userName,
-            employeeName,
-            serviceName,
-            date: moment(date).format("LL"),
-            time,
-          });
+        transportMail({
+          from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
+          to: userEmail,
+          subject: "Appointment Cancellation",
+          text: `${userName}, we received your cancellation notice, and we want to let you know that we are sorry to hear of your decisions. If you would, please tell us why you have made this decision so our company can provide better service in the future.`,
+          temp: "cancel",
+          userName,
+          employeeName,
+          serviceName,
+          date: moment(date).format("LL"),
+          time,
+        });
 
-          return result;
-        }
+        return result;
       } catch (err) {
         throw err;
       }
