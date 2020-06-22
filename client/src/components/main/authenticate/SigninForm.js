@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { Form, Icon, Dimmer, Loader, Label, Input } from "semantic-ui-react";
 import { Content } from "../../styled/containers";
 import { DButton } from "../../styled/utils";
+import ResendVerify from "./ResendVerify";
 
 const SigninForm = ({ hist, from }) => {
   const [errors, setErrors] = useState({});
@@ -47,75 +48,88 @@ const SigninForm = ({ hist, from }) => {
 
   return (
     <Content width="100%" flex justify="center" margin="50px 0 80px 0">
-      <Form noValidate onSubmit={handleSubmit} style={{ width: "80%" }}>
-        <h2>Account Login</h2>
+      {errors.notVerify ? (
+        <ResendVerify email={values.email} />
+      ) : (
+        <Form noValidate onSubmit={handleSubmit} style={{ width: "80%" }}>
+          <h2>Account Login</h2>
 
-        <Form.Field
-          error={
-            errors.email || errors.emailX || errors.userX || errors.general
-              ? true
-              : false
-          }
-        >
-          <label>Email</label>
+          <Form.Field
+            error={
+              errors.email || errors.emailX || errors.userX || errors.general
+                ? true
+                : false
+            }
+          >
+            <label>Email</label>
 
-          {errors.email || errors.emailX || errors.userX || errors.general ? (
-            <Label basic color="red" style={{ border: "none" }}>
-              {errors.email || errors.emailX || errors.userX || errors.general}
-            </Label>
-          ) : (
-            ""
-          )}
-          <Input
-            name="email"
-            type="text"
-            placeholder="example@example.com"
-            values={values.email}
-            onChange={handleChange}
-          />
-        </Form.Field>
+            {errors.email || errors.emailX || errors.userX || errors.general ? (
+              <Label basic color="red" style={{ border: "none" }}>
+                {errors.email ||
+                  errors.emailX ||
+                  errors.userX ||
+                  errors.general}
+              </Label>
+            ) : (
+              ""
+            )}
+            <Input
+              name="email"
+              type="text"
+              placeholder="example@example.com"
+              values={values.email}
+              onChange={handleChange}
+            />
+          </Form.Field>
 
-        <Form.Field error={errors.password || errors.general ? true : false}>
-          <label>Password</label>
+          <Form.Field error={errors.password || errors.general ? true : false}>
+            <label>Password</label>
 
-          {errors.password || errors.general ? (
-            <Label basic color="red" style={{ border: "none" }}>
-              {errors.password || errors.general}
-            </Label>
-          ) : (
-            ""
-          )}
-          <Input
-            name="password"
-            type="password"
-            placeholder="********"
-            values={values.password}
-            onChange={handleChange}
-          />
-        </Form.Field>
-        <DButton type="submit" fluid="true" size="3rem" fSize="18px" text="uppercase">
-          {loading ? (
-            <Dimmer active style={{ background: "transparent" }}>
-              <Loader />
-            </Dimmer>
-          ) : (
-            "Login"
-          )}
-        </DButton>
-        <div
-          style={{
-            marginTop: "1rem",
-            textTransform: "uppercase",
-            fontSize: "12px",
-            fontWeight: "700",
-          }}
-        >
-          <Link to="/signup">
-            <Icon name="arrow left" />
-            Create your account
-          </Link>
-        </div>
-      </Form>
+            {errors.password || errors.general ? (
+              <Label basic color="red" style={{ border: "none" }}>
+                {errors.password || errors.general}
+              </Label>
+            ) : (
+              ""
+            )}
+            <Input
+              name="password"
+              type="password"
+              placeholder="********"
+              values={values.password}
+              onChange={handleChange}
+            />
+          </Form.Field>
+          <DButton
+            type="submit"
+            fluid="true"
+            size="3rem"
+            fSize="18px"
+            text="uppercase"
+          >
+            {loading ? (
+              <Dimmer active style={{ background: "transparent" }}>
+                <Loader />
+              </Dimmer>
+            ) : (
+              "Login"
+            )}
+          </DButton>
+          <div
+            style={{
+              marginTop: "1rem",
+              textTransform: "uppercase",
+              fontSize: "12px",
+              fontWeight: "700",
+            }}
+          >
+            <Link to="/signup">
+              <Icon name="arrow left" />
+              Create your account
+            </Link>
+          </div>
+        </Form>
+      )}
     </Content>
   );
 };

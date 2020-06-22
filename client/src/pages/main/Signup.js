@@ -8,17 +8,17 @@ import {
   DContainer,
 } from "../../components/styled/containers";
 import useWindowSize from "../../util/hooks/useWindowSize";
-const Signup = (props) => {
+const Signup = () => {
   const { width: wid } = useWindowSize();
-  const { from } = props.location.state || {
-    from: { pathname: "/" },
-  };
+  // const { from } = props.location.state || {
+  //   from: { pathname: "/account" },
+  // };
 
-  const hist = props.history;
+  // const hist = props.history;
 
   return (
     <DContainer>
-      <DSection width="100%" height="100%" flex center>
+      <DSection width="100%" height="100%" flex center id="reg">
         <DSection
           height="100%"
           flex
@@ -29,7 +29,7 @@ const Signup = (props) => {
           className="signin-right"
           minh="80vh"
         >
-          <SignupForm from={from} hist={hist} />
+          <SignupForm />
         </DSection>
         {wid > 768 && (
           <DSection

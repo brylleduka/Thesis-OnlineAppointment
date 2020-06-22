@@ -24,6 +24,8 @@ const FETCH_ALL_CATEGORIES_QUERY = gql`
         title
         firstName
         lastName
+        role
+        active
       }
     }
   }
@@ -55,6 +57,8 @@ const FETCH_CATEGORY_QUERY = gql`
         lastName
         email
         contact
+        role
+        active
       }
     }
   }

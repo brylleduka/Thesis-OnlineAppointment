@@ -69,12 +69,12 @@ const CurrentAppointment = () => {
           style={
             row.status === "PENDING"
               ? { fontSize: 12, fontWeight: 500, color: "gold" }
-              : row.status === "VERIFIED"
+              : row.status === "INPROGRESS"
               ? { fontSize: 12, fontWeight: 500, color: "green" }
               : { fontSize: 12, fontWeight: 500, color: "blue" }
           }
         >
-          {row.status}
+          {row.status === "INPROGRESS" ? "IN PROGRESS" : row.status}
         </span>
       ),
     },

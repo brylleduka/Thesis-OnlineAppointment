@@ -23,7 +23,7 @@ const Confirmation = ({
 }) => {
   const history = useHistory();
   const [errors, setErrors] = useState({});
-  const [addInfo, setAddInfo] = useState("");
+  // const [addInfo, setAddInfo] = useState("");
   const [service, setService] = useState({});
 
   const { data: data_service, loading: loading_service } = useQuery(
@@ -103,13 +103,13 @@ const Confirmation = ({
       employeeId: employeeVal !== null ? employeeVal : null,
       date: new Date(startDate).toLocaleDateString(),
       start: selectedTime,
-      message: addInfo,
+      message: "",
     },
   });
 
-  const handleMessage = (e) => {
-    setAddInfo(e.target.value);
-  };
+  // const handleMessage = (e) => {
+  //   setAddInfo(e.target.value);
+  // };
 
   const handleCreateAppointment = () => {
     createAppointment();

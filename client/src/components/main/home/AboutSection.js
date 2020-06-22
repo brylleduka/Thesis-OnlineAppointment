@@ -70,7 +70,7 @@ const AboutSection = ({ nextSection }) => {
   return (
     <Section2Styled
       ref={(el) => (section2 = el)}
-      alt={isAboutSection.alt === true ? true : false}
+      alt={isAboutSection.alt ? true : undefined}
     >
       <div className="sec2-container" ref={nextSection}>
         <div className="sec2-inner">

@@ -14,7 +14,9 @@ import Services from "./main/Services";
 import Service from "./main/Service";
 import ThankYou from "./main/ThankYou";
 import VerifyNotice from "./main/VerifyNotice";
-import Account from "./main/Account";
+import AccountCreated from "./main/account/AccountCreated";
+import AccountVerification from "./main/account/AccountVerification";
+import Account from "./main/account/Account";
 import Terms from "./main/Terms";
 import { UserAuthRoute } from "../util/AuthRoute";
 import { UserPrivateRoute } from "../util/PrivateRoute";
@@ -40,7 +42,18 @@ function Main({ match }) {
         <Route path={`/services&rates`} component={Services} exact />
         <Route path={`/service/:_id`} component={Service} exact />
         <Route path={`/verified/:emailToken`} component={ThankYou} exact />
+
         <Route path={`/terms&conditions`} component={Terms} exact />
+        <Route
+          path={`/account_created/:_id`}
+          component={AccountCreated}
+          exact
+        />
+        <Route
+          path={`/account_verification/:emailToken`}
+          component={AccountVerification}
+          exact
+        />
         <UserPrivateRoute
           path={`/verifynotice`}
           component={VerifyNotice}

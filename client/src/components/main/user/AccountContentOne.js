@@ -53,7 +53,7 @@ const AccountContentOne = ({ handleAppointments, handleDetails, userInfo }) => {
         ? uploadFileData.addUserPhoto.Location
         : userInfo
         ? userInfo.imageURL
-        : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png",
+        : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
     },
   ];
 
@@ -71,7 +71,7 @@ const AccountContentOne = ({ handleAppointments, handleDetails, userInfo }) => {
                     ? uploadFileData.addUserPhoto.Location
                     : userInfo.imageURL !== null
                     ? userInfo.imageURL
-                    : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png"
+                    : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
                 }
                 alt="Avatar"
                 onClick={openLightbox}

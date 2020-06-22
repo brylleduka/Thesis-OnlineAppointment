@@ -52,7 +52,12 @@ const TeamSection = ({ cards }) => {
         <DGrid three gap="25px">
           {employeesAR &&
             employeesAR.map((employee) => (
-              <Content margin="0 auto" width="90%" height="100%">
+              <Content
+                margin="0 auto"
+                width="90%"
+                height="100%"
+                key={employee._id}
+              >
                 <JCard4 data-emp={employee._id} key={employee._id}>
                   <div className="profile-image">
                     <img

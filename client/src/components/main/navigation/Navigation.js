@@ -62,7 +62,13 @@ const Navigation = ({ open, setOpen }) => {
           style={{ marginRight: "1.2rem" }}
         >
           <DImage circle height="100%" width="100%">
-            <img src={client.imageURL} alt={client.firstName} />
+            <img
+              src={
+                client.imageURL ||
+                "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+              }
+              alt={client.firstName}
+            />
           </DImage>
         </DCard>
       )}
@@ -91,7 +97,13 @@ const Navigation = ({ open, setOpen }) => {
                 style={{ marginRight: "1.2rem" }}
               >
                 <DImage circle height="100%" width="100%">
-                  <img src={client.imageURL} alt={client.firstName} />
+                  <img
+                    src={
+                      client.imageURL ||
+                      "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                    }
+                    alt={client.firstName}
+                  />
                 </DImage>
               </DCard>
             ) : (

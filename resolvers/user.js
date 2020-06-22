@@ -1,11 +1,12 @@
 require("dotenv").config({ path: "../env" });
 const { UserInputError } = require("apollo-server-express");
-const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const transportMail = require("../utils/transportMail");
+const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 const Auth = require("../utils/check-auth");
 // const { createWriteStream } = require("fs");
-const path = require("path");
+// const path = require("path");
 const {
   validateUserCreateInput,
   validateUserLoginInput,
@@ -48,11 +49,13 @@ module.exports = {
         );
 
         if (existingUser) {
+          console.log("existing user");
           errors.userTaken = "This email already taken.";
           throw new UserInputError("Error", { errors });
         }
 
         if (!valid) {
+          console.log(errors);
           throw new UserInputError("Input Error", { errors });
         }
 
@@ -63,10 +66,36 @@ module.exports = {
           lastName,
           email,
           password: hashedPassword,
+          active: false,
         });
 
         const result = await newUser.save();
-        return true;
+
+        const userName = `${newUser.firstName} ${newUser.lastName}`;
+
+        jwt.sign(
+          { _id: newUser._id },
+
+          process.env.EMAIL_KEY,
+          {
+            expiresIn: "1d",
+          },
+          (err, emailToken) => {
+            const url = `https://www.zessencefacialandspa.com/account_verification/${emailToken}`;
+
+            transportMail({
+              from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
+              to: email, // list of receivers
+              subject: "Account Verification",
+              text: `Hi, ${user.firstName} ${user.lastName}, In order to make an appointment we ask you to please verify your email by clicking the link ${url}`, // plain text body
+              temp: "accountverify",
+              url,
+              userName,
+            });
+          }
+        );
+
+        return result;
       } catch (err) {
         throw err;
       }
@@ -90,13 +119,19 @@ module.exports = {
           errors.general = "Email/Password not correct";
           throw new UserInputError("Error", { errors });
         }
+
+        if (!user.active) {
+          errors.notVerify = `Your account has not been verified`;
+          throw new UserInputError("Account not verified", { errors });
+        }
+
         //* Token
         const token = await jwt.sign(
           { userId: user.id, email: user.email, firstName: user.firstName },
 
           process.env.REFRESH_SECRET_KEY,
           {
-            expiresIn: "1d",
+            expiresIn: "12h",
           }
         );
 
@@ -168,39 +203,10 @@ module.exports = {
     addUserPhoto: async (_, { _id, file }) => {
       try {
         const { filename } = await file;
-        // await new Promise((res) =>
-        //   createReadStream().pipe(
-        //     createWriteStream(
-        //       path.join(__dirname, "../images/users", filename)
-        //     ).on("close", res)
-        //   )
-        // );
+
         const folder = "clients";
 
         const response = await handleFileUpload(file, folder);
-
-        // const { createReadStream, filename } = await file;
-
-        // const key = uuidv4();
-
-        // const response = await new Promise((resolve, reject) => {
-        //   s3.upload(
-        //     {
-        //       ...s3DefaultParams,
-        //       Body: createReadStream(),
-        //       Key: `clients/${key}-${filename}`,
-        //     },
-        //     (err, data) => {
-        //       if (err) {
-        //         console.log("error uploading...", err);
-        //         reject(err);
-        //       } else {
-        //         console.log("successfully uploaded file...", data);
-        //         resolve(data);
-        //       }
-        //     }
-        //   );
-        // });
 
         await User.updateOne(
           { _id },
@@ -211,6 +217,60 @@ module.exports = {
         console.log(response.Location);
 
         return response;
+      } catch (err) {
+        throw err;
+      }
+    },
+    accountVerification: async (_, { _id }) => {
+      try {
+        const result = await User.updateOne(
+          { _id },
+          { $set: { active: true } }
+        );
+
+        return true;
+      } catch (err) {
+        throw err;
+      }
+    },
+    resendVerifyEmail: async (_, { email }) => {
+      let errors = {};
+      const user = await User.findOne({ email });
+
+      try {
+        if (!user) {
+          errors.emailNotExist = "Email not Exist";
+          throw new UserInputError("Account not exist", { errors });
+        }
+
+        const userId = user._id;
+
+        jwt.sign(
+          { _id: userId },
+
+          process.env.EMAIL_KEY,
+          {
+            expiresIn: "12h",
+          },
+          (err, emailToken) => {
+            const url = `https://www.zessencefacialandspa.com/account_verification/${emailToken}`;
+
+            transportMail({
+              from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
+              to: email, // list of receivers
+              subject: "Account Verification",
+              text: `Hi, ${user.firstName} ${user.lastName}, In order to make an appointment we ask you to please verify your email by clicking the link ${url}`, // plain text body
+              temp: "accountverify",
+              url,
+              userName: `${user.firstName} ${user.lastName}`,
+            });
+
+            if (err) {
+              console.log(err);
+            }
+          }
+        );
+        return true;
       } catch (err) {
         throw err;
       }

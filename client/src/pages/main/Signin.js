@@ -19,7 +19,7 @@ const Signin = (props) => {
 
   return (
     <DContainer>
-      <DSection width="100%" height="100%" flex center>
+      <DSection width="100%" height="100%" flex center id="sign">
         {wid > 768 && (
           <DSection
             height="100%"

@@ -70,7 +70,7 @@ const CurrentAppointments = () => {
           style={
             row.status === "PENDING"
               ? { fontSize: 14, fontWeight: 500, color: "gold" }
-              : row.status === "VERIFIED"
+              : row.status === "INPROGRESS"
               ? { fontSize: 14, fontWeight: 500, color: "green" }
               : { fontSize: 14, fontWeight: 500, color: "blue" }
           }

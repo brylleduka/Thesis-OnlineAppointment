@@ -18,7 +18,7 @@ const ReschedConfirm = ({
   selectedTime,
   setIsResched,
   appointmentId,
-  setOpenResched,
+  setOpen,
   isAdmin,
   status,
 }) => {
@@ -62,19 +62,14 @@ const ReschedConfirm = ({
     onCompleted(data) {
       setIsReschedConfirm(false);
       setIsResched(false);
-      setOpenResched(false);
+      setOpen(false);
 
       if (data) {
         toaster.notify(
           ({ onClose }) => (
-            <Toasted status={"success"}>
-              <span className="description">
-                Please confirm your appointment booking to complete your
-                process. We send a confirmation link in your email. Thank You!
-              </span>
-              <span className="close" onClick={onClose}>
-                &times;
-              </span>
+            <Toasted confirm onClick={onClose}>
+              Please confirm your appointment booking to complete your process.
+              We send a confirmation link in your email. Thank You!
             </Toasted>
           ),
           { position: "bottom-right" }

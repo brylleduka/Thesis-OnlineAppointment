@@ -3,7 +3,6 @@ import { useQuery, useLazyQuery } from "@apollo/react-hooks";
 import {
   FETCH_ALL_CATEGORIES_QUERY,
   FETCH_SERVICES_QUERY,
-  FETCH_SINGLE_SERVICE_QUERY,
   FETCH_CATEGORY_QUERY,
 } from "../../../util/graphql/service";
 import { Form } from "semantic-ui-react";
@@ -196,11 +195,15 @@ const AppointmentInputs = ({
                   Select Aesthetician...
                 </option>
                 {employees &&
-                  employees.map((servEmp) => (
-                    <option key={servEmp._id} value={servEmp._id}>
-                      {servEmp.title} {servEmp.firstName} {servEmp.lastName}
-                    </option>
-                  ))}
+                  employees.map(
+                    (servEmp) =>
+                      servEmp.role === "AESTHETICIAN" &&
+                      servEmp.active && (
+                        <option key={servEmp._id} value={servEmp._id}>
+                          {servEmp.title} {servEmp.firstName} {servEmp.lastName}
+                        </option>
+                      )
+                  )}
               </select>
             )}
           </Form.Field>

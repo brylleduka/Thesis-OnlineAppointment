@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { useForm } from "../../../util/hooks/useForm";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Form, Icon, Dimmer, Loader, Label, Input } from "semantic-ui-react";
 import { Content } from "../../styled/containers";
 import { DButton } from "../../styled/utils";
@@ -10,8 +10,9 @@ import TermsConditionsModal from "./TermsConditionsModal";
 import toaster from "toasted-notes";
 import Toasted from "../../Toasted";
 
-const SignupForm = ({ hist, from }) => {
+const SignupForm = () => {
   const [errors, setErrors] = useState({});
+  const history = useHistory();
   const [isTermsChecked, setIsTermsChecked] = useState(false);
 
   const { handleChange, handleSubmit, values } = useForm(registerCallBack, {
@@ -23,13 +24,18 @@ const SignupForm = ({ hist, from }) => {
   });
 
   const [register, { loading }] = useMutation(REGISTER_USER, {
-    update() {
-      hist.push(from);
+    variables: {
+      ...values,
+    },
+    onCompleted(res) {
+      console.log(res);
+      history.push(`/account_created/${res._id}`);
     },
     onError(err) {
+      // if (err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
+      // }
     },
-    variables: values,
   });
 
   function registerCallBack() {
@@ -54,7 +60,7 @@ const SignupForm = ({ hist, from }) => {
         <h2>Create a free account</h2>
 
         <Form.Group widths="equal">
-          <Form.Field error={errors.firstName ? true : false}>
+          <Form.Field error={errors.firstName ? true : undefined}>
             <label>First Name</label>
             {errors.firstName && (
               <Label basic color="red" style={{ border: "none" }}>
@@ -229,7 +235,12 @@ const REGISTER_USER = gql`
         password: $password
         confirmPassword: $confirmPassword
       }
-    )
+    ) {
+      _id
+      firstName
+      lastName
+      email
+    }
   }
 `;
 

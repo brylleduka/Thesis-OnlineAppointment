@@ -78,7 +78,10 @@ const CategorySection = ({ setRef }) => {
         {categorySection && (
           <>
             {categorySection.title !== "" && (
-              <FancyText size="28px" alt={categorySection.dark ? true : false}>
+              <FancyText
+                size="28px"
+                alt={categorySection.dark ? true : undefined}
+              >
                 {categorySection.title}
               </FancyText>
             )}
@@ -96,9 +99,8 @@ const CategorySection = ({ setRef }) => {
           ) : (
             <Slider {...settings}>
               {isCategories.map((category) => (
-                <div style={{ margin: "0 auto" }}>
+                <div style={{ margin: "0 auto" }} key={category._id}>
                   <DCard
-                    key={category._id}
                     dw="300px"
                     dh="300px"
                     margin="0 auto"

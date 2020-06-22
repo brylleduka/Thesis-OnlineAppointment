@@ -56,6 +56,9 @@ const ThankYou = (props) => {
           You can view your appointment details by signing in and go to My
           Account Page
         </h4>
+        <h4>
+          We also sent you an email of your appointment details. Thank you
+        </h4>
         <Content
           width="80%"
           flex
@@ -64,10 +67,18 @@ const ThankYou = (props) => {
           margin="0 auto"
           direction={wid < 768 ? "column" : "row"}
         >
-          <DButton as={Link} to="/">
+          <DButton
+            as={Link}
+            to="/"
+            style={{ textDecoration: "none", color: "#fff" }}
+          >
             Explore
           </DButton>
-          <DButton as={Link} to={userId ? `/account/${userId}` : `/login`}>
+          <DButton
+            as={Link}
+            to={userId ? `/account/${userId}` : `/login`}
+            style={{ textDecoration: "none", color: "#fff" }}
+          >
             Go to my account
           </DButton>
         </Content>

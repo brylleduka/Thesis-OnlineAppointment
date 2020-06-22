@@ -13,8 +13,9 @@ import Spinner from "../../Spinner";
 import { QuestionMarkCircle } from "@styled-icons/evaicons-solid";
 
 const CurrentAppointModal = ({ appointId, open, setOpen }) => {
-  let verified;
-  let pending;
+  // let verified;
+  // let pending;
+  let inprogress;
   let done;
   let rescheduled;
   let cancelled;
@@ -32,8 +33,9 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
   );
 
   if (appointmentInfo) {
-    verified = appointmentInfo.appointment.status === "VERIFIED";
-    pending = appointmentInfo.appointment.status === "PENDING";
+    // verified = appointmentInfo.appointment.status === "VERIFIED";
+    // pending = appointmentInfo.appointment.status === "PENDING";
+    inprogress = appointmentInfo.appointment.status === "INPROGRESS";
     done = appointmentInfo.appointment.status === "DONE";
     rescheduled = appointmentInfo.appointment.status === "RESCHEDULED";
     cancelled = appointmentInfo.appointment.status === "CANCELLED";
@@ -268,10 +270,8 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
                               fontSize: "12px",
                               fontWeight: 700,
                             },
-                            verified
+                            inprogress
                               ? { color: "#0f9b0f" }
-                              : pending
-                              ? { color: "#fffc00" }
                               : done
                               ? { color: "#2980B9" }
                               : cancelled
@@ -281,7 +281,9 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
                               : "#2193b0")
                           }
                         >
-                          {appointmentInfo.appointment.status}
+                          {appointmentInfo.appointment.status === "INPROGRESS"
+                            ? "IN PROGRESS"
+                            : appointmentInfo.appointment.status}
                         </h5>
                       </Content>
                     </Content>
@@ -322,12 +324,13 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
                 </Content>
               </Modal.Content>
               <Modal.Actions>
-                {appointmentInfo.appointment.status === "PENDING" ||
-                appointmentInfo.appointment.status === "VERIFIED" ? (
+                {/* {appointmentInfo.appointment.status === "PENDING" ||
+                appointmentInfo.appointment.status === "VERIFIED" ? ( */}
+                {appointmentInfo.appointment.status === "INPROGRESS" ? (
                   <>
                     {appointmentInfo.appointment.reschedule.new !== true && (
                       <ReschedModal
-                        status={"PENDING"}
+                        status={"INPROGRESS"}
                         isAdmin={false}
                         setOpen={setOpen}
                         appointmentId={appointmentInfo.appointment._id}

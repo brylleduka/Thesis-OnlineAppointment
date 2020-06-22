@@ -34,8 +34,12 @@ module.exports = {
       }
     },
     currentAppointments: async () => {
+      // const getCurrentAppointments = await Appointment.find({
+      //   $or: [{ status: "VERIFIED" }, { status: "PENDING" }],
+      // }).sort({ createdAt: -1 });
+
       const getCurrentAppointments = await Appointment.find({
-        $or: [{ status: "VERIFIED" }, { status: "PENDING" }],
+        $or: [{ status: "INPROGRESS" }],
       }).sort({ createdAt: -1 });
 
       return getCurrentAppointments;
@@ -64,14 +68,20 @@ module.exports = {
     },
     checkedAppointments: async (_, { employeeId, date }) => {
       try {
+        // const checkAppointments = await Appointment.find({
+        //   employee: employeeId,
+        //   date: new Date(date).toLocaleDateString(),
+        //   $or: [
+        //     { status: "PENDING" },
+        //     { status: "VERIFIED" },
+        //     { status: "DONE" },
+        //   ],
+        // });
+
         const checkAppointments = await Appointment.find({
           employee: employeeId,
           date: new Date(date).toLocaleDateString(),
-          $or: [
-            { status: "PENDING" },
-            { status: "VERIFIED" },
-            { status: "DONE" },
-          ],
+          $or: [{ status: "INPROGRESS" }, { status: "DONE" }],
         });
 
         return checkAppointments;
@@ -96,9 +106,14 @@ module.exports = {
       try {
         const { userId: user } = Auth(context);
 
+        // const getCurrentAppointment = await Appointment.find({
+        //   user,
+        //   $or: [{ status: "PENDING" }, { status: "VERIFIED" }],
+        // }).sort({ createdAt: -1 });
+
         const getCurrentAppointment = await Appointment.find({
           user,
-          $or: [{ status: "PENDING" }, { status: "VERIFIED" }],
+          $or: [{ status: "INPROGRESS" }],
         }).sort({ createdAt: -1 });
 
         return getCurrentAppointment;
@@ -174,7 +189,8 @@ module.exports = {
           duration,
           slot_start,
           message,
-          status: "VERIFIED",
+          // status: "VERIFIED",
+          status: "INPROGRESS",
         });
 
         const result = await newAppointment.save();
@@ -203,9 +219,14 @@ module.exports = {
         const userInfo = await User.findOne({ _id: userId });
         const userEmail = userInfo.email;
 
+        // const checkAppointment = await Appointment.findOne({
+        //   user: userId,
+        //   $or: [{ status: "PENDING" }, { status: "VERIFIED" }],
+        // });
+
         const checkAppointment = await Appointment.findOne({
           user: userId,
-          $or: [{ status: "PENDING" }, { status: "VERIFIED" }],
+          $or: [{ status: "INPROGRESS" }],
         });
 
         const checkTime = await Appointment.findOne({
@@ -235,7 +256,8 @@ module.exports = {
           duration,
           slot_start,
           message,
-          status: "VERIFIED",
+          status: "INPROGRESS",
+          // status: "VERIFIED",
         });
 
         const result = await newAppointment.save();
@@ -270,7 +292,8 @@ module.exports = {
 
         const checkAppointment = await Appointment.findOne({
           user,
-          $or: [{ status: "PENDING" }, { status: "VERIFIED" }],
+          // $or: [{ status: "PENDING" }, { status: "VERIFIED" }],
+          $or: [{ status: "INPROGRESS" }],
         });
 
         const checkTime = await Appointment.findOne({
@@ -278,8 +301,9 @@ module.exports = {
           date: new Date(date).toLocaleDateString(),
           slot_start,
           $or: [
-            { status: "PENDING" },
-            { status: "VERIFIED" },
+            // { status: "PENDING" },
+            // { status: "VERIFIED" },
+            { status: "INPROGRESS" },
             { status: "DONE" },
           ],
         });
@@ -313,36 +337,51 @@ module.exports = {
           duration,
           slot_start,
           message,
-          status: "PENDING",
+          status: "INPROGRESS",
+          // status: "PENDING",
         });
 
         const result = await newAppointment.save();
 
-        jwt.sign(
-          { _id: newAppointment._id },
+        transportMail({
+          from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
+          to: userEmail, // list of receivers
+          subject: "Appointment Acknowledgement",
+          text: "Good Day", // plain text body
+          temp: "index",
+          // url,
+          userName,
+          serviceName,
+          employeeName,
+          date: moment(date).format("LL"),
+          time: slot_start,
+        });
 
-          process.env.EMAIL_KEY,
-          {
-            expiresIn: "1d",
-          },
-          (err, emailToken) => {
-            const url = `https://www.zessencefacialandspa.com/verified/${emailToken}`;
+        // jwt.sign(
+        //   { _id: newAppointment._id },
 
-            transportMail({
-              from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
-              to: userEmail, // list of receivers
-              subject: "Appointment Confirmation",
-              text: "Good Day", // plain text body
-              temp: "index",
-              url,
-              userName,
-              serviceName,
-              employeeName,
-              date: moment(date).format("LL"),
-              time: slot_start,
-            });
-          }
-        );
+        //   process.env.EMAIL_KEY,
+        //   {
+        //     expiresIn: "1d",
+        //   },
+        //   (err, emailToken) => {
+        //     const url = `https://www.zessencefacialandspa.com/verified/${emailToken}`;
+
+        //     transportMail({
+        //       from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
+        //       to: userEmail, // list of receivers
+        //       subject: "Appointment Confirmation",
+        //       text: "Good Day", // plain text body
+        //       temp: "index",
+        //       url,
+        //       userName,
+        //       serviceName,
+        //       employeeName,
+        //       date: moment(date).format("LL"),
+        //       time: slot_start,
+        //     });
+        //   }
+        // );
 
         return result;
       } catch (err) {
@@ -532,46 +571,60 @@ module.exports = {
         }
       );
 
-      if (!isAdmin) {
-        jwt.sign(
-          { _id: rescheduleAppointment._id },
+      transportMail({
+        from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
+        to: userEmail, // list of receivers
+        subject: "Appointment Rescheduling",
+        text: "Good Day", // plain text body
+        temp: "index",
+        // url,
+        userName,
+        serviceName,
+        employeeName,
+        date: moment(date).format("LL"),
+        time: slot_start,
+      });
 
-          process.env.EMAIL_KEY,
-          {
-            expiresIn: "1d",
-          },
-          (err, emailToken) => {
-            const url = `https://www.zessencefacialandspa.com/verified/${emailToken}`;
+      // if (!isAdmin) {
+      //   jwt.sign(
+      //     { _id: rescheduleAppointment._id },
 
-            transportMail({
-              from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
-              to: userEmail, // list of receivers
-              subject: "Appointment Confirmation",
-              text: "Good Day", // plain text body
-              temp: "index",
-              url,
-              userName,
-              serviceName,
-              employeeName,
-              date: moment(date).format("LL"),
-              time: slot_start,
-            });
-          }
-        );
-      } else {
-        transportMail({
-          from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
-          to: userEmail, // list of receivers
-          subject: "Appointment Rescheduling",
-          text: "Good Day", // plain text body
-          temp: "resched",
-          userName,
-          serviceName,
-          employeeName,
-          date: moment(date).format("LL"),
-          time: slot_start,
-        });
-      }
+      //     process.env.EMAIL_KEY,
+      //     {
+      //       expiresIn: "1d",
+      //     },
+      //     (err, emailToken) => {
+      //       const url = `https://www.zessencefacialandspa.com/verified/${emailToken}`;
+
+      //       transportMail({
+      //         from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
+      //         to: userEmail, // list of receivers
+      //         subject: "Appointment Confirmation",
+      //         text: "Good Day", // plain text body
+      //         temp: "index",
+      //         url,
+      //         userName,
+      //         serviceName,
+      //         employeeName,
+      //         date: moment(date).format("LL"),
+      //         time: slot_start,
+      //       });
+      //     }
+      //   );
+      // } else {
+      //   transportMail({
+      //     from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
+      //     to: userEmail, // list of receivers
+      //     subject: "Appointment Rescheduling",
+      //     text: "Good Day", // plain text body
+      //     temp: "resched",
+      //     userName,
+      //     serviceName,
+      //     employeeName,
+      //     date: moment(date).format("LL"),
+      //     time: slot_start,
+      //   });
+      // }
 
       return result;
     },
