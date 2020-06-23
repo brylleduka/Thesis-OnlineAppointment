@@ -434,6 +434,8 @@ const typeDefs = gql`
     register(userInput: UserInput): User
     accountVerification(_id: ID!): Boolean
     resendVerifyEmail(email: String): Boolean
+    forgotPassword(email: String): Boolean
+    resetPassword(_id: ID, password: String, confirmPassword: String): Boolean
     updateUser(
       _id: ID!
       firstName: String

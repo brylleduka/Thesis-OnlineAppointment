@@ -1,5 +1,5 @@
 import React from "react";
-import SigninForm from "../../components/main/authenticate/SigninForm";
+import SigninContent from "../../components/main/authenticate/SigninContent";
 import {
   Content,
   DSection,
@@ -11,11 +11,6 @@ import useWindowSize from "../../util/hooks/useWindowSize";
 
 const Signin = (props) => {
   const { width: wid } = useWindowSize();
-  const { from } = props.location.state || {
-    from: { pathname: "/" },
-  };
-
-  const hist = props.history;
 
   return (
     <DContainer>
@@ -76,7 +71,7 @@ const Signin = (props) => {
           mcenter
           minh="80vh"
         >
-          <SigninForm from={from} hist={hist} />
+          <SigninContent />
         </DSection>
       </DSection>
     </DContainer>

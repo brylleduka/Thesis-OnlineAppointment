@@ -3,14 +3,14 @@ import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { AuthContext } from "../../../context/auth";
 import { FETCH_MY_APPOINTMENTS } from "../../../util/graphql/appointment";
-
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Form, Icon, Dimmer, Loader, Label, Input } from "semantic-ui-react";
 import { Content } from "../../styled/containers";
 import { DButton } from "../../styled/utils";
 import ResendVerify from "./ResendVerify";
 
-const SigninForm = ({ hist, from }) => {
+const SigninForm = ({ handleIsRestPwdEmail }) => {
+  const history = useHistory();
   const [errors, setErrors] = useState({});
   const context = useContext(AuthContext);
   const [values, setValues] = useState({
@@ -28,7 +28,7 @@ const SigninForm = ({ hist, from }) => {
 
       values.email = "";
       values.password = "";
-      return hist.push(from);
+      return history.push("/");
     },
     refetchQueries: [{ query: FETCH_MY_APPOINTMENTS }],
     onCompleted() {
@@ -102,7 +102,7 @@ const SigninForm = ({ hist, from }) => {
           </Form.Field>
           <DButton
             type="submit"
-            fluid="true"
+            fluid
             size="3rem"
             fSize="18px"
             text="uppercase"
@@ -117,16 +117,23 @@ const SigninForm = ({ hist, from }) => {
           </DButton>
           <div
             style={{
+              display: "flex",
+              justifyContent: "space-around",
               marginTop: "1rem",
-              textTransform: "uppercase",
               fontSize: "12px",
               fontWeight: "700",
             }}
           >
             <Link to="/signup">
               <Icon name="arrow left" />
-              Create your account
+              Don't have an account? Sign Up
             </Link>
+            <span
+              style={{ cursor: "pointer", color: "#2193b0", fontSize: "12px" }}
+              onClick={handleIsRestPwdEmail}
+            >
+              Forgot Password?
+            </span>
           </div>
         </Form>
       )}

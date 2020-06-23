@@ -275,5 +275,74 @@ module.exports = {
         throw err;
       }
     },
+    forgotPassword: async (_, { email }) => {
+      const user = await User.findOne({ email });
+      try {
+        const { errors, valid } = validateUserLoginInput(email);
+
+        if (!user) {
+          errors.userX = "Email not found";
+          throw new UserInputError("Email does not exist", { errors });
+        }
+
+        if (!valid) {
+          throw new UserInputError("Input Error", { errors });
+        }
+
+        jwt.sign(
+          { _id: user._id },
+
+          process.env.EMAIL_KEY,
+          {
+            expiresIn: "12h",
+          },
+          (err, emailToken) => {
+            const url = `https://www.zessencefacialandspa.com/account_reset_password/${emailToken}`;
+
+            transportMail({
+              from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
+              to: email, // list of receivers
+              subject: "Password Reset",
+              text: `Hi, ${user.firstName} ${user.lastName}, In order to make an appointment we ask you to please verify your email by clicking the link ${url}`, // plain text body
+              temp: "passwordreset",
+              url,
+              userName: `${user.firstName} ${user.lastName}`,
+            });
+          }
+        );
+
+        return true;
+      } catch (err) {
+        throw err;
+      }
+    },
+    resetPassword: async (_, { _id, password, confirmPassword }) => {
+      try {
+        const user = await User.findById(_id);
+
+        if (!user) throw new Error("USER NOT EXIST");
+
+        const { valid, errors } = validateUserCreateInput(
+          password,
+          confirmPassword
+        );
+
+        if (!valid) {
+          console.log(errors);
+          throw new UserInputError("Input Error", { errors });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 12);
+
+        const updatePassword = await User.findOneAndUpdate(
+          { _id },
+          { $set: { password: hashedPassword } },
+          { new: true, upsert: true }
+        );
+        return true;
+      } catch (err) {
+        throw err;
+      }
+    },
   },
 };

@@ -10,35 +10,35 @@ const validateUserCreateInput = (
 ) => {
   const errors = {};
 
-  if (firstName.trim() === "") {
+  if (firstName && firstName.trim() === "") {
     errors.firstName = "First name must not be empty";
   }
 
-  if (lastName.trim() === "") {
+  if (lastName && lastName.trim() === "") {
     errors.lastName = "Last name must not be empty";
   }
 
-  if (email.trim() === "") {
+  if (email && email.trim() === "") {
     errors.email = "Email must not be empty";
   }
 
-  if (!email.match(regex)) {
+  if (email && !email.match(regex)) {
     errors.emailX = "Email must be a valid  email address";
   }
 
-  if (password === "") {
+  if (password && password === "") {
     errors.password = "Password must not be empty";
   }
 
-  if (confirmPassword === "") {
+  if (confirmPassword && confirmPassword === "") {
     errors.confirmPasswordEmpty = "Password must not be empty";
   }
 
-  if (password.length <= 6) {
+  if (password && password.length <= 6) {
     errors.pwdShort = "Password must be greater than six characters";
   }
 
-  if (password !== confirmPassword) {
+  if ((password && password) !== (confirmPassword && confirmPassword)) {
     errors.confirmPassword = "Passwords do not match";
   }
 
@@ -51,15 +51,15 @@ const validateUserCreateInput = (
 const validateUserLoginInput = (email, password) => {
   const errors = {};
 
-  if (email.trim() === "") {
+  if (email && email.trim() === "") {
     errors.email = "Email must not be empty";
   }
 
-  if (!email.match(regex)) {
+  if (email && !email.match(regex)) {
     errors.emailX = "Email must be a valid Address";
   }
 
-  if (password.trim() === "") {
+  if (password && password.trim() === "") {
     errors.password = "Password must not be empty";
   }
 

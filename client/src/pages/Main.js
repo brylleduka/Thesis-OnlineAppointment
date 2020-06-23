@@ -12,11 +12,12 @@ import Contact from "./main/Contact";
 import Testimonials from "./main/Testimonials";
 import Services from "./main/Services";
 import Service from "./main/Service";
-import ThankYou from "./main/ThankYou";
-import VerifyNotice from "./main/VerifyNotice";
+// import ThankYou from "./main/ThankYou";
+import AppointmentThankYou from "./main/AppointmentThankYou";
 import AccountCreated from "./main/account/AccountCreated";
 import AccountVerification from "./main/account/AccountVerification";
 import Account from "./main/account/Account";
+import AccountResetPwd from "./main/account/AccountResetPwd";
 import Terms from "./main/Terms";
 import { UserAuthRoute } from "../util/AuthRoute";
 import { UserPrivateRoute } from "../util/PrivateRoute";
@@ -41,7 +42,7 @@ function Main({ match }) {
         <Route path={`/testimonials`} component={Testimonials} exact />
         <Route path={`/services&rates`} component={Services} exact />
         <Route path={`/service/:_id`} component={Service} exact />
-        <Route path={`/verified/:emailToken`} component={ThankYou} exact />
+        {/* <Route path={`/verified/:emailToken`} component={ThankYou} exact /> */}
 
         <Route path={`/terms&conditions`} component={Terms} exact />
         <Route
@@ -54,9 +55,15 @@ function Main({ match }) {
           component={AccountVerification}
           exact
         />
+
+        <Route
+          path={`/account_reset_password/:emailToken`}
+          component={AccountResetPwd}
+          exact
+        />
         <UserPrivateRoute
-          path={`/verifynotice`}
-          component={VerifyNotice}
+          path={`/appointment_thankyou`}
+          component={AppointmentThankYou}
           exact
         />
         <UserAuthRoute path={`/signup`} component={Signup} exact />

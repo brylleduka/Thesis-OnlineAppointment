@@ -67,7 +67,7 @@ const Confirmation = ({
     },
     onCompleted(data) {
       setOpen(false);
-      history.push("/verifynotice");
+      history.push("/appointment_thankyou");
       if (data) {
         toaster.notify(
           ({ onClose }) => (
