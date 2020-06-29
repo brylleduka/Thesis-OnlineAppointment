@@ -4,7 +4,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { useForm } from "../../../util/hooks/useForm";
 import { DSection, DGrid, Content } from "../../styled/containers";
 import { DButton, DInput, DLabel } from "../../styled/utils";
-import { Form } from "semantic-ui-react";
+import { Form, Input } from "semantic-ui-react";
 import toaster from "toasted-notes";
 import Spinner from "../../Spinner";
 
@@ -49,11 +49,13 @@ const ContactInquiry = ({ address, phone, mobile }) => {
   return (
     <Content width="90%" height="100%" margin="0 auto" pad="20px">
       <DGrid two>
-        <Content width="70%" height="100%" margin="0 auto">
+        <Content width="70%" height="100%" margin="12px auto">
           <Form>
             <Form.Field>
               <label>Location</label>
-              <input
+              <Input
+                icon="point"
+                iconPosition="left"
                 value={address}
                 readOnly
                 style={{ border: "0", borderBottom: "1px solid  #ccc" }}
@@ -61,7 +63,9 @@ const ContactInquiry = ({ address, phone, mobile }) => {
             </Form.Field>
             <Form.Field>
               <label>Phone</label>
-              <input
+              <Input
+                icon="phone"
+                iconPosition="left"
                 value={phone}
                 readOnly
                 style={{ border: "0", borderBottom: "1px solid  #ccc" }}
@@ -69,10 +73,35 @@ const ContactInquiry = ({ address, phone, mobile }) => {
             </Form.Field>
             <Form.Field>
               <label>Mobile</label>
-              <input
+              <Input
+                icon="mobile alternate"
+                iconPosition="left"
                 value={mobile}
                 readOnly
                 style={{ border: "0", borderBottom: "1px solid  #ccc" }}
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Open Days</label>
+              <Input
+                icon="calendar alternate outline"
+                iconPosition="left"
+                value={"Monday - Sunday"}
+                readOnly
+                style={{ border: "0", borderBottom: "1px solid  #ccc" }}
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Open Hours</label>
+              <Input
+                icon="clock outline"
+                iconPosition="left"
+                value={"9:00 AM - 9:00 PM"}
+                readOnly
+                style={{
+                  border: "0",
+                  borderBottom: "1px solid  #ccc",
+                }}
               />
             </Form.Field>
           </Form>
