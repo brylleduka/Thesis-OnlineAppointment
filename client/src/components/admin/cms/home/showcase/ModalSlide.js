@@ -137,10 +137,8 @@ const ModalSlide = ({ open, setOpen, showcase }) => {
                 />
               </Form.Field>
               <Form.Field>
-                <label>Paragraph</label>
-                <TextArea
-                  maxLength="150"
-                  style={{ minHeight: 100 }}
+                <label>Content</label>
+                <input
                   name="paragraph"
                   value={values.paragraph || ""}
                   onChange={handleChange}
@@ -253,7 +251,9 @@ const ModalSlide = ({ open, setOpen, showcase }) => {
         <DButton type="submit" confirm onClick={handleSave}>
           {loading ? <Spinner small inverted /> : "Save"}
         </DButton>
-        <DButton alert>Cancel</DButton>
+        <DButton alert onClick={() => setOpen(false)}>
+          Close
+        </DButton>
       </Modal.Actions>
     </Modal>
   );

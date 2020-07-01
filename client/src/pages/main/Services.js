@@ -60,13 +60,27 @@ const Services = () => {
           style={{ minWidth: "90%", textAlign: "center" }}
           className="dark"
         >
-          <h1 style={{ fontSize: "48px" }}>Our Services</h1>
-          <h3>It's time to take care of your skin</h3>
-          <MouseScroll onClick={scrollDown} />
+          <h1
+            style={{
+              fontSize: "38px",
+              letterSpacing: "1rem",
+              textTransform: "uppercase",
+            }}
+          >
+            Our Services
+          </h1>
+          <p
+            style={{
+              fontSize: "18px",
+              textAlign: "center",
+              letterSpacing: "0.75rem",
+            }}
+          >
+            It's time to take care of your skin
+          </p>
+          <MouseScroll onClick={scrollDown} inverted />
         </Content>
-        <Overlay
-          bg={"linear-gradient(to top, rgba(0,0,0,0.3), rgba(255,255,255,0.1))"}
-        />
+        <Overlay bgc />
       </DSection>
       <DSection
         width="90%"

@@ -1,10 +1,13 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { useQuery } from "@apollo/react-hooks";
+import { FETCH_THE_SHOWCASE } from "../../util/graphql/cms";
 import {
   DContainer,
   DSection,
   Content,
   Overlay,
 } from "../../components/styled/containers";
+
 import ScrollButton from "../../components/main/utils/ScrollButton";
 import useScroll from "../../util/hooks/useScroll";
 import TestimonialCard from "../../components/main/testimonial/TestimonialCard";
@@ -14,6 +17,22 @@ import MouseScroll from "../../components/MouseScroll";
 const Testimonials = () => {
   const content = useRef();
   const scrolling = useScroll(500);
+  const [isShowcase, setIsShowcase] = useState([]);
+
+  const { data: dataShowcase, loading: loadShowcase } = useQuery(
+    FETCH_THE_SHOWCASE,
+    {
+      variables: {
+        sectionName: "SHOWCASE",
+      },
+    }
+  );
+
+  useEffect(() => {
+    if (dataShowcase) {
+      setIsShowcase(dataShowcase.showcaseCMS.content);
+    }
+  }, [dataShowcase]);
 
   const scrollDown = () => {
     scrollView(content);
@@ -23,7 +42,9 @@ const Testimonials = () => {
       {scrolling && <ScrollButton scrollPx="100" delay="16.66" />}
       <DSection
         background={
-          "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+          isShowcase[2] !== undefined
+            ? isShowcase[2].bgImgURL
+            : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
         }
         height="85vh"
         fixed
@@ -44,9 +65,9 @@ const Testimonials = () => {
             What Our Client Says
           </h1>
           {/* <h3>We continously improve our service</h3> */}
-          <MouseScroll onClick={scrollDown} />
+          <MouseScroll onClick={scrollDown} inverted />
         </Content>
-        <Overlay />
+        <Overlay bgc />
       </DSection>
       <TestimonialCard content={content} />
     </DContainer>

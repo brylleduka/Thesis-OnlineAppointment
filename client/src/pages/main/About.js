@@ -61,11 +61,28 @@ const About = () => {
             style={{ minWidth: "90%", textAlign: "center" }}
             className="dark"
           >
-            <h1 style={{ fontSize: "38px" }}>
+            <h1
+              style={{
+                fontSize: "38px",
+                letterSpacing: "1rem",
+                textTransform: "uppercase",
+              }}
+            >
               {about.title ? about.title : "ABOUT US"}
             </h1>
+
             {loadAbout && <Spinner medium inverted />}
-            {about.subtitle !== "" && <h3>{about.subtitles}</h3>}
+            {about.subtitle !== "" && (
+              <p
+                style={{
+                  fontSize: "18px",
+                  textAlign: "center",
+                  letterSpacing: "0.75rem",
+                }}
+              >
+                {about.subtitle}
+              </p>
+            )}
             <MouseScroll
               onClick={scrollDown}
               inverted={about.dark ? true : false}

@@ -18,7 +18,7 @@ import parser from "html-react-parser";
 import ReadMore from "../utils/ReadMore";
 import Slider from "react-slick";
 import useWindowSize from "../../../util/hooks/useWindowSize";
-import styled from "styled-components";
+
 
 const CategorySection = ({ setRef }) => {
   const { width: wid } = useWindowSize();
@@ -86,7 +86,7 @@ const CategorySection = ({ setRef }) => {
               </FancyText>
             )}
             {categorySection.subtitle !== "" && (
-              <h3>{categorySection.subtitle}</h3>
+              <p style={{ fontSize: "16px" }}>{categorySection.subtitle}</p>
             )}
           </>
         )}

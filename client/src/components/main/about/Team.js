@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_EMPLOYEES_NOT_ADMIN_QUERY } from "../../../util/graphql/employee";
-import { DGrid, DSection, Content } from "../../styled/containers";
+import { DGrid, DSection, Content, Overlay } from "../../styled/containers";
 import Spinner from "../../Spinner";
 import FancyText from "../../FancyText";
 import TeamDetails from "./TeamDetails";
@@ -39,9 +39,13 @@ const Team = () => {
           align="center"
           width="100%"
           height="40vh"
+          className="dark"
         >
-          <FancyText size="48px">Our TEAM</FancyText>
+          <FancyText size="48px" alt>
+            Our TEAM
+          </FancyText>
         </Content>
+        <Overlay bgc />
       </DSection>
       <DSection
         flex

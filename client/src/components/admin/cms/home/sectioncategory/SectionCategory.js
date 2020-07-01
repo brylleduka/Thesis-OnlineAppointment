@@ -16,8 +16,8 @@ const SectionCategory = () => {
     FETCH_HOME_SECTION,
     {
       variables: {
-        sectionName: "CATEGORY"
-      }
+        sectionName: "CATEGORY",
+      },
     }
   );
 
@@ -56,7 +56,7 @@ const SectionCategory = () => {
           align="center"
           direct="column"
           height="100%"
-          width="90%"
+          width="100%"
           margin="0 auto"
         >
           <Content
@@ -72,15 +72,8 @@ const SectionCategory = () => {
             <FancyText alt={sectCategory.dark ? true : false}>
               {sectCategory.title}
             </FancyText>
-            <h3>
-              {sectCategory.subtitle !== ""
-                ? sectCategory.subtitle
-                : "SUBTITLE"}
-            </h3>
-            <p>
-              {sectCategory.paragraph !== ""
-                ? sectCategory.paragraph
-                : "PARAGRAPH"}
+            <p style={{ fontSize: "16px" }}>
+              {sectCategory.subtitle !== "" ? sectCategory.subtitle : "Content"}
             </p>
           </Content>
           {!loadSectionCategory && (

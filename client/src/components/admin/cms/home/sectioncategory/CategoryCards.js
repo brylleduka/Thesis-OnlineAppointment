@@ -13,6 +13,7 @@ import ReadMore from "../../../../ReadMore";
 import Spinner from "../../../../Spinner";
 import parser from "html-react-parser";
 import Page404 from "../../../../../pages/Page404";
+import Slider from "react-slick";
 
 const CategoryCards = ({ gridCount }) => {
   const { width: wid } = useWindowSize();
@@ -30,68 +31,101 @@ const CategoryCards = ({ gridCount }) => {
   if (error) return Page404;
 
   return (
-    <Content height="auto" width="100%">
+    <Content height="auto" width="90%" margin="0 auto">
       {loading ? (
         <Content width="100%" margin="0 auto" height="80vh">
           <Spinner />
         </Content>
       ) : (
-        <DGrid
-          two={gridCount === 2 ? true : false}
-          three={gridCount === 3 ? true : false}
-          four={gridCount === 4 ? true : false}
-          gap="20px"
-        >
+        <Slider {...settings}>
           {isCategories.map((category) => (
-            <DCard
-              key={category._id}
-              dw={wid < 524 ? "70%" : "90%"}
-              dh="250px"
-              mcenter
-              p="0px"
-              grayzoom
-              overlaying
-            >
-              <DImage height="100%" width="100%" grayscaling>
-                <img
-                  src={
-                    category.imageURL !== null
-                      ? category.imageURL
-                      : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png"
-                  }
-                  alt={category.name}
-                />
-              </DImage>
-
-              <Overlay
-                bgc
-                width="100%"
-                height="100%"
-                flex
-                justify="center"
-                align="center"
-                initbox
+            <div style={{ margin: "0 auto" }} key={category._id}>
+              <DCard
+                dw="250px"
+                dh="250px"
+                margin="0 auto"
+                p="0px"
+                grayzoom
+                overlaying
               >
-                <div className="overlay-box">
-                  <div className="overlay-box__content dark">
-                    <h3 className="title">{category.name}</h3>
+                <DImage height="100%" width="100%" grayscaling>
+                  <img
+                    src={
+                      category.imageURL !== null
+                        ? category.imageURL
+                        : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png"
+                    }
+                    alt={category.name}
+                  />
+                </DImage>
 
-                    {category.description.length > 100
-                      ? parser(category.description.substr(0, 100) + "...")
-                      : parser(category.description.substr(0, 100))}
+                <Overlay
+                  bgc
+                  width="100%"
+                  height="100%"
+                  flex
+                  justify="center"
+                  align="center"
+                  initbox
+                >
+                  <div className="overlay-box">
+                    <div className="overlay-box__content dark">
+                      <h3 className="title">{category.name}</h3>
 
-                    <ReadMore center size="14px">
-                      Learn More
-                    </ReadMore>
+                      {category.description.length > 100
+                        ? parser(category.description.substr(0, 100) + "...")
+                        : parser(category.description.substr(0, 100))}
+                      <div
+                        style={{
+                          width: "100%",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          position: "absolute",
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          zIndex: 5,
+                        }}
+                      >
+                        <ReadMore center size="14px">
+                          View More
+                        </ReadMore>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </Overlay>
-            </DCard>
+                </Overlay>
+              </DCard>
+            </div>
           ))}
-        </DGrid>
+        </Slider>
       )}
     </Content>
   );
+};
+
+const settings = {
+  dots: false,
+  infinite: true,
+  speed: 500,
+  slidesToScroll: 3,
+  slidesToShow: 3,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToScroll: 1,
+        slidesToShow: 1,
+      },
+    },
+    {
+      breakpoint: 768,
+      settings: {
+        slidesToScroll: 1,
+        slidesToShow: 1,
+      },
+    },
+  ],
 };
 
 export default CategoryCards;

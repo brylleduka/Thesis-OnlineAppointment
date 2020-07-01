@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_CATEGORY_QUERY } from "../../util/graphql/service";
+import { FETCH_THE_SHOWCASE } from "../../util/graphql/cms";
 import {
   DContainer,
   DSection,
   DGrid,
   Content,
   Overlay,
-  DCard,
 } from "../../components/styled/containers";
 import { DButton } from "../../components/styled/utils";
 import { JCard2 } from "../../components/styled/card";
@@ -24,6 +24,7 @@ const Service = (props) => {
   const [isReadMore, setIsReadMore] = useState(false);
 
   const [isServices, setIsServices] = useState([]);
+  const [isShowcase, setIsShowcase] = useState([]);
 
   const { data, loading } = useQuery(FETCH_CATEGORY_QUERY, {
     variables: {
@@ -31,11 +32,24 @@ const Service = (props) => {
     },
   });
 
+  const { data: dataShowcase, loading: loadShowcase } = useQuery(
+    FETCH_THE_SHOWCASE,
+    {
+      variables: {
+        sectionName: "SHOWCASE",
+      },
+    }
+  );
+
   useEffect(() => {
     if (data) {
       setIsServices(data.category.services);
     }
-  }, [data]);
+
+    if (dataShowcase) {
+      setIsShowcase(dataShowcase.showcaseCMS.content);
+    }
+  }, [data, dataShowcase]);
 
   const backHist = () => {
     history.goBack();
@@ -44,9 +58,7 @@ const Service = (props) => {
   return (
     <DContainer>
       <DSection
-        background={
-          "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-        }
+        background={isShowcase[0] !== undefined && isShowcase[0].bgImgURL}
         height="50vh"
         fixed
         id={"serv"}
@@ -65,14 +77,16 @@ const Service = (props) => {
             <Spinner inverted />
           ) : (
             <>
-              <h1 style={{ fontSize: "22px" }}>{data.category.name}</h1>
-              <p style={{ width: "50%", margin: "0 auto" }}>
+              <h1 style={{ fontSize: "32px" }}>{data.category.name}</h1>
+              <p
+                style={{ width: "50%", margin: "0 auto", textAlign: "center" }}
+              >
                 {parser(data.category.description)}
               </p>
             </>
           )}
         </Content>
-        <Overlay />
+        <Overlay bgc />
       </DSection>
       <Content flex width="90%" height="50px" margin="20px auto">
         <DButton onClick={backHist}>

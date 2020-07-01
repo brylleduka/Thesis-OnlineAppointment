@@ -15,13 +15,13 @@ const colors = [
   "#fe8c00",
   "#E9E4F0",
   "#203A43",
-  "#FFFFFF"
+  "#FFFFFF",
 ];
 
 const UpdateSectCategory = ({
   setOpenCatSec,
   openCatSec,
-  categorySectionInfo
+  categorySectionInfo,
 }) => {
   const [isColor, setIsColor] = useState(
     categorySectionInfo && categorySectionInfo.bgColor
@@ -38,7 +38,7 @@ const UpdateSectCategory = ({
   const [values, setValues] = useState({
     title: categorySectionInfo && categorySectionInfo.title,
     subtitle: categorySectionInfo && categorySectionInfo.subtitle,
-    paragraph: categorySectionInfo && categorySectionInfo.paragraph
+    paragraph: categorySectionInfo && categorySectionInfo.paragraph,
   });
 
   const [updateSectionCategory, { loading }] = useMutation(
@@ -49,23 +49,23 @@ const UpdateSectCategory = ({
         ...values,
         grid: gridCount,
         dark: isDark,
-        bgColor: isColor
+        bgColor: isColor,
       },
       refetchQueries: [
-        { query: FETCH_HOME_SECTION, variables: { sectionName: "CATEGORY" } }
+        { query: FETCH_HOME_SECTION, variables: { sectionName: "CATEGORY" } },
       ],
       onCompleted() {
         setOpenCatSec(false);
         toaster.notify("Update Category Section");
-      }
+      },
     }
   );
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const handleChangeComplete = color => {
+  const handleChangeComplete = (color) => {
     setIsColor(color.hex);
   };
 
@@ -73,9 +73,9 @@ const UpdateSectCategory = ({
     setIsDark(!isDark);
   };
 
-  const handleGrid = event => {
-    setGridCount(parseInt(event.target.value));
-  };
+  // const handleGrid = event => {
+  //   setGridCount(parseInt(event.target.value));
+  // };
 
   const handleSave = () => {
     updateSectionCategory();
@@ -100,14 +100,14 @@ const UpdateSectCategory = ({
             />
           </Form.Field>
           <Form.Field>
-            <label>Subtitle</label>
+            <label>Content</label>
             <input
               name="subtitle"
               value={values.subtitle || ""}
               onChange={handleChange}
             />
           </Form.Field>
-          <Form.Field>
+          {/* <Form.Field>
             <label>Paragraph</label>
             <TextArea
               maxLength="150"
@@ -116,7 +116,7 @@ const UpdateSectCategory = ({
               value={values.paragraph || ""}
               onChange={handleChange}
             />
-          </Form.Field>
+          </Form.Field> */}
           <Form.Field>
             <label>
               Background-color{" "}
@@ -163,7 +163,7 @@ const UpdateSectCategory = ({
               </div>
             </Content>
           </Form.Field>
-          <Form.Field>
+          {/* <Form.Field>
             <label>Grid Count Display</label>
             <Content
               flex
@@ -210,7 +210,7 @@ const UpdateSectCategory = ({
                 </div>
               </div>
             </Content>
-          </Form.Field>
+          </Form.Field> */}
         </Form>
       </Modal.Content>
       <Modal.Actions>

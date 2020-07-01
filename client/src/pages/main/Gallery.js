@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_GALLERIES } from "../../util/graphql/gallery";
+import { FETCH_THE_SHOWCASE } from "../../util/graphql/cms";
 import MyGallery from "react-photo-gallery";
 import Carousel, { Modal, ModalGateway } from "react-images";
 import {
@@ -26,6 +27,7 @@ const Gallery = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
   const [galleries, setGalleries] = useState([]);
+  const [isShowcase, setIsShowcase] = useState([]);
 
   const {
     data: dataGalleries,
@@ -33,11 +35,24 @@ const Gallery = () => {
     error,
   } = useQuery(FETCH_GALLERIES, { variables: { active: true } });
 
+  const { data: dataShowcase, loading: loadShowcase } = useQuery(
+    FETCH_THE_SHOWCASE,
+    {
+      variables: {
+        sectionName: "SHOWCASE",
+      },
+    }
+  );
+
   useEffect(() => {
     if (dataGalleries) {
       setGalleries(dataGalleries.galleries);
     }
-  }, [dataGalleries]);
+
+    if (dataShowcase) {
+      setIsShowcase(dataShowcase.showcaseCMS.content);
+    }
+  }, [dataGalleries, dataShowcase]);
 
   const imageRenderer = useCallback(
     ({ index, left, top, photo }) => (
@@ -71,7 +86,9 @@ const Gallery = () => {
       {scrolling && <ScrollButton scrollPx="100" delay="16.66" />}
       <DSection
         background={
-          "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+          isShowcase[1] !== undefined
+            ? isShowcase[1].bgImgURL
+            : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
         }
         height="85vh"
         fixed
@@ -88,11 +105,27 @@ const Gallery = () => {
           style={{ minWidth: "90%", textAlign: "center" }}
           className="dark"
         >
-          <h1 style={{ fontSize: "38px" }}>Gallery</h1>
-          <h3>Love Your Skin</h3>
-          <MouseScroll onClick={scrollDown} />
+          <h1
+            style={{
+              fontSize: "38px",
+              letterSpacing: "1rem",
+              textTransform: "uppercase",
+            }}
+          >
+            Gallery
+          </h1>
+          <p
+            style={{
+              fontSize: "18px",
+              textAlign: "center",
+              letterSpacing: "0.75rem",
+            }}
+          >
+            Be your own kind of Beautiful
+          </p>
+          <MouseScroll onClick={scrollDown} inverted />
         </Content>
-        <Overlay />
+        <Overlay bgc />
       </DSection>
       {loadGalleries ? (
         <Content
