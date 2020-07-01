@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_ALL_CATEGORIES_QUERY } from "../../util/graphql/service";
+import { FETCH_THE_SHOWCASE } from "../../util/graphql/cms";
 import {
   DContainer,
   DSection,
@@ -25,15 +26,30 @@ const Services = () => {
   const scrolling = useScroll(500);
   const { width: wid } = useWindowSize();
   const [isCategories, setIsCategories] = useState([]);
+  const [isShowcase, setIsShowcase] = useState([]);
+
   const { data, loading } = useQuery(FETCH_ALL_CATEGORIES_QUERY, {
     variables: { active: true },
   });
+
+  const { data: dataShowcase, loading: loadShowcase } = useQuery(
+    FETCH_THE_SHOWCASE,
+    {
+      variables: {
+        sectionName: "SHOWCASE",
+      },
+    }
+  );
 
   useEffect(() => {
     if (data) {
       setIsCategories(data.categories);
     }
-  }, [data]);
+
+    if (dataShowcase) {
+      setIsShowcase(dataShowcase.showcaseCMS.content);
+    }
+  }, [data, dataShowcase]);
 
   const scrollDown = () => {
     scrollView(sectionDown);
@@ -44,6 +60,7 @@ const Services = () => {
       {scrolling && <ScrollButton scrollPx="100" delay="16.66" />}
       <DSection
         background={
+          isShowcase[0] !== undefined ? isShowcase[0].bgImgURL :
           "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
         }
         height="85vh"

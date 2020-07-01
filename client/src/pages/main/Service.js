@@ -58,7 +58,11 @@ const Service = (props) => {
   return (
     <DContainer>
       <DSection
-        background={isShowcase[0] !== undefined && isShowcase[0].bgImgURL}
+        background={
+          isShowcase[0] !== undefined
+            ? isShowcase[0].bgImgURL
+            : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+        }
         height="50vh"
         fixed
         id={"serv"}
