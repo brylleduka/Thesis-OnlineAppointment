@@ -431,7 +431,7 @@ const typeDefs = gql`
     ): Appointment
 
     #USERS
-    register(userInput: UserInput): User
+    register(userInput: UserInput): Boolean
     accountVerification(_id: ID!): Boolean
     resendVerifyEmail(email: String): Boolean
     forgotPassword(email: String): Boolean

@@ -116,7 +116,12 @@ const Confirmation = ({
   };
 
   return (
-    <Modal size="tiny" open={open} onClose={() => setOpen(false)}>
+    <Modal
+      size="tiny"
+      open={open}
+      onClose={() => setOpen(false)}
+      closeOnDimmerClick={false}
+    >
       <Modal.Header>Appointment Confirmation</Modal.Header>
       <Modal.Content>
         <Form>

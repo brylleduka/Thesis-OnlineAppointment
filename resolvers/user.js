@@ -74,11 +74,11 @@ module.exports = {
         const userName = `${newUser.firstName} ${newUser.lastName}`;
 
         jwt.sign(
-          { _id: newUser._id },
+          { _id: userId },
 
           process.env.EMAIL_KEY,
           {
-            expiresIn: "1d",
+            expiresIn: "12h",
           },
           (err, emailToken) => {
             const url = `https://www.zessencefacialandspa.com/account_verification/${emailToken}`;
@@ -90,12 +90,16 @@ module.exports = {
               text: `Hi, ${user.firstName} ${user.lastName}, In order to make an appointment we ask you to please verify your email by clicking the link ${url}`, // plain text body
               temp: "accountverify",
               url,
-              userName,
+              userName: `${user.firstName} ${user.lastName}`,
             });
+
+            if (err) {
+              console.log(err);
+            }
           }
         );
 
-        return result;
+        return true;
       } catch (err) {
         throw err;
       }
