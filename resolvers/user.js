@@ -87,10 +87,10 @@ module.exports = {
               from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
               to: email, // list of receivers
               subject: "Account Verification",
-              text: `Hi, ${user.firstName} ${user.lastName}, In order to make an appointment we ask you to please verify your email by clicking the link ${url}`, // plain text body
+              text: `Hi, ${userName}, In order to make an appointment we ask you to please verify your email by clicking the link ${url}`, // plain text body
               temp: "accountverify",
               url,
-              userName: `${user.firstName} ${user.lastName}`,
+              userName,
             });
 
             if (err) {
