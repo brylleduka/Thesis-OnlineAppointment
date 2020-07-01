@@ -95,7 +95,7 @@ module.exports = {
           }
         );
 
-        return true;
+        return result;
       } catch (err) {
         throw err;
       }
