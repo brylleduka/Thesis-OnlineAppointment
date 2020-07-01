@@ -74,7 +74,7 @@ module.exports = {
         const userName = `${newUser.firstName} ${newUser.lastName}`;
 
         jwt.sign(
-          { _id: userId },
+          { _id: newUser._id },
 
           process.env.EMAIL_KEY,
           {
