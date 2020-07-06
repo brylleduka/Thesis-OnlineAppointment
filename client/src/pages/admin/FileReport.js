@@ -6,7 +6,6 @@ import { DSection, DGrid, Content } from "../../components/styled/containers";
 import { Breadcrumb, Divider } from "semantic-ui-react";
 import Layout from "../../components/admin/layout/Layout";
 import HistoryAppointments from "../../components/admin/appointment/HistoryAppointments";
-import NewModal from "../../components/admin/appointment/NewModal";
 import { NoPrint } from "react-easy-print";
 import Page404 from "../Page404";
 

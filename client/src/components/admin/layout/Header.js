@@ -44,6 +44,7 @@ const Header = ({ handleOpenMenu }) => {
         <Spinner small />
       ) : (
         <Dropdown
+          simple
           trigger={
             <DCard dw="50px" dh="50px" mcenter circle p="0px" grayzoom>
               <DImage circle height="100%" width="100%">

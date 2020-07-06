@@ -10,9 +10,11 @@ import { AdminAuthRoute } from "../util/AuthRoute";
 import { PrivateRoute } from "../util/PrivateRoute";
 
 import Dashboard from "./admin/Dashboard";
-import Appointments from "./admin/Appointments";
-import AppointmentDetails from "./admin/AppointmentDetails";
-import NewAppointment from "./admin/NewAppointment";
+import Appointments from "./admin/appointment/Appointments";
+import AppointmentDetails from "./admin/appointment/AppointmentDetails";
+import WalkinAppointments from "./admin/appointment/WalkinAppointments";
+import WalkinAppointmentInfo from "./admin/appointment/WalkinAppointmentInfo";
+
 import Employees from "./admin/Employees";
 
 import Employee from "./admin/Employee";
@@ -56,6 +58,16 @@ const Admin = () => {
           />
           <PrivateRoute
             exact
+            path="/zeadmin/walkin_appointments"
+            component={WalkinAppointments}
+          />
+          <PrivateRoute
+            exact
+            path="/zeadmin/walkin_appointment/:_id"
+            component={WalkinAppointmentInfo}
+          />
+          <PrivateRoute
+            exact
             path="/zeadmin/paccount/:_id"
             component={PersonalAccount}
           />
@@ -66,11 +78,6 @@ const Admin = () => {
             component={UserInfo}
           />
           <PrivateRoute exact path="/zeadmin/inquiry" component={Inquiry} />
-          <PrivateRoute
-            exact
-            path="/zeadmin/new_appointment"
-            component={NewAppointment}
-          />
 
           <PrivateRoute exact path="/zeadmin/employees" component={Employees} />
 

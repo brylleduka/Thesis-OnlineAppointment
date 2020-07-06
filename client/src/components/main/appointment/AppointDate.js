@@ -69,7 +69,7 @@ const AppointDate = ({
     {
       variables: {
         employeeId: employeeVal,
-        date: new Date(startDate).toLocaleDateString(),
+        date: moment(startDate).format("L"),
       },
     }
   );

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { FETCH_CURRENT_APPOINTMENTS } from "../../../util/graphql/appointment";
+import { FETCH_CURRENT_WALKIN_APPOINTMENTS } from "../../../util/graphql/walkinappointment";
 import { useQuery } from "@apollo/react-hooks";
 import { Link } from "react-router-dom";
 import DataTable from "react-data-table-component";
@@ -11,17 +11,20 @@ import Spinner from "../../Spinner";
 import moment from "moment";
 
 const CurrentAppointments = () => {
-  const [isCurrentAppoint, setIsCurrentAppoint] = useState([]);
+  const [isCurrentWalkinAppoint, setIsCurrentWalkinAppoint] = useState([]);
 
-  const { loading, data: currentAppointmentData } = useQuery(
-    FETCH_CURRENT_APPOINTMENTS
-  );
+  const {
+    loading: loadCurrentWalkAppoint,
+    data: currentWalkAppointmentData,
+  } = useQuery(FETCH_CURRENT_WALKIN_APPOINTMENTS);
 
   useEffect(() => {
-    if (currentAppointmentData) {
-      setIsCurrentAppoint(currentAppointmentData.currentAppointments);
+    if (currentWalkAppointmentData) {
+      setIsCurrentWalkinAppoint(
+        currentWalkAppointmentData.currentWalkinAppointments
+      );
     }
-  }, [currentAppointmentData]);
+  }, [currentWalkAppointmentData]);
 
   const columns = [
     {
@@ -37,6 +40,14 @@ const CurrentAppointments = () => {
       selector: "_id",
       wrap: true,
       cell: (row) => row._id.slice(-10),
+    },
+    {
+      name: "Client",
+      selector: "walkinClient.lastName",
+      wrap: true,
+      sortable: true,
+      format: (row) =>
+        `${row.walkinClient.firstName} ${row.walkinClient.lastName}`,
     },
     {
       name: "Aesthetician",
@@ -83,7 +94,7 @@ const CurrentAppointments = () => {
       name: "Actions",
 
       cell: (row) => (
-        <DButton as={Link} to={`/zeadmin/appointment/${row._id}`} flex>
+        <DButton as={Link} to={`/zeadmin/walkin_appointment/${row._id}`} flex>
           <Eye size="22px" />
         </DButton>
       ),
@@ -101,7 +112,7 @@ const CurrentAppointments = () => {
     >
       <DataTable
         columns={columns}
-        data={isCurrentAppoint}
+        data={isCurrentWalkinAppoint}
         responsive
         customStyles={customStyles}
         pagination={true}
@@ -109,7 +120,7 @@ const CurrentAppointments = () => {
         paginationRowsPerPageOptions={paginationRowsPerPageOptions}
         highlightOnHover
         pointerOnHover
-        progressPending={loading}
+        progressPending={loadCurrentWalkAppoint}
         progressComponent={
           <Spinner content="Please wait while we fetch our data..." />
         }

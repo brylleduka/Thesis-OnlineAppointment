@@ -67,7 +67,7 @@ const Confirmation = ({
     },
     onCompleted(data) {
       setOpen(false);
-      history.push("/appointment_thankyou");
+      history.push("/appointment_created");
       if (data) {
         toaster.notify(
           ({ onClose }) => (
@@ -101,7 +101,8 @@ const Confirmation = ({
     variables: {
       serviceId: serviceValue !== null ? serviceValue : null,
       employeeId: employeeVal !== null ? employeeVal : null,
-      date: new Date(startDate).toLocaleDateString(),
+      // date: new Date(startDate).toLocaleDateString(),
+      date: moment(startDate).format("L"),
       start: selectedTime,
       message: "",
     },
@@ -120,6 +121,7 @@ const Confirmation = ({
       size="tiny"
       open={open}
       onClose={() => setOpen(false)}
+      closeOnEscape={false}
       closeOnDimmerClick={false}
     >
       <Modal.Header>Appointment Confirmation</Modal.Header>

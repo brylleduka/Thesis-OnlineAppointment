@@ -16,13 +16,6 @@ const AppointmentCard = ({ history }) => {
   const { data: dataIsAppointments, loading: loadingIsAppointments } = useQuery(
     FETCH_APPOINTMENTS_QUERY
   );
-  useEffect(() => {
-    if (dataIsAppointments) {
-      setIsAppointments(dataIsAppointments.appointments);
-    }
-  }, [dataIsAppointments]);
-
-  console.log(isAppointments);
 
   const { data: dataIsDone, loading: loadingIsDone } = useQuery(
     FETCH_APPOINTMENT_STATUS,
@@ -32,11 +25,6 @@ const AppointmentCard = ({ history }) => {
       },
     }
   );
-  useEffect(() => {
-    if (dataIsDone) {
-      setIsDone(dataIsDone.appointmentsByStatus);
-    }
-  }, [dataIsDone]);
 
   const { data: dataIsCancelled, loading: loadingIsCancelled } = useQuery(
     FETCH_APPOINTMENT_STATUS,
@@ -46,11 +34,18 @@ const AppointmentCard = ({ history }) => {
       },
     }
   );
+
   useEffect(() => {
+    if (dataIsAppointments) {
+      setIsAppointments(dataIsAppointments.appointments);
+    }
+    if (dataIsDone) {
+      setIsDone(dataIsDone.appointmentsByStatus);
+    }
     if (dataIsCancelled) {
       setIsCancelled(dataIsCancelled.appointmentsByStatus);
     }
-  }, [dataIsCancelled]);
+  }, [dataIsAppointments, dataIsDone, dataIsCancelled]);
 
   return (
     <DCard
@@ -95,7 +90,7 @@ const AppointmentCard = ({ history }) => {
             {loadingIsAppointments ? (
               <Spinner small />
             ) : (
-              isAppointments && <h1>{isAppointments.length}</h1>
+              <h1>{isAppointments.length}</h1>
             )}
           </Content>
         </Content>

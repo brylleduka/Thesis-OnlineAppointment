@@ -34,6 +34,8 @@ const FETCH_APPOINTMENTS_QUERY = gql`
       slot_start
       date
       status
+      # online
+      # appointType
       message
       note
     }

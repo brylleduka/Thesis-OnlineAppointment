@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 // import { AuthContext } from "../../context/auth";
 
-import AppointDate from "../../components/main/appointment/AppointDate";
-import AppointmentInputs from "../../components/main/appointment/AppointmentInputs";
+import AppointDate from "../../../components/main/appointment/AppointDate";
+import AppointmentInputs from "../../../components/main/appointment/AppointmentInputs";
 import {
   DSection,
   Content,
   DGrid,
   Overlay,
   DContainer,
-} from "../../components/styled/containers";
-import { DButton } from "../../components/styled/utils";
-import Confirmation from "../../components/main/appointment/Confirmation";
-import useWindowSize from "../../util/hooks/useWindowSize";
+} from "../../../components/styled/containers";
+import { DButton } from "../../../components/styled/utils";
+import Confirmation from "../../../components/main/appointment/Confirmation";
+import useWindowSize from "../../../util/hooks/useWindowSize";
 
 const Appointment = () => {
   const { width: wid } = useWindowSize();

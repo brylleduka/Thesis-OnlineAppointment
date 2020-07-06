@@ -19,7 +19,6 @@ import ReadMore from "../utils/ReadMore";
 import Slider from "react-slick";
 import useWindowSize from "../../../util/hooks/useWindowSize";
 
-
 const CategorySection = ({ setRef }) => {
   const { width: wid } = useWindowSize();
 

@@ -35,7 +35,7 @@ const AccountCreated = (props) => {
         rounded
       >
         <h1>Hi!</h1>
-        <h3>We send you an email verification.</h3>
+        <h3>We sent you an email verification.</h3>
         <h3>
           Please verify your account in order to make an appointment. Thank you!
         </h3>

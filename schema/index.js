@@ -21,6 +21,18 @@ const typeDefs = gql`
     createdAt: String
     updatedAt: String
   }
+  type WalkinClient {
+    _id: ID
+    pseudoId: String
+    firstName: String
+    lastName: String
+    contact: String
+    email: String
+    dateOfBirth: String
+    address: String
+    createdAt: String
+    updatedAt: String
+  }
   type Appointment {
     _id: ID
     user: User
@@ -34,6 +46,21 @@ const typeDefs = gql`
     message: String
     note: String
     reschedule: Reschedule
+    createdAt: String
+    updatedAt: String
+  }
+
+  type WalkinAppointment {
+    _id: ID
+    walkinClient: WalkinClient
+    employee: Employee
+    service: Service
+    slot_start: String
+    slot_end: String
+    duration: Int
+    date: String
+    status: String
+    note: String
     createdAt: String
     updatedAt: String
   }
@@ -345,6 +372,7 @@ const typeDefs = gql`
   type Query {
     user(_id: ID!): User
     getUsers: [User]
+    # APPOINTMENT
     appointment(_id: ID!): Appointment
     appointments: [Appointment]
     appointmentsByStatus(status: String!): [Appointment]
@@ -354,6 +382,18 @@ const typeDefs = gql`
     myAppointments: [Appointment]
     myCurrentAppointment: [Appointment]
     myAppointmentHistory: [Appointment]
+
+    # WALKIN APPOINTMENT
+    walkinAppointment(_id: ID!): WalkinAppointment
+    walkinAppointments: [WalkinAppointment]
+    walkinAppointmentsByStatus(status: String!): [WalkinAppointment]
+    checkedWalkinAppointments(
+      employeeId: ID!
+      date: String!
+    ): [WalkinAppointment]
+    currentWalkinAppointments: [WalkinAppointment]
+    walkinAppointmentHistory: [WalkinAppointment]
+
     # EMPLOYEE
     employee(_id: ID!): Employee
     employeeService(serviceId: ID): Employee
@@ -400,23 +440,23 @@ const typeDefs = gql`
 
     # APPOINTMENTS
     createAppointment(appointmentInput: AppointmentInput): Appointment
-    updateAppointment(
-      serviceId: ID
-      employeeId: ID
-      date: String
-      slot_time: String
-    ): Appointment
+    # updateAppointment(
+    #   serviceId: ID
+    #   employeeId: ID
+    #   date: String
+    #   slot_time: String
+    # ): Appointment
     cancelAppointment(_id: ID!, note: String): Appointment
     cancelTheAppointment(_id: ID!, note: String): Appointment
     doneAppointment(_id: ID!): Appointment
     verifiedAppointment(_id: ID!): Appointment
-    createGuestAppointment(
-      firstName: String!
-      lastName: String!
-      email: String!
-      contact: String
-      appointmentInput: AppointmentInput
-    ): Appointment
+    # createGuestAppointment(
+    #   firstName: String!
+    #   lastName: String!
+    #   email: String!
+    #   contact: String
+    #   appointmentInput: AppointmentInput
+    # ): Appointment
 
     createUserExistAppointment(
       userId: ID!
@@ -429,6 +469,23 @@ const typeDefs = gql`
       isAdmin: Boolean
       appointmentInput: AppointmentInput
     ): Appointment
+
+    # WALKIN APPOINTMENT
+
+    createWalkinAppointment(
+      firstName: String
+      lastName: String
+      contact: String
+      email: String
+      dateOfBirth: String
+      address: String
+      serviceId: ID!
+      employeeId: ID!
+      date: String!
+      slot_start: String!
+    ): WalkinAppointment
+
+    cancelWalkinAppointment(_id: ID!, note: String): WalkinAppointment
 
     #USERS
     register(userInput: UserInput): User

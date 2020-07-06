@@ -16,7 +16,7 @@ import {
   DRightMenu,
   DropdownCustomNav,
 } from "../../styled/navigation";
-import { DCard, DImage } from "../../styled/containers";
+import { DCard, DImage, Content } from "../../styled/containers";
 import Burger from "./Burger";
 import Branding from "./Branding";
 import useScroll from "../../../util/hooks/useScroll";
@@ -52,25 +52,39 @@ const Navigation = ({ open, setOpen }) => {
   const trigger = (
     <>
       {user && (
-        <DCard
-          dw="40px"
-          dh="40px"
-          mcenter
-          circle
-          p="0px"
-          grayzoom
-          style={{ marginRight: "1.2rem" }}
+        <Content
+          flex
+          height="100%"
+          width="100%"
+          justify="center"
+          align="center"
         >
-          <DImage circle height="100%" width="100%">
-            <img
-              src={
-                client.imageURL ||
-                "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-              }
-              alt={client.firstName}
-            />
-          </DImage>
-        </DCard>
+          <DCard
+            dw="40px"
+            dh="40px"
+            mcenter
+            circle
+            p="0px"
+            grayzoom
+            style={{ marginRight: "1.2rem" }}
+          >
+            <DImage circle height="100%" width="100%">
+              <img
+                src={
+                  client.imageURL ||
+                  "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                }
+                alt={client.firstName}
+              />
+            </DImage>
+          </DCard>
+          <span style={{ fontSize: "12px" }}>
+            Hi,
+            {client.firstName && client.firstName.length > 6
+              ? client.firstName.substr(0, 6) + "..."
+              : client.firstName}
+          </span>
+        </Content>
       )}
     </>
   );
@@ -87,25 +101,46 @@ const Navigation = ({ open, setOpen }) => {
         <div className="menu-container">
           <Link to={user ? `/account/${user.userId || user._id}` : "/login"}>
             {user ? (
-              <DCard
-                dw="30px"
-                dh="30px"
-                mcenter
-                circle
-                p="0px"
-                grayzoom
-                style={{ marginRight: "1.2rem" }}
+              <Content
+                flex
+                height="100%"
+                width="100%"
+                justify="center"
+                align="center"
+                style={{ marginRight: "1.2rem", padding: "0 5px" }}
               >
-                <DImage circle height="100%" width="100%">
-                  <img
-                    src={
-                      client.imageURL ||
-                      "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                    }
-                    alt={client.firstName}
-                  />
-                </DImage>
-              </DCard>
+                <DCard
+                  dw="40px"
+                  dh="40px"
+                  mcenter
+                  circle
+                  p="0px"
+                  grayzoom
+                  style={{ marginRight: ".75rem" }}
+                >
+                  <DImage circle height="100%" width="100%">
+                    <img
+                      src={
+                        client.imageURL ||
+                        "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                      }
+                      alt={client.firstName}
+                    />
+                  </DImage>
+                </DCard>
+                <span
+                  style={{
+                    fontSize: "12px",
+                    color: "#000",
+                    textDecoration: "none",
+                  }}
+                >
+                  Hi,
+                  {client.firstName && client.firstName.length > 6
+                    ? client.firstName.substr(0, 6) + "..."
+                    : client.firstName}
+                </span>
+              </Content>
             ) : (
               <UserCircle
                 size="22px"
@@ -255,6 +290,7 @@ const Navigation = ({ open, setOpen }) => {
                 icon={null}
                 trigger={trigger}
                 className="avatarLog"
+                simple
               >
                 <Dropdown.Menu>
                   <Dropdown.Item disabled>

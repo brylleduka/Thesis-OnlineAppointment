@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../../context/auth";
+import React, { useContext, useEffect } from "react";
+import { AuthContext } from "../../../context/auth";
 import { Link, useHistory } from "react-router-dom";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import jwtDecode from "jwt-decode";
-import { DSection, Content } from "../../components/styled/containers";
-import { DButton } from "../../components/styled/utils";
-import useWindowSize from "../../util/hooks/useWindowSize";
+import { DSection, Content } from "../../../components/styled/containers";
+import { DButton } from "../../../components/styled/utils";
+import useWindowSize from "../../../util/hooks/useWindowSize";
 
 const ThankYou = (props) => {
   const { width: wid } = useWindowSize();
@@ -25,9 +25,9 @@ const ThankYou = (props) => {
     },
   });
 
-  window.onload = () => {
+  useEffect(() => {
     verifiedAppointment();
-  };
+  }, []);
 
   return (
     <DSection
@@ -56,9 +56,9 @@ const ThankYou = (props) => {
           You can view your appointment details by signing in and go to My
           Account Page
         </h4>
-        <h4>
-          We also sent you an email of your appointment details. Thank you
-        </h4>
+        {/* <h4>
+          We also sent you an email of your appointment details. Thank you!
+        </h4> */}
         <Content
           width="80%"
           flex

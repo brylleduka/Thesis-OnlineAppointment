@@ -3,6 +3,7 @@ const serviceResolvers = require("./service");
 const categoryResolvers = require("./category");
 const employeeResolvers = require("./employee");
 const appointmentResolvers = require("./appointment");
+const walkinAppointmentResolvers = require("./walkinAppointment");
 const inquiryResolvers = require("./inquiry");
 const homeCMSResolvers = require("./homeCms");
 const showcaseCMSResolvers = require("./showcaseCms");
@@ -27,6 +28,7 @@ module.exports = {
     ...galleryResolvers.Query,
     ...contactResolvers.Query,
     ...brandResolvers.Query,
+    ...walkinAppointmentResolvers.Query,
   },
   Mutation: {
     ...userResolvers.Mutation,
@@ -42,5 +44,6 @@ module.exports = {
     ...galleryResolvers.Mutation,
     ...contactResolvers.Mutation,
     ...brandResolvers.Mutation,
+    ...walkinAppointmentResolvers.Mutation,
   },
 };

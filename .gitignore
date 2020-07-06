@@ -1,3 +1,4 @@
 /node_modules
+# Comment public and env if you want to push it to heroku
 public
 .env

@@ -5,16 +5,18 @@ import Home from "./main/Home";
 import About from "./main/About";
 import Signup from "./main/Signup";
 import Signin from "./main/Signin";
-import Appointment from "./main/Appointment";
+import Appointment from "./main/appointment/Appointment";
 import Gallery from "./main/Gallery";
 import Album from "./main/Album";
 import Contact from "./main/Contact";
 import Testimonials from "./main/Testimonials";
 import Services from "./main/Services";
 import Service from "./main/Service";
-// import ThankYou from "./main/ThankYou";
-import AppointmentThankYou from "./main/AppointmentThankYou";
+
+import AppointmentVerify from "./main/appointment/AppointmentVerify";
+import AppointmentCreated from "./main/appointment/AppointmentCreated";
 import AccountCreated from "./main/account/AccountCreated";
+
 import AccountVerification from "./main/account/AccountVerification";
 import Account from "./main/account/Account";
 import AccountResetPwd from "./main/account/AccountResetPwd";
@@ -23,7 +25,7 @@ import { UserAuthRoute } from "../util/AuthRoute";
 import { UserPrivateRoute } from "../util/PrivateRoute";
 import Footer from "../components/main/footer/Footer";
 import Page404 from "./Page404";
-import AppointmentDetails from "./main/AppointmentDetails";
+import AppointmentDetails from "./main/appointment/AppointmentDetails";
 
 function Main({ match }) {
   const [open, setOpen] = useState(false);
@@ -42,7 +44,11 @@ function Main({ match }) {
         <Route path={`/testimonials`} component={Testimonials} exact />
         <Route path={`/services&rates`} component={Services} exact />
         <Route path={`/service/:_id`} component={Service} exact />
-        {/* <Route path={`/verified/:emailToken`} component={ThankYou} exact /> */}
+        <Route
+          path={`/verified/:emailToken`}
+          component={AppointmentVerify}
+          exact
+        />
 
         <Route path={`/terms&conditions`} component={Terms} exact />
         <Route
@@ -62,8 +68,8 @@ function Main({ match }) {
           exact
         />
         <UserPrivateRoute
-          path={`/appointment_thankyou`}
-          component={AppointmentThankYou}
+          path={`/appointment_created`}
+          component={AppointmentCreated}
           exact
         />
         <UserAuthRoute path={`/signup`} component={Signup} exact />

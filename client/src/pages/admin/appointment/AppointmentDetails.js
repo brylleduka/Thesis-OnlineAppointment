@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { FETCH_SINGLE_APPOINTMENT_QUERY } from "../../util/graphql/appointment";
+import { FETCH_SINGLE_APPOINTMENT_QUERY } from "../../../util/graphql/appointment";
 import { useHistory } from "react-router-dom";
 import {
   DSection,
   Content,
   DGrid,
   DCard,
-} from "../../components/styled/containers";
-import { DButton, DLink, DLabel } from "../../components/styled/utils";
+} from "../../../components/styled/containers";
+import { DButton, DLink, DLabel } from "../../../components/styled/utils";
 import { Breadcrumb, Icon } from "semantic-ui-react";
 import { Service } from "@styled-icons/remix-fill/Service";
 import { Bookmark } from "@styled-icons/boxicons-solid/Bookmark";
@@ -17,12 +17,12 @@ import { UserMd } from "@styled-icons/fa-solid/UserMd";
 import { CalendarExclamation } from "@styled-icons/boxicons-solid/CalendarExclamation";
 import { CalendarEvent } from "@styled-icons/boxicons-solid/CalendarEvent";
 import { Timelapse } from "@styled-icons/material/Timelapse";
-import Spinner from "../../components/Spinner";
+import Spinner from "../../../components/Spinner";
 import moment from "moment";
-import Layout from "../../components/admin/layout/Layout";
-import AppointmentCancel from "../../components/admin/appointment/AppointmentCancel";
-import AppointmentDone from "../../components/admin/appointment/AppointmentDone";
-import ReschedModal from "../../components/main/appointment/ReschedModal";
+import Layout from "../../../components/admin/layout/Layout";
+import AppointmentCancel from "../../../components/admin/appointment/AppointmentCancel";
+import AppointmentDone from "../../../components/admin/appointment/AppointmentDone";
+import ReschedModal from "../../../components/main/appointment/ReschedModal";
 
 const AppointmentDetails = (props) => {
   const history = useHistory();
@@ -99,16 +99,16 @@ const AppointmentDetails = (props) => {
 
             <DGrid
               custom={
-                myAppoint.status === "VERIFIED" ||
+                myAppoint.status === "INPROGRESS" ||
                 myAppoint.status === "PENDING"
-                  ? "3fr 200px"
+                  ? "3fr 1fr"
                   : "1fr"
               }
               gap="5px"
             >
               <DCard
                 dw={
-                  myAppoint.status === "VERIFIED" ||
+                  myAppoint.status === "INPROGRESS" ||
                   myAppoint.status === "PENDING"
                     ? "100%"
                     : "80%"
@@ -416,7 +416,7 @@ const AppointmentDetails = (props) => {
                   </Content>
                 </DGrid>
               </DCard>
-              {(myAppoint.status === "PENDING" ||
+              {(myAppoint.status === "INPROGRESS" ||
                 myAppoint.status === "VERIFIED") && (
                 <Content
                   width="90%"

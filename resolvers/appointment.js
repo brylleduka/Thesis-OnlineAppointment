@@ -29,18 +29,18 @@ module.exports = {
         });
 
         return getAllAppointments;
-      } catch {
-        throw new Error("Error");
+      } catch (err) {
+        throw err;
       }
     },
     currentAppointments: async () => {
-      // const getCurrentAppointments = await Appointment.find({
-      //   $or: [{ status: "VERIFIED" }, { status: "PENDING" }],
-      // }).sort({ createdAt: -1 });
-
       const getCurrentAppointments = await Appointment.find({
-        $or: [{ status: "INPROGRESS" }],
+        $or: [{ status: "VERIFIED" }, { status: "PENDING" }],
       }).sort({ createdAt: -1 });
+
+      // const getCurrentAppointments = await Appointment.find({
+      //   $or: [{ status: "INPROGRESS" }],
+      // }).sort({ createdAt: -1 });
 
       return getCurrentAppointments;
     },
@@ -68,21 +68,21 @@ module.exports = {
     },
     checkedAppointments: async (_, { employeeId, date }) => {
       try {
+        const checkAppointments = await Appointment.find({
+          employee: employeeId,
+          date,
+          $or: [
+            { status: "PENDING" },
+            { status: "VERIFIED" },
+            { status: "DONE" },
+          ],
+        });
+
         // const checkAppointments = await Appointment.find({
         //   employee: employeeId,
         //   date: new Date(date).toLocaleDateString(),
-        //   $or: [
-        //     { status: "PENDING" },
-        //     { status: "VERIFIED" },
-        //     { status: "DONE" },
-        //   ],
+        //   $or: [{ status: "INPROGRESS" }, { status: "DONE" }],
         // });
-
-        const checkAppointments = await Appointment.find({
-          employee: employeeId,
-          date: new Date(date).toLocaleDateString(),
-          $or: [{ status: "INPROGRESS" }, { status: "DONE" }],
-        });
 
         return checkAppointments;
       } catch (err) {
@@ -106,15 +106,15 @@ module.exports = {
       try {
         const { userId: user } = Auth(context);
 
-        // const getCurrentAppointment = await Appointment.find({
-        //   user,
-        //   $or: [{ status: "PENDING" }, { status: "VERIFIED" }],
-        // }).sort({ createdAt: -1 });
-
         const getCurrentAppointment = await Appointment.find({
           user,
-          $or: [{ status: "INPROGRESS" }],
+          $or: [{ status: "PENDING" }, { status: "VERIFIED" }],
         }).sort({ createdAt: -1 });
+
+        // const getCurrentAppointment = await Appointment.find({
+        //   user,
+        //   $or: [{ status: "INPROGRESS" }],
+        // }).sort({ createdAt: -1 });
 
         return getCurrentAppointment;
       } catch (err) {
@@ -141,73 +141,73 @@ module.exports = {
     },
   },
   Mutation: {
-    createGuestAppointment: async (
-      _,
-      {
-        firstName,
-        lastName,
-        email,
-        contact,
-        appointmentInput: { serviceId, employeeId, date, slot_start, message },
-      }
-    ) => {
-      try {
-        const pseudoUserId = (Math.random() + 1).toString(36).substring(7);
+    // createGuestAppointment: async (
+    //   _,
+    //   {
+    //     firstName,
+    //     lastName,
+    //     email,
+    //     contact,
+    //     appointmentInput: { serviceId, employeeId, date, slot_start, message },
+    //   }
+    // ) => {
+    //   try {
+    //     const pseudoUserId = (Math.random() + 1).toString(36).substring(7);
 
-        const hashedPassword = await bcrypt.hash(pseudoUserId, 12);
+    //     const hashedPassword = await bcrypt.hash(pseudoUserId, 12);
 
-        const newGuestUser = new User({
-          firstName,
-          lastName,
-          email,
-          contact,
-          password: hashedPassword,
-        });
+    //     const newGuestUser = new User({
+    //       firstName,
+    //       lastName,
+    //       email,
+    //       contact,
+    //       password: hashedPassword,
+    //     });
 
-        await newGuestUser.save();
+    //     await newGuestUser.save();
 
-        const checkTime = await Appointment.findOne({
-          employee: employeeId,
-          date: new Date(date).toLocaleDateString(),
-          slot_start,
-        });
+    //     const checkTime = await Appointment.findOne({
+    //       employee: employeeId,
+    //       date: new Date(date).toLocaleDateString(),
+    //       slot_start,
+    //     });
 
-        if (checkTime) {
-          errors.checkTime = "Time unavailable";
-          throw new UserInputError("Time error", { errors });
-        }
+    //     if (checkTime) {
+    //       errors.checkTime = "Time unavailable";
+    //       throw new UserInputError("Time error", { errors });
+    //     }
 
-        const service = await Service.findById(serviceId);
-        const employee = await Employee.findById(employeeId);
-        const duration = service.duration;
+    //     const service = await Service.findById(serviceId);
+    //     const employee = await Employee.findById(employeeId);
+    //     const duration = service.duration;
 
-        const newAppointment = await new Appointment({
-          user: newGuestUser,
-          service,
-          employee,
-          date: new Date(date).toLocaleDateString(),
-          duration,
-          slot_start,
-          message,
-          // status: "VERIFIED",
-          status: "INPROGRESS",
-        });
+    //     const newAppointment = await new Appointment({
+    //       user: newGuestUser,
+    //       service,
+    //       employee,
+    //       date: new Date(date).toLocaleDateString(),
+    //       duration,
+    //       slot_start,
+    //       message,
+    //       // status: "VERIFIED",
+    //       status: "INPROGRESS",
+    //     });
 
-        const result = await newAppointment.save();
+    //     const result = await newAppointment.save();
 
-        transportMail({
-          from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
-          to: email, // list of receivers
-          subject: "Appointment Confirmation",
-          text: "Good Day", // plain text body
-          html: `Your appointment details`,
-        });
+    //     transportMail({
+    //       from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
+    //       to: email, // list of receivers
+    //       subject: "Appointment Confirmation",
+    //       text: "Good Day", // plain text body
+    //       html: `Your appointment details`,
+    //     });
 
-        return result;
-      } catch (err) {
-        throw err;
-      }
-    },
+    //     return result;
+    //   } catch (err) {
+    //     throw err;
+    //   }
+    // },
     createUserExistAppointment: async (
       _,
       {
@@ -219,15 +219,15 @@ module.exports = {
         const userInfo = await User.findOne({ _id: userId });
         const userEmail = userInfo.email;
 
-        // const checkAppointment = await Appointment.findOne({
-        //   user: userId,
-        //   $or: [{ status: "PENDING" }, { status: "VERIFIED" }],
-        // });
-
         const checkAppointment = await Appointment.findOne({
           user: userId,
-          $or: [{ status: "INPROGRESS" }],
+          $or: [{ status: "PENDING" }, { status: "VERIFIED" }],
         });
+
+        // const checkAppointment = await Appointment.findOne({
+        //   user: userId,
+        //   $or: [{ status: "INPROGRESS" }],
+        // });
 
         const checkTime = await Appointment.findOne({
           employee: employeeId,
@@ -256,8 +256,8 @@ module.exports = {
           duration,
           slot_start,
           message,
-          status: "INPROGRESS",
-          // status: "VERIFIED",
+          // status: "INPROGRESS",
+          status: "VERIFIED",
         });
 
         const result = await newAppointment.save();
@@ -292,18 +292,18 @@ module.exports = {
 
         const checkAppointment = await Appointment.findOne({
           user,
-          // $or: [{ status: "PENDING" }, { status: "VERIFIED" }],
-          $or: [{ status: "INPROGRESS" }],
+          $or: [{ status: "PENDING" }, { status: "VERIFIED" }],
+          // $or: [{ status: "INPROGRESS" }],
         });
 
         const checkTime = await Appointment.findOne({
           employee: employeeId,
-          date: new Date(date).toLocaleDateString(),
+          date,
           slot_start,
           $or: [
-            // { status: "PENDING" },
-            // { status: "VERIFIED" },
-            { status: "INPROGRESS" },
+            { status: "PENDING" },
+            { status: "VERIFIED" },
+            // { status: "INPROGRESS" },
             { status: "DONE" },
           ],
         });
@@ -333,55 +333,56 @@ module.exports = {
           user,
           service,
           employee,
-          date: new Date(date).toLocaleDateString(),
+          date,
           duration,
           slot_start,
           message,
-          status: "INPROGRESS",
-          // status: "PENDING",
+          // status: "INPROGRESS",
+          status: "PENDING",
         });
 
         const result = await newAppointment.save();
 
-        transportMail({
-          from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
-          to: userEmail, // list of receivers
-          subject: "Appointment Acknowledgement",
-          text: "Good Day", // plain text body
-          temp: "index",
-          // url,
-          userName,
-          serviceName,
-          employeeName,
-          date: moment(date).format("LL"),
-          time: slot_start,
-        });
+        // transportMail({
+        //   from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
+        //   to: userEmail, // list of receivers
+        //   subject: "Appointment Acknowledgement",
+        //   text: "Good Day", // plain text body
+        //   temp: "index",
+        //   // url,
+        //   userName,
+        //   serviceName,
+        //   employeeName,
+        //   date: moment(date).format("LL"),
+        //   time: slot_start,
+        // });
 
-        // jwt.sign(
-        //   { _id: newAppointment._id },
+        jwt.sign(
+          { _id: newAppointment._id },
 
-        //   process.env.EMAIL_KEY,
-        //   {
-        //     expiresIn: "1d",
-        //   },
-        //   (err, emailToken) => {
-        //     const url = `https://www.zessencefacialandspa.com/verified/${emailToken}`;
+          process.env.EMAIL_KEY,
+          {
+            expiresIn: "1d",
+          },
+          (err, emailToken) => {
+            // const url = `https://www.zessencefacialandspa.com/verified/${emailToken}`;
+            const url = `http://localhost:3000/verified/${emailToken}`;
 
-        //     transportMail({
-        //       from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
-        //       to: userEmail, // list of receivers
-        //       subject: "Appointment Confirmation",
-        //       text: "Good Day", // plain text body
-        //       temp: "index",
-        //       url,
-        //       userName,
-        //       serviceName,
-        //       employeeName,
-        //       date: moment(date).format("LL"),
-        //       time: slot_start,
-        //     });
-        //   }
-        // );
+            transportMail({
+              from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
+              to: userEmail, // list of receivers
+              subject: "Appointment Confirmation",
+              text: "Good Day", // plain text body
+              temp: "appointmentverify",
+              url,
+              userName,
+              serviceName,
+              employeeName,
+              date: moment(date).format("LL"),
+              time: slot_start,
+            });
+          }
+        );
 
         return result;
       } catch (err) {

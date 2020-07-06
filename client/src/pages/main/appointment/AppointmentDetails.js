@@ -1,24 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { FETCH_SINGLE_APPOINTMENT_QUERY } from "../../util/graphql/appointment";
+import { FETCH_SINGLE_APPOINTMENT_QUERY } from "../../../util/graphql/appointment";
 import { useHistory } from "react-router-dom";
-import { DSection, Content, DGrid } from "../../components/styled/containers";
-import { DButton } from "../../components/styled/utils";
+import {
+  DSection,
+  Content,
+  DGrid,
+} from "../../../components/styled/containers";
+import { DButton } from "../../../components/styled/utils";
 import { Form, Popup, Icon } from "semantic-ui-react";
-import Spinner from "../../components/Spinner";
+import Spinner from "../../../components/Spinner";
 import moment from "moment";
 
-const AppointmentDetails = props => {
+const AppointmentDetails = (props) => {
   const history = useHistory();
   const appointmentId = props.match.params._id;
   const [myAppoint, setMyAppoint] = useState({});
- 
+
   const { data, loading: dataLoading } = useQuery(
     FETCH_SINGLE_APPOINTMENT_QUERY,
     {
       variables: {
-        appointmentId
-      }
+        appointmentId,
+      },
     }
   );
 
@@ -35,9 +39,7 @@ const AppointmentDetails = props => {
 
   if (data) {
     schedDate = moment(parseInt(data.appointment.date)).format("M/D/YYYY");
-    addDate = moment()
-      .add(12, "h")
-      .format("M/D/YYYY");
+    addDate = moment().add(12, "h").format("M/D/YYYY");
   }
 
   const diffDate = schedDate <= addDate;
@@ -128,27 +130,27 @@ const AppointmentDetails = props => {
                           width: "60%",
                           fontSize: 14,
                           fontWeight: 700,
-                          color: "gold"
+                          color: "gold",
                         }
                       : myAppoint.status === "CANCELLED"
                       ? {
                           width: "60%",
                           fontSize: 14,
                           fontWeight: 700,
-                          color: "firebrick"
+                          color: "firebrick",
                         }
                       : myAppoint.status === "VERIFIED"
                       ? {
                           width: "60%",
                           fontSize: 14,
                           fontWeight: 700,
-                          color: "green"
+                          color: "green",
                         }
                       : {
                           width: "60%",
                           fontSize: 14,
                           fontWeight: 700,
-                          color: "blue"
+                          color: "blue",
                         }
                   }
                 />
@@ -189,14 +191,14 @@ const styles = {
     width: "100%",
     display: "flex",
     jusitfyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
   },
   label: {
-    width: "40%"
+    width: "40%",
   },
   input: {
-    width: "60%"
-  }
+    width: "60%",
+  },
 };
 
 export default AppointmentDetails;

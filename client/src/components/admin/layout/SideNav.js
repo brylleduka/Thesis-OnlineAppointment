@@ -18,7 +18,10 @@ import {
   AccountCircle,
   Dashboard,
   Close,
+  Computer,
 } from "@styled-icons/material";
+import { Walk } from "@styled-icons/boxicons-regular/Walk";
+
 import { FileDirectory } from "@styled-icons/octicons";
 import { Profile } from "@styled-icons/icomoon/Profile";
 import { Archive } from "@styled-icons/entypo";
@@ -31,7 +34,6 @@ import { ReactComponent as ZEssenceLogo } from "../../../ze_logo.svg";
 
 const SideNav = ({ isOpenMenu, handleOpenMenu }) => {
   const { employeeAuth } = useContext(AuthContext);
-  console.log(employeeAuth);
 
   return (
     <SideNavLayout openMenu={isOpenMenu ? true : null}>
@@ -48,12 +50,31 @@ const SideNav = ({ isOpenMenu, handleOpenMenu }) => {
           <span>Dashboard</span>
         </NavLink>
       </NavItem>
-      <NavItem>
-        <NavLink to="/zeadmin/appointments">
-          <CalendarEvent size="16px" />
-          <span>Appointments</span>
+
+      <Accordion
+        title={"Appointments"}
+        icon={<CalendarEvent size="16px" />}
+        hcolor="#fff"
+        fs="14px"
+      >
+        <NavLink to="/zeadmin/appointments" activeClassName="navlink-active">
+          <span>
+            <Computer size="16px" style={styles.ml} />
+            Online
+          </span>
         </NavLink>
-      </NavItem>
+
+        <NavLink
+          to="/zeadmin/walkin_appointments"
+          activeClassName="navlink-active"
+        >
+          <span>
+            <Walk size="16px" style={styles.ml} />
+            Walk In
+          </span>
+        </NavLink>
+      </Accordion>
+
       <NavItem>
         <NavLink to="/zeadmin/inquiry">
           <MessageRoundedDetail size="16px" />
