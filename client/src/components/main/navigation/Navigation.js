@@ -197,18 +197,6 @@ const Navigation = ({ open, setOpen }) => {
               Home
             </Link>
           </li>
-          <li>
-            <NavLink
-              to="/services&rates/#services"
-              scroll={scrollBehavior}
-              onClick={() => setOpen(false)}
-              activeClassName="main_nav_link-active"
-            >
-              Services
-            </NavLink>
-          </li>
-
-          {/* <NavLink to="/about">About&nbsp;Us</NavLink> */}
           <DropdownCustomNav
             trigger={
               <NavLink
@@ -244,6 +232,18 @@ const Navigation = ({ open, setOpen }) => {
               </Dropdown.Item>
             </Dropdown.Menu>
           </DropdownCustomNav>
+          <li>
+            <NavLink
+              to="/services&rates/#services"
+              scroll={scrollBehavior}
+              onClick={() => setOpen(false)}
+              activeClassName="main_nav_link-active"
+            >
+              Services
+            </NavLink>
+          </li>
+
+          {/* <NavLink to="/about">About&nbsp;Us</NavLink> */}
 
           <li>
             <NavLink
@@ -256,15 +256,6 @@ const Navigation = ({ open, setOpen }) => {
             </NavLink>
           </li>
           <li>
-            <Link
-              to="/#contact"
-              scroll={scrollBehavior}
-              onClick={() => setOpen(false)}
-            >
-              Contact
-            </Link>
-          </li>
-          <li>
             <NavLink
               to="/testimonials/#tstmnl"
               scroll={scrollBehavior}
@@ -274,6 +265,16 @@ const Navigation = ({ open, setOpen }) => {
               Testimonials
             </NavLink>
           </li>
+          <li>
+            <Link
+              to="/#contact"
+              scroll={scrollBehavior}
+              onClick={() => setOpen(false)}
+            >
+              Contact
+            </Link>
+          </li>
+
           {user && (
             <li className="signout_link">
               <span onClick={handleLogout} className="signing_out">

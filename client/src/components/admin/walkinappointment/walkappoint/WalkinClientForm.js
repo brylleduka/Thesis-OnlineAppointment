@@ -17,7 +17,6 @@ const WalkinClientForm = ({ setClientValues, clientValues }) => {
       heigh="100%"
       margin="0 auto"
     >
-      <h1>Client Form</h1>
       <Form style={{ width: "100%" }}>
         <Form.Field>
           <label>First Name</label>

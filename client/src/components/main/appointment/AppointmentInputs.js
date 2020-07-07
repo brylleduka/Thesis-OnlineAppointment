@@ -77,13 +77,11 @@ const AppointmentInputs = ({
   //Handle Changes
 
   const handleChange = (e) => {
-    e.preventDefault();
     setCategoryValue(e.target.value);
     if (categoryValue !== "CHECK_UP") loadService();
   };
 
   const handleServiceChange = (e) => {
-    e.preventDefault();
     setServiceValue(e.target.value);
     loadServiceEmp();
   };

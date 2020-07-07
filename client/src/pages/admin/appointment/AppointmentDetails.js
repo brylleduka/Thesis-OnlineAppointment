@@ -99,7 +99,7 @@ const AppointmentDetails = (props) => {
 
             <DGrid
               custom={
-                myAppoint.status === "INPROGRESS" ||
+                myAppoint.status === "VERIFIED" ||
                 myAppoint.status === "PENDING"
                   ? "3fr 1fr"
                   : "1fr"
@@ -108,7 +108,7 @@ const AppointmentDetails = (props) => {
             >
               <DCard
                 dw={
-                  myAppoint.status === "INPROGRESS" ||
+                  myAppoint.status === "VERIFIED" ||
                   myAppoint.status === "PENDING"
                     ? "100%"
                     : "80%"
@@ -416,7 +416,7 @@ const AppointmentDetails = (props) => {
                   </Content>
                 </DGrid>
               </DCard>
-              {(myAppoint.status === "INPROGRESS" ||
+              {(myAppoint.status === "PENDING" ||
                 myAppoint.status === "VERIFIED") && (
                 <Content
                   width="90%"

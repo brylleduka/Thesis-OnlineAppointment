@@ -477,7 +477,6 @@ const typeDefs = gql`
       lastName: String
       contact: String
       email: String
-      dateOfBirth: String
       address: String
       serviceId: ID!
       employeeId: ID!

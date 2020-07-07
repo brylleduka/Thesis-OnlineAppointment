@@ -114,8 +114,6 @@ const Appointment = () => {
               startDate={startDate}
               employeeVal={employeeVal}
               serviceValue={serviceValue}
-              categoryValue={categoryValue}
-              calendarSize={"calendar_large"}
             />
             <Content width="100%" flex justify="center" align="center">
               <DButton

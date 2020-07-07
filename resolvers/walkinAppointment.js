@@ -93,7 +93,6 @@ module.exports = {
         lastName,
         contact,
         email,
-        dateOfBirth,
         address,
         serviceId,
         employeeId,
@@ -160,7 +159,6 @@ module.exports = {
           lastName,
           contact,
           email,
-          dateOfBirth,
           address,
         });
 

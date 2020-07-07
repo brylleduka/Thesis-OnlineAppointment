@@ -24,12 +24,35 @@ const NewWalkinContent = ({
         <WalkinClientForm
           clientValues={clientValues}
           setClientValues={setClientValues}
+          stepCount={stepCount}
         />
       );
     case 2:
-      return <AppointmentContentForms />;
+      return (
+        <AppointmentContentForms
+          categoryValue={categoryValue}
+          setCategoryValue={setCategoryValue}
+          serviceValue={serviceValue}
+          setServiceValue={setServiceValue}
+          employeeVal={employeeVal}
+          setEmployeeVal={setEmployeeVal}
+          setStartDate={setStartDate}
+          setSelectedTime={setSelectedTime}
+          selectedTime={selectedTime}
+          startDate={startDate}
+        />
+      );
     case 3:
-      return <WalkinAppointmentConfirm clientValues={clientValues} />;
+      return (
+        <WalkinAppointmentConfirm
+          clientValues={clientValues}
+          categoryValue={categoryValue}
+          serviceValue={serviceValue}
+          employeeVal={employeeVal}
+          startDate={startDate}
+          selectedTime={selectedTime}
+        />
+      );
   }
 };
 
