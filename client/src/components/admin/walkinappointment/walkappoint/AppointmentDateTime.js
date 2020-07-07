@@ -155,61 +155,61 @@ const AppointmentDateTime = ({
       </Content>
 
       {isEmp &&
-        data_service &&
-        (loading_employee ||
+      data_service &&
+      (loading_employee ||
         loading_appointments ||
         loadWalkAppointData ||
-        loading_service ? (
+        loading_service) ? (
+        <Content
+          flex
+          justify="center"
+          align="center"
+          width="100%"
+          height="100%"
+        >
+          <Spinner content="Fetching available time slot..." medium />
+        </Content>
+      ) : (
+        <Content
+          flex
+          width="100%"
+          height="100%"
+          justify="space-around"
+          align="center"
+          direct="column"
+        >
+          <DLabel size="16px" color="bluer" weight={700} rounded>
+            Time Slot
+          </DLabel>
           <Content
-            flex
-            justify="center"
-            align="center"
             width="100%"
             height="100%"
-          >
-            <Spinner content="Fetching available time slot..." medium />
-          </Content>
-        ) : (
-          <Content
+            maxh={"300px"}
             flex
-            width="100%"
-            height="100%"
-            justify="space-around"
-            align="center"
-            direct="column"
+            align="flex-start"
+            justify="flex-start"
+            flow="column wrap"
+            style={{ overflowX: "auto" }}
           >
-            <DLabel size="16px" color="bluer" weight={700} rounded>
-              Time Slot
-            </DLabel>
-            <Content
-              width="100%"
-              height="100%"
-              maxh={"300px"}
-              flex
-              align="flex-start"
-              justify="flex-start"
-              flow="column wrap"
-              style={{ overflowX: "auto" }}
-            >
-              {times.map((time) => (
-                <Content width="auto" height="30px" margin={"5px"} key={time}>
-                  <div className="pretty p-default p-curve">
-                    <input
-                      type="radio"
-                      name="time"
-                      value={time}
-                      onChange={handleTimeChanged}
-                      checked={selectedTime === time ? true : null}
-                    />
-                    <div className="state p-info-o">
-                      <label style={styles.label}>{time}</label>
-                    </div>
+            {times.map((time) => (
+              <Content width="auto" height="30px" margin={"5px"} key={time}>
+                <div className="pretty p-default p-curve">
+                  <input
+                    type="radio"
+                    name="time"
+                    value={time}
+                    onChange={handleTimeChanged}
+                    checked={selectedTime === time ? true : null}
+                  />
+                  <div className="state p-info-o">
+                    <label style={styles.label}>{time}</label>
                   </div>
-                </Content>
-              ))}
-            </Content>
+                </div>
+              </Content>
+            ))}
           </Content>
-        ))}
+        </Content>
+      )}
     </DGrid>
   );
 };

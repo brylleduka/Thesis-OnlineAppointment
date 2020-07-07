@@ -4,6 +4,7 @@ import {
   FETCH_APPOINTMENT_STATUS,
   FETCH_APPOINTMENTS_QUERY,
 } from "../../../util/graphql/appointment";
+import { FETCH_WALKIN_APPOINTMENTS } from "../../../util/graphql/walkinappointment";
 import { DGrid, DCard, Content } from "../../styled/containers";
 import { DLabel } from "../../styled/utils";
 import Spinner from "../../Spinner";
@@ -12,10 +13,15 @@ const AppointmentCard = ({ history }) => {
   const [isDone, setIsDone] = useState([]);
   const [isCancelled, setIsCancelled] = useState([]);
   const [isAppointments, setIsAppointments] = useState([]);
+  const [isWalkAppointments, setIsWalkAppointments] = useState([]);
 
   const { data: dataIsAppointments, loading: loadingIsAppointments } = useQuery(
     FETCH_APPOINTMENTS_QUERY
   );
+
+  const {
+    data: dataIsWalkAppointments
+  } = useQuery(FETCH_WALKIN_APPOINTMENTS);
 
   const { data: dataIsDone, loading: loadingIsDone } = useQuery(
     FETCH_APPOINTMENT_STATUS,
@@ -39,13 +45,20 @@ const AppointmentCard = ({ history }) => {
     if (dataIsAppointments) {
       setIsAppointments(dataIsAppointments.appointments);
     }
+
+    if (dataIsWalkAppointments) {
+      setIsWalkAppointments(dataIsWalkAppointments.walkinAppointments);
+    }
+
     if (dataIsDone) {
       setIsDone(dataIsDone.appointmentsByStatus);
     }
     if (dataIsCancelled) {
       setIsCancelled(dataIsCancelled.appointmentsByStatus);
     }
-  }, [dataIsAppointments, dataIsDone, dataIsCancelled]);
+  }, [dataIsAppointments, dataIsWalkAppointments, dataIsDone, dataIsCancelled]);
+
+  const totalAppointments = isAppointments.length + isWalkAppointments.length;
 
   return (
     <DCard
@@ -90,7 +103,7 @@ const AppointmentCard = ({ history }) => {
             {loadingIsAppointments ? (
               <Spinner small />
             ) : (
-              <h1>{isAppointments.length}</h1>
+              <h1>{totalAppointments}</h1>
             )}
           </Content>
         </Content>

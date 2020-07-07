@@ -8,7 +8,6 @@ import {
 import { Breadcrumb } from "semantic-ui-react";
 import Layout from "../../../components/admin/layout/Layout";
 import CurrentAppointments from "../../../components/admin/appointment/CurrentAppointments";
-// import HistoryAppointments from "../../components/admin/appointment/HistoryAppointments";
 
 const Appointments = () => {
   const [open, setOpen] = useState(false);
@@ -27,7 +26,7 @@ const Appointments = () => {
             <Breadcrumb.Divider icon="right chevron" />
             <Breadcrumb.Section active>Online</Breadcrumb.Section>
           </Breadcrumb>
-          {/* <DButton onClick={() => setOpen(true)}>New Appointment</DButton> */}
+
         </Content>
         <DGrid>
           <CurrentAppointments />
