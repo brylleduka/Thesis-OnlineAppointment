@@ -95,7 +95,7 @@ const PhotoBooth = ({
                   ? dataEmpImg.addEmployeePhoto.Location
                   : photoURL !== null
                   ? photoURL
-                  : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png"
+                  : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/smiling-woman-with-touching-her-cheek-3762185.jpg"
               }
               alt={photo}
               onClick={openLightbox}

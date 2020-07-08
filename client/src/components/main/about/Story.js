@@ -1,6 +1,7 @@
 import React from "react";
 import { DSection, Content, DImage } from "../../styled/containers";
 import useWindowSize from "../../../util/hooks/useWindowSize";
+import parser from "html-react-parser";
 
 const Story = ({ content, aboutUS }) => {
   const { width } = useWindowSize();
@@ -76,6 +77,7 @@ const Story = ({ content, aboutUS }) => {
         direct={
           width === 768 ? "column" : aboutUS.story.alt ? "row-reverse" : "row"
         }
+        ref={content}
       >
         <Content
           flex
@@ -121,7 +123,7 @@ const Story = ({ content, aboutUS }) => {
               padding: "10px",
             }}
           >
-            {aboutUS.story.paragraph}
+            {parser(aboutUS.story.paragraph)}
           </p>
         </Content>
       </DSection>

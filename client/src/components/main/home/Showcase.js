@@ -72,13 +72,14 @@ const Showcase = ({ nextSection }) => {
       ) : (
         <Slider {...settings}>
           {showcase.map((sc) => (
-            <DShowCase
-              height="90vh"
-              key={sc._id}
-              bgcolor={sc.bgColor}
-              background={sc.bgImgURL && sc.bgImgURL}
-            >
-              {/* {sc.bgImg && (
+            <div className="slider_holder">
+              <DShowCase
+                height="90vh"
+                key={sc._id}
+                bgcolor={sc.bgColor}
+                background={sc.bgImgURL && sc.bgImgURL}
+              >
+                {/* {sc.bgImg && (
                 <DImage height="100%">
                   <img
                     src={
@@ -91,66 +92,67 @@ const Showcase = ({ nextSection }) => {
                 </DImage>
               )} */}
 
-              <Overlay
-                cmarg={
-                  sc.position === "left"
-                    ? "0 0 0 5rem"
-                    : sc.position === "right"
-                    ? "0 5rem 0 0"
-                    : "0"
-                }
-                flex
-                bgr={sc.dark && sc.position === "right" ? true : false}
-                bgl={sc.dark && sc.position === "left" ? true : false}
-                bgc={sc.dark && sc.position === "center" ? true : false}
-                justify={
-                  sc.position === "left"
-                    ? "flex-start"
-                    : sc.position === "right"
-                    ? "flex-end"
-                    : sc.position === "center"
-                    ? "center"
-                    : ""
-                }
-                talign={
-                  sc.position === "left"
-                    ? "left"
-                    : sc.position === "right"
-                    ? "right"
-                    : sc.position === "center"
-                    ? "center"
-                    : ""
-                }
-                align="center"
-                className={sc.dark ? "dark" : ""}
-              >
-                <div className="overlay-content">
-                  <div className="title-container">
-                    <h1 className="title">{sc.title}</h1>
+                <Overlay
+                  cmarg={
+                    sc.position === "left"
+                      ? "0 0 0 5rem"
+                      : sc.position === "right"
+                      ? "0 5rem 0 0"
+                      : "0"
+                  }
+                  flex
+                  bgr={sc.dark && sc.position === "right" ? true : false}
+                  bgl={sc.dark && sc.position === "left" ? true : false}
+                  bgc={sc.dark && sc.position === "center" ? true : false}
+                  justify={
+                    sc.position === "left"
+                      ? "flex-start"
+                      : sc.position === "right"
+                      ? "flex-end"
+                      : sc.position === "center"
+                      ? "center"
+                      : ""
+                  }
+                  talign={
+                    sc.position === "left"
+                      ? "left"
+                      : sc.position === "right"
+                      ? "right"
+                      : sc.position === "center"
+                      ? "center"
+                      : ""
+                  }
+                  align="center"
+                  className={sc.dark ? "dark" : ""}
+                >
+                  <div className="overlay-content">
+                    <div className="title-container">
+                      <h1 className="title">{sc.title}</h1>
 
-                    <div className="title_logo">
-                      <DImage objFit="contain" height="65px" width="65px">
-                        <img src="https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png" />
-                      </DImage>
+                      <div className="title_logo">
+                        <DImage objFit="contain" height="65px" width="65px">
+                          <img src="https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png" />
+                        </DImage>
+                      </div>
                     </div>
-                  </div>
 
-                  <h3 className="subtitle">{sc.subtitle}</h3>
-                  <p className="paragraph">{sc.paragraph}</p>
-                  <JButton
-                    className={sc.dark ? "dark" : ""}
-                    dark={sc.dark ? true : false}
-                  >
-                    Book Appointment
-                    <Link to="/appointment" />
-                  </JButton>
-                </div>
-              </Overlay>
-              <MouseScroll
-                onClick={scrollDown}
-                inverted={sc.dark ? true : false}
-              />
-            </DShowCase>
+                    <h3 className="subtitle">{sc.subtitle}</h3>
+                    <p className="paragraph">{sc.paragraph}</p>
+                    <JButton
+                      className={sc.dark ? "dark" : ""}
+                      dark={sc.dark ? true : false}
+                    >
+                      Book Appointment
+                      <Link to="/appointment" />
+                    </JButton>
+                  </div>
+                </Overlay>
+                <MouseScroll
+                  onClick={scrollDown}
+                  inverted={sc.dark ? true : false}
+                />
+              </DShowCase>
+            </div>
           ))}
         </Slider>
       )}

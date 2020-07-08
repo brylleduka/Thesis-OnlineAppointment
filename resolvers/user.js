@@ -254,7 +254,7 @@ module.exports = {
 
           process.env.EMAIL_KEY,
           {
-            expiresIn: "12h",
+            expiresIn: "45m",
           },
           (err, emailToken) => {
             const url = `https://www.zessencefacialandspa.com/account_verification/${emailToken}`;
@@ -298,7 +298,7 @@ module.exports = {
 
           process.env.EMAIL_KEY,
           {
-            expiresIn: "12h",
+            expiresIn: "20m",
           },
           (err, emailToken) => {
             const url = `https://www.zessencefacialandspa.com/account_reset_password/${emailToken}`;

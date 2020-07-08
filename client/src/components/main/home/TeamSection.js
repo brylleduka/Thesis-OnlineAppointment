@@ -4,15 +4,18 @@ import { FETCH_EMPLOYEES_NOT_ADMIN_QUERY } from "../../../util/graphql/employee"
 
 import { HashLink as Link } from "react-router-hash-link";
 import { DGrid, DSection, Content } from "../../styled/containers";
-import { JCard4 } from "../../styled/card";
-
+import { JCard4, JCard3 } from "../../styled/card";
+import { Modal } from "semantic-ui-react";
+import Slider from "react-slick";
 import Spinner from "../../Spinner";
 import parser from "html-react-parser";
 import ReadMore from "../utils/ReadMore";
 import FancyText from "../../FancyText";
+import TeamDetails from "../about/TeamDetails";
 
-const TeamSection = ({ cards }) => {
+const TeamSection = () => {
   const [employeesAR, setEmployeesAR] = useState([]);
+  const [openAesthetician, setOpenAesthetician] = useState(false);
 
   const {
     data: data_employeesAR,
@@ -32,7 +35,7 @@ const TeamSection = ({ cards }) => {
   }, [data_employeesAR]);
 
   if (error) {
-    return <p>Oops!</p>;
+    return <Spinner />;
   }
 
   return (
@@ -46,58 +49,29 @@ const TeamSection = ({ cards }) => {
       margin="48px auto"
     >
       <FancyText size="28px">Our Team</FancyText>
-      {loading_employeesAR ? (
-        <Spinner />
-      ) : (
-        <DGrid three gap="25px">
-          {employeesAR &&
-            employeesAR.map((employee) => (
-              <Content
-                margin="0 auto"
-                width="90%"
-                height="100%"
-                key={employee._id}
-              >
-                <JCard4 data-emp={employee._id} key={employee._id}>
-                  <div className="profile-image">
-                    <img
-                      src={
-                        employee.imageURL !== null
-                          ? employee.imageURL
-                          : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png"
-                      }
-                      alt={employee.photo}
-                    />
-                  </div>
-                  <figcaption>
-                    <h4>
-                      {employee.title} {employee.firstName} {employee.lastName}
-                    </h4>
-                    <h4>{employee.role}</h4>
-                    <p>
-                      {employee.bio.length > 100
-                        ? parser(employee.bio.substr(0, 100) + "...")
-                        : parser(employee.bio.substr(0, 100))}
-                    </p>
-                    <ReadMore
-                      hover={0}
-                      style={{
-                        position: "absolute",
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                      }}
-                    >
-                      Read More
-                    </ReadMore>
-                  </figcaption>
-                  <Link to="/about" className="linkToPage" />
-                </JCard4>
-              </Content>
-            ))}
-        </DGrid>
-      )}
+      <Content height="100vh" width="100%" margin="0 auto">
+        {loading_employeesAR ? (
+          <Spinner />
+        ) : (
+          <Slider {...settings}>
+            {employeesAR &&
+              employeesAR.map((employee) => (
+                <div className="slider_holder" key={employee._id}>
+                  <TeamDetails key={employee._id} employee={employee} />
+                </div>
+              ))}
 
+            {/* <DGrid three gap="25px">
+            {employeesAR &&
+              employeesAR.map((employee) => (
+                <>
+                  <TeamDetails key={employee._id} employee={employee} />
+                </>
+              ))}
+          </DGrid> */}
+          </Slider>
+        )}
+      </Content>
       <Link to="/about/#team" className="btn btn-blue">
         Learn More
       </Link>
@@ -105,16 +79,40 @@ const TeamSection = ({ cards }) => {
   );
 };
 
-const styles = {
-  dloading: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-    width: "250px",
-    lineHeight: 2,
-    margin: "0 auto",
-  },
+// const styles = {
+//   dloading: {
+//     display: "flex",
+//     justifyContent: "center",
+//     alignItems: "center",
+//     flexDirection: "column",
+//     width: "250px",
+//     lineHeight: 2,
+//     margin: "0 auto",
+//   },
+// };
+
+const settings = {
+  dots: false,
+  infinite: true,
+  speed: 500,
+  slidesToScroll: 3,
+  slidesToShow: 3,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToScroll: 1,
+        slidesToShow: 1,
+      },
+    },
+    {
+      breakpoint: 768,
+      settings: {
+        slidesToScroll: 1,
+        slidesToShow: 1,
+      },
+    },
+  ],
 };
 
 export default TeamSection;

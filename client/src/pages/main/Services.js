@@ -60,8 +60,9 @@ const Services = () => {
       {scrolling && <ScrollButton scrollPx="100" delay="16.66" />}
       <DSection
         background={
-          isShowcase[0] !== undefined ? isShowcase[0].bgImgURL :
-          "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+          isShowcase[0] !== undefined
+            ? isShowcase[0].bgImgURL
+            : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
         }
         height="85vh"
         fixed
@@ -138,7 +139,7 @@ const Services = () => {
                       src={
                         category.imageURL !== null
                           ? category.imageURL
-                          : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png"
+                          : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/smiling-woman-with-touching-her-cheek-3762185.jpg"
                       }
                       alt={category.name}
                     />

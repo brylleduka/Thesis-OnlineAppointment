@@ -53,7 +53,7 @@ const CategoryCards = ({ gridCount }) => {
                     src={
                       category.imageURL !== null
                         ? category.imageURL
-                        : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/logo.png"
+                        : "https://zessencefacial.s3-ap-southeast-1.amazonaws.com/global/smiling-woman-with-touching-her-cheek-3762185.jpg"
                     }
                     alt={category.name}
                   />

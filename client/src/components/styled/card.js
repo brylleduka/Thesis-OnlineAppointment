@@ -336,6 +336,16 @@ export const JCard3 = styled.div`
       color: #a2a2a2;
       margin-top: 5px;
     }
+    ul {
+      list-style-type: square;
+      padding-left: 20px;
+    }
+    ul li {
+      line-height: 1.2;
+      font-size: 0.95rem;
+      font-weight: 300;
+      text-transform: capitalize;
+    }
 
     p {
       position: relative;
@@ -360,9 +370,10 @@ export const JCard3 = styled.div`
 export const JCard4 = styled.figure`
   position: relative;
   margin: 10px auto;
+
+  width: ${(props) => (props.width ? props.width : "90%")};
   min-width: 90%;
   max-width: 315px;
-  width: 100%;
   height: ${(props) => props.height && props.height};
   color: #000000;
   text-align: center;
@@ -397,7 +408,6 @@ export const JCard4 = styled.figure`
   }
 
   &:hover {
-    cursor: pointer;
     .profile-image {
       border-color: #2193b0;
     }
@@ -415,7 +425,7 @@ export const JCard4 = styled.figure`
 
   figcaption {
     position: relative;
-    width: 100%;
+    width: 90%;
     height: 300px;
     background-color: #ffffff;
     color: #555;

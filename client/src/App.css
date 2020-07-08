@@ -15,6 +15,19 @@ body {
   letter-spacing: 1px;
   width: 100%;
 }
+
+.slider_holder {
+  border: none;
+  outline: none;
+}
+.slider_holder:focus {
+  border: none;
+  outline: none;
+}
+.slider_holder:active {
+  border: none;
+  outline: none;
+}
 .modalBgPrint {
   background-color: blue !important;
 }
