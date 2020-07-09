@@ -34,7 +34,16 @@ module.exports = {
   Mutation: {
     register: async (
       _,
-      { userInput: { firstName, lastName, email, password, confirmPassword } }
+      {
+        userInput: {
+          firstName,
+          lastName,
+          contact,
+          email,
+          password,
+          confirmPassword,
+        },
+      }
     ) => {
       try {
         //Validating Inputs
@@ -44,9 +53,15 @@ module.exports = {
           firstName,
           lastName,
           email,
+          contact,
           password,
           confirmPassword
         );
+
+        if (!valid) {
+          console.log(errors);
+          throw new UserInputError("Input Error", { errors });
+        }
 
         if (existingUser) {
           console.log("existing user");
@@ -54,17 +69,19 @@ module.exports = {
           throw new UserInputError("Error", { errors });
         }
 
-        if (!valid) {
-          console.log(errors);
-          throw new UserInputError("Input Error", { errors });
-        }
+       
 
+        if (password.length < 1 || confirmPassword.length < 1) {
+          errors.pwdEmpty = "Password must not be empty";
+          throw new UserInputError("Error", { errors });
+        }
         const hashedPassword = await bcrypt.hash(password, 12);
 
         const newUser = new User({
           firstName,
           lastName,
           email,
+          contact,
           password: hashedPassword,
           active: false,
         });

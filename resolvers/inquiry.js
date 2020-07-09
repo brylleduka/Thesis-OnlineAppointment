@@ -2,6 +2,7 @@ const Inquiry = require("../models/Inquiry");
 const transportMail = require("../utils/transportMail");
 const { UserInputError } = require("apollo-server-express");
 const { validateInquiry } = require("../utils/validators");
+const { https } = require("follow-redirects");
 
 module.exports = {
   Query: {
@@ -58,6 +59,43 @@ module.exports = {
         subject,
         message,
       });
+
+      // SMS
+
+      // const options = {
+      //   method: "POST",
+      //   hostname: "api.sms.to",
+      //   path: "/sms/send",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Authorization: "Bearer QMh7cA9Ej3MAuYCfxvd1iOAkdmsMnHAr",
+      //   },
+      //   maxRedirects: 20,
+      // };
+
+      // const req = https.request(options, function (res) {
+      //   let chunks = [];
+
+      //   res.on("data", function (chunk) {
+      //     chunks.push(chunk);
+      //   });
+
+      //   res.on("end", function (chunk) {
+      //     const body = Buffer.concat(chunks);
+      //     console.log(body.toString());
+      //   });
+
+      //   res.on("error", function (error) {
+      //     console.error(error);
+      //   });
+      // });
+
+      // const postData =
+      //   '{\n    "message": "This is test",\n    "to": "+639062319593",\n    "sender_id": "SMSto",\n    "callback_url": "https://example.com/callback/handler"\n}';
+
+      // req.write(postData);
+
+      // req.end();
 
       await newInquiry.save();
 

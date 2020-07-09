@@ -8,6 +8,7 @@ const moment = require("moment");
 const jwt = require("jsonwebtoken");
 const transportMail = require("../utils/transportMail");
 const bcrypt = require("bcryptjs");
+const { https } = require("follow-redirects");
 
 module.exports = {
   Query: {
@@ -289,6 +290,7 @@ module.exports = {
         const userInfo = await User.findOne({ _id: user });
         const userEmail = userInfo.email;
         const userName = `${userInfo.firstName} ${userInfo.lastName}`;
+        const userContact = userInfo.contact;
 
         const checkAppointment = await Appointment.findOne({
           user,

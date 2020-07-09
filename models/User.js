@@ -14,7 +14,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    contact: Number,
+    contact: String,
     email: {
       type: String,
       required: true,

@@ -5,11 +5,26 @@ const validateUserCreateInput = (
   firstName,
   lastName,
   email,
+  contact,
   password,
   confirmPassword
 ) => {
-  const errors = {};
+  let errors = {};
 
+  // if (
+  //   firstName &&
+  //   firstName.trim() === "" &&
+  //   lastName &&
+  //   lastName.trim() === "" &&
+  //   email &&
+  //   email.trim() === "" &&
+  //   password &&
+  //   password === "" &&
+  //   confirmPassword &&
+  //   confirmPassword === ""
+  // ) {
+  //   errors.fullEmpty = "Fields must not be empty";
+  // } else {
   if (firstName && firstName.trim() === "") {
     errors.firstName = "First name must not be empty";
   }
@@ -26,21 +41,30 @@ const validateUserCreateInput = (
     errors.emailX = "Email must be a valid  email address";
   }
 
-  if (password && password === "") {
+  if (contact && contact.length > 10) {
+    errors.contactLength = "Please input your 10 digits of your contact number";
+  }
+
+  if (contact && !contact.match(regexNum)) {
+    errors.contact = "Contact must contain numbers only";
+  }
+
+  if (password && password.trim() === "") {
     errors.password = "Password must not be empty";
   }
 
-  if (confirmPassword && confirmPassword === "") {
+  if (confirmPassword && confirmPassword.trim() === "") {
     errors.confirmPasswordEmpty = "Password must not be empty";
   }
 
-  if (password && password.length <= 6) {
+  if (password && password.length <= 6 && password.length > 1) {
     errors.pwdShort = "Password must be greater than six characters";
   }
 
   if ((password && password) !== (confirmPassword && confirmPassword)) {
     errors.confirmPassword = "Passwords do not match";
   }
+  // }
 
   return {
     errors,

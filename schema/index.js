@@ -275,6 +275,7 @@ const typeDefs = gql`
   input UserInput {
     firstName: String!
     lastName: String!
+    contact: String
     email: String!
     password: String!
     confirmPassword: String!
@@ -435,7 +436,7 @@ const typeDefs = gql`
 
   type Mutation {
     # AUTH
-    userLogin(email: String, password: String): User
+    userLogin(email: String!, password: String!): User!
     employeeLogin(empId: String!, password: String!): Employee
 
     # APPOINTMENTS
@@ -487,7 +488,7 @@ const typeDefs = gql`
     cancelWalkinAppointment(_id: ID!, note: String): WalkinAppointment
 
     #USERS
-    register(userInput: UserInput): User
+    register(userInput: UserInput!): User!
     accountVerification(_id: ID!): Boolean
     resendVerifyEmail(email: String): Boolean
     forgotPassword(email: String): Boolean

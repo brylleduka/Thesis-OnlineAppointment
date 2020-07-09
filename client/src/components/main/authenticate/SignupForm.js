@@ -19,6 +19,7 @@ const SignupForm = () => {
     firstName: "",
     lastName: "",
     email: "",
+    contact: "",
     password: "",
     confirmPassword: "",
   });
@@ -32,9 +33,10 @@ const SignupForm = () => {
       history.push(`/account_created/${res._id}`);
     },
     onError(err) {
-      // if (err) {
-      setErrors(err.graphQLErrors[0].extensions.exception.errors);
-      // }
+      if (err) {
+        setErrors(err.graphQLErrors[0].extensions.exception.errors);
+      }
+      console.log(err.graphQLErrors[0].extensions.exception.errors);
     },
   });
 
@@ -43,7 +45,7 @@ const SignupForm = () => {
       register();
     } else {
       toaster.notify(({ onClose }) => (
-        <Toasted warning onClick={onClose}>
+        <Toasted alert onClick={onClose}>
           Agreeing to our terms and conditions in order to proceed.
         </Toasted>
       ));
@@ -64,12 +66,11 @@ const SignupForm = () => {
             <label>First Name</label>
             {errors.firstName && (
               <Label basic color="red" style={{ border: "none" }}>
-                {errors.firstName}
+                {errors.firstName.message && "First name must not be empty"}
               </Label>
             )}
 
             <Input
-              type="text"
               name="firstName"
               value={values.firstName}
               onChange={handleChange}
@@ -82,11 +83,10 @@ const SignupForm = () => {
             <label>Last Name</label>
             {errors.lastName && (
               <Label basic color="red" style={{ border: "none" }}>
-                {errors.lastName}
+                {errors.lastName.message && "Last name must not be empty"}
               </Label>
             )}
             <Input
-              type="text"
               name="lastName"
               value={values.lastName}
               onChange={handleChange}
@@ -95,27 +95,59 @@ const SignupForm = () => {
             />
           </Form.Field>
         </Form.Group>
-        <Form.Field
-          error={
-            errors.email || errors.emailX || errors.userTaken ? true : false
-          }
-        >
-          <label>Email</label>
-          {errors.email || errors.emailX || errors.userTaken ? (
-            <Label basic color="red" style={{ border: "none" }}>
-              {errors.email || errors.emailX || errors.userTaken}
-            </Label>
-          ) : (
-            ""
-          )}
-          <Input
-            type="email"
-            name="email"
-            value={values.email}
-            onChange={handleChange}
-            placeholder="example@example.com"
-          />
-        </Form.Field>
+        <Form.Group widths="equal">
+          <Form.Field
+            error={
+              errors.email || errors.emailX || errors.userTaken ? true : false
+            }
+          >
+            <label>Email</label>
+            {errors.email || errors.emailX || errors.userTaken ? (
+              <Label basic color="red" style={{ border: "none" }}>
+                {(errors.email && "Email must not be empty") ||
+                  errors.emailX ||
+                  errors.userTaken}
+              </Label>
+            ) : (
+              ""
+            )}
+            <Input
+              type="email"
+              name="email"
+              value={values.email}
+              onChange={handleChange}
+              placeholder="example@example.com"
+            />
+          </Form.Field>
+
+          <Form.Field
+            error={errors.contact || errors.contactLength ? true : false}
+          >
+            <label>Contact</label>
+
+            {values.contact.trim() === "" ? (
+              ""
+            ) : !values.contact.match(/^\d+$/) ||
+              values.contact.length !== 10 ? (
+              <Label basic color="red" style={{ border: "none" }}>
+                {(!values.contact.match(/^\d+$/) &&
+                  "Must contain numbers only") ||
+                  (values.contact.length !== 10 &&
+                    "Please enter your 10 digit contact numbers")}
+              </Label>
+            ) : (
+              ""
+            )}
+
+            <Input
+              label="+63"
+              name="contact"
+              value={values.contact}
+              onChange={handleChange}
+              placeholder="9361234789"
+            />
+          </Form.Field>
+        </Form.Group>
 
         <Form.Field
           error={
@@ -126,9 +158,9 @@ const SignupForm = () => {
         >
           <label>Password</label>
 
-          {errors.password || errors.pwdShort || errors.confirmPassword ? (
+          {errors.pwdEmpty || errors.pwdShort || errors.confirmPassword ? (
             <Label basic color="red" style={{ border: "none" }}>
-              {errors.password || errors.pwdShort || errors.confirmPassword}
+              {errors.pwdEmpty || errors.pwdShort || errors.confirmPassword}
             </Label>
           ) : (
             ""
@@ -148,9 +180,9 @@ const SignupForm = () => {
           }
         >
           <label>Confirm Password</label>
-          {errors.confirmPasswordEmpty || errors.confirmPassword ? (
+          {errors.pwdEmpty || errors.confirmPassword ? (
             <Label basic color="red" style={{ border: "none" }}>
-              {errors.confirmPasswordEmpty || errors.confirmPassword}
+              {errors.pwdEmpty || errors.confirmPassword}
             </Label>
           ) : (
             ""
@@ -192,6 +224,16 @@ const SignupForm = () => {
           size="3rem"
           fSize="18px"
           text="uppercase"
+          // disabled={
+          //   (values.firstName.trim() === "" &&
+          //     values.lastName.trim() === "" &&
+          //     values.email.trim() === "" &&
+          //     values.password.trim() === "" &&
+          //     values.confirmPassword.trim() === "") ||
+          //   !isTermsChecked
+          //     ? true
+          //     : null
+          // }
         >
           {loading ? (
             <Dimmer active style={{ background: "transparent" }}>
@@ -224,6 +266,7 @@ const REGISTER_USER = gql`
     $firstName: String!
     $lastName: String!
     $email: String!
+    $contact: String
     $password: String!
     $confirmPassword: String!
   ) {
@@ -232,6 +275,7 @@ const REGISTER_USER = gql`
         firstName: $firstName
         lastName: $lastName
         email: $email
+        contact: $contact
         password: $password
         confirmPassword: $confirmPassword
       }
