@@ -63,7 +63,7 @@ const MyAppointmentHistory = () => {
       selector: "date",
 
       sortable: true,
-      format: (row) => `${moment(parseInt(row.date)).format("LL")}`,
+      format: (row) => `${moment(row.date).format("LL")}`,
     },
     {
       name: "Status",

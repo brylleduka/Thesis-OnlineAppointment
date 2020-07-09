@@ -8,11 +8,14 @@ import { Popup, Icon } from "semantic-ui-react";
 import Spinner from "../../Spinner";
 import moment from "moment";
 import CurrentAppointModal from "./CurrentAppointModal";
+import CancelAppoint from "./CancelAppoint";
 
 const CurrentAppointment = () => {
   const [open, setOpen] = useState(false);
+  const [isCancelOpen, setIsCancelOpen] = useState(false);
   const [isPop, setIsPop] = useState(false);
   const [currentAppoint, setCurrentAppoint] = useState([]);
+  const [isAppointID, setIsAppointID] = useState("");
 
   const handlePop = () => {
     setIsPop(!isPop);
@@ -27,6 +30,10 @@ const CurrentAppointment = () => {
       setCurrentAppoint(currentAppointData.myCurrentAppointment);
     }
   }, [currentAppointData]);
+
+  const handleHover = (e) => {
+    setIsAppointID(e.currentTarget.dataset.appointid);
+  };
 
   const columns = [
     {
@@ -83,7 +90,18 @@ const CurrentAppointment = () => {
       name: "Actions",
       right: true,
       cell: (row) => (
-        <>
+        <Content
+          flex
+          margin="0 auto"
+          align="center"
+          justify="center"
+          width="100%"
+          height="100%"
+          pad="3px 0"
+          flow="row nowrap"
+          data-appointid={row._id}
+          onMouseOver={handleHover}
+        >
           <Popup
             trigger={
               <DButton onClick={() => setOpen(true)}>
@@ -96,12 +114,19 @@ const CurrentAppointment = () => {
             position="left center"
             size="tiny"
           />
-          <CurrentAppointModal
-            appointId={row._id}
-            open={open}
-            setOpen={setOpen}
+          <Popup
+            trigger={
+              <DButton alert onClick={() => setIsCancelOpen(true)}>
+                <Icon name="ban" fitted />
+              </DButton>
+            }
+            mouseEnterDelay={500}
+            mouseLeaveDelay={500}
+            content="View detailed appointment info."
+            position="left center"
+            size="tiny"
           />
-        </>
+        </Content>
       ),
     },
   ];
@@ -130,6 +155,16 @@ const CurrentAppointment = () => {
         }
         highlightOnHover
         pointerOnHover
+      />
+      <CurrentAppointModal
+        appointId={isAppointID}
+        open={open}
+        setOpen={setOpen}
+      />
+      <CancelAppoint
+        appointmentId={isAppointID}
+        isCancelOpen={isCancelOpen}
+        setIsCancelOpen={setIsCancelOpen}
       />
     </Content>
   );

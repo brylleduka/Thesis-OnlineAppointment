@@ -21,21 +21,21 @@ const CancelAppoint = ({ isCancelOpen, setIsCancelOpen, appointmentId }) => {
         appointmentId,
         note: isNote.trim() !== "" ? isNote : "",
       },
-      refetchQueries: [{ query: FETCH_MY_CURRENT_APPOINTMENTS }],
-      onCompleted(data) {
+      // refetchQueries: [{ query: FETCH_MY_CURRENT_APPOINTMENTS }],
+      onCompleted() {
         setIsCancelOpen(false);
         toaster.notify("Appointment Cancelled", { position: "bottom-right" });
       },
-      onError(err) {
-        setIsCancelOpen(false);
-        // setErrors(err.graphQLErrors[0].extensions.exception.errors);
+      // onError(err) {
+      //   setIsCancelOpen(false);
+      //   // setErrors(err.graphQLErrors[0].extensions.exception.errors);
 
-        toaster.notify(({ onClose }) => (
-          <Toasted alert onClick={onClose}>
-            Something went wrong
-          </Toasted>
-        ));
-      },
+      //   toaster.notify(({ onClose }) => (
+      //     <Toasted alert onClick={onClose}>
+      //       Something went wrong
+      //     </Toasted>
+      //   ));
+      // },
     }
   );
 
@@ -86,31 +86,32 @@ const CancelAppoint = ({ isCancelOpen, setIsCancelOpen, appointmentId }) => {
 
 const CANCEL_APPOINTMENT_MUTATION = gql`
   mutation cancelAppointment($appointmentId: ID!, $note: String) {
-    cancelAppointment(_id: $appointmentId, note: $note) {
-      _id
-      date
-      slot_start
-      status
-      note
-      message
+    cancelAppointment(_id: $appointmentId, note: $note)
+    #  {
+    #   _id
+    #   date
+    #   slot_start
+    #   status
+    #   note
+    #   message
 
-      # user {
-      #   _id
-      #   firstName
-      #   lastName
-      # }
-      # employee {
-      #   _id
-      #   empId
-      #   firstName
-      #   lastName
-      # }
-      # service {
-      #   _id
-      #   name
-      #   duration
-      # }
-    }
+    #   # user {
+    #   #   _id
+    #   #   firstName
+    #   #   lastName
+    #   # }
+    #   # employee {
+    #   #   _id
+    #   #   empId
+    #   #   firstName
+    #   #   lastName
+    #   # }
+    #   # service {
+    #   #   _id
+    #   #   name
+    #   #   duration
+    #   # }
+    # }
   }
 `;
 

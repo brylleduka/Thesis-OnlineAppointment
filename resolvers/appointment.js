@@ -9,6 +9,7 @@ const jwt = require("jsonwebtoken");
 const transportMail = require("../utils/transportMail");
 const bcrypt = require("bcryptjs");
 const { https } = require("follow-redirects");
+const Nexmo = require("nexmo");
 
 module.exports = {
   Query: {
@@ -386,6 +387,19 @@ module.exports = {
           }
         );
 
+        if (userContact) {
+          const nexmo = new Nexmo({
+            apiKey: "db47cee1",
+            apiSecret: "K3yqI72Vi4zIMoGd",
+          });
+
+          const from = "Z Essence";
+          const to = `63${userContact}`;
+          const text = `Hello ${userInfo.firstName}! Thank you for making an appointment with us.Please visit your account or check your email to see details of your appointment. Z Essence Facial and Spa`;
+
+          nexmo.message.sendSms(from, to, text);
+        }
+
         return result;
       } catch (err) {
         throw err;
@@ -429,18 +443,18 @@ module.exports = {
           time,
         });
 
-        return result;
+        return true;
       } catch (err) {
         throw err;
       }
     },
     cancelTheAppointment: async (_, { _id, note }) => {
       try {
-        const appointment = await Appointment.findById(_id);
+        const theappointment = await Appointment.findById(_id);
 
-        const userId = appointment.user;
-        const serviceId = appointment.service;
-        const employeeId = appointment.employee;
+        const userId = theappointment.user;
+        const serviceId = theappointment.service;
+        const employeeId = theappointment.employee;
 
         const userInfo = await User.findOne({ _id: userId });
         const userName = `${userInfo.firstName} ${userInfo.lastName}`;
@@ -451,10 +465,10 @@ module.exports = {
         const employee = await Employee.findById(employeeId);
         const employeeName = `${employee.title} ${employee.firstName} ${employee.lastName}`;
 
-        const date = appointment.date;
-        const time = appointment.slot_start;
+        const date = theappointment.date;
+        const time = theappointment.slot_start;
 
-        const result = await Appointment.updateOne(
+        const cancelResult = await Appointment.updateOne(
           { _id },
           { $set: { status: "CANCELLED", note } }
         );
@@ -472,7 +486,7 @@ module.exports = {
           time,
         });
 
-        return result;
+        return cancelResult;
       } catch (err) {
         throw err;
       }
@@ -491,6 +505,9 @@ module.exports = {
     },
     verifiedAppointment: async (_, { _id }) => {
       try {
+        // const appointmentInfo = await Appointment.findById(_id);
+        // const userId = appointmentInfo.user;
+
         const result = await Appointment.updateOne(
           { _id },
           { $set: { status: "VERIFIED" } }
