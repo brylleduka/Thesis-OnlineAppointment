@@ -224,16 +224,6 @@ const SignupForm = () => {
           size="3rem"
           fSize="18px"
           text="uppercase"
-          // disabled={
-          //   (values.firstName.trim() === "" &&
-          //     values.lastName.trim() === "" &&
-          //     values.email.trim() === "" &&
-          //     values.password.trim() === "" &&
-          //     values.confirmPassword.trim() === "") ||
-          //   !isTermsChecked
-          //     ? true
-          //     : null
-          // }
         >
           {loading ? (
             <Dimmer active style={{ background: "transparent" }}>
