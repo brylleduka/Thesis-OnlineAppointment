@@ -119,7 +119,6 @@ const AppointDate = ({
 
     diffDays.map((dfDay) => dayOffDays.push(dfDay));
 
-
     isCheckAppointments.map((occupied) =>
       appointmentTimes.push(occupied.slot_start)
     );

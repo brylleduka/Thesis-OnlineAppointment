@@ -16,7 +16,7 @@ const NewWalkinAppointment = ({ openWalkinAppoint, setOpenWalkinAppoint }) => {
   const [categoryValue, setCategoryValue] = useState("");
   const [serviceValue, setServiceValue] = useState("");
   const [employeeVal, setEmployeeVal] = useState("");
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState("");
   const [clientValues, setClientValues] = useState({
     firstName: "",

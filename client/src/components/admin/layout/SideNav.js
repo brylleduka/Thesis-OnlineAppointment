@@ -10,7 +10,7 @@ import {
   MapAlt,
 } from "@styled-icons/boxicons-solid";
 
-import { Gallery, Service } from "@styled-icons/remix-fill";
+import { Gallery, Service, Advertisement } from "@styled-icons/remix-fill";
 
 import {
   ShortText,
@@ -150,6 +150,15 @@ const SideNav = ({ isOpenMenu, handleOpenMenu }) => {
               <span>
                 <MapAlt size="16px" style={styles.ml} />
                 Contact
+              </span>
+            </NavLink>
+            <NavLink
+              to="/zeadmin/cms_promotion"
+              activeClassName="navlink-active"
+            >
+              <span>
+                <Advertisement size="16px" style={styles.ml} />
+                Promotion
               </span>
             </NavLink>
           </Accordion>

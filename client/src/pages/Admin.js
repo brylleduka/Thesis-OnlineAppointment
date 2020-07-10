@@ -34,6 +34,7 @@ import Gallery from "./admin/cms/Gallery";
 import Album from "./admin/cms/Album";
 import Contact from "./admin/cms/Contact";
 import Brand from "./admin/cms/Brand";
+import Promotion from "./admin/cms/Promotion";
 import Archive from "./admin/Archive";
 import Page404 from "../pages/Page404";
 
@@ -107,6 +108,11 @@ const Admin = () => {
           <PrivateRoute exact path="/zeadmin/cms_gallery" component={Gallery} />
           <PrivateRoute exact path="/zeadmin/album/:_id" component={Album} />
           <PrivateRoute exact path="/zeadmin/cms_contact" component={Contact} />
+          <PrivateRoute
+            exact
+            path="/zeadmin/cms_promotion"
+            component={Promotion}
+          />
           <PrivateRoute exact path="/zeadmin/archives" component={Archive} />
           <PrivateRoute
             exact

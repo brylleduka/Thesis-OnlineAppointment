@@ -21,9 +21,7 @@ const Appointment = () => {
   const [categoryValue, setCategoryValue] = useState("");
   const [serviceValue, setServiceValue] = useState("");
   const [employeeVal, setEmployeeVal] = useState("");
-  const [startDate, setStartDate] = useState(
-    new Date().setDate(new Date().getDate() + 1)
-  );
+  const [startDate, setStartDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState("");
 
   return (

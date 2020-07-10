@@ -331,7 +331,7 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
                 {appointmentInfo.appointment.status === "PENDING" ||
                 appointmentInfo.appointment.status === "VERIFIED" ? (
                   <>
-                    {/* {appointmentInfo.appointment.reschedule.new !== true && (
+                    {appointmentInfo.appointment.reschedule.new !== true && (
                       <ReschedModal
                         status={"PENDING"}
                         isAdmin={false}
@@ -339,16 +339,16 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
                         appointmentId={appointmentInfo.appointment._id}
                         diffHours={diffHours}
                       />
-                    )} */}
+                    )}
 
-                    {/* <DButton
+                    <DButton
                       alert
                       onClick={() => setIsCancelOpen(true)}
                       disabled={diffHours < 12 ? true : false}
                     >
                       Cancel
-                    </DButton> */}
-                    {/* <Popup
+                    </DButton>
+                    <Popup
                       inverted
                       trigger={
                         <QuestionMarkCircle
@@ -359,17 +359,17 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
                       mouseEnterDelay={500}
                       mouseLeaveDelay={500}
                       content="Cancellation and Rescheduling of appointment may place 12 hours before the scheduled appointment day. If you wish to still cancel or reschedule your appointment, you may call us on (+63) 926 652 4505. Thank you!"
-                    /> */}
+                    />
                   </>
                 ) : (
                   ""
                 )}
 
-                {/* <CancelAppoint
+                <CancelAppoint
                   setIsCancelOpen={setIsCancelOpen}
                   isCancelOpen={isCancelOpen}
                   appointmentId={appointmentInfo.appointment._id}
-                /> */}
+                />
               </Modal.Actions>
             </>
           )

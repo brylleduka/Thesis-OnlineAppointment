@@ -12,6 +12,7 @@ const testimonialResolvers = require("./testimonial");
 const galleryResolvers = require("./gallery");
 const contactResolvers = require("./contact");
 const brandResolvers = require("./brand");
+const promotionResolvers = require("./promotion");
 
 module.exports = {
   Query: {
@@ -29,6 +30,7 @@ module.exports = {
     ...contactResolvers.Query,
     ...brandResolvers.Query,
     ...walkinAppointmentResolvers.Query,
+    ...promotionResolvers.Query,
   },
   Mutation: {
     ...userResolvers.Mutation,
@@ -45,5 +47,6 @@ module.exports = {
     ...contactResolvers.Mutation,
     ...brandResolvers.Mutation,
     ...walkinAppointmentResolvers.Mutation,
+    ...promotionResolvers.Mutation,
   },
 };

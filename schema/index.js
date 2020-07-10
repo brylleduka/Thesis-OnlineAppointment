@@ -263,6 +263,19 @@ const typeDefs = gql`
     mobile: String
   }
 
+  type Promotion {
+    _id: ID
+    title: String
+    subtitle: String
+    description: String
+    photo: String
+    imageURL: String
+    bgColor: String
+    active: Boolean
+    createdAt: String
+    updatedAt: String
+  }
+
   # INPUTS
   input AppointmentInput {
     serviceId: ID!
@@ -432,6 +445,11 @@ const typeDefs = gql`
     brands: [Brand]
     brand(_id: ID): Brand
     brandActive: Brand
+
+    # PROMOTIONS
+    promotions: [Promotion]
+    promotionActives(active: Boolean): [Promotion]
+    promotion(_id: ID): Promotion
   }
 
   type Mutation {
@@ -662,6 +680,25 @@ const typeDefs = gql`
     addBrand(image: Upload): Brand
     updateActiveBrand(_id: ID): Brand
     deleteBrand(_id: ID): Brand
+
+    # PROMOTION
+    createPromotion(
+      title: String
+      subtitle: String
+      description: String
+      photo: Upload
+      bgColor: String
+    ): Promotion
+    promotionToggleActive(_id: ID): Promotion
+    promotionUpdate(
+      _id: ID
+      title: String
+      subtitle: String
+      description: String
+      photo: String
+      bgColor: String
+    ): Promotion
+    deletePromotion(_id: ID): Boolean
   }
 `;
 
