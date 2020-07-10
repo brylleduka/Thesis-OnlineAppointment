@@ -167,7 +167,7 @@ const ScheduleEmployee = ({ employee }) => {
                       <>
                         <div className="pretty p-default p-curve p-thick p-smooth p-toggle">
                           <Checkbox
-                            value="Sun"
+                            value="0"
                             disabled={isEditSched ? false : true}
                           />
                           <div className="state p-info-o p-on">
@@ -189,7 +189,7 @@ const ScheduleEmployee = ({ employee }) => {
                         </div>
                         <div className="pretty p-default p-curve p-thick p-smooth p-toggle">
                           <Checkbox
-                            value="Mon"
+                            value="1"
                             disabled={isEditSched ? false : true}
                           />
                           <div className="state p-info-o p-on">
@@ -211,7 +211,7 @@ const ScheduleEmployee = ({ employee }) => {
                         </div>
                         <div className="pretty p-default p-curve p-thick p-smooth p-toggle">
                           <Checkbox
-                            value="Tue"
+                            value="2"
                             disabled={isEditSched ? false : true}
                           />
                           <div className="state p-info-o p-on">
@@ -233,7 +233,7 @@ const ScheduleEmployee = ({ employee }) => {
                         </div>
                         <div className="pretty p-default p-curve p-thick p-smooth p-toggle">
                           <Checkbox
-                            value="Wed"
+                            value="3"
                             disabled={isEditSched ? false : true}
                           />
                           <div className="state p-info-o p-on">
@@ -255,7 +255,7 @@ const ScheduleEmployee = ({ employee }) => {
                         </div>
                         <div className="pretty p-default p-curve p-thick p-smooth p-toggle">
                           <Checkbox
-                            value="Thu"
+                            value="4"
                             disabled={isEditSched ? false : true}
                           />
                           <div className="state p-info-o p-on">
@@ -277,7 +277,7 @@ const ScheduleEmployee = ({ employee }) => {
                         </div>
                         <div className="pretty p-default p-curve p-thick p-smooth p-toggle">
                           <Checkbox
-                            value="Fri"
+                            value="5"
                             disabled={isEditSched ? false : true}
                           />
                           <div className="state p-info-o p-on">
@@ -299,7 +299,7 @@ const ScheduleEmployee = ({ employee }) => {
                         </div>
                         <div className="pretty p-default p-curve p-thick p-smooth p-toggle">
                           <Checkbox
-                            value="Sat"
+                            value="6"
                             disabled={isEditSched ? false : true}
                           />
                           <div className="state p-info-o p-on">

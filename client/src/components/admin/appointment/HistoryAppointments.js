@@ -23,11 +23,11 @@ const HistoryAppointments = ({ historyAppointments, loading }) => {
         (item.service && item.service.name.includes(filterText)) ||
         (item.employee && item.employee.lastName.includes(filterText)) ||
         (item.user && item.user.lastName.includes(filterText)) ||
-        moment(parseInt(item.date)).format("LL").includes(filterText) ||
+        moment(item.date).format("LL").includes(filterText) ||
         (
           item.status.toUpperCase() +
           "/" +
-          moment(parseInt(item.date)).format("LL").toUpperCase() +
+          moment(item.date).format("LL").toUpperCase() +
           "/" +
           item.status.toUpperCase()
         ).includes(filterText.toUpperCase()))

@@ -19,9 +19,10 @@ const AppointDate = ({
   employeeVal,
   serviceValue,
   calendarSize,
-  categoryValue,
 }) => {
+  let initialDays = ["0", "1", "2", "3", "4", "5", "6"];
   let days = [];
+  let dayOffDays = [];
   let times = [];
   let appointmentTimes = [];
   const [isEmp, setIsEmp] = useState({});
@@ -112,9 +113,12 @@ const AppointDate = ({
 
     isEmp.employee && isEmp.employee.schedule.day.map((d) => days.push(d));
 
-    // data_appointments.checkedAppointments.map((occcupied) =>
-    //   appointmentTimes.push(occcupied.slot_start)
-    // );
+    let diffDays = initialDays.filter((diffDay) => {
+      return !days.includes(diffDay);
+    });
+
+    diffDays.map((dfDay) => dayOffDays.push(dfDay));
+
 
     isCheckAppointments.map((occupied) =>
       appointmentTimes.push(occupied.slot_start)
@@ -148,7 +152,18 @@ const AppointDate = ({
     finalTime.map((ft) => times.push(ft));
   }
 
-  console.log(new Date(startDate).toLocaleDateString());
+  const isWeekday = (date) => {
+    const day = moment(date).day();
+    return (
+      day !== parseInt(dayOffDays[0]) &&
+      day !== parseInt(dayOffDays[1]) &&
+      day !== parseInt(dayOffDays[2]) &&
+      day !== parseInt(dayOffDays[3]) &&
+      day !== parseInt(dayOffDays[4]) &&
+      day !== parseInt(dayOffDays[5]) &&
+      day !== parseInt(dayOffDays[6])
+    );
+  };
 
   return (
     <DGrid two gap="10px">
@@ -157,6 +172,7 @@ const AppointDate = ({
           selected={startDate}
           minDate={new Date().setDate(new Date().getDate() + 1)}
           onChange={handleDateChanged}
+          filterDate={isWeekday}
           peekNextMonth
           showMonthDropdown
           showYearDropdown
