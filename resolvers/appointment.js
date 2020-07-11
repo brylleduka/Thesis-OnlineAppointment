@@ -368,8 +368,8 @@ module.exports = {
             expiresIn: "1d",
           },
           (err, emailToken) => {
-            // const url = `https://www.zessencefacialandspa.com/verified/${emailToken}`;
-            const url = `http://localhost:3000/verified/${emailToken}`;
+            const url = `http://www.zessencefacialandspa.com/verified/${emailToken}`;
+            // const url = `http://localhost:3000/verified/${emailToken}`;
 
             transportMail({
               from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
