@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { useForm } from "../../../util/hooks/useForm";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Form, Icon, Dimmer, Loader, Label, Input } from "semantic-ui-react";
 import { Content } from "../../styled/containers";
 import { DButton } from "../../styled/utils";
 import TermsConditionsModal from "./TermsConditionsModal";
 import toaster from "toasted-notes";
 import Toasted from "../../Toasted";
+import { HashLink as Link } from "react-router-hash-link";
 
 const SignupForm = () => {
   const [errors, setErrors] = useState({});
@@ -242,7 +243,7 @@ const SignupForm = () => {
             fontWeight: "700",
           }}
         >
-          <Link to="/login">
+          <Link to="/login/#log">
             Already have an account? Sign in <Icon name="arrow right" />
           </Link>
         </div>

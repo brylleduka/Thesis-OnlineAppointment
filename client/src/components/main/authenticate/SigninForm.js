@@ -3,11 +3,12 @@ import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { AuthContext } from "../../../context/auth";
 import { FETCH_MY_APPOINTMENTS } from "../../../util/graphql/appointment";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Form, Icon, Dimmer, Loader, Label, Input } from "semantic-ui-react";
 import { Content } from "../../styled/containers";
 import { DButton } from "../../styled/utils";
 import ResendVerify from "./ResendVerify";
+import { HashLink as Link } from "react-router-hash-link";
 
 const SigninForm = ({ handleIsRestPwdEmail }) => {
   const history = useHistory();
@@ -124,7 +125,7 @@ const SigninForm = ({ handleIsRestPwdEmail }) => {
               fontWeight: "700",
             }}
           >
-            <Link to="/signup">
+            <Link to="/signup/#reg">
               <Icon name="arrow left" />
               Don't have an account? Sign Up
             </Link>

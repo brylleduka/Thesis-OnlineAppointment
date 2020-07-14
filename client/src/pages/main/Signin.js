@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import SigninContent from "../../components/main/authenticate/SigninContent";
 import {
   Content,
@@ -8,13 +8,54 @@ import {
   DImage,
 } from "../../components/styled/containers";
 import useWindowSize from "../../util/hooks/useWindowSize";
+import MouseScroll from "../../components/MouseScroll";
+import { scrollView } from "../../util/useScrollDown";
 
 const Signin = (props) => {
   const { width: wid } = useWindowSize();
+  const content = useRef();
 
+  const scrollDown = () => {
+    scrollView(content);
+  };
   return (
     <DContainer>
-      <DSection width="100%" height="100%" flex center id="sign">
+      <DSection
+        background={
+          "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+        }
+        height="85vh"
+        fixed
+        id="log"
+      >
+        <Content
+          flex
+          justify="center"
+          direct="column"
+          align="center"
+          width="50%"
+          margin="0 auto"
+          height="100%"
+          style={{ minWidth: "90%", textAlign: "center" }}
+          className="dark"
+        >
+          <h1
+            style={{
+              fontSize: "28px",
+              letterSpacing: "1rem",
+              textTransform: "uppercase",
+              width: "70%",
+              margin: "0 auto",
+            }}
+          >
+            {"A beautiful day begins with a beautiful mindset."}
+          </h1>
+
+          <MouseScroll onClick={scrollDown} inverted />
+        </Content>
+        <Overlay bgc />
+      </DSection>
+      <DSection width="100%" height="100%" flex center id="sign" ref={content}>
         {wid > 768 && (
           <DSection
             height="100%"

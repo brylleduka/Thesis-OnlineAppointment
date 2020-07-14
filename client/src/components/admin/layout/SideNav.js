@@ -100,7 +100,7 @@ const SideNav = ({ isOpenMenu, handleOpenMenu }) => {
         <>
           {/* CMS ACCORDION */}
           <Accordion
-            title={"Content Manangement"}
+            title={"Content Management"}
             icon={<BookContent size="16px" />}
             hcolor="#fff"
             fs="14px"
