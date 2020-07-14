@@ -1,9 +1,10 @@
-@import url("https://fonts.googleapis.com/css?family=Playfair+Display:400,500|Quicksand:400,500,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400;1,700;1,900&family=Quicksand:wght@400;500;700&display=swap");
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: "Quicksand";
+
   /* font-family: 'Playfair Display', ; */
 }
 
@@ -35,7 +36,7 @@ body {
 /* END SCROLL STYLE */
 
 a {
-  color: #262626;
+  color: #203a43;
   text-decoration: none;
 }
 
@@ -60,16 +61,20 @@ ul {
   display: inline-block;
   border: 0;
   font-weight: bold;
-  padding: 10px 20px;
-  background-color: #71cbd2;
+  padding: 12px 22px;
+  background-color: #42d8f9;
   color: #fff !important;
-  font-size: 14px;
+  font-size: 18px !important;
   z-index: 2;
   border-radius: 5px;
 }
 
+.btn-rounded {
+  border-radius: 25px;
+}
+
 .btn-blue {
-  background-color: #71cbd2 !important;
+  background-color: #2193b0 !important;
 }
 .btn:hover {
   opacity: 0.9;

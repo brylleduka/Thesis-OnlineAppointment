@@ -6,7 +6,7 @@ export default function useScroll(scrollVal) {
   const scrollH = scrollVal !== undefined ? scrollVal : 100;
 
   useEffect(() => {
-    const onScroll = e => {
+    const onScroll = (e) => {
       setScrollTop(e.target.documentElement.scrollTop);
       setScrolling(e.target.documentElement.scrollTop > scrollH);
     };

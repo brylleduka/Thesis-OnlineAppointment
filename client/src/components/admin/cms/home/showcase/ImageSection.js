@@ -4,11 +4,10 @@ import {
   DImage,
   Content,
   DSection,
-  Overlay,
+  ShowcaseOverlay,
 } from "../../../../styled/containers";
 
 const ImageSection = ({
-  isDark,
   isPosition,
   isColor,
   preview,
@@ -34,42 +33,20 @@ const ImageSection = ({
           )}
         </DImage>
 
-        <Overlay
-          flex
-          bgr={isDark && isPosition === "right" ? true : false}
-          bgl={isDark && isPosition === "left" ? true : false}
-          bgc={isDark && isPosition === "center" ? true : false}
-          justify={
-            isPosition === "left"
-              ? "flex-start"
-              : isPosition === "right"
-              ? "flex-end"
-              : isPosition === "center"
-              ? "center"
-              : ""
-          }
-          talign={
-            isPosition === "left"
-              ? "left"
-              : isPosition === "right"
-              ? "right"
-              : isPosition === "center"
-              ? "center"
-              : ""
-          }
-          align="center"
-          className={isDark ? "dark" : ""}
+        <ShowcaseOverlay
+          titleSize="58px"
+          greetSize="18px"
+          paragSize="14px"
+          bgr={isPosition === "right" ? true : null}
+          bgl={isPosition === "left" ? true : null}
+          bgc={isPosition === "center" ? true : null}
         >
           <div className="overlay-content">
-            <h3>{values.title ? values.title : "TITLE"}</h3>
-            <h4>{values.subtitle ? values.subtitle : "SUBTITLE"}</h4>
-            <p className="ps">
-              {values.paragraph
-                ? values.paragraph
-                : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec posuere ante orci, at interdum nunc maximus eu. Pellentesque tempus est ligula, sit ame"}
-            </p>
+            <h3 className="greeting">{values.subtitle}</h3>
+            <h1 className="title">{values.title}</h1>
+            <p className="content">{values.paragraph}</p>
           </div>
-        </Overlay>
+        </ShowcaseOverlay>
       </DSection>
 
       <Content width="80%" margin="0 auto" flex justify="center" align="center">

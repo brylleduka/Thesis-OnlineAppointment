@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 // import { AuthContext } from "../../context/auth";
 
 import AppointDate from "../../../components/main/appointment/AppointDate";
@@ -13,10 +13,14 @@ import {
 import { DButton } from "../../../components/styled/utils";
 import Confirmation from "../../../components/main/appointment/Confirmation";
 import useWindowSize from "../../../util/hooks/useWindowSize";
+import useScroll from "../../../util/hooks/useScroll";
+import MouseScroll from "../../../components/MouseScroll";
+import { scrollView } from "../../../util/useScrollDown";
 
 const Appointment = () => {
   const { width: wid } = useWindowSize();
   const [open, setOpen] = useState(false);
+  const content = useRef();
 
   const [categoryValue, setCategoryValue] = useState("");
   const [serviceValue, setServiceValue] = useState("");
@@ -24,10 +28,14 @@ const Appointment = () => {
   const [startDate, setStartDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState("");
 
+  const scrollDown = () => {
+    scrollView(content);
+  };
+
   return (
     <DContainer>
       <DSection
-        height="40vh"
+        height="85vh"
         background={
           "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
         }
@@ -38,17 +46,40 @@ const Appointment = () => {
         width="100%"
         direct="column"
       >
-        <h1 style={{ margin: "24px" }}>Make an Appointment Now</h1>
-        <p
-          style={{
-            width: "90%",
-            margin: "0 auto",
-            textAlign: "center",
-            fontSize: "13px",
-          }}
+        <Content
+          flex
+          justify="center"
+          direct="column"
+          align="center"
+          width="50%"
+          margin="0 auto"
+          height="100%"
+          style={{ minWidth: "90%", textAlign: "center" }}
+          className="dark"
         >
-          Great skin doesn't happen by chance. It happens by Appointment
-        </p>
+          <h1
+            style={{
+              fontSize: "38px",
+              letterSpacing: "1rem",
+              textTransform: "uppercase",
+            }}
+          >
+            {"Make an appoint now"}
+          </h1>
+
+          <p
+            style={{
+              fontSize: "18px",
+              textAlign: "center",
+              letterSpacing: "0.75rem",
+            }}
+          >
+            Great skin doesn't happen by chance. It happens by Appointment
+          </p>
+
+          <MouseScroll onClick={scrollDown} inverted />
+        </Content>
+        <Overlay bgc />
       </DSection>
       <DSection
         flex
@@ -57,6 +88,7 @@ const Appointment = () => {
         width="90%"
         height="100%"
         margin="24px auto"
+        ref={content}
       >
         {/* <DGrid two> */}
         {/* <DSection

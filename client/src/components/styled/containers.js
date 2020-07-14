@@ -20,19 +20,19 @@ export const DContainer = styled.div`
   width: 100%;
   margin: auto;
   background: rgba(242, 242, 242, 0.2);
-  margin-top: 12vh;
+  // margin-top: 12vh;
 `;
 
 export const DShowCase = styled.div`
   width: 100%;
-
   height: ${(props) => (props.height ? props.height : "100vh")};
   position: relative;
   background: ${(props) => props.bgcolor && props.bgcolor};
   background-image: url(${(props) => props.background && props.background});
   background-repeat: no-repeat;
-  background-position: calc(100% - 20%) calc(100% + 20vh);
-  background-size: cover;
+  // background-position: calc(100% - 20%) calc(100% + 20vh);
+  background-position: center;
+  background-size: ${(props) => (props.bgSize ? props.bgSize : "cover")};
   background-attachment: fixed;
 
   display: flex;
@@ -47,13 +47,10 @@ export const DShowCase = styled.div`
     object-fit: cover;
   }
 
-  @media (max-width: 1024px) {
-    background-position: calc(100% - 30%) calc(100%);
-  }
+
 
   @media (max-width: 768px) {
     width: 100%;
-    background-position: calc(100% - 30%) calc(100%);
     align-items: center;
     text-align: center;
 
@@ -73,6 +70,99 @@ export const DShowCase = styled.div`
       margin-left: 0px;
       font-size: 14px;
       padding: 0.5em 0.8em;
+    }
+  }
+`;
+
+export const ShowcaseOverlay = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: ${(props) =>
+    props.bg
+      ? props.bg
+      : props.bgr
+      ? "linear-gradient(270deg, rgba(0,0,0,0.4) 48%, rgba(255,255,255,0.09007352941176472) 100%)"
+      : props.bgl
+      ? "linear-gradient(90deg, rgba(0,0,0,0.4) 48%, rgba(255,255,255,0.09007352941176472) 100%)"
+      : props.bgc
+      ? "rgba(0,0,0,0.4)"
+      : "rgba(0, 0, 0, 0)"};
+  border-radius: inherit;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: ${(props) => (props.pad ? props.pad : "2rem")};
+  margin: 0 auto;
+  overflow: hidden;
+
+  .overlay-content {
+    display: flex;
+    justify-content: center;
+    align-items: ${(props) =>
+      props.bgl
+        ? "flex-start"
+        : props.bgr
+        ? "flex-end"
+        : props.bgc
+        ? "center"
+        : "flex-start"};
+    flex-direction: column;
+    width: 80%;
+    height: auto;
+
+    .greeting {
+      font-size: ${(props) => (props.greetSize ? props.greetSize : "22px")};
+      font-family: "Merriweather", serif;
+      font-style: italic;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.5rem;
+
+      // background: -webkit-linear-gradient(#ffffff 0.64%, #42d8f9);
+      // -webkit-background-clip: text;
+      // -webkit-text-fill-color: transparent;
+    }
+
+    .title {
+      font-size: ${(props) => (props.titleSize ? props.titleSize : "94px")};
+      font-family: "Merriweather", serif;
+      font-style: italic;
+      font-weight: 900;
+
+      color: #fff;
+
+      background: -webkit-linear-gradient(#ffffff 0.64%, #42d8f9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .content {
+      font-size: ${(props) => (props.paragSize ? props.paragSize : "20px")};
+      font-family: "Merriweather", serif;
+      font-style: italic;
+      font-weight: 500;
+      color: #fff;
+      letter-spacing: 0.5rem;
+    }
+    @media (max-width: 1024px) {
+      width: 90%;
+      justify-content: center;
+      align-items: center;
+      .greeting {
+        font-size: 18px;
+      }
+
+      .title {
+        font-size: 52px;
+      }
+
+      .content {
+        font-size: 16px;
+      }
     }
   }
 `;
@@ -162,7 +252,7 @@ export const DSection = styled.section`
   background-position: center;
   background-size: ${(props) => (props.bgsize ? props.bgsize : "cover")};
   background-attachment: fixed;
-
+  font-family: "Quicksand";
   display: ${(props) => props.flex && "flex"};
   justify-content: ${(props) => props.justify && props.justify};
   align-items: ${(props) => props.align && props.align};
@@ -236,7 +326,7 @@ export const Content = styled.div`
     "0 8px 16px rgba(0, 0, 0, 0.12)")};
   z-index: 2;
   font-weight: ${(props) => props.weight && props.weight};
-
+  font-family: "Quicksand";
   ${(props) =>
     props.minh &&
     css`

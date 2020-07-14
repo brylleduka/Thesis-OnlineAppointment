@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { FETCH_THE_SHOWCASE } from "../../../util/graphql/cms";
 
 import { Link } from "react-router-dom";
-import { DShowCase, Overlay, DImage } from "../../styled/containers";
+import { DShowCase, ShowcaseOverlay } from "../../styled/containers";
 import { JButton } from "../../styled/button";
 import Slider from "react-slick";
 import MouseScroll from "../../MouseScroll";
@@ -64,7 +64,6 @@ const Showcase = ({ nextSection }) => {
     <div style={{ position: "relative" }} id="home">
       {dataLoading ? (
         <DShowCase
-          height="90vh"
           background={
             "https://images.pexels.com/photos/3765134/pexels-photo-3765134.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
           }
@@ -74,7 +73,6 @@ const Showcase = ({ nextSection }) => {
           {showcase.map((sc) => (
             <div className="slider_holder">
               <DShowCase
-                height="90vh"
                 key={sc._id}
                 bgcolor={sc.bgColor}
                 background={sc.bgImgURL && sc.bgImgURL}
@@ -91,8 +89,19 @@ const Showcase = ({ nextSection }) => {
                   />
                 </DImage>
               )} */}
+                <ShowcaseOverlay
+                  bgr={sc.position === "right" ? true : null}
+                  bgl={sc.position === "left" ? true : null}
+                  bgc={sc.position === "center" ? true : null}
+                >
+                  <div className="overlay-content">
+                    <h3 className="greeting">{sc.subtitle}</h3>
+                    <h1 className="title">{sc.title}</h1>
+                    <p className="content">{sc.paragraph}</p>
+                  </div>
+                </ShowcaseOverlay>
 
-                <Overlay
+                {/* <Overlay
                   cmarg={
                     sc.position === "left"
                       ? "0 0 0 5rem"
@@ -146,11 +155,8 @@ const Showcase = ({ nextSection }) => {
                       <Link to="/appointment" />
                     </JButton>
                   </div>
-                </Overlay>
-                <MouseScroll
-                  onClick={scrollDown}
-                  inverted={sc.dark ? true : false}
-                />
+                </Overlay> */}
+                <MouseScroll onClick={scrollDown} inverted />
               </DShowCase>
             </div>
           ))}

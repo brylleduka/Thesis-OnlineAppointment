@@ -1,5 +1,5 @@
 export const theme = {
-  primary: "#71cbd2",
+  primary: "#42d8f9",
   secondary: "#fe8c00",
   dark: "#203A43",
   light: "#FFFFFF",

@@ -3,9 +3,9 @@ import { useQuery } from "@apollo/react-hooks";
 import { FETCH_THE_SHOWCASE } from "../../../../../util/graphql/cms";
 import {
   DShowCase,
-  Overlay,
   DSection,
   DImage,
+  ShowcaseOverlay,
 } from "../../../../styled/containers";
 import NewSlide from "./NewSlide";
 import EditSlide from "./EditSlide";
@@ -61,7 +61,21 @@ const Showcase = () => {
                 background={sc.bgImgURL && sc.bgImgURL}
                 bgcolor={sc.bgColor}
               >
-                <Overlay
+                <ShowcaseOverlay
+                  titleSize="68px"
+                  greetSize="20px"
+                  paragSize="16px"
+                  bgr={sc.position === "right" ? true : null}
+                  bgl={sc.position === "left" ? true : null}
+                  bgc={sc.position === "center" ? true : null}
+                >
+                  <div className="overlay-content">
+                    <h3 className="greeting">{sc.subtitle}</h3>
+                    <h1 className="title">{sc.title}</h1>
+                    <p className="content">{sc.paragraph}</p>
+                  </div>
+                </ShowcaseOverlay>
+                {/* <Overlay
                   flex
                   bgr={sc.dark && sc.position === "right" ? true : false}
                   bgl={sc.dark && sc.position === "left" ? true : false}
@@ -92,7 +106,7 @@ const Showcase = () => {
                     <h2>{sc.subtitle}</h2>
                     <p>{sc.paragraph}</p>
                   </div>
-                </Overlay>
+                </Overlay> */}
                 <div
                   style={{
                     position: "absolute",

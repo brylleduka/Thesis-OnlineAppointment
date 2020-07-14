@@ -1,15 +1,90 @@
 import styled, { css } from "styled-components";
 import { Dropdown } from "semantic-ui-react";
 
+export const TopNav = styled.div`
+  width: 100%;
+  height: 5vh;
+  position: relative;
+
+  z-index: 5;
+
+  .top-nav_content {
+    width: 90%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .divider {
+      height: 50%;
+      margin: 0 5px;
+      border-left: 2px solid #ffffff;
+    }
+
+    .contact_info {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      text-align: center;
+
+      .info {
+        display: flex;
+        align-items: center;
+        margin-right: 5px;
+        color: #fff;
+      }
+    }
+
+    .social_links {
+      width: auto;
+      height: 100%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      .social {
+        color: #fff;
+      }
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .top-nav_content {
+      .contact_info {
+        width: 70%;
+        .info {
+          font-size: 9px;
+        }
+      }
+
+      .social_links {
+        width: 30%;
+        .social {
+          font-size: 9px;
+        }
+      }
+    }
+  }
+`;
 export const DNavigation = styled.nav`
   width: 100%;
-  background: ${(props) => (props.bg ? props.bg : "rgba(255,255,255,1)")};
-  position: fixed;
+  background: ${(props) => (props.bg ? props.bg : "rgba(0,0,0,0)")};
+  position: ${(props) => (props.position ? props.position : "relative")};
   top: 0;
   right: 0;
   left: 0;
   height: 15vh;
   z-index: 10;
+
+  ${(props) =>
+    props.shadow &&
+    css`
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.11), 0 2px 2px rgba(0, 0, 0, 0.11),
+        0 4px 4px rgba(0, 0, 0, 0.11);
+    `}
 
   .content {
     position: relative;
@@ -18,7 +93,8 @@ export const DNavigation = styled.nav`
     justify-content: space-between;
     height: 100%;
     padding: 30px 0;
-    font-size: 15px;
+    font-size: 16px;
+    font-family: "Merriweather", serif !important;
     font-weight: 700;
     letter-spacing: 2px;
 
@@ -29,13 +105,14 @@ export const DNavigation = styled.nav`
     border: 0;
 
     .brand-container {
-      width: 100px;
+      width: 180px;
       height: 100%;
+      font-size: 22px;
 
       .brand {
         width: 100%;
         height: 100%;
-        object-fit: contain;
+        object-fit: fill;
       }
     }
 
@@ -59,7 +136,7 @@ export const DNavigation = styled.nav`
       padding: 10px 0;
 
       .brand-container {
-        width: 100px;
+        width: 180px;
       }
     }
 
@@ -69,7 +146,7 @@ export const DNavigation = styled.nav`
       width: 90%;
 
       .brand-container {
-        width: 70px;
+        width: 180px;
       }
     }
   }
@@ -77,7 +154,7 @@ export const DNavigation = styled.nav`
 
 export const DMenu = styled.ul`
   display: flex;
-
+  // border: 1px solid #fff;
   align-items: center;
   justify-content: flex-end;
 
@@ -86,8 +163,9 @@ export const DMenu = styled.ul`
   }
   li a {
     font-size: 16px;
+    font-weight: 700;
     padding-bottom: 2px;
-    color: ${({ theme }) => theme.dark};
+    color: ${({ theme }) => theme.light};
   }
 
   li a:hover,
@@ -99,8 +177,8 @@ export const DMenu = styled.ul`
 `;
 
 export const DMainMenu = styled(DMenu)`
-  flex: 1;
-  margin-left: 30px;
+  // flex: 1;
+  // margin-left: 30px;
 
   li:nth-child(1),
   li:nth-child(2),
@@ -117,17 +195,30 @@ export const DMainMenu = styled(DMenu)`
     display: none;
   }
 
+  .main_navlink {
+    font-size: 16px;
+    color: ${({ theme }) => theme.light};
+  }
+
+  ${(props) =>
+    props.scrolled &&
+    css`
+      li a,
+      .main_navlink {
+        color: ${({ theme }) => theme.dark};
+      }
+    `};
+
   @media (max-width: 1024px) {
     height: 100%;
-    min-height: 100vh;
-    width: 90%;
-
-    background: ${({ theme }) => theme.primary};
+    width: 100%;
+    border: 1px solid #fff;
+    background: ${({ theme }) => theme.blue};
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-end;
     align-items: flex-end;
-    padding: 2rem;
+    padding: 20px;
     position: fixed;
     top: 0;
     right: 0;
@@ -136,7 +227,7 @@ export const DMainMenu = styled(DMenu)`
     transform: ${({ open }) => (open ? "translateX(0%)" : "translateX(100%)")};
     transform-origin: bottom left;
     transition: transform 0.3s ease-in-out;
-    border: 1px solid #fff;
+  
 
     .signout_link {
       display: block;
@@ -153,23 +244,22 @@ export const DMainMenu = styled(DMenu)`
         font-size: 12px;
       }
     }
-    li:nth-child(2) {
-      .btn {
-        font-size: 16px;
-        margin: 0;
-        padding: 5px 6px;
-        &:hover {
-          color: ${({ theme }) => theme.secondary};
-        }
-      }
-    }
+    // li:nth-child(2) {
+    //   .btn {
+    //     font-size: 16px;
+    //     margin: 0;
+    //     padding: 5px 6px;
+    //     &:hover {
+    //       color: ${({ theme }) => theme.secondary};
+    //     }
+    //   }
+    // }
 
     .account-nav {
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       align-items: flex-end;
-      line-height: 1.4;
     }
 
     .account-nav li,
@@ -185,17 +275,14 @@ export const DMainMenu = styled(DMenu)`
       margin-left: 10px;
     }
 
-    .hr-nav {
-      display: block;
-      width: 70%;
-      margin: 10px auto;
-      hr {
-        border: 0;
-        height: 1px;
-        background: #333;
-        background-image: linear-gradient(to right, #ccc, #333, #ccc);
-      }
-    }
+    ${(props) =>
+      props.scrolled &&
+      css`
+        li a,
+        .main_navlink {
+          color: ${({ theme }) => theme.light};
+        }
+      `};
 
     li {
       justify-content: flex-start;
@@ -213,16 +300,15 @@ export const DMainMenu = styled(DMenu)`
         font-size: 18px;
         text-transform: uppercase;
         font-weight: bold;
-        letter-spacing: 0.5rem;
         text-align: center;
-        line-height: 2.8;
+        line-height: 1.2;
         color: ${({ theme }) => theme.light};
         text-decoration: none;
       }
 
-      a:hover,
+      .main_navlink,a:hover, .btn,
       &.active {
-        color: ${({ theme }) => theme.secondary};
+        color: ${({ theme }) => theme.secondary} !important;
         border-bottom: 0;
       }
       &:nth-child(1) {
@@ -335,7 +421,7 @@ export const DBurger = styled.nav`
   div {
     width: 2rem;
     height: 0.3rem;
-    background: ${({ theme, open }) => (open ? theme.light : theme.primary)};
+    background: ${({ theme, open }) => (open ? theme.light : theme.light)};
     transition: all 0.3s linear;
     position: relative;
     transform-origin: 1px;
@@ -355,6 +441,12 @@ export const DBurger = styled.nav`
     :nth-child(3) {
       transform: ${({ open }) => (open ? "rotate(-45deg)" : "rotate(0)")};
     }
+
+    ${(props) =>
+      props.scrolled &&
+      css`
+        background: ${({ theme }) => theme.primary};
+      `}
   }
 
   @media only screen and (min-width: 1025px) {

@@ -121,18 +121,18 @@ const ModalSlide = ({ open, setOpen, showcase }) => {
           <Content pad="10px" width="100%" height="100%">
             <Form>
               <Form.Field>
-                <label>Title</label>
+                <label>Greeting</label>
                 <input
-                  name="title"
-                  value={values.title || ""}
+                  name="subtitle"
+                  value={values.subtitle || ""}
                   onChange={handleChange}
                 />
               </Form.Field>
               <Form.Field>
-                <label>Subtitle</label>
+                <label>Title</label>
                 <input
-                  name="subtitle"
-                  value={values.subtitle || ""}
+                  name="title"
+                  value={values.title || ""}
                   onChange={handleChange}
                 />
               </Form.Field>
@@ -212,7 +212,7 @@ const ModalSlide = ({ open, setOpen, showcase }) => {
                 />
               </Form.Field>
 
-              <Form.Field>
+              {/* <Form.Field>
                 <label>
                   Overlay{" "}
                   <Popup
@@ -242,7 +242,7 @@ const ModalSlide = ({ open, setOpen, showcase }) => {
                     </div>
                   </div>
                 </Content>
-              </Form.Field>
+              </Form.Field> */}
             </Form>
           </Content>
         </Modal.Content>
