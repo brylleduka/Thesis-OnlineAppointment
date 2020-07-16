@@ -14,7 +14,6 @@ const AppointmentThankYou = () => {
   return (
     <DSection
       height="100vh"
-      margin="15vh 0 0 0"
       background={
         "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
       }

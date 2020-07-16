@@ -465,10 +465,19 @@ const typeDefs = gql`
     #   date: String
     #   slot_time: String
     # ): Appointment
-    cancelAppointment(_id: ID!, note: String): Boolean
+    cancelAppointment(
+      _id: ID!
+      userName: String
+      userEmail: String
+      serviceName: String
+      employeeName: String
+      date: String
+      time: String
+      note: String
+    ): Boolean
     cancelTheAppointment(_id: ID!, note: String): Appointment
     doneAppointment(_id: ID!): Appointment
-    verifiedAppointment(_id: ID!): Appointment
+    verifiedAppointment(_id: ID!): Boolean
     # createGuestAppointment(
     #   firstName: String!
     #   lastName: String!

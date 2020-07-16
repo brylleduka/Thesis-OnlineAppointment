@@ -295,6 +295,7 @@ module.exports = {
 
         const checkAppointment = await Appointment.findOne({
           user,
+          date,
           $or: [{ status: "PENDING" }, { status: "VERIFIED" }],
           // $or: [{ status: "INPROGRESS" }],
         });
@@ -361,15 +362,17 @@ module.exports = {
         // });
 
         jwt.sign(
-          { _id: newAppointment._id },
+          {
+            _id: newAppointment._id,
+          },
 
           process.env.EMAIL_KEY,
           {
             expiresIn: "1d",
           },
           (err, emailToken) => {
-            const url = `http://www.zessencefacialandspa.com/verified/${emailToken}`;
-            // const url = `http://localhost:3000/verified/${emailToken}`;
+            // const url = `http://www.zessencefacialandspa.com/verified/${emailToken}`;
+            const url = `http://localhost:3000/verified/${emailToken}`;
 
             transportMail({
               from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
@@ -405,29 +408,36 @@ module.exports = {
         throw err;
       }
     },
-    cancelAppointment: async (_, { _id, note }) => {
+    cancelAppointment: async (
+      _,
+      { _id, userEmail, userName, serviceName, employeeName, date, time, note }
+    ) => {
       try {
-        const appointment = await Appointment.findById(_id);
+        // const appointInfo = await Appointment.findById(_id);
 
-        const userId = appointment.user;
-        const serviceId = appointment.service;
-        const employeeId = appointment.employee;
+        // const userId = appointInfo.user;
+        // const serviceId = appointInfo.service;
+        // const employeeId = appointInfo.employee;
 
-        const userInfo = await User.findOne({ _id: userId });
-        const userName = `${userInfo.firstName} ${userInfo.lastName}`;
-        const userEmail = userInfo.email;
+        // const userInfo = await User.findOne({ _id: userId });
+        // const userName = `${userInfo.firstName} ${userInfo.lastName}`;
+        // const userEmail = userInfo.email;
 
-        const service = await Service.findById(serviceId);
-        const serviceName = service.name;
-        const employeeInfo = await Employee.findById(employeeId);
-        const employeeName = `${employeeInfo.title} ${employeeInfo.firstName} ${employeeInfo.lastName}`;
+        // const service = await Service.findById(serviceId);
+        // const serviceName = service.name;
+        // const employeeInfo = await Employee.findById(employeeId);
+        // const employeeName = `${employeeInfo.title} ${employeeInfo.firstName} ${employeeInfo.lastName}`;
 
-        const date = appointment.date;
-        const time = appointment.slot_start;
+        // const date = appointInfo.date;
+        // const time = appointInfo.slot_start;
 
-        const result = await Appointment.updateOne(
+        const result = await Appointment.findOneAndUpdate(
           { _id },
-          { $set: { status: "CANCELLED", note } }
+          { $set: { status: "CANCELLED", note } },
+          {
+            new: true,
+            upsert: true,
+          }
         );
 
         transportMail({
@@ -468,7 +478,7 @@ module.exports = {
         const date = theappointment.date;
         const time = theappointment.slot_start;
 
-        const cancelResult = await Appointment.updateOne(
+        const cancelResult = await Appointment.findOneAndUpdate(
           { _id },
           { $set: { status: "CANCELLED", note } }
         );
@@ -505,15 +515,39 @@ module.exports = {
     },
     verifiedAppointment: async (_, { _id }) => {
       try {
-        // const appointmentInfo = await Appointment.findById(_id);
-        // const userId = appointmentInfo.user;
+        const appointmentInfo = await Appointment.findById(_id);
+
+        const userId = appointmentInfo.user;
+        // const serviceId = appointmentInfo.service;
+        // const employeeId = appointmentInfo.employee;
+
+        const userInfo = await User.findById(userId);
+        const userName = `${userInfo.firstName} ${userInfo.lastName}`;
+        const userEmail = userInfo.email;
+
+        // const service = await Service.findById(serviceId);
+        // const serviceName = service.name;
+        // const employee = await Employee.findById(employeeId);
+        // const employeeName = `${employee.title} ${employee.firstName} ${employee.lastName}`;
+
+        // const date = appointmentInfo.date;
+        // const time = appointmentInfo.slot_start;
 
         const result = await Appointment.updateOne(
           { _id },
           { $set: { status: "VERIFIED" } }
         );
 
-        return result;
+        transportMail({
+          from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
+          to: userEmail,
+          subject: "Appointment Verified",
+          text: `${userName}, Your appointment has been verified. Please visit your account for more info.`,
+          temp: "index",
+          userName,
+        });
+
+        return true;
       } catch (err) {
         throw err;
       }

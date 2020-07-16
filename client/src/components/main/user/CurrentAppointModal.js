@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_SINGLE_APPOINTMENT_QUERY } from "../../../util/graphql/appointment";
-import { Modal, Popup, Icon } from "semantic-ui-react";
+import { Modal, Popup, } from "semantic-ui-react";
 import { Content, DGrid } from "../../styled/containers";
 import { DLabel, DButton } from "../../styled/utils";
 import Accordion from "../../Accordion";
@@ -12,7 +12,17 @@ import ReschedModal from "../appointment/ReschedModal";
 import Spinner from "../../Spinner";
 import { QuestionMarkCircle } from "@styled-icons/evaicons-solid";
 
-const CurrentAppointModal = ({ appointId, open, setOpen }) => {
+const CurrentAppointModal = ({
+  appointId,
+  userName,
+  userEmail,
+  employeeName,
+  serviceName,
+  date,
+  time,
+  open,
+  setOpen,
+}) => {
   let verified;
   let pending;
   // let inprogress;
@@ -369,6 +379,12 @@ const CurrentAppointModal = ({ appointId, open, setOpen }) => {
                   setIsCancelOpen={setIsCancelOpen}
                   isCancelOpen={isCancelOpen}
                   appointmentId={appointmentInfo.appointment._id}
+                  userEmail={userEmail}
+                  userName={userName}
+                  serviceName={serviceName}
+                  employeeName={employeeName}
+                  date={date}
+                  time={time}
                 />
               </Modal.Actions>
             </>

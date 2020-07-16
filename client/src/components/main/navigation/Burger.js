@@ -9,7 +9,7 @@ const Burger = ({ open, setOpen }) => {
     <DBurger
       open={open}
       onClick={() => setOpen(!open)}
-      scrolled={scrolling ? true : false}
+      scrolled={scrolling ? true : null}
     >
       <div />
       <div />

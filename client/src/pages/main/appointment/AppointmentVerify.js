@@ -1,8 +1,12 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../context/auth";
 import { Link, useHistory } from "react-router-dom";
 import gql from "graphql-tag";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
+import { FETCH_SINGLE_APPOINTMENT_QUERY } from "../../../util/graphql/appointment";
+import { FETCH_USER_ACCOUNT } from "../../../util/graphql/user";
+import { FETCH_SINGLE_SERVICE_QUERY } from "../../../util/graphql/service";
+import { FETCH_EMPLOYEE_QUERY } from "../../../util/graphql/employee";
 import jwtDecode from "jwt-decode";
 import { DSection, Content } from "../../../components/styled/containers";
 import { DButton } from "../../../components/styled/utils";
@@ -12,6 +16,10 @@ const ThankYou = (props) => {
   const { width: wid } = useWindowSize();
   const { userId } = useContext(AuthContext);
   const emailToken = props.match.params.emailToken;
+  const [appointInfo, setAppointInfo] = useState({});
+  const [userInfo, setUserInfo] = useState({});
+  const [employeeInfo, setEmployeeInfo] = useState({});
+  const [serviceInfo, setServiceInfo] = useState({});
   const history = useHistory();
   history.go(1);
 
@@ -19,20 +27,64 @@ const ThankYou = (props) => {
 
   const { _id } = decodedToken;
 
+  // const { data: appointData } = useQuery(FETCH_SINGLE_APPOINTMENT_QUERY, {
+  //   variables: {
+  //     appointmentId: _id,
+  //   },
+  // });
+
+  // const { data: userData } = useQuery(FETCH_USER_ACCOUNT, {
+  //   variables: {
+  //     userId: user,
+  //   },
+  // });
+
+  // const { data: employeeData } = useQuery(FETCH_EMPLOYEE_QUERY, {
+  //   variables: {
+  //     employeeId: employee,
+  //   },
+  // });
+
+  // const { data: serviceData } = useQuery(FETCH_SINGLE_SERVICE_QUERY, {
+  //   variables: {
+  //     serviceId: service,
+  //   },
+  // });
+
   const [verifiedAppointment] = useMutation(VERRIFIED_APPOINTMENT, {
     variables: {
       appointmentId: _id,
+      // userName: `${userInfo.firstName} ${userInfo.lastName}`,
+      // userEmail: userInfo.email,
+      // employeeName: `${employeeInfo.title} ${employeeInfo.firstName} ${employeeInfo.lastName}`,
+      // serviceName: serviceInfo.name,
+      // date: appointInfo.date,
+      // time: appointInfo.slot_start,
     },
   });
 
   useEffect(() => {
+    // if (appointData) {
+    //   setAppointInfo(appointData.appointment);
+    // }
+
+    // if (userData) {
+    //   setUserInfo(userData.user);
+    // }
+
+    // if (employeeData) {
+    //   setEmployeeInfo(employeeData.employee);
+    // }
+    // if (serviceData) {
+    //   setServiceInfo(serviceData.service);
+    // }
     verifiedAppointment();
   }, []);
 
   return (
     <DSection
       height="100vh"
-      margin="15vh 0 0 0"
+      pad="5vh 0"
       background={
         "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
       }
@@ -89,9 +141,7 @@ const ThankYou = (props) => {
 
 const VERRIFIED_APPOINTMENT = gql`
   mutation verifiedAppointment($appointmentId: ID!) {
-    verifiedAppointment(_id: $appointmentId) {
-      _id
-    }
+    verifiedAppointment(_id: $appointmentId)
   }
 `;
 

@@ -10,7 +10,7 @@ import moment from "moment";
 import CurrentAppointModal from "./CurrentAppointModal";
 import CancelAppoint from "./CancelAppoint";
 
-const CurrentAppointment = () => {
+const CurrentAppointment = ({ userInfo }) => {
   const [open, setOpen] = useState(false);
   const [isCancelOpen, setIsCancelOpen] = useState(false);
   const [isPop, setIsPop] = useState(false);
@@ -126,6 +126,28 @@ const CurrentAppointment = () => {
             position="left center"
             size="tiny"
           />
+          <CurrentAppointModal
+            appointId={row._id}
+            userEmail={userInfo.email}
+            userName={`${userInfo.firstName} ${userInfo.lastName}`}
+            serviceName={row.service.name}
+            employeeName={`${row.employee.title} ${row.employee.firstName} ${row.employee.lastName}`}
+            date={moment(row.date).format("LL")}
+            time={row.slot_start}
+            open={open}
+            setOpen={setOpen}
+          />
+          <CancelAppoint
+            userEmail={userInfo.email}
+            userName={`${userInfo.firstName} ${userInfo.lastName}`}
+            appointmentId={row._id}
+            serviceName={row.service.name}
+            employeeName={`${row.employee.title} ${row.employee.firstName} ${row.employee.lastName}`}
+            date={moment(row.date).format("LL")}
+            time={row.slot_start}
+            isCancelOpen={isCancelOpen}
+            setIsCancelOpen={setIsCancelOpen}
+          />
         </Content>
       ),
     },
@@ -156,16 +178,11 @@ const CurrentAppointment = () => {
         highlightOnHover
         pointerOnHover
       />
-      <CurrentAppointModal
+      {/* <CurrentAppointModal
         appointId={isAppointID}
         open={open}
         setOpen={setOpen}
-      />
-      <CancelAppoint
-        appointmentId={isAppointID}
-        isCancelOpen={isCancelOpen}
-        setIsCancelOpen={setIsCancelOpen}
-      />
+      /> */}
     </Content>
   );
 };

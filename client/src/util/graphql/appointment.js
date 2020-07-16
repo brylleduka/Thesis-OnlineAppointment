@@ -211,6 +211,7 @@ const FETCH_SINGLE_APPOINTMENT_QUERY = gql`
         _id
         firstName
         lastName
+        email
       }
       employee {
         _id

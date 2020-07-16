@@ -274,7 +274,7 @@ const Navigation = ({ open, setOpen }) => {
                 </NavLink>
               }
               simple
-              scrolled={scrolling ? true : undefined}
+              scrolled={scrolling ? true : null}
             >
               <Dropdown.Menu className="customDropMenu">
                 <Dropdown.Item
@@ -326,7 +326,7 @@ const Navigation = ({ open, setOpen }) => {
                 scroll={scrollBehavior}
                 onClick={() => setOpen(false)}
               >
-                Contact
+                Inquiry
               </Link>
             </li>
 
