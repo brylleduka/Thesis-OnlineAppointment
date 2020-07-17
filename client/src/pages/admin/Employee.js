@@ -80,7 +80,7 @@ const Employee = (props) => {
                 <Breadcrumb.Section as={Link} to="/zeadmin/employees">
                   Employee
                 </Breadcrumb.Section>
-                <Breadcrumb.Divider>/</Breadcrumb.Divider>
+                <Breadcrumb.Divider icon="right chevron" />
                 <Breadcrumb.Section
                   active
                 >{`${employee.firstName} ${employee.lastName}'s Info`}</Breadcrumb.Section>

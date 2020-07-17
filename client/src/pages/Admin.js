@@ -22,6 +22,7 @@ import Categories from "./admin/Categories";
 import Category from "./admin/Category";
 import Service from "./admin/Service";
 import Inquiry from "./admin/Inquiry";
+import Message from "./admin/Message";
 import PersonalAccount from "./admin/PersonalAccount";
 import User from "./admin/User";
 import UserInfo from "./admin/UserInfo";
@@ -79,6 +80,11 @@ const Admin = () => {
             component={UserInfo}
           />
           <PrivateRoute exact path="/zeadmin/inquiry" component={Inquiry} />
+          <PrivateRoute
+            exact
+            path="/zeadmin/message/:_id"
+            component={Message}
+          />
 
           <PrivateRoute exact path="/zeadmin/employees" component={Employees} />
 

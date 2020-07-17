@@ -97,16 +97,18 @@ const Inquiry = () => {
           trigger={
             <DButton
               flex
-              data-inqid={row._id}
-              onClick={handleRow}
-              onMouseOver={handleMouseOver}
+              as={Link}
+              to={`/zeadmin/message/${row._id}`}
+              // data-inqid={row._id}
+              // onClick={handleRow}
+              // onMouseOver={handleMouseOver}
             >
               <Eye size="18px" />
             </DButton>
           }
           mouseEnterDelay={500}
           mouseLeaveDelay={500}
-          content="View detailed appointment info."
+          content="View detailed message info."
           position="left center"
           size="tiny"
         />
