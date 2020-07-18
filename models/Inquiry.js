@@ -10,10 +10,10 @@ const inquirySchema = new Schema(
     subject: String,
     message: String,
     reply: String,
-    read: Boolean
+    read: Boolean,
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

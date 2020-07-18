@@ -1,4 +1,7 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import gql from "graphql-tag";
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import { FETCH_VIEW_APPOINTMENTS } from "../../../util/graphql/appointment";
 import { AuthContext } from "../../../context/auth";
 import { NavLink } from "react-router-dom";
 import {
@@ -25,15 +28,33 @@ import { Walk } from "@styled-icons/boxicons-regular/Walk";
 import { FileDirectory } from "@styled-icons/octicons";
 import { Profile } from "@styled-icons/icomoon/Profile";
 import { Archive } from "@styled-icons/entypo";
-
+import { Exclamation } from "@styled-icons/fa-solid/Exclamation";
 import { SideNavLayout } from "../../styled/layout";
-import { NavItem } from "../../styled/utils";
+import { NavItem, NotificationNum } from "../../styled/utils";
 
 import Accordion from "../../Accordion";
 import { ReactComponent as ZEssenceLogo } from "../../../ze_logo.svg";
 
 const SideNav = ({ isOpenMenu, handleOpenMenu }) => {
   const { employeeAuth } = useContext(AuthContext);
+  const [allAppointments, setAllAppointments] = useState([]);
+
+  const { data: dataAllAppoints } = useQuery(FETCH_VIEW_APPOINTMENTS, {
+    pollInterval: 500,
+  });
+
+  useEffect(() => {
+    if (dataAllAppoints)
+      setAllAppointments(dataAllAppoints.checkedViewAppointments);
+  }, [dataAllAppoints]);
+
+  const [viewAppoints, { loading: loadView }] = useMutation(VIEW_APPOINTMENT, {
+    variables: { view: true },
+  });
+
+  const handleViewAppoint = () => {
+    viewAppoints();
+  };
 
   return (
     <SideNavLayout openMenu={isOpenMenu ? true : null}>
@@ -50,30 +71,48 @@ const SideNav = ({ isOpenMenu, handleOpenMenu }) => {
           <span>Dashboard</span>
         </NavLink>
       </NavItem>
-
-      <Accordion
-        title={"Appointments"}
-        icon={<CalendarEvent size="16px" />}
-        hcolor="#fff"
-        fs="14px"
-      >
-        <NavLink to="/zeadmin/appointments" activeClassName="navlink-active">
-          <span>
-            <Computer size="16px" style={styles.ml} />
-            Online
-          </span>
-        </NavLink>
-
-        <NavLink
-          to="/zeadmin/walkin_appointments"
-          activeClassName="navlink-active"
+      <div style={{ position: "relative", width: "100%", margin: "0 auto" }}>
+        <NotificationNum
+          absolute
+          visible={allAppointments.length > 0 ? true : null}
         >
-          <span>
-            <Walk size="16px" style={styles.ml} />
-            Walk In
-          </span>
-        </NavLink>
-      </Accordion>
+          {loadView ? "?" : <Exclamation size="12px" />}
+        </NotificationNum>
+        <Accordion
+          title={"Appointments"}
+          icon={<CalendarEvent size="16px" />}
+          hcolor="#fff"
+          fs="14px"
+        >
+          <div style={{ display: "flex", width: "100%", position: "relative" }}>
+            <NavLink
+              onClick={handleViewAppoint}
+              to="/zeadmin/appointments"
+              activeClassName="navlink-active"
+            >
+              <span>
+                <Computer size="16px" style={styles.ml} />
+                Online
+              </span>
+            </NavLink>
+            <NotificationNum
+              absolute
+              visible={allAppointments.length > 0 ? true : null}
+            >
+              {allAppointments.length}
+            </NotificationNum>
+          </div>
+          <NavLink
+            to="/zeadmin/walkin_appointments"
+            activeClassName="navlink-active"
+          >
+            <span>
+              <Walk size="16px" style={styles.ml} />
+              Walk In
+            </span>
+          </NavLink>
+        </Accordion>
+      </div>
 
       <NavItem>
         <NavLink to="/zeadmin/inquiry">
@@ -98,7 +137,6 @@ const SideNav = ({ isOpenMenu, handleOpenMenu }) => {
 
       {(employeeAuth.role === "ADMIN" || employeeAuth.level >= 3) && (
         <>
-          {/* CMS ACCORDION */}
           <Accordion
             title={"Content Management"}
             icon={<BookContent size="16px" />}
@@ -202,6 +240,15 @@ const SideNav = ({ isOpenMenu, handleOpenMenu }) => {
     </SideNavLayout>
   );
 };
+
+const VIEW_APPOINTMENT = gql`
+  mutation viewAppointments($view: Boolean) {
+    viewAppointments(view: $view) {
+      _id
+      view
+    }
+  }
+`;
 
 const styles = {
   ml: {

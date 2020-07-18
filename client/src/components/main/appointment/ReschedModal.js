@@ -31,7 +31,7 @@ const ReschedModal = ({
     <>
       <DButton
         onClick={handleModalResched}
-        fluid={isAdmin ? "true" : null}
+        fluid={isAdmin ? true : null}
         disabled={diffHours < 12 && !isAdmin ? true : false}
       >
         Reschedule

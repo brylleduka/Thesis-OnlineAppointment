@@ -2,17 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { FETCH_INQUIRY } from "../../util/graphql/inquiry.js";
 import Layout from "../../components/admin/layout/Layout";
-import { DButton, DLabel } from "../../components/styled/utils";
+import { DLabel } from "../../components/styled/utils";
 import { DSection, Content } from "../../components/styled/containers";
-import { Breadcrumb, Icon } from "semantic-ui-react";
+import { Breadcrumb } from "semantic-ui-react";
 import DTextArea from "../../components/DTextArea";
-import CKEditor from "@ckeditor/ckeditor5-react";
-import DecoupledEditor from "@ckeditor/ckeditor5-build-decoupled-document";
+import Spinner from "../../components/Spinner";
+
+import ReplyForm from "../../components/admin/inquiry/ReplyForm";
 
 const Message = (props) => {
   const inquiryId = props.match.params._id;
   const [inquiryInfo, setInquiryInfo] = useState({});
-  const [content, setContent] = useState("");
+
   const { data: dataInqInfo, loading: loadInqInfo } = useQuery(FETCH_INQUIRY, {
     variables: {
       inquiryId,
@@ -107,7 +108,6 @@ const Message = (props) => {
               </DTextArea>
             </Content>
           </Content>
-
           <Content
             width="100%"
             height="100%"
@@ -137,38 +137,11 @@ const Message = (props) => {
               margin="0 auto"
             >
               <DTextArea border active={true}>
-                <CKEditor
-                  onInit={(editor) => {
-                    // Insert the toolbar before the editable area.
-                    editor.ui
-                      .getEditableElement()
-                      .parentElement.insertBefore(
-                        editor.ui.view.toolbar.element,
-                        editor.ui.getEditableElement()
-                      );
-                  }}
-                  onChange={(event, editor) => {
-                    const data = editor.getData();
-                    setContent(data);
-                  }}
-                  editor={DecoupledEditor}
-                  data={content}
-                />
+                {inquiryInfo.reply}
               </DTextArea>
             </Content>
           </Content>
-          <Content
-            width="90%"
-            margin="0 auto"
-            flex
-            justify="flex-end"
-            align="center"
-          >
-            <DButton>
-              <Icon name="send" />
-              Send
-            </DButton>
-          </Content>
+          <ReplyForm inquiryId={inquiryInfo._id} email={inquiryInfo.email} />
         </DSection>
       </DSection>
     </Layout>

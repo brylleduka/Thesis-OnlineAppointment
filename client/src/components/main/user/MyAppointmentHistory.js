@@ -18,7 +18,10 @@ const MyAppointmentHistory = () => {
   const [appointHistory, setAppointHistory] = useState([]);
 
   const { data: appointHistoryData, loading: appointHistoryLoading } = useQuery(
-    FETCH_MY_APPOINTMENT_HISTORY
+    FETCH_MY_APPOINTMENT_HISTORY,
+    {
+      pollInterval: 500,
+    }
   );
 
   useEffect(() => {

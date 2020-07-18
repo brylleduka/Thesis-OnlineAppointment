@@ -83,7 +83,7 @@ const AppointmentDetails = (props) => {
                   {myAppoint.user && (
                     <strong>
                       <DLink
-                        borderb="true"
+                        borderb
                         size="16px"
                         color="#232323"
                         to={`/zeadmin/userInfo/${myAppoint.user._id}`}
@@ -427,19 +427,11 @@ const AppointmentDetails = (props) => {
                   direct="column"
                   margin="0 auto"
                 >
-                  <DButton
-                    confirm
-                    fluid="true"
-                    onClick={() => setOpenDone(true)}
-                  >
+                  <DButton confirm fluid onClick={() => setOpenDone(true)}>
                     <Icon name="calendar check" /> Confirm
                   </DButton>
                   <ReschedModal appointmentId={appointmentId} isAdmin={true} />
-                  <DButton
-                    alert
-                    fluid="true"
-                    onClick={() => setOpenCancel(true)}
-                  >
+                  <DButton alert fluid onClick={() => setOpenCancel(true)}>
                     <Icon name="delete calendar" /> Cancel
                   </DButton>
                 </Content>

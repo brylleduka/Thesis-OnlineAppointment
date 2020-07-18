@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/react-hooks";
-import {
-  FETCH_MY_CURRENT_APPOINTMENTS,
-  FETCH_HISTORY_APPOINTMENTS,
-  FETCH_SINGLE_APPOINTMENT_QUERY,
-} from "../../../util/graphql/appointment";
+import { FETCH_SINGLE_APPOINTMENT_QUERY } from "../../../util/graphql/appointment";
 import { Modal, Label, Form, Popup } from "semantic-ui-react";
 import { DButton } from "../../styled/utils";
 import toaster from "toasted-notes";
@@ -62,10 +58,6 @@ const CancelAppoint = ({
         time,
         note: isNote,
       },
-      refetchQueries: [
-        { query: FETCH_MY_CURRENT_APPOINTMENTS },
-        { query: FETCH_HISTORY_APPOINTMENTS },
-      ],
 
       onCompleted() {
         setIsCancelOpen(false);

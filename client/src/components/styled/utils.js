@@ -339,9 +339,11 @@ export const NavItem = styled.div`
 `;
 
 export const DAccordion = styled.section`
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 90%;
+  margin: 0 auto;
 
   .zbrand {
     filter: invert(45%) sepia(72%) saturate(450%) hue-rotate(145deg)
@@ -398,6 +400,7 @@ export const DAccordion = styled.section`
   }
 
   .accordion-content {
+    position: relative;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -408,6 +411,7 @@ export const DAccordion = styled.section`
     transition: max-height 0.4s ease-in-out;
 
     span {
+      position: relative;
       width: 100%;
       display: flex;
       align-items: center;
@@ -419,6 +423,7 @@ export const DAccordion = styled.section`
     }
 
     a {
+      position: relative;
       width: 100%;
       // height: 100%;
       font-size: 16px;
@@ -798,4 +803,30 @@ export const CheckLabel = styled.label`
       ? colors.grey
       : colors.secondary};
   text-transform: ${(props) => (props.textt ? props.textt : "none")};
+`;
+
+export const NotificationNum = styled.div`
+  position: relative;
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: 50%;
+  background: ${({ theme }) => theme.red};
+  z-index: 10;
+  color: #fff;
+
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-event: none;
+  visibility: ${(props) => (props.visible ? "visible" : "hidden")};
+  transition: visibility 0.4s ease-in-out;
+
+  ${(props) =>
+    props.absolute &&
+    css`
+      position: absolute;
+      top: 10px;
+      right: 50px;
+    `}
 `;

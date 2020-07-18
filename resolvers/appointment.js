@@ -8,7 +8,6 @@ const moment = require("moment");
 const jwt = require("jsonwebtoken");
 const transportMail = require("../utils/transportMail");
 const bcrypt = require("bcryptjs");
-const { https } = require("follow-redirects");
 const Nexmo = require("nexmo");
 
 module.exports = {
@@ -31,6 +30,19 @@ module.exports = {
         });
 
         return getAllAppointments;
+      } catch (err) {
+        throw err;
+      }
+    },
+    checkedViewAppointments: async () => {
+      try {
+        const getViewAppointments = await Appointment.find({
+          view: false,
+        }).sort({
+          createdAt: -1,
+        });
+
+        return getViewAppointments;
       } catch (err) {
         throw err;
       }
@@ -143,73 +155,6 @@ module.exports = {
     },
   },
   Mutation: {
-    // createGuestAppointment: async (
-    //   _,
-    //   {
-    //     firstName,
-    //     lastName,
-    //     email,
-    //     contact,
-    //     appointmentInput: { serviceId, employeeId, date, slot_start, message },
-    //   }
-    // ) => {
-    //   try {
-    //     const pseudoUserId = (Math.random() + 1).toString(36).substring(7);
-
-    //     const hashedPassword = await bcrypt.hash(pseudoUserId, 12);
-
-    //     const newGuestUser = new User({
-    //       firstName,
-    //       lastName,
-    //       email,
-    //       contact,
-    //       password: hashedPassword,
-    //     });
-
-    //     await newGuestUser.save();
-
-    //     const checkTime = await Appointment.findOne({
-    //       employee: employeeId,
-    //       date: new Date(date).toLocaleDateString(),
-    //       slot_start,
-    //     });
-
-    //     if (checkTime) {
-    //       errors.checkTime = "Time unavailable";
-    //       throw new UserInputError("Time error", { errors });
-    //     }
-
-    //     const service = await Service.findById(serviceId);
-    //     const employee = await Employee.findById(employeeId);
-    //     const duration = service.duration;
-
-    //     const newAppointment = await new Appointment({
-    //       user: newGuestUser,
-    //       service,
-    //       employee,
-    //       date: new Date(date).toLocaleDateString(),
-    //       duration,
-    //       slot_start,
-    //       message,
-    //       // status: "VERIFIED",
-    //       status: "INPROGRESS",
-    //     });
-
-    //     const result = await newAppointment.save();
-
-    //     transportMail({
-    //       from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
-    //       to: email, // list of receivers
-    //       subject: "Appointment Confirmation",
-    //       text: "Good Day", // plain text body
-    //       html: `Your appointment details`,
-    //     });
-
-    //     return result;
-    //   } catch (err) {
-    //     throw err;
-    //   }
-    // },
     createUserExistAppointment: async (
       _,
       {
@@ -343,23 +288,10 @@ module.exports = {
           message,
           // status: "INPROGRESS",
           status: "PENDING",
+          view: false,
         });
 
         const result = await newAppointment.save();
-
-        // transportMail({
-        //   from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
-        //   to: userEmail, // list of receivers
-        //   subject: "Appointment Acknowledgement",
-        //   text: "Good Day", // plain text body
-        //   temp: "index",
-        //   // url,
-        //   userName,
-        //   serviceName,
-        //   employeeName,
-        //   date: moment(date).format("LL"),
-        //   time: slot_start,
-        // });
 
         jwt.sign(
           {
@@ -390,18 +322,18 @@ module.exports = {
           }
         );
 
-        if (userContact) {
-          const nexmo = new Nexmo({
-            apiKey: "db47cee1",
-            apiSecret: "K3yqI72Vi4zIMoGd",
-          });
+        // if (userContact) {
+        //   const nexmo = new Nexmo({
+        //     apiKey: "db47cee1",
+        //     apiSecret: "K3yqI72Vi4zIMoGd",
+        //   });
 
-          const from = "Z Essence";
-          const to = `63${userContact}`;
-          const text = `Hello ${userInfo.firstName}! Thank you for making an appointment with us.Please visit your account or check your email to see details of your appointment. Z Essence Facial and Spa`;
+        //   const from = "Z Essence";
+        //   const to = `63${userContact}`;
+        //   const text = `Hello ${userInfo.firstName}! Thank you for making an appointment with us.Please visit your account or check your email to see details of your appointment. Z Essence Facial and Spa`;
 
-          nexmo.message.sendSms(from, to, text);
-        }
+        //   nexmo.message.sendSms(from, to, text);
+        // }
 
         return result;
       } catch (err) {
@@ -413,24 +345,6 @@ module.exports = {
       { _id, userEmail, userName, serviceName, employeeName, date, time, note }
     ) => {
       try {
-        // const appointInfo = await Appointment.findById(_id);
-
-        // const userId = appointInfo.user;
-        // const serviceId = appointInfo.service;
-        // const employeeId = appointInfo.employee;
-
-        // const userInfo = await User.findOne({ _id: userId });
-        // const userName = `${userInfo.firstName} ${userInfo.lastName}`;
-        // const userEmail = userInfo.email;
-
-        // const service = await Service.findById(serviceId);
-        // const serviceName = service.name;
-        // const employeeInfo = await Employee.findById(employeeId);
-        // const employeeName = `${employeeInfo.title} ${employeeInfo.firstName} ${employeeInfo.lastName}`;
-
-        // const date = appointInfo.date;
-        // const time = appointInfo.slot_start;
-
         const result = await Appointment.findOneAndUpdate(
           { _id },
           { $set: { status: "CANCELLED", note } },
@@ -681,6 +595,19 @@ module.exports = {
       // }
 
       return result;
+    },
+    viewAppointments: async (_, { view }) => {
+      try {
+        const result = Appointment.updateMany(
+          {},
+          { $set: { view } },
+          { upsert: true }
+        );
+
+        return result;
+      } catch (err) {
+        throw err;
+      }
     },
   },
 };

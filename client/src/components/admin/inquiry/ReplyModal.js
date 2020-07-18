@@ -162,6 +162,4 @@ const REPLY_MESSAGE = gql`
   }
 `;
 
-
-
 export default ReplyModal;

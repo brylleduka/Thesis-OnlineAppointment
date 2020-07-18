@@ -78,7 +78,7 @@ const SigninForm = () => {
         </Form.Field>
         <DButton
           type="submit"
-          fluid="true"
+          fluid
           size="3rem"
           fSize="18px"
           text="uppercase"

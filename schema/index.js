@@ -45,6 +45,7 @@ const typeDefs = gql`
     status: String
     message: String
     note: String
+    view: Boolean
     reschedule: Reschedule
     createdAt: String
     updatedAt: String
@@ -389,6 +390,7 @@ const typeDefs = gql`
     # APPOINTMENT
     appointment(_id: ID!): Appointment
     appointments: [Appointment]
+    checkedViewAppointments: [Appointment]
     appointmentsByStatus(status: String!): [Appointment]
     checkedAppointments(employeeId: ID!, date: String!): [Appointment]
     currentAppointments: [Appointment]
@@ -459,12 +461,7 @@ const typeDefs = gql`
 
     # APPOINTMENTS
     createAppointment(appointmentInput: AppointmentInput): Appointment
-    # updateAppointment(
-    #   serviceId: ID
-    #   employeeId: ID
-    #   date: String
-    #   slot_time: String
-    # ): Appointment
+
     cancelAppointment(
       _id: ID!
       userName: String
@@ -478,13 +475,6 @@ const typeDefs = gql`
     cancelTheAppointment(_id: ID!, note: String): Appointment
     doneAppointment(_id: ID!): Appointment
     verifiedAppointment(_id: ID!): Boolean
-    # createGuestAppointment(
-    #   firstName: String!
-    #   lastName: String!
-    #   email: String!
-    #   contact: String
-    #   appointmentInput: AppointmentInput
-    # ): Appointment
 
     createUserExistAppointment(
       userId: ID!
@@ -497,6 +487,8 @@ const typeDefs = gql`
       isAdmin: Boolean
       appointmentInput: AppointmentInput
     ): Appointment
+
+    viewAppointments(view: Boolean): Appointment
 
     # WALKIN APPOINTMENT
 

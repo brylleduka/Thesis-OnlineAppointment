@@ -337,6 +337,13 @@ const FETCH_APPOINTMENT_STATUS = gql`
   }
 `;
 
+const FETCH_VIEW_APPOINTMENTS = gql`
+  query checkedViewAppointments {
+    checkedViewAppointments {
+      _id
+    }
+  }
+`;
 // END-APPOINTMENTS
 
 export {
@@ -349,4 +356,5 @@ export {
   FETCH_CURRENT_APPOINTMENTS,
   FETCH_HISTORY_APPOINTMENTS,
   FETCH_APPOINTMENT_STATUS,
+  FETCH_VIEW_APPOINTMENTS,
 };

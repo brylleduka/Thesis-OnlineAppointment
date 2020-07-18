@@ -131,11 +131,11 @@ const PhotoBooth = ({
         </IconWrap>
       </DCard>
 
-      <DButton width="180px" flex="true" onClick={handleDetails}>
+      <DButton width="180px" flex onClick={handleDetails}>
         <UserDetail size="22px" />
         Details
       </DButton>
-      <DButton width="180px" flex="true" onClick={handleSchedule}>
+      <DButton width="180px" flex onClick={handleSchedule}>
         <Schedule size="22px" title="Employee's Schdule Tab" />
         Schedule
       </DButton>

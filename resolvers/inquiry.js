@@ -2,7 +2,6 @@ const Inquiry = require("../models/Inquiry");
 const transportMail = require("../utils/transportMail");
 const { UserInputError } = require("apollo-server-express");
 const { validateInquiry } = require("../utils/validators");
-const { https } = require("follow-redirects");
 
 module.exports = {
   Query: {
@@ -104,16 +103,21 @@ module.exports = {
     replyInquiry: async (_, { _id, email, message }) => {
       const inquiry = await Inquiry.findById(_id);
       const subject = inquiry.subject;
-      const updateInquiry = await Inquiry.findByIdAndUpdate(_id, {
-        $set: { reply: message },
-      });
+      const updateInquiry = await Inquiry.findByIdAndUpdate(
+        _id,
+        {
+          $set: { reply: message },
+        },
+        { new: true }
+      );
 
       transportMail({
         from: '"Z Essence Facial and Spa"<zessence.spa@gmail.com>',
         to: email, // list of receivers
-        subject: subject,
+        subject,
         text: message, // plain text body
-        html: message,
+        temp: "reply",
+        message: message.replace(/<[^>]*>?/gm, ""),
       });
 
       return updateInquiry;

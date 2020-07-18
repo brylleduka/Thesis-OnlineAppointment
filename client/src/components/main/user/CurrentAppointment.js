@@ -22,7 +22,10 @@ const CurrentAppointment = ({ userInfo }) => {
   };
 
   const { data: currentAppointData, loading: currentAppointLoading } = useQuery(
-    FETCH_MY_CURRENT_APPOINTMENTS
+    FETCH_MY_CURRENT_APPOINTMENTS,
+    {
+      pollInterval: 500,
+    }
   );
 
   useEffect(() => {
