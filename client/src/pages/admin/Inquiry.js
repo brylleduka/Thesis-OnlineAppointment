@@ -20,7 +20,10 @@ const Inquiry = () => {
   const [inqVal, setInqVal] = useState("");
 
   const { data: data_inquiries, loading: loading_inquiries, error } = useQuery(
-    FETCH_INQUIRIES
+    FETCH_INQUIRIES,
+    {
+      pollInterval: 500,
+    }
   );
 
   useEffect(() => {
@@ -29,19 +32,9 @@ const Inquiry = () => {
     }
   }, [data_inquiries]);
 
-  const [readInq, { loading: loadReadInq }] = useMutation(READ_INQ, {
-    variables: { inqId: inqVal },
-    refetchQueries: [{ query: FETCH_INQUIRIES }],
-  });
+  
 
-  const handleRow = (e) => {
-    readInq();
-    setOpen(true);
-  };
 
-  const handleMouseOver = (e) => {
-    setInqVal(e.currentTarget.dataset.inqid);
-  };
 
   const columns = [
     {
@@ -209,10 +202,6 @@ const title = (
 
 const paginationRowsPerPageOptions = [5, 10, 15, 20];
 
-const READ_INQ = gql`
-  mutation readInquiry($inqId: ID!) {
-    readInquiry(_id: $inqId)
-  }
-`;
+
 
 export default Inquiry;

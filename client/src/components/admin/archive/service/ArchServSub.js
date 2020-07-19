@@ -24,7 +24,10 @@ const ArchServSub = () => {
     data: servicesData,
     loading: servicesLoad,
     error: servicesErr,
-  } = useQuery(FETCH_ALL_SERVICES_QUERY, { variables: { active: false } });
+  } = useQuery(FETCH_ALL_SERVICES_QUERY, {
+    variables: { active: false },
+    pollInterval: 500,
+  });
 
   useEffect(() => {
     if (servicesData) setArchServices(servicesData.allServices);

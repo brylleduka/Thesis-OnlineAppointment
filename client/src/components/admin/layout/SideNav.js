@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import gql from "graphql-tag";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/react-hooks";
 import { FETCH_VIEW_APPOINTMENTS } from "../../../util/graphql/appointment";
+import { FETCH_INQUIRIES_READ } from "../../../util/graphql/inquiry";
 import { AuthContext } from "../../../context/auth";
 import { NavLink } from "react-router-dom";
 import {
@@ -38,23 +39,25 @@ import { ReactComponent as ZEssenceLogo } from "../../../ze_logo.svg";
 const SideNav = ({ isOpenMenu, handleOpenMenu }) => {
   const { employeeAuth } = useContext(AuthContext);
   const [allAppointments, setAllAppointments] = useState([]);
+  const [allInquiries, setAllInquiries] = useState([]);
 
   const { data: dataAllAppoints } = useQuery(FETCH_VIEW_APPOINTMENTS, {
     pollInterval: 500,
   });
 
-  useEffect(() => {
-    if (dataAllAppoints)
-      setAllAppointments(dataAllAppoints.checkedViewAppointments);
-  }, [dataAllAppoints]);
-
-  const [viewAppoints, { loading: loadView }] = useMutation(VIEW_APPOINTMENT, {
-    variables: { view: true },
+  const { data: dataAllInqs } = useQuery(FETCH_INQUIRIES_READ, {
+    variables: { read: false },
+    pollInterval: 500,
   });
 
-  const handleViewAppoint = () => {
-    viewAppoints();
-  };
+  useEffect(() => {
+    if (dataAllAppoints) {
+      setAllAppointments(dataAllAppoints.checkedViewAppointments);
+    }
+    if (dataAllInqs) {
+      setAllInquiries(dataAllInqs.inquiriesRead);
+    }
+  }, [dataAllAppoints, dataAllInqs]);
 
   return (
     <SideNavLayout openMenu={isOpenMenu ? true : null}>
@@ -76,7 +79,7 @@ const SideNav = ({ isOpenMenu, handleOpenMenu }) => {
           absolute
           visible={allAppointments.length > 0 ? true : null}
         >
-          {loadView ? "?" : <Exclamation size="12px" />}
+          <Exclamation size="12px" />
         </NotificationNum>
         <Accordion
           title={"Appointments"}
@@ -86,7 +89,7 @@ const SideNav = ({ isOpenMenu, handleOpenMenu }) => {
         >
           <div style={{ display: "flex", width: "100%", position: "relative" }}>
             <NavLink
-              onClick={handleViewAppoint}
+              // onClick={handleViewAppoint}
               to="/zeadmin/appointments"
               activeClassName="navlink-active"
             >
@@ -113,14 +116,20 @@ const SideNav = ({ isOpenMenu, handleOpenMenu }) => {
           </NavLink>
         </Accordion>
       </div>
-
-      <NavItem>
-        <NavLink to="/zeadmin/inquiry">
-          <MessageRoundedDetail size="16px" />
-          <span>Inquiry</span>
-        </NavLink>
-      </NavItem>
-
+      <div style={{ display: "flex", width: "100%", position: "relative" }}>
+        <NotificationNum
+          absolute
+          visible={allInquiries.length > 0 ? true : null}
+        >
+          {allInquiries.length}
+        </NotificationNum>
+        <NavItem>
+          <NavLink to="/zeadmin/inquiry">
+            <MessageRoundedDetail size="16px" />
+            <span>Inquiry</span>
+          </NavLink>
+        </NavItem>
+      </div>
       <Accordion
         title={"Accounts"}
         hcolor="#fff"
@@ -240,15 +249,6 @@ const SideNav = ({ isOpenMenu, handleOpenMenu }) => {
     </SideNavLayout>
   );
 };
-
-const VIEW_APPOINTMENT = gql`
-  mutation viewAppointments($view: Boolean) {
-    viewAppointments(view: $view) {
-      _id
-      view
-    }
-  }
-`;
 
 const styles = {
   ml: {

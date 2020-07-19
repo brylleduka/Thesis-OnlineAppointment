@@ -13,7 +13,10 @@ const FileReport = () => {
   const [historyAppointments, setHistoryAppointments] = useState([]);
 
   const { loading, data: historyAppointmentData, error } = useQuery(
-    FETCH_HISTORY_APPOINTMENTS
+    FETCH_HISTORY_APPOINTMENTS,
+    {
+      pollInterval: 500,
+    }
   );
 
   useEffect(() => {

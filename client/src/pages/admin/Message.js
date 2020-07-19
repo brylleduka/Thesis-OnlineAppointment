@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import gql from "graphql-tag";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import { FETCH_INQUIRY } from "../../util/graphql/inquiry.js";
 import Layout from "../../components/admin/layout/Layout";
 import { DLabel } from "../../components/styled/utils";
@@ -7,6 +8,7 @@ import { DSection, Content } from "../../components/styled/containers";
 import { Breadcrumb } from "semantic-ui-react";
 import DTextArea from "../../components/DTextArea";
 import Spinner from "../../components/Spinner";
+import { Link } from "react-router-dom";
 
 import ReplyForm from "../../components/admin/inquiry/ReplyForm";
 
@@ -18,9 +20,15 @@ const Message = (props) => {
     variables: {
       inquiryId,
     },
+    pollInterval: 500,
+  });
+
+  const [readInq] = useMutation(READ_INQ, {
+    variables: { inquiryId },
   });
 
   useEffect(() => {
+    readInq();
     if (dataInqInfo) setInquiryInfo(dataInqInfo.inquiry);
   }, [dataInqInfo]);
 
@@ -43,109 +51,120 @@ const Message = (props) => {
           margin="24px auto"
         >
           <Breadcrumb size={"huge"}>
-            <Breadcrumb.Section>Inquiry List</Breadcrumb.Section>
+            <Breadcrumb.Section as={Link} to="/zeadmin/inquiry">
+              Inquiry List
+            </Breadcrumb.Section>
             <Breadcrumb.Divider icon="right chevron" />
             <Breadcrumb.Section active>Message</Breadcrumb.Section>
           </Breadcrumb>
         </Content>
-
-        <DSection
-          flex
-          width="100%"
-          height="100%"
-          margin="0 auto"
-          direct="column"
-        >
-          <div>
-            <DLabel size="16px" weight={700}>
-              Sender:
-            </DLabel>
-            <span>{inquiryInfo.name}</span>
-          </div>
-          <div>
-            <DLabel size="16px" weight={700}>
-              Email:
-            </DLabel>
-            <span>{inquiryInfo.email}</span>
-          </div>
-          <div>
-            <DLabel size="16px" weight={700}>
-              Subject:
-            </DLabel>
-            <span>{inquiryInfo.subject}</span>
-          </div>
-
-          <Content
+        {loadInqInfo ? (
+          <Spinner content="Please wait while we fetch your data..." />
+        ) : (
+          <DSection
+            flex
             width="100%"
             height="100%"
-            flex
-            justify="flex-start"
-            align="flex-start"
+            margin="0 auto"
             direct="column"
-            margin="12px auto"
           >
-            <DLabel
-              flex
-              justifyEnd
-              alignCenter
-              weight={700}
-              w={"40%"}
-              size="14px"
-            >
-              Message:
-            </DLabel>
+            <div>
+              <DLabel size="16px" weight={700}>
+                Sender:
+              </DLabel>
+              <span>{inquiryInfo.name}</span>
+            </div>
+            <div>
+              <DLabel size="16px" weight={700}>
+                Email:
+              </DLabel>
+              <span>{inquiryInfo.email}</span>
+            </div>
+            <div>
+              <DLabel size="16px" weight={700}>
+                Subject:
+              </DLabel>
+              <span>{inquiryInfo.subject}</span>
+            </div>
+
             <Content
-              width="90%"
-              height="auto"
+              width="100%"
+              height="100%"
               flex
-              justify="center"
-              align="center"
-              pad="3px 15px"
-              margin="0 auto"
+              justify="flex-start"
+              align="flex-start"
+              direct="column"
+              margin="12px auto"
             >
-              <DTextArea border active={true}>
-                {inquiryInfo.message}
-              </DTextArea>
+              <DLabel
+                flex
+                justifyEnd
+                alignCenter
+                weight={700}
+                w={"40%"}
+                size="14px"
+              >
+                Message:
+              </DLabel>
+              <Content
+                width="90%"
+                height="auto"
+                flex
+                justify="center"
+                align="center"
+                pad="3px 15px"
+                margin="0 auto"
+              >
+                <DTextArea border active={true}>
+                  {inquiryInfo.message}
+                </DTextArea>
+              </Content>
             </Content>
-          </Content>
-          <Content
-            width="100%"
-            height="100%"
-            flex
-            justify="flex-start"
-            align="flex-start"
-            direct="column"
-            margin="12px auto"
-          >
-            <DLabel
-              flex
-              justifyEnd
-              alignCenter
-              weight={700}
-              w={"40%"}
-              size="14px"
-            >
-              Reply:
-            </DLabel>
             <Content
-              width="90%"
-              height="auto"
+              width="100%"
+              height="100%"
               flex
-              justify="center"
-              align="center"
-              pad="3px 15px"
-              margin="0 auto"
+              justify="flex-start"
+              align="flex-start"
+              direct="column"
+              margin="12px auto"
             >
-              <DTextArea border active={true}>
-                {inquiryInfo.reply}
-              </DTextArea>
+              <DLabel
+                flex
+                justifyEnd
+                alignCenter
+                weight={700}
+                w={"40%"}
+                size="14px"
+              >
+                Reply:
+              </DLabel>
+              <Content
+                width="90%"
+                height="auto"
+                flex
+                justify="center"
+                align="center"
+                pad="3px 15px"
+                margin="0 auto"
+              >
+                <DTextArea border active={true}>
+                  {inquiryInfo.reply}
+                </DTextArea>
+              </Content>
             </Content>
-          </Content>
-          <ReplyForm inquiryId={inquiryInfo._id} email={inquiryInfo.email} />
-        </DSection>
+            <ReplyForm inquiryId={inquiryInfo._id} email={inquiryInfo.email} />
+          </DSection>
+        )}
       </DSection>
     </Layout>
   );
 };
+
+const READ_INQ = gql`
+  mutation readInquiry($inquiryId: ID!) {
+    readInquiry(_id: $inquiryId)
+  }
+`;
 
 export default Message;

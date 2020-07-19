@@ -18,7 +18,7 @@ const AppointmentCancel = ({ openCancel, setOpenCancel, appointmentId }) => {
       refetchQueries: [{ query: FETCH_APPOINTMENTS_QUERY }],
       onCompleted(data) {
         setOpenCancel(false);
-        toaster.notify("Appointment Cancelled", { position: "bottom-right" });
+        toaster.notify("Appointment Cancelled");
       },
       onError(err) {
         setOpenCancel(false);

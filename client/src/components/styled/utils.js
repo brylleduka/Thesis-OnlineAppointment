@@ -312,6 +312,8 @@ export const DLabel = styled.label`
 
 export const NavItem = styled.div`
   width: 90%;
+  margin: 0 auto;
+  position: relative;
   a {
     height: 100%;
     width: 100%;
@@ -807,13 +809,15 @@ export const CheckLabel = styled.label`
 
 export const NotificationNum = styled.div`
   position: relative;
-  width: 22px !important;
-  height: 22px !important;
+  width: 24px;
+  height: 24px;
+  padding: 3px;
   border-radius: 50%;
   background: ${({ theme }) => theme.red};
+  border: 1px solid ${({ theme }) => theme.red};
   z-index: 10;
   color: #fff;
-
+  font-size: 0.75rem;
   text-align: center;
   display: flex;
   justify-content: center;

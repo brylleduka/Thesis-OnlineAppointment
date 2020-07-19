@@ -18,7 +18,7 @@ const AppointmentDone = ({ openDone, setOpenDone, appointmentId }) => {
       refetchQueries: [{ query: FETCH_APPOINTMENTS_QUERY }],
       onCompleted(data) {
         setOpenDone(false);
-        toaster.notify("Appointment Done", { position: "bottom-right" });
+        toaster.notify("Appointment Done");
       },
       onError(err) {
         setOpenDone(false);

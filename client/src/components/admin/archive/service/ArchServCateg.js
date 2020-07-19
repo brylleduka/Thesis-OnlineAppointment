@@ -23,7 +23,10 @@ const ArchServCateg = () => {
     data: servCategData,
     loading: servCategLoad,
     error: servCategErr,
-  } = useQuery(FETCH_ALL_CATEGORIES_QUERY, { variables: { active: false } });
+  } = useQuery(FETCH_ALL_CATEGORIES_QUERY, {
+    variables: { active: false },
+    pollInterval: 500,
+  });
 
   useEffect(() => {
     if (servCategData) setArchServCateg(servCategData.categories);

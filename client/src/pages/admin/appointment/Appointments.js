@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import gql from "graphql-tag";
+import { useMutation } from "@apollo/react-hooks";
 import {
   DSection,
   DGrid,
@@ -11,6 +12,15 @@ import CurrentAppointments from "../../../components/admin/appointment/CurrentAp
 
 const Appointments = () => {
   const [open, setOpen] = useState(false);
+
+  const [viewAppoints] = useMutation(VIEW_APPOINTMENT, {
+    variables: { view: true },
+  });
+
+  useEffect(() => {
+    viewAppoints();
+  }, []);
+
   return (
     <Layout>
       <DSection width="90%" mcenter height="100%">
@@ -26,7 +36,6 @@ const Appointments = () => {
             <Breadcrumb.Divider icon="right chevron" />
             <Breadcrumb.Section active>Online</Breadcrumb.Section>
           </Breadcrumb>
-
         </Content>
         <DGrid>
           <CurrentAppointments />
@@ -36,5 +45,14 @@ const Appointments = () => {
     </Layout>
   );
 };
+
+const VIEW_APPOINTMENT = gql`
+  mutation viewAppointments($view: Boolean) {
+    viewAppointments(view: $view) {
+      _id
+      view
+    }
+  }
+`;
 
 export default Appointments;

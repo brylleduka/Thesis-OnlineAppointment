@@ -27,6 +27,7 @@ const ArchEmp = () => {
     error: archEmpErr,
   } = useQuery(FETCH_EMPLOYEES_NOT_ADMIN_QUERY, {
     variables: { limit: 0, active: false },
+    pollInterval: 500,
   });
 
   useEffect(() => {
