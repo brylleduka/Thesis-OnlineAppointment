@@ -107,10 +107,10 @@ const AboutSection = ({ nextSection }) => {
                       : parser(
                           truncateString(about.story.paragraph, 800) + "..."
                         ))}
+                  <ReadMore size="14px" color={({ theme }) => theme.bluer}>
+                    <Link to="/about/#story">Read More</Link>
+                  </ReadMore>
                 </p>
-                <ReadMore style={{ padding: "5px", fontSize: "14px" }}>
-                  <Link to="/about/#story">Read More</Link>
-                </ReadMore>
               </div>
             </div>
           )}

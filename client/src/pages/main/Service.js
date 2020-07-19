@@ -11,9 +11,10 @@ import {
 } from "../../components/styled/containers";
 import { DButton } from "../../components/styled/utils";
 import { JCard2 } from "../../components/styled/card";
+import { JButton } from "../../components/styled/button";
 import parser from "html-react-parser";
 import { Icon } from "semantic-ui-react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 // import ServiceDetails from "../../components/main/services/ServiceDetails";
 import ReadMore from "../../components/main/utils/ReadMore";
 import Spinner from "../../components/Spinner";
@@ -63,7 +64,7 @@ const Service = (props) => {
             ? isShowcase[0].bgImgURL
             : "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
         }
-        height="50vh"
+        height="80vh"
         fixed
         id={"serv"}
       >
@@ -158,6 +159,7 @@ const Service = (props) => {
                               ""
                             ) : (
                               <ReadMore
+                                size="14px"
                                 onClick={() => setIsReadMore(!isReadMore)}
                               >
                                 {isReadMore ? "Read Less" : "Read More"}
@@ -165,6 +167,19 @@ const Service = (props) => {
                             )}
 
                             {/* <ServiceDetails service={service} /> */}
+                          </div>
+                          <div
+                            style={{
+                              width: "100%",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <JButton>
+                              Book Appointment
+                              <Link to="/appointment" />
+                            </JButton>
                           </div>
                         </div>
                       </JCard2>

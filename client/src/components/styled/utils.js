@@ -507,12 +507,9 @@ export const ReadMore = styled.p`
   cursor: pointer !important;
 
   width: 150px;
-  background: ${(props) => (props.color ? props.color : colors.primary)};
-  &:hover {
-    background: ${colors.blue};
-  }
+
   span {
-    color: ${(props) => (props.color ? props.color : colors.light)};
+    color: ${(props) => (props.color ? props.color : colors.blue)};
     display: inline-block;
     position: relative;
     font-weight: 700;
@@ -535,7 +532,7 @@ export const ReadMore = styled.p`
       transition: margin 0.3s, opacity 0.3s;
     }
     a {
-      color: ${colors.light};
+      color: ${(props) => (props.color ? props.color : colors.blue)};
     }
     &:hover {
       &:after {

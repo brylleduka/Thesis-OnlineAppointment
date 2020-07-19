@@ -227,13 +227,12 @@ export const DMainMenu = styled(DMenu)`
     transform: ${({ open }) => (open ? "translateX(0%)" : "translateX(100%)")};
     transform-origin: bottom left;
     transition: transform 0.3s ease-in-out;
-  
 
     .signout_link {
       display: block;
       cursor: pointer;
       &:hover {
-        color: ${({ theme }) => theme.secondary};
+        color: ${({ theme }) => theme.bluer};
       }
     }
 
@@ -241,19 +240,9 @@ export const DMainMenu = styled(DMenu)`
     li:nth-child(2) {
       display: block;
       a {
-        font-size: 12px;
+        font-size: 18px;
       }
     }
-    // li:nth-child(2) {
-    //   .btn {
-    //     font-size: 16px;
-    //     margin: 0;
-    //     padding: 5px 6px;
-    //     &:hover {
-    //       color: ${({ theme }) => theme.secondary};
-    //     }
-    //   }
-    // }
 
     .account-nav {
       display: flex;
@@ -268,7 +257,7 @@ export const DMainMenu = styled(DMenu)`
       display: flex;
       justify-content: flex-end;
       align-items: flex-end;
-      font-size: 13px;
+      font-size: 14px;
     }
 
     .account-nav li:first-child span {
@@ -306,9 +295,11 @@ export const DMainMenu = styled(DMenu)`
         text-decoration: none;
       }
 
-      .main_navlink,a:hover, .btn,
+      .main_navlink,
+      a:hover,
+      .btn,
       &.active {
-        color: ${({ theme }) => theme.secondary} !important;
+        color: ${({ theme }) => theme.bluer} !important;
         border-bottom: 0;
       }
       &:nth-child(1) {

@@ -161,10 +161,27 @@ const Services = () => {
                         {category.description.length > 100
                           ? parser(category.description.substr(0, 100) + "...")
                           : parser(category.description.substr(0, 100))}
-
-                        <ReadMore center size="14px">
-                          View More
-                        </ReadMore>
+                        <div
+                          style={{
+                            width: "100%",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            position: "absolute",
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            zIndex: 5,
+                          }}
+                        >
+                          <ReadMore
+                            color={({ theme }) => theme.light}
+                            center
+                            size="14px"
+                          >
+                            View More
+                          </ReadMore>
+                        </div>
                       </div>
                     </div>
                   </Overlay>

@@ -149,7 +149,11 @@ const CategorySection = ({ setRef }) => {
                               zIndex: 5,
                             }}
                           >
-                            <ReadMore center size="14px">
+                            <ReadMore
+                              color={({ theme }) => theme.light}
+                              center
+                              size="14px"
+                            >
                               View More
                             </ReadMore>
                           </div>

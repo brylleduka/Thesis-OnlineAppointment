@@ -98,6 +98,13 @@ const Showcase = ({ nextSection }) => {
                     <h3 className="greeting">{sc.subtitle}</h3>
                     <h1 className="title">{sc.title}</h1>
                     <p className="content">{sc.paragraph}</p>
+                    <JButton
+                      className={sc.dark ? "dark" : ""}
+                      dark={sc.dark ? true : null}
+                    >
+                      Book Appointment
+                      <Link to="/appointment" />
+                    </JButton>
                   </div>
                 </ShowcaseOverlay>
 

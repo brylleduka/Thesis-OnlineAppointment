@@ -47,8 +47,6 @@ export const DShowCase = styled.div`
     object-fit: cover;
   }
 
-
-
   @media (max-width: 768px) {
     width: 100%;
     align-items: center;
@@ -96,6 +94,7 @@ export const ShowcaseOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   padding: ${(props) => (props.pad ? props.pad : "2rem")};
   margin: 0 auto;
   overflow: hidden;

@@ -229,11 +229,7 @@ const Navigation = ({ open, setOpen }) => {
             )}
 
             <li>
-              <Link
-                to="/appointment"
-                className="btn btn-blue btn-rounded"
-                onClick={() => setOpen(false)}
-              >
+              <Link to="/appointment" onClick={() => setOpen(false)}>
                 Book Online
               </Link>
             </li>
@@ -385,7 +381,7 @@ const Navigation = ({ open, setOpen }) => {
               </li>
             )}
             <li>
-              <Link to="/appointment" className="btn btn-rounded">
+              <Link to="/appointment" className="btn btn-blue btn-rounded">
                 Book Online
               </Link>
             </li>

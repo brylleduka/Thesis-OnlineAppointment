@@ -67,6 +67,7 @@ ul {
   font-size: 18px !important;
   z-index: 2;
   border-radius: 5px;
+  border: 1px solid #42d8f9;
 }
 
 .btn-rounded {
@@ -74,7 +75,7 @@ ul {
 }
 
 .btn-blue {
-  background-color: #2193b0 !important;
+  background-color: #55bcc9 !important;
 }
 .btn:hover {
   opacity: 0.9;
