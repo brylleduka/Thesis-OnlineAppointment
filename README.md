@@ -1,4 +1,4 @@
-Thesis Project: Website for Z Essence Facial and Spa with online inquiry and appointment
+Thesis Project: Website for Facial and Spa Salon with online inquiry and appointment
 
 Add .env file
 contains:
